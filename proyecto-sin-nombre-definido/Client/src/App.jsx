@@ -18,11 +18,8 @@ function App() {
       {location.pathname !== "/" && <Nav/>}
      <Routes>
       <Route path='/' element={<Landing/>} />
-<<<<<<< HEAD
       <Route path='/detail/:id' element={<Detail/>} />
-=======
-      <Route path='/home' element={<Home/>}></Route>
->>>>>>> 4c4c0908e4eb2e251aa07427c6edaaf8f01c26a3
+      <Route path='/home' element={<Home/>}/>
       <Route path="*" element={<NotFound/>}/>
      </Routes>
     </>
