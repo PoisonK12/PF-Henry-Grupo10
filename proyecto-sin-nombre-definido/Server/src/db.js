@@ -15,11 +15,11 @@ AssetModel(sequelize);
 
 const { User, Rent, Asset } = sequelize.models
 
-User.hasMany(Asset, {through:'userAssets'})
-Asset.belongsTo(User,{through:'userAssets'})
+User.hasMany(Asset, { through: 'userAssets' })
+Asset.belongsTo(User, { through: 'userAssets' })
 
-User.hasMany(Rent, {through: 'userRents'})
-Rent.belongsTo(User, {through: 'userRents'})
+User.hasMany(Rent, { through: 'userRents' })
+Rent.belongsTo(User, { through: 'userRents' })
 
 
 
