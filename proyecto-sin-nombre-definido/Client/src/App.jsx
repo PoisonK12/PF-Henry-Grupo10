@@ -7,6 +7,7 @@ import Landing from './views/Landing/Landing';
 import NotFound from './views/404/404';
 import Detail  from './views/Details/Detail';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import {Footer} from "./components/Footer/Footer"
 
 function App() {
