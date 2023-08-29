@@ -3,9 +3,10 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { Route, Routes, useLocation } from "react-router-dom";
+import {Home} from "./views/Home/Home"
+import {Nav} from "./components/Nav/Nav"
 import Landing from './views/Landing/Landing';
-import { Home } from './views/Home/Home';
-import { Nav } from "./components/Nav/Nav"
+import NotFound from './views/404/404';
 
 
 function App() {
@@ -16,10 +17,11 @@ function App() {
       {location.pathname !== "/" && <Nav/>}
      <Routes>
       <Route path='/' element={<Landing/>} />
-      <Route path='/home' element={<Home/>}/>
+      <Route path='/home' element={<Home/>}></Route>
+      <Route path="*" element={<NotFound/>}/>
      </Routes>
     </>
   )
 }
 
-export default App
+export default App;
