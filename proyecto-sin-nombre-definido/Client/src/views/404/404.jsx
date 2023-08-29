@@ -1,12 +1,16 @@
-import React from 'react'
-import styles from "../404/404.module.css"
+import React from 'react';
 
-const NotFound = () => {
+const NotFoundPage = () => {
   return (
-    <div className={styles.background}>
-        <h1>Not Found</h1>
+    <div className="container">
+      <div className="row justify-content-center mt-5">
+        <div className="col-md-6">
+          <h1 className="text-center">Error 404</h1>
+          <p className="text-center">La página que buscas no existe.</p>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default NotFound;
+export default NotFoundPage;
