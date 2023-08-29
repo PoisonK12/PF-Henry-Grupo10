@@ -21,6 +21,6 @@ Asset.belongsTo(User,{through:'userAssets'})
 User.hasMany(Rent, {through: 'userRents'})
 Rent.belongsTo(User, {through: 'userRents'})
 
-
-
+Asset.hasMany(Amenitie.{through:"AssetAmenities"})
+Amenitie.hasMany(Asset.{through:"AssetAmenities"})
 module.exports = { sequelize }
