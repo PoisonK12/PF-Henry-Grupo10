@@ -10,17 +10,21 @@
 .background button{
     border: none;
     padding: 15px;
-    background-color: transparent;
+    cursor: pointer;
+    background-color: white;
     border: 2px solid white;
-    color: white;
+    color: rgba(13,69,126,1) ;
     transition: 0.2s ease ;
 }
 
 .background button:hover{
-    background-color:white ;
-    color: rgba(13,69,126,1) ;
+    background-color:transparent ;
+    color: white ;
+
 }
 
-.header{
+.container{
+    display: flex;
+    align-items: center;
     
 }
