@@ -2,5 +2,18 @@
     display: grid flex;
     flex-direction: row;
     top: 0;
+    justify-content: space-between;
+    width: auto;
+  
+    
    
 }
+
+  
+  /* Estilo para el logotipo */
+  .img {
+    width: 100px;
+    height: auto;
+  }
+  
+ 

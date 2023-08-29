@@ -8,8 +8,11 @@ export const Nav = () => {
     
     return (
         <div className={style.nav}>
-            <img src={logo}></img>
-            <Link to="/home"><button> Home </button></Link>
+            <div>  
+                <Link to="/home"><img className="img" src={logo}></img></Link>
+            </div>
+          
+            <Link to="/home"><button className="button_home"> Home </button></Link>
         </div>
     )
 };
