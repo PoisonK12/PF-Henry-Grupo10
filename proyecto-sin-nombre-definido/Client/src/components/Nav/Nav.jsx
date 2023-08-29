@@ -8,7 +8,7 @@ export const Nav = () => {
     
     return (
         <nav className={style.nav}>
-            <Link to="/" className={style.logo}><img src={logo}></img></Link>
+            <Link to="/home" className={style.logo}><img src={logo}></img></Link>
             <div className={style.menu}>
                 <span></span>
                 <span></span>
@@ -19,7 +19,7 @@ export const Nav = () => {
                     <NavLink to="/home">Home</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/contacts">Contactos</NavLink>
+                    <NavLink to="/contacts">Sobre nosotros</NavLink>
                 </li>
                 <li>
                     <NavLink to="/properties">Propiedades</NavLink>
