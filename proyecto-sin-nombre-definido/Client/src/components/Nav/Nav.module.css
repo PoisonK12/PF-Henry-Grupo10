@@ -1,0 +1,6 @@
+.nav {
+    display: grid flex;
+    flex-direction: row;
+    top: 0;
+   
+}
