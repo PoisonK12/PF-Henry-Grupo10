@@ -1,12 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { Nav } from '../../components/Nav/Nav';
 
 export const Home = () => {
   return (
     <>
-      <div>Filtros</div>
-      <div>Favorites_People_Properties</div>  
+      <div><Nav/></div>
+      <h1> Welcome to the chilli´s !</h1>
+      <div><img src='../../assets/favorites_people1.jpg' alt='foto'></img></div>  
       <div>Cards</div>
       
     </>
   )
-}
+};
