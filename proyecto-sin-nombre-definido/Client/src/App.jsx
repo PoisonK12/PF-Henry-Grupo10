@@ -8,6 +8,7 @@ import {Nav} from "./components/Nav/Nav"
 import Landing from './views/Landing/Landing';
 import NotFound from './views/404/404';
 import Detail  from './views/Details/Detail';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
