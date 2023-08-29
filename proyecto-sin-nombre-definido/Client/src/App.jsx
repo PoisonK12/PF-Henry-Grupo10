@@ -7,6 +7,7 @@ import {Home} from "./views/Home/Home"
 import {Nav} from "./components/Nav/Nav"
 import Landing from './views/Landing/Landing';
 import NotFound from './views/404/404';
+import Detail  from './views/Details/Detail';
 
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
       {location.pathname !== "/" && <Nav/>}
      <Routes>
       <Route path='/' element={<Landing/>} />
-      <Route path='/home' element={<Home/>}></Route>
+      <Route path='/detail/:id' element={<Detail/>} />
+      <Route path='/home' element={<Home/>}/>
       <Route path="*" element={<NotFound/>}/>
      </Routes>
     </>
