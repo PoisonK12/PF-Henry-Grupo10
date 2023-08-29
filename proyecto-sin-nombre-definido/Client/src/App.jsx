@@ -4,15 +4,19 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { Route, Routes, useLocation } from "react-router-dom";
 import Landing from './views/Landing/Landing';
+import { Home } from './views/Home/Home';
+import { Nav } from "./components/Nav/Nav"
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const location = useLocation()
 
   return (
     <>
+      {location.pathname !== "/" && <Nav/>}
      <Routes>
       <Route path='/' element={<Landing/>} />
+      <Route path='/home' element={<Home/>}/>
      </Routes>
     </>
   )
