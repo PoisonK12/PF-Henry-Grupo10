@@ -9,6 +9,16 @@ const Landing = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animationActive, setAnimationActive] = useState(false);
 
+  useEffect(() => {
+    const redirectTimeout = setTimeout(() => {
+      window.location.href = "/home"; // Redireccionar después de 3 segundos
+    }, 7000);
+
+    return () => {
+      clearTimeout(redirectTimeout);
+    };
+  }, []);
+
   const handleSelect = (selectedIndex, e) => {
     setActiveIndex(selectedIndex);
     setAnimationActive(true);
@@ -40,7 +50,7 @@ const Landing = () => {
 
   return (
     <div className={style.landing}>
-      <Carousel interval={5500} activeIndex={activeIndex} onSelect={handleSelect}>
+      <Carousel interval={2000} activeIndex={activeIndex} onSelect={handleSelect}>
         {slides.map((slide, index) => (
           <Carousel.Item key={index}>
             <div className={`${style.imageContainer}`}>
