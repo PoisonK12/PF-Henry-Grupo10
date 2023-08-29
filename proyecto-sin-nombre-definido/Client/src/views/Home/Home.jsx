@@ -6,6 +6,7 @@ export const Home = () => {
       <div>Filtros</div>
       <div>Favorites_People_Properties</div>  
       <div>Cards</div>
+      
     </>
   )
 }
