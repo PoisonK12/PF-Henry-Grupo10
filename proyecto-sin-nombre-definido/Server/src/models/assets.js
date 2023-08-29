@@ -45,7 +45,22 @@ module.exports = (sequelize) => {
         allowNull: false
       },
       bathrooms: {
-        type: DataTypes.INTEGER ,
+        type: DataTypes.INTEGER,
+      },
+      reviews: {
+        type: DataTypes.JSON
+      },
+      nearby: {
+        type: DataTypes.JSON
+      },
+      nearbyScore: {
+        type: DataTypes.INTEGER
+      },
+      coveredArea: {
+        type: DataTypes.FLOAT
+      },
+      totalArea: {
+        type: DataTypes.FLOAT
       }
     },
     { timestamps: false }
