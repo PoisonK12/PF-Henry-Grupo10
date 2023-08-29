@@ -41,7 +41,8 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       nationality: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM("Argentina", "Mexico", "Colombia", "Venezuela"),
+        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
@@ -61,6 +62,14 @@ module.exports = (sequelize) => {
       },
       landLord: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      favorites: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: true,
+      },
+      history: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
       },
     },

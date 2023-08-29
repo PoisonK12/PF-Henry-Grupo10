@@ -22,19 +22,19 @@ module.exports = (sequelize) => {
       },
       checkIn: {
         type: DataTypes.DATEONLY,
-        allowNull:false,
+        allowNull: false,
       },
       checkInTime: {
-        type :DataTypes.DATE,
-        allowNull: false
+        type: DataTypes.DATE,
+        allowNull: false,
       },
       checkOut: {
         type: DataTypes.DATEONLY,
-        allowNull: false
+        allowNull: false,
       },
       checkOutTime: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
       },
       price: {
         type: DataTypes.INTEGER,
@@ -42,23 +42,23 @@ module.exports = (sequelize) => {
       },
       termCon: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: false,
       },
       paymentMethod: {
-        type: DataTypes.ENUM(),
-        allowNull: false
+        type: DataTypes.ENUM("Card", "Cash"),
+        allowNull: false,
       },
       guest: {
         type: DataTypes.BOOLEAN,
-        allowNull: true
+        allowNull: false,
       },
       guestName: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
       },
       guestPhoneNumber: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
       },
     },
     { timestamps: false }
