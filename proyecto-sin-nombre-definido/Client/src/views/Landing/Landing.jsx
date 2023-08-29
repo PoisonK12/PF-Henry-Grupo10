@@ -1,10 +1,11 @@
 import hotel from "../../assets/hotel-presidente-4s.jpg"
 import React from "react";
+import style from "./Landing.module.css"
 import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
-    <div>
+    <div className={style.background}>
       <h1>Get Outstanding Accommodations Today!</h1>
       <h4>
         Somos una plataforma digital que opera en linea donde personas
