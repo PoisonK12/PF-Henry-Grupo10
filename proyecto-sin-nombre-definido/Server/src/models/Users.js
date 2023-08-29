@@ -17,6 +17,9 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      profilePic: {
+        type :DataTypes.TEXT,
+      },
       birthDate: {
         type: DataTypes.DATEONLY,
         allowNull: false,

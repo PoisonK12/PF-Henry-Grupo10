@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
       },
       name: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       description: {
@@ -21,14 +21,32 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      availability: {
+      location: {
+        type: DataTypes.STRING,
+        allowNull:false,
+      },
+      country: {
+        type :DataTypes.STRING,
+        allowNull: false
+      },
+      images: {
+        type: DataTypes.ARRAY(DataTypes.TEXT),
+        allowNull: false
+      },
+      onSale: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true,
       },
       price: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      rooms: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      bathrooms: {
+        type: DataTypes.INTEGER ,
+      }
     },
     { timestamps: false }
   );
