@@ -1,0 +1,25 @@
+.houseDetails {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .imageGallery {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .imageGallery img {
+    max-width: 30%;
+    height: auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }

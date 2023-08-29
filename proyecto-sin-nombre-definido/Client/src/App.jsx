@@ -5,6 +5,7 @@ import './App.css'
 import { Route, Routes, useLocation } from "react-router-dom";
 import Landing from './views/Landing/Landing';
 import NotFound from './views/404/404';
+import Detail  from './views/Details/Detail';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <>
      <Routes>
       <Route path='/' element={<Landing/>} />
+      <Route path='/detail/:id' element={<Detail/>} />
       <Route path="*" element={<NotFound/>}/>
      </Routes>
     </>
