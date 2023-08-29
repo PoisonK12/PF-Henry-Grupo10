@@ -1,24 +1,49 @@
-import hotel from "../../assets/hotel-presidente-4s.jpg"
 import React from "react";
-import style from "./Landing.module.css"
+import { Carousel } from "react-bootstrap";
+import style from "./Landing.module.css";
 import { Link } from "react-router-dom";
+import image1 from "../../assets/images/slider-slide-1.jpg";
+import image2 from "../../assets/images/slider-slide-2.jpg";
+import image3 from "../../assets/images/slider-slide-3.jpg";
 
 const Landing = () => {
   return (
-    <div className={style.background}>
-        <div className={style.container}>
-        <div className={style.header}>
-      <h1>Get Outstanding Accommodations Today!</h1>
-      <h4>
-        Somos una plataforma digital que opera en linea donde personas
-        particulares y propietarios de alojamientos turisticos pueden conectar
-      </h4>
-      </div>
-      <Link to={"/home"}>
-      <button>INGRESA AQUI</button>
-      </Link>
-      <img src={hotel} />
-      </div>
+    <div className={style.landing}>
+      <Carousel>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={image1}
+            alt="First slide"
+          />
+          <Carousel.Caption className={style.carouselCaption}>
+            <h3>Imagen 1</h3>
+            <p>Descripción de la imagen 1.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={image2}
+            alt="Second slide"
+          />
+          <Carousel.Caption className={style.carouselCaption}>
+            <h3>Imagen 2</h3>
+            <p>Descripción de la imagen 2.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={image3}
+            alt="Third slide"
+          />
+          <Carousel.Caption className={style.carouselCaption}>
+            <h3>Imagen 3</h3>
+            <p>Descripción de la imagen 3.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      </Carousel>
     </div>
   );
 };
