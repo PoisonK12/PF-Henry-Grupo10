@@ -4,6 +4,7 @@
     background-size: cover;
     width: 100%;
     height: 100vh;
+    position: relative;
 }
 
 .background button{
@@ -18,4 +19,8 @@
 .background button:hover{
     background-color:white ;
     color: rgba(13,69,126,1) ;
+}
+
+.header{
+    
 }

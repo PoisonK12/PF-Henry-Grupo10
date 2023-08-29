@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 const Landing = () => {
   return (
     <div className={style.background}>
+        <div className={style.header}>
       <h1>Get Outstanding Accommodations Today!</h1>
       <h4>
         Somos una plataforma digital que opera en linea donde personas
         particulares y propietarios de alojamientos turisticos pueden conectar
       </h4>
+      </div>
       <Link to={"/home"}>
       <button>INGRESA AQUI</button>
       </Link>
