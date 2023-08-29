@@ -64,6 +64,7 @@ button:focus {
 	outline: none !important;
 }
 
+<<<<<<< HEAD
 button::-moz-focus-inner {
 	border: 0;
 }
@@ -29487,3 +29488,26 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 	transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	white-space: nowrap;
 }
+=======
+.background button{
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    background-color: white;
+    border: 2px solid white;
+    color: rgba(13,69,126,1) ;
+    transition: 0.2s ease ;
+}
+
+.background button:hover{
+    background-color:transparent ;
+    color: white ;
+
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    
+}
+>>>>>>> b9f9632abdd52e502ab32a471150ffb4c5e0c5eb
