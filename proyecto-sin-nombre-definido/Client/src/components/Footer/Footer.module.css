@@ -1,9 +1,13 @@
 .footer {
-   
+    display: flex;
+    flex-direction: column;
     background-color: #161616;
-    padding-bottom : 60px;
-    
+    padding-bottom : 30%;
+    align-items: center;
+    justify-content: space-around;
+}
 
-    
-
+.footer h5 {
+    margin-top: 20px;
+    color: rgb(255, 234, 234);
 }

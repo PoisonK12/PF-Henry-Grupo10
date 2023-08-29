@@ -6,7 +6,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: blueviolet;
+  background-color: rgba(44, 40, 40, 0.349);
 }
 
 .nav ul {
