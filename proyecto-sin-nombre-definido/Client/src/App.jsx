@@ -7,7 +7,7 @@ import Landing from './views/Landing/Landing';
 import NotFound from './views/404/404';
 import Detail  from './views/Details/Detail';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import {Footer} from "./components/Footer/Footer"
 
 function App() {
   const location = useLocation()
@@ -16,11 +16,13 @@ function App() {
     <>
       {location.pathname !== "/" && <Nav/>}
      <Routes>
-      <Route path='/' element={<Landing/>} />
-      <Route path='/detail/:id' element={<Detail/>} />
-      <Route path='/home' element={<Home/>}/>
-      <Route path="*" element={<NotFound/>}/>
+      <Route path='/' element={<><Landing/></>} />
+      <Route path='/detail/:id' element={<><Detail/><Footer/></>} />
+      <Route path='/home' element={<><Home/><Footer/></>}/>
+      <Route path="*" element={<><NotFound/><Footer/></>}/>
      </Routes>
+      
+     
     </>
   )
 }
