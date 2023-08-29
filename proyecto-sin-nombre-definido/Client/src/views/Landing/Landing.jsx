@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const Landing = () => {
   return (
     <div className={style.background}>
+        <div className={style.container}>
         <div className={style.header}>
       <h1>Get Outstanding Accommodations Today!</h1>
       <h4>
@@ -17,6 +18,7 @@ const Landing = () => {
       <button>INGRESA AQUI</button>
       </Link>
       <img src={hotel} />
+      </div>
     </div>
   );
 };
