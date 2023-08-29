@@ -1,14 +1,19 @@
 import React from 'react';
-import { Nav } from '../../components/Nav/Nav';
+import   hotel  from "../../assets/favorite_people1.jpg"
+import style from "./Home.module.css"
 
 export const Home = () => {
+
   return (
     <>
-      <div><Nav/></div>
-      <h1> Welcome to the chilli´s !</h1>
-      <div><img src='../../assets/favorites_people1.jpg' alt='foto'></img></div>  
-      <div>Cards</div>
-      
+
+      <div className={style.home}>
+        <h1> Welcome to the chilli´s !</h1>
+        <div><img src={hotel} alt='foto' className={style.img}></img></div>  
+        <div>Cards</div>
+
+      </div>
     </>
   )
+
 };

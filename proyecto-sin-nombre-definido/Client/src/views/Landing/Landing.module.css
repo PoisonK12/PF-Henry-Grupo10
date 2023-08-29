@@ -1,0 +1,21 @@
+.background{
+    background: rgb(13,69,126);
+    background: linear-gradient(45deg, rgba(13,69,126,1) 7%, rgba(36,166,215,1) 90%); 
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+
+.background button{
+    border: none;
+    padding: 15px;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    transition: 0.2s ease ;
+}
+
+.background button:hover{
+    background-color:white ;
+    color: rgba(13,69,126,1) ;
+}
