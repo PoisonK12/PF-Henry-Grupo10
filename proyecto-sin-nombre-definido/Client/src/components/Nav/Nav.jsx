@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import {Link, NavLink} from "react-router-dom"
 import logo from "../../assets/logo.png"
 import style from "./Nav.module.css"
 
@@ -7,12 +7,24 @@ import style from "./Nav.module.css"
 export const Nav = () => {
     
     return (
-        <div className={style.nav}>
-            <div>  
-                <Link to="/home"><img className="img" src={logo}></img></Link>
+        <nav className={style.nav}>
+            <Link to="/" className={style.logo}><img src={logo}></img></Link>
+            <div className={style.menu}>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-          
-            <Link to="/home"><button className="button_home"> Home </button></Link>
-        </div>
+            <ul>
+                <li>
+                    <NavLink to="/home">Home</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/contacts">Contactos</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/properties">Propiedades</NavLink>
+                </li>
+            </ul>
+        </nav>
     )
 };
