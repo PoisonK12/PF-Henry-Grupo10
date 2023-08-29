@@ -1,3 +1,4 @@
+import hotel from "../../assets/hotel-presidente-4s.jpg"
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -12,7 +13,7 @@ const Landing = () => {
       <Link to={"/home"}>
       <button>INGRESA AQUI</button>
       </Link>
-      <image ></image>
+      <img src={hotel} />
     </div>
   );
 };
