@@ -11,9 +11,10 @@
     grid-area: cabecera;
     background-color: rgba(173, 216, 230, 0.144);
 }
-.img {
-    width: 600px;
-    height: 400px;
+.cajaCarrusel img {
+    width: 1100px;
+    /* background-size: contain; */
+    /* height: 400px; */
 }
 
 .card{

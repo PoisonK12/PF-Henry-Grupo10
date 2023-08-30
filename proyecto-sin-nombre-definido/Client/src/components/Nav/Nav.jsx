@@ -6,11 +6,16 @@ import style from "./Nav.module.css";
 export const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+
+  
   return (
     <nav className={style.nav}>
       <Link to="/" className={style.logo}>
         <img src={logo}></img>
       </Link>
+      <h2>
+        W.I.P
+      </h2>
       <div
         className={style.menu}
         onClick={() => {
@@ -25,13 +30,13 @@ export const Nav = () => {
       </div>
       <ul className={menuOpen ? "open" : ""}>
         <li>
-          <NavLink to="/home">Home</NavLink>
+          <NavLink to="/home" className={({isActive}) => isActive ? style.active : ""}> <span>Home </span></NavLink>
         </li>
         <li>
-          <NavLink to="/contacts">Contactos</NavLink>
+          <NavLink to="/contacts" className={({isActive}) => isActive ? style.active : ""}> <span>Contactos</span></NavLink>
         </li>
         <li>
-          <NavLink to="/properties">Propiedades</NavLink>
+          <NavLink to="/properties" className={({isActive}) => isActive ? style.active : ""}><span>Propiedades</span></NavLink>
         </li>
       </ul>
     </nav>
