@@ -6,6 +6,7 @@
     display: flex;
     /* padding: 0; */
 }
+
 .cajaCarrusel {
     /* padding: 10px; */
     grid-area: cabecera;
@@ -15,7 +16,7 @@
     width: 100vw;
     margin: 0;
     /* background-size: contain; */
-    /* height: 400px; */
+    height: 600px;
 }
 
 .card{
