@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import hotel from '../../assets/favorite_people1.jpg';
 import playa from '../../assets/images/imagen 2.jpg';
-import playa2 from '../../assets/images/imagne 3.jpg';
-import playa3 from '../../assets/images/imagne1.jpg';
+import playa2 from '../../assets/images/image02.jpeg';
+import playa3 from '../../assets/images/image0.jpg';
 import style from './Home.module.css';
 import ButtonUp from '../../components/ButtonUp/ButtonUp';
 
