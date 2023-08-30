@@ -9,11 +9,7 @@ const getAllAssets = async () => {
 
   let page = 0;
   if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
-<<<<<<< HEAD
     page = pageAsNumber;
-=======
-    page = pageAsNumber
->>>>>>> e4df15980971f826ad5efbe72b56e2c3833692b3
   }
 
   let size = 10;
@@ -36,19 +32,8 @@ const getAssetById = async (id) => {
     },
     include: {
       model: Amenity,
-<<<<<<< HEAD
       through: { attribute: [] },
     },
   });
   return asset;
 };
-=======
-      through: { attribute: [] }
-    }
-  })
-  return asset
-}
-
-// Modifica las propiedades de una propiedad
-const updateAsset = async ()
->>>>>>> e4df15980971f826ad5efbe72b56e2c3833692b3
