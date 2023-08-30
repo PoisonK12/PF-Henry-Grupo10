@@ -1,4 +1,4 @@
-
+// const {createUserController} = require("../controllers/createUserController");
 
 const userPostHandler = async (req, res) => {
   const { 
@@ -16,26 +16,29 @@ const userPostHandler = async (req, res) => {
     review,
     landlord,
     favorites,
-    history
+    history,
+    //asset
    } = req.body
 
    try {
-    const user = await createUserController(
-    userName,
-    fullName,
-    profilePic,
-    birthDate,
-    phoneNumber,
-    verificationNumber,
-    gender,
-    address,
-    nationality,
-    email,
-    password,
-    review,
-    landlord,
-    favorites,
-    history)
+     const user = await createUserController(
+       userName,
+       fullName,
+       profilePic,
+       birthDate,
+       phoneNumber,
+       verificationNumber,
+       gender,
+       address,
+       nationality,
+       email,
+       password,
+       review,
+       landlord,
+       favorites,
+       history,
+       //asset
+     )
     res.status(200).json("Usuario creado con exito!")
    } catch (error) {
     console.log(error)
