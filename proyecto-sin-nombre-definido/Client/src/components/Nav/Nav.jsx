@@ -41,7 +41,7 @@ export const Nav = () => {
             className={({ isActive }) => (isActive ? style.active : "")}
           >
             {" "}
-            <span>Contactos</span>
+            <span>Contacto</span>
           </NavLink>
         </li>
         <li>

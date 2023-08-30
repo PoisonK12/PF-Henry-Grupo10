@@ -1,8 +1,12 @@
+.cardContainer{
+    background-color: rgba(0, 0, 0, 0.1);
+}
 .card{
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* background-color: c; */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); 
 }
 
@@ -10,3 +14,57 @@ img{
     border-top-left-radius: 5px; /* Cambia el valor según tus preferencias */
     border-top-right-radius: 5px;
 }
+
+.ribbon{
+    font: 700 16px/1 'Lato', sans-serif;
+    text-transform: uppercase;
+  text-align: center;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.ribbon::before,
+.ribbon::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  display: block;
+  border: 3px solid #ff261e;
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 165px;
+  padding: 5px 0;
+  background-color: #ff261e;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+}
+
+.ribbonTopRight {
+    top: -3px;
+    right: -3px;
+    /* filter: drop-shadow(0px 4px 8px rgba(0, 0, 0)) ;  */
+
+  }
+  .ribbonTopRight::before,
+  .ribbonTopRight::after {
+    border-top-color: transparent;
+    border-right-color: transparent;
+  }
+  .ribbonTopRight::before {
+      
+      top: 0;
+    left: 0;
+  }
+  .ribbonTopRight::after {
+    bottom: 0;
+    right: 0;
+  }
+  .ribbonTopRight span {
+    left: -22px;
+    top: 30px;
+    transform: rotate(45deg);
+  }
+  
