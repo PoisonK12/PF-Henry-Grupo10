@@ -11,7 +11,7 @@ export const Home = () => {
 
   return (
     <>
-      <div class="container-fluid">
+      <div className={`${style.containerFluid} ${style.container}`}>
         <div className={style.cajaCarrusel}>
           <section className="indexSection">
             <div>
@@ -104,8 +104,8 @@ export const Home = () => {
               </div>
             </div>
         </div>
-        <ButtonUp/>
       </div>
+        <ButtonUp/> 
       </div>
     </>
   );

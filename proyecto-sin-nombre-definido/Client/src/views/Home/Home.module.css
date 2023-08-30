@@ -4,15 +4,16 @@
     background-color: #C19B76;
     justify-content: center;
     display: flex;
-    
+    /* padding: 0; */
 }
 .cajaCarrusel {
-    padding: 10px;
+    /* padding: 10px; */
     grid-area: cabecera;
     background-color: rgba(173, 216, 230, 0.144);
 }
 .cajaCarrusel img {
-    width: 1100px;
+    width: 100vw;
+    margin: 0;
     /* background-size: contain; */
     /* height: 400px; */
 }
@@ -24,4 +25,8 @@
     justify-content: center;
     align-items: center;
 }
+ 
+.container-fluid{
+    padding: 0 !important;
+} 
 
