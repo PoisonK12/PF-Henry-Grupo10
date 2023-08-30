@@ -16,7 +16,8 @@ export default [
     "rooms": 2,
     "bathrooms": 1,
     "coveredArea": 35.5,
-    "totalArea" : 200
+    "totalArea" : 200,
+    "offer": true
   },
   {
     "name": "Pablito",
@@ -73,7 +74,9 @@ export default [
     "rooms": 2,
     "bathrooms": 1,
     "coveredArea": 35.5,
-    "totalArea" : 200
+    "totalArea" : 200,
+    "offer": true
+
   },
   {
     "name": "Luque",
@@ -129,6 +132,7 @@ export default [
     "perPerson": 2000,
     "rooms": 2,
     "bathrooms": 1,
+    "offer": true,
     "coveredArea": 35.5,
     "totalArea" : 200
   },

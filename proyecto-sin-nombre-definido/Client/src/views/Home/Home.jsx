@@ -7,6 +7,7 @@ import style from "./Home.module.css";
 import ButtonUp from "../../components/ButtonUp/ButtonUp";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import Cards from '../../components/Cards/Cards';
+import Sale from "../../components/Sale/Sale.jsx";
 
 export const Home = () => {
   return (
@@ -24,7 +25,7 @@ export const Home = () => {
                       <span>descuentos!</span>
                       {/* <span>hoteles!</span> */}
                       <span>servicios!</span>
-                      <span>experiencias!</span>
+                      <span>destinos!</span>
                       <span>precios!</span>
                     </span>
                   </h1>
@@ -107,8 +108,8 @@ export const Home = () => {
             </div>
           </section>
       </div>
-                <h2 className={style.holaa}>HOLA</h2>
-      <Cards/>
+
+      <Sale></Sale>
         
       </div>
     </>
