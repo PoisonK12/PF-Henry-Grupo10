@@ -13,7 +13,10 @@ export const SearchBar = () => {
   }
 
   return (
+    
     <div className={s.form}>
+        <input className={s.input} type="text" placeholder='Search name...' value={search} onChange={handleSearch} />
+
       <button className={s.buttons}>
         <svg
           width="17"
@@ -32,8 +35,8 @@ export const SearchBar = () => {
           ></path>
         </svg>
       </button>
-        <input className={s.input} type="text" placeholder='Search name...' value={search} onChange={handleSearch} />
         <button className={s.reset} onClick={cleanButton}></button>
+        
     </div>
   )
 }
