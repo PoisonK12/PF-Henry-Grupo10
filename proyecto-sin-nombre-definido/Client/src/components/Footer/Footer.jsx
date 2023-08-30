@@ -68,9 +68,6 @@ export const Footer = () => {
                 </div>
 
                 <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                  <h6 className="text-uppercase mb-4 font-weight-bold">
-                    Síguenos en nuestras redes.
-                  </h6>
                   <a
                     className={`btn btn-primary btn-floating m-1 ${style.borderNone}`}
                     style={{ backgroundColor: "#3b5998" }}

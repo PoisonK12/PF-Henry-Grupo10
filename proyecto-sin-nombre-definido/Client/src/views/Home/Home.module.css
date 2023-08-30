@@ -103,7 +103,6 @@
 	}
 }
 
-.holaa{
-    position: sticky;
-    top: 70px;
+.containerFluid{
+    background-color: beige;
 }
