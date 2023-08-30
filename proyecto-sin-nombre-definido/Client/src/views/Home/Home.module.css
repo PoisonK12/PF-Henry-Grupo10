@@ -1,3 +1,5 @@
+
+
 .carrusel {
     width: 50%;
     height: 30%;
@@ -31,3 +33,65 @@
     padding: 0 !important;
 } 
 
+.search{
+    position: absolute;
+    top: 60%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+}
+
+.containerText{
+    display: flex;
+	align-items: center;
+	justify-content: center;
+	
+	color: white;
+}
+
+.cajaCarrusel h1{
+    font-family: 'Geologica', sans-serif;
+    position: absolute;
+    z-index: 10000;
+    top: 35%;
+    left: 50%;
+    color: beige;
+    transform: translate(-50%,-50%);
+    text-shadow: 2px 2px 2px black;
+    font-size: 3em;
+    /* font-weight: 400; */
+    text-align: center;
+}
+
+.cajaCarrusel h1 > span{
+    position: relative;
+    display: inline-block;
+    color: #FF3C41;
+    height: 3.5rem;
+    
+    vertical-align: bottom;
+    overflow: hidden;
+}
+.cajaCarrusel h1 > span > span{
+    display: block;
+    animation: animateWords 5s infinite ease;
+}
+
+@keyframes animateWords {
+    
+    10% {
+        transform: translateY(0%);
+    }
+    40% {
+        transform: translateY(-100%);
+    }
+    60% {
+        transform: translateY(-200%);
+    }
+    80% {
+        transform: translateY(-300%);
+    }
+    100% {
+        transform: translateY(-400%);
+    }
+}
