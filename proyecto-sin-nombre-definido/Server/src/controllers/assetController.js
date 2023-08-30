@@ -1,7 +1,6 @@
 const { Asset, Amenity } = require("../db");
 const { Op } = require("sequelize");
 
-
 // Trae todas las propiedades y paginado
 const getAllAssets = async () => {
   const pageAsNumber = Number.parseInt(req.query.page);
@@ -36,4 +35,96 @@ const getAssetById = async (id) => {
     },
   });
   return asset;
+};
+
+const updateAsset = async (
+  name,
+  description,
+  images,
+  onSale,
+  price,
+  rooms,
+  bathrooms,
+  amenities
+) => {
+  const updateAsset = await Asset.findOne({
+    where: { name: name },
+    include: Amenity,
+  });
+  await updateAsset.update({
+    description,
+    images,
+    onSale,
+    price,
+    rooms,
+    bathrooms,
+    amenities,
+  });
+  const amenitiesToUpdate = await Amenity.findAll({
+    where: { id: amenities },
+  });
+  await updateAsset.setAssets(amenitiesToUpdate);
+  return updateAsset;
+};
+const createAsset = async (
+  name,
+  description,
+  address,
+  location,
+  country,
+  images,
+  onSale,
+  price,
+  rooms,
+  bathrooms,
+  amenities,
+  coveredArea,
+  totalArea
+) => {
+  const createAsset = await Asset.create({
+    name,
+    description,
+    address,
+    location,
+    country,
+    images,
+    onSale,
+    price,
+    rooms,
+    bathrooms,
+    amenities,
+    coveredArea,
+    totalArea,
+  });
+  for (const findId of amenities) {
+    const findAmen = await Amenity.findOne({
+      where: { id: findId },
+    });
+    if (findAmen) {
+      await createAsset.addAmenities(findAmen);
+    }
+  }
+  return createAsset;
+};
+const deleteAssetById = async (id) => {
+  const asset = await Asset.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!asset) {
+    throw new Error("Asset not found");
+  }
+
+  await asset.destroy();
+
+  return "Asset deleted successfully";
+};
+module.exports = {
+  deleteAssetById,
+  createAsset,
+  getAllAssets,
+  getAssetById,
+  updateAsset,
 };
