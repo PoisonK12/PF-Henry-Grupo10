@@ -54,6 +54,14 @@ export const Nav = () => {
         </li>
         <li>
           <NavLink
+            to="/property"
+            className={({ isActive }) => (isActive ? style.active : "")}
+          >
+            <span>Houses</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
             to="/adminDashboard"
             className={({ isActive }) => (isActive ? style.active : "")}
           >

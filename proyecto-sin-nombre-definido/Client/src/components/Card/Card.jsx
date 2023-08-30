@@ -23,9 +23,9 @@ const Card = ({
 
   return (
     <div>
-      <div className="container">
+      <div className={`container`}>
         <div className="row">
-          <div className="col m-4">
+          <div className={`col m-4 ` }>
             <div className={`card ${style.card} rounded`}>
 
               {isOffer ? <div
@@ -34,7 +34,7 @@ const Card = ({
                 <span>oferta</span>
               </div> : ""}
               <div
-                className="bg-image hover-overlay ripple"
+                className={`bg-image hover-overlay ripple`}
                 data-mdb-ripple-color="light"
               >
                 <img src={images} className="img-fluid border" />
@@ -45,7 +45,7 @@ const Card = ({
                   ></div>
                 </a>
               </div>
-              <div className="card-body">
+              <div className={`card-body ${style.cardContainer}`} >
                 <h3 className="card-title font-weight-bold d-flex justify-content-center">
                   <a>{name}</a>
                 </h3>
