@@ -58,8 +58,8 @@ font-family: 'Avenir', sans-serif;
 /* Estilo para el logotipo */
 .nav img {
   margin-left: 20px;
-  width: 80px !important;
-  height: 70px;
+  width: 150px;
+  height: 150px;
   mix-blend-mode:multiply;
 }
 

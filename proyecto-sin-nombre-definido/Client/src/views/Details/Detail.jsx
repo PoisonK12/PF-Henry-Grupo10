@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './detail.module.css';
-import imagen1 from '../../assets/favorite_people1.jpg';
-import imagen3 from '../../assets/favorites_people3.jpg'
+import imagen1 from '../../assets/images/single-room-2-1920x1188.jpg';
+import imagen3 from '../../assets/images/single-room-1-1920x1409.jpg';
 
 const Detail = () => {
     return (
@@ -50,7 +50,7 @@ const Detail = () => {
                 <p>"Mi familia y yo tuvimos la mejor experiencia en Playa Serena Oasis. La casa estaba impecable a nuestra llegada, con todas las comodidades que podríamos haber imaginado. La vista al mar desde la terraza era simplemente impresionante, y disfrutamos de inolvidables puestas de sol. Los anfitriones fueron extremadamente amables y estaban disponibles para cualquier pregunta que tuviéramos. Sin duda, este será nuestro destino de vacaciones anual a partir de ahora." - Marta G.</p>
             </div>
             <div className={`col-4 border ${style.col}`}>
-                <h1 className={style.headingStyle}>Reseña de Cabaña Bosque Encantado</h1>
+                <h1 className={style.headingStyle}>Reseña de Cabaña Molino Rojo</h1>
                 <p>"Perderse en la naturaleza nunca había sido tan encantador. La Cabaña Bosque Encantado nos brindó la escapada perfecta del ajetreo y el bullicio de la ciudad. Cada mañana nos despertábamos con el canto de los pájaros y una taza de café en la terraza. El interior de la cabaña estaba decorado con un estilo rústico pero moderno, y nos sentimos como en casa desde el primer momento. Definitivamente, recomiendo esta joya escondida a todos los amantes de la naturaleza." - Carlos M.</p>
             </div>
             <div className={`col-4 border ${style.col}`}>
