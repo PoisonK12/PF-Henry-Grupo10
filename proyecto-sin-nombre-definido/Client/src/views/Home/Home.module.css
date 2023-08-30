@@ -6,15 +6,20 @@
     display: flex;
     
 }
+
 .cajaCarrusel {
-    padding: 10px;
+    /*postion : stinky , al scrollear para abjo , difuminar la imagen  */
+    
+    padding: 20px;
     grid-area: cabecera;
     background-color: rgba(173, 216, 230, 0.144);
 }
 .cajaCarrusel img {
     width: 1100px;
+    margin-top: 70px;
+    margin-bottom: 20px;
     /* background-size: contain; */
-    /* height: 400px; */
+    height: 600px;
 }
 
 .card{
