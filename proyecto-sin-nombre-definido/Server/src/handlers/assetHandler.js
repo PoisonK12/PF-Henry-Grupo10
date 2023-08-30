@@ -1,3 +1,4 @@
+const { type } = require("os");
 const {
   deleteAssetById,
   createAsset,
@@ -59,28 +60,42 @@ const createAssetHandler = async (req, res) => {
   const {
     name,
     description,
+    address,
+    location,
+    country,
     images,
     onSale,
     sellPrice,
     rentPrice,
     rooms,
     bathrooms,
+    coveredArea,
+    totalArea,
     amenities,
+    userId
   } = req.body;
+ 
   try {
     const response = await createAsset(
       name,
       description,
+      address,
+      location,
+      country,
       images,
       onSale,
       sellPrice,
       rentPrice,
       rooms,
       bathrooms,
-      amenities
+      coveredArea,
+      totalArea,
+      amenities,
+      userId
     );
     res.status(200).json(`La propiedad ${name} se creó correctamente`);
   } catch (error) {
+    
     res.status(500).json({ error: error.message });
   }
 };

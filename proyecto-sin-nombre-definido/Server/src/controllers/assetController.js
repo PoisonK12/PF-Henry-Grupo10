@@ -70,21 +70,24 @@ const updateAsset = async (
 };
 const createAsset = async (
   name,
-  description,
-  address,
-  location,
-  country,
-  images,
-  onSale,
-  sellPrice,
-  rentPrice,
-  rooms,
-  bathrooms,
-  amenities,
-  coveredArea,
-  totalArea
+    description,
+    address,
+    location,
+    country,
+    images,
+    onSale,
+    sellPrice,
+    rentPrice,
+    rooms,
+    bathrooms,
+    coveredArea,
+    totalArea,
+    amenities,
+    userId
 ) => {
-  const createAsset = await Asset.create({
+  try{
+  console.log(123)
+  const createdAsset = await Asset.create({
     name,
     description,
     address,
@@ -96,20 +99,31 @@ const createAsset = async (
     rentPrice,
     rooms,
     bathrooms,
-    amenities,
     coveredArea,
     totalArea,
+    amenities,
+    userId,
   });
-  for (const findId of amenities) {
+  console.log(1)
+  
+  for (const findId of amenities) {    
     const findAmen = await Amenity.findOne({
       where: { id: findId },
     });
     if (findAmen) {
-      await createAsset.addAmenities(findAmen);
+      await createdAsset.addAmenity(findAmen);
+      
     }
   }
-  return createAsset;
+  
+  return "createAsset";}
+   catch (error) {
+    console.log(error);
+    throw new Error("Error al postear el perro");
+  }
+  
 };
+
 const deleteAssetById = async (id) => {
   const asset = await Asset.findOne({
     where: {
