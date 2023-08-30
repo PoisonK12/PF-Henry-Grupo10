@@ -25,7 +25,7 @@ const Card = ({
     <div>
       <div className={`container`}>
         <div className="row">
-          <div className={`col m-4 ` }>
+          <div className={`col m-4` }>
             <div className={`card ${style.card} rounded`}>
 
               {isOffer ? <div
