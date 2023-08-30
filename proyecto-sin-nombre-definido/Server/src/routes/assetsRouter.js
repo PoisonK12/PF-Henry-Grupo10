@@ -1,25 +1,22 @@
 const { Router } = require("express");
+const {
+  deleteAssetByIdHandler,
+  getAllAssetsHandler,
+  createAssetHandler,
+  getAssetByIdHandler,
+  updateAssetHandler,
+} = require("../handlers/assetHandler");
 
 const assetsRouter = Router();
 
-assetsRouter.get("/", (req, res) => {
-  res.status(200).send("Estoy trayendo todas las propiedades");
-});
+assetsRouter.get("/", getAllAssetsHandler);
 
-assetsRouter.get("/:id", (req, res) => {
-  res.status(200).send("Trayendo propiedades por id");
-});
+assetsRouter.get("/:id", getAssetByIdHandler);
 
-assetsRouter.put("/", (req, res) => {
-  res.status(200).send("Estoy modificando una propiedad existente");
-});
+assetsRouter.put("/edit", updateAssetHandler);
 
-assetsRouter.post("/", (req, res) => {
-  res.status(200).send("Estoy creando una nueva propiedad");
-});
+assetsRouter.post("/create", createAssetHandler);
 
-assetsRouter.delete("/:id", (req, res) => {
-  res.status(200).send("Estoy eliminando una propiedad");
-});
+assetsRouter.delete("/delete/:id", deleteAssetByIdHandler);
 
 module.exports = assetsRouter;
