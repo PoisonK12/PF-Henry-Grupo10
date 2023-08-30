@@ -1,4 +1,5 @@
 import React from "react";
+import s from "./adminDashboard.module.css"
 
 const AdminDashboard = () => {
   return (
@@ -8,7 +9,7 @@ const AdminDashboard = () => {
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"></link>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+{/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link> */}
     <div className="container">
       <div className="table-responsive">
         <div className="table-wrapper">
@@ -18,8 +19,8 @@ const AdminDashboard = () => {
                 <h2>User <b>Management</b></h2>
               </div>
               <div className="col-xs-7">
-                <a href="#" className="btn btn-primary"><i className="material-icons">&#xE147;</i> <span>Add New User</span></a>
-                <a href="#" className="btn btn-primary"><i className="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
+                <a href="#" className={`btn btn-primary ${s.margin}`}><i className="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                <a href="#" className={`btn btn-primary ${s.margin}`}><i className="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
               </div>
             </div>
           </div>
