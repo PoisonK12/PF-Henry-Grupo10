@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/avenir');
+
 .active span {
   color: blueviolet;
 }
@@ -12,30 +14,31 @@
   justify-content: space-between;
   align-items: center;
   background-color: transparent;
-  /* box-shadow: 2px 2px 20px rgba(0, 0, 0, 1); */
-  /* margin-bottom: 30px; */
   transition: all 0.5s ease;
+  font-family: 'Avenir', sans-serif; 
 }
 
 .nav.fixed{
   transition: all 0.5s ease;
   position: fixed;
-  background-color: brown;
+  background-color: rgba(5, 5, 5, 0.308);
 }
 
 
 .nav ul {
   display: flex;
+  font-family: 'Avenir', sans-serif; 
 }
 
 
 .nav ul li {
   list-style: none;
+  font-family: 'Avenir', sans-serif; 
 }
 
 .nav ul li a {
 font-size: 16px !important;
-font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+font-family: 'Avenir', sans-serif; 
   display: block;
   font-weight: 500;
   
@@ -48,7 +51,7 @@ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
 }
 
 .nav ul li a:not(.active):hover{
-  background-color: rgb(31, 28, 28);
+  background-color: rgba(31, 28, 28, 0.452);
 
 }
 
