@@ -13,7 +13,7 @@
     --width-of-input: 400px;
     --height-of-input: 40px;
     --border-height: 2px;
-    --input-bg: #fff;
+    --input-bg: rgba(28,28,28, 0.5);
     --border-color: #2f2ee9;
     --border-radius: 30px;
     --after-border-radius: 1px;
@@ -25,7 +25,7 @@
     padding-inline: 0.8em;
     border-radius: var(--border-radius);
     transition: border-radius 0.5s ease;
-    background: var(--input-bg,#fff);
+    background: var(--input-bg,rgba(254,254,254, 0.3));
     margin-top: 5px;
     left: 50px;
   }
@@ -59,6 +59,10 @@
     border-radius: var(--after-border-radius);
   }
   
+  .form input::placeholder{
+    color: rgba(250, 250, 255);
+  }
+
   input:focus {
     outline: none;
   }
