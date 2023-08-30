@@ -1,20 +1,27 @@
 .active span {
-  color: aqua;
+  color: blueviolet;
 }
 
 .nav {
   width: 100%;
   height: 70px;
   display: flex;
-  /* position: fixed; */
-  z-index: 100;
+  position: absolute;
+  top: 0;
+  z-index: 100000;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(44, 40, 40);
-  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+  background-color: transparent;
+  /* box-shadow: 2px 2px 20px rgba(0, 0, 0, 1); */
   /* margin-bottom: 30px; */
+  transition: all 0.5s ease;
 }
 
+.nav.fixed{
+  transition: all 0.5s ease;
+  position: fixed;
+  background-color: brown;
+}
 
 
 .nav ul {
@@ -28,11 +35,13 @@
 
 .nav ul li a {
 font-size: 16px !important;
-
+font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
   display: block;
+  font-weight: 500;
+  
   text-decoration: none;
   color: white;
-  padding: 1.9rem 1.2rem !important ;
+  padding: 1.95rem 1.2rem !important ;
   height: 100%;
   margin: 0 0.5rem;
   /* border-radius: 0.9rem; */
@@ -47,8 +56,8 @@ font-size: 16px !important;
 .nav img {
   margin-left: 20px;
   width: 80px !important;
-  /* height: 90px; */
-  mix-blend-mode: multiply;
+  height: 70px;
+  mix-blend-mode:multiply;
 }
 
 .nav .menu{

@@ -106,7 +106,7 @@ export const Home = () => {
           </section>
       </div>
       <Cards/>
-        <ButtonUp/> 
+        
       </div>
     </>
   );

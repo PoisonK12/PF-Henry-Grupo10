@@ -18,7 +18,7 @@
     width: 100vw;
     margin: 0;
     /* background-size: contain; */
-    height: 600px;
+    height: 100vh;
 }
 
 .card{
@@ -38,7 +38,7 @@
     top: 60%;
     left: 45%;
     transform: translate(-50%, -50%);
-    z-index: 10000;
+    z-index: 99;
 }
 
 .containerText{

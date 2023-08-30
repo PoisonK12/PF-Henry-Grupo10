@@ -1,3 +1,15 @@
 .footer {
     background-color:black;
 }
+
+.borderNone{
+    background-color: blueviolet !important;
+    border: none;
+}
+
+.borderNone:hover{
+    background-color: transparent !important;
+    color: blueviolet;
+    border: 1px solid blueviolet !important;
+}
+
