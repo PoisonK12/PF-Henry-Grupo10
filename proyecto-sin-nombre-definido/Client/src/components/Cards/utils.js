@@ -1,4 +1,4 @@
-[
+export default [
   {
     "name": "Pepito",
     "description": "Un bonito lugar para pasar el verano",
@@ -19,7 +19,7 @@
     "totalArea" : 200
   },
   {
-    "name": "Pepito",
+    "name": "Pablito",
     "description": "Un bonito lugar para pasar el verano",
     "address": "Manuelito #42",
     "location": "Monterrey",
@@ -38,7 +38,7 @@
     "totalArea" : 200
   },
   {
-    "name": "Pepito",
+    "name": "Jaimito",
     "description": "Un bonito lugar para pasar el verano",
     "address": "Manuelito #42",
     "location": "Monterrey",
