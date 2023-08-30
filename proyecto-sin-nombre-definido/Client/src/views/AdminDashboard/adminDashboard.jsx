@@ -1,4 +1,5 @@
 import React from "react";
+import s from "./adminDashboard.module.css"
 
 const AdminDashboard = () => {
   return (
@@ -18,8 +19,8 @@ const AdminDashboard = () => {
                 <h2>User <b>Management</b></h2>
               </div>
               <div className="col-xs-7">
-                <a href="#" className="btn btn-primary"><i className="material-icons">&#xE147;</i> <span>Add New User</span></a>
-                <a href="#" className="btn btn-primary"><i className="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
+                <a href="#" className={`btn btn-primary ${s.margin}`}><i className="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                <a href="#" className={`btn btn-primary ${s.margin}`}><i className="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
               </div>
             </div>
           </div>
