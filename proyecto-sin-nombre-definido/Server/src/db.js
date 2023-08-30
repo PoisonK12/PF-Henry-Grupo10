@@ -7,7 +7,7 @@ const AssetModel = require('./models/assets')
 
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/dbname`, { logging: false })
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/GOAT10`, { logging: false })
 
 UserModel(sequelize);
 RentModel(sequelize);
