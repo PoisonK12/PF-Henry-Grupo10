@@ -102,9 +102,12 @@ export const Home = () => {
                   <span className="visually-hidden">Next</span>
                 </button>
               </div>
+              
+              
             </div>
           </section>
       </div>
+                <h2 className={style.holaa}>HOLA</h2>
       <Cards/>
         
       </div>

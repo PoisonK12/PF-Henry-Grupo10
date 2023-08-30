@@ -99,3 +99,8 @@
 		transform: translateY(-400%);
 	}
 }
+
+.holaa{
+    position: sticky;
+    top: 70px;
+}
