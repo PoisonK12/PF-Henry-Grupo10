@@ -1,13 +1,16 @@
 const { Asset, Amenity } = require("../db");
 const { Op } = require("sequelize");
+const {filterLocation} = require("../helpers/filterLocation");
+const assets = require("../models/assets");
 
 // Trae todas las propiedades y paginado
-const getAllAssets = async () => {
+const getAllAssets = async (req) => {
   const pageAsNumber = Number.parseInt(req.query.page);
   const sizeAsNumber = Number.parseInt(req.query.size);
-
-  let page = 0;
-  if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
+  // const pageAsNumber = 1
+  // const sizeAsNumber= 30
+  let page = 1;
+  if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
     page = pageAsNumber;
   }
 
@@ -18,11 +21,12 @@ const getAllAssets = async () => {
 
   const assets = await Asset.findAndCountAll({
     limit: size,
-    offset: page * size,
+    offset: (page-1) * size,
   });
+  
   return assets;
 };
-
+//!------------------------------------------------------------------------
 // Trae una propiedad especificada por el id
 const getAssetById = async (id) => {
   const asset = await Asset.findOne({
@@ -36,8 +40,9 @@ const getAssetById = async (id) => {
   });
   return asset;
 };
-
+//!------------------------------------------------------------------------
 const updateAsset = async (
+  id,
   name,
   description,
   images,
@@ -46,30 +51,35 @@ const updateAsset = async (
   rentPrice,
   rooms,
   bathrooms,
+  coveredArea,
   amenities
 ) => {
   const updateAsset = await Asset.findOne({
-    where: { name: name },
+    where: { id: id },
     include: Amenity,
   });
   await updateAsset.update({
-    description,
-    images,
-    onSale,
-    sellPrice,
-    rentPrice,
-    rooms,
-    bathrooms,
-    amenities,
+    name,
+  description,
+  images,
+  onSale,
+  sellPrice,
+  rentPrice,
+  rooms,
+  bathrooms,
+  coveredArea,
+  amenities
   });
   const amenitiesToUpdate = await Amenity.findAll({
     where: { id: amenities },
   });
-  await updateAsset.setAssets(amenitiesToUpdate);
+  await updateAsset.setAmenities(amenitiesToUpdate);
   return updateAsset;
 };
+
+//!------------------------------------------------------------------------
 const createAsset = async (
-  name,
+    name,
     description,
     address,
     location,
@@ -86,7 +96,6 @@ const createAsset = async (
     userId
 ) => {
   try{
-  console.log(123)
   const createdAsset = await Asset.create({
     name,
     description,
@@ -104,7 +113,6 @@ const createAsset = async (
     amenities,
     userId,
   });
-  console.log(1)
   
   for (const findId of amenities) {    
     const findAmen = await Amenity.findOne({
@@ -116,15 +124,16 @@ const createAsset = async (
     }
   }
   
-  return "createAsset";}
+  return createAsset;}
    catch (error) {
     console.log(error);
-    throw new Error("Error al postear el perro");
+    throw new Error("Error al registrar la propiedad");
   }
   
 };
 
 const deleteAssetById = async (id) => {
+  //TODO agregar borrado logico
   const asset = await Asset.findOne({
     where: {
       id: id,
@@ -134,10 +143,22 @@ const deleteAssetById = async (id) => {
   if (!asset) {
     throw new Error("Asset not found");
   }
-
   await asset.destroy();
 
   return "Asset deleted successfully";
+};
+
+const getAllLocations = async () => {
+try {
+  const allAssets = await Asset.findAll()
+  // console.log(allAssets)
+  const response = filterLocation(allAssets)
+  // console.log(response)
+  return response
+} catch (error) {
+  console.log(error);
+    throw new Error("Error al obtener las locaciones");
+}
 };
 module.exports = {
   deleteAssetById,
@@ -145,4 +166,5 @@ module.exports = {
   getAllAssets,
   getAssetById,
   updateAsset,
+  getAllLocations
 };

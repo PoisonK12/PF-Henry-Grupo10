@@ -26,4 +26,6 @@ Rent.belongsTo(User, { through: 'userRents' })
 Asset.belongsToMany(Amenity, { through: 'assetAmenities' })
 Amenity.belongsToMany(Asset, { through: 'assetAmenities' })
 
-module.exports = { sequelize }
+module.exports = { 
+  sequelize,
+  ...sequelize.models}
