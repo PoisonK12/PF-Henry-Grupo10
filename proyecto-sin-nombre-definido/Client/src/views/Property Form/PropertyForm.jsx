@@ -1,35 +1,57 @@
 import React, {useState , useEffect} from "react";
 import style from "./PropertyForm.module.css"
 import { useNavigate } from "react-router";
-import { Carousel } from "react-bootstrap";
+import { Carousel} from "react-bootstrap";
+import { createAsset } from "../../redux/actions";
 
 
 const PropertyForm = () => {
 
 
-  const [image, setImage] = useState([]);
   const [step , setStep] = useState(1);
   const [errors , setErrors] = useState( {
     image : ""
   })
-  const [selectedCkeckbox , setSelectedCheckbox] = useState({venta : "" , estacionamiento : "" , terraza : ""})
+  const [selectedCkeckbox , setSelectedCheckbox] = useState({
+    onSale : "" ,
+    parking : "" ,
+    terrace : ""
+  });
+
+  const navigate = useNavigate()
+
   const [form , setForm] = useState({
     name : "",
-    image : "",
-
+    images : [],
+    country : "",
+    state : "",
+    adress : "",
+    city : "",
+    cp : "",
+    type : "",
+    rooms : 0,
+    bathrooms : 0 ,
+    description : "",
+    onSale : false,
+    parking : false,
+    terrace : false,
+    totalArea : 0,
   })
   
-  const navigate = useNavigate()
+    console.log(form);
+
+      
+
 
   const handleCheckbox = (e) => {
       setSelectedCheckbox({...selectedCkeckbox, [e.target.name] : e.target.value})
   }
 
-  
+
   // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
     event.preventDefault();
-    if(image.length === 3) {
+    if(form.images.length === 3) {
       setErrors({...errors , image : "Solo puedes tres imagenes"})
       return
     }
@@ -41,13 +63,13 @@ const PropertyForm = () => {
 
   // Función para manejar el archivo seleccionado
   const handleFile = (file) => {
+
     // Realizar las acciones necesarias con el archivo
     const imageURL = URL.createObjectURL( new Blob([file]));
-    setImage([... image , imageURL]);
-    console.log(image);
+    setForm({...form , images : [... form.images , imageURL]})
   };
 
-const handleStep = (e) => {
+  const handleStep = (e) => {
   e.preventDefault()
   if(e.target.value === "prev") {
     setStep(step - 1)
@@ -59,26 +81,24 @@ const handleStep = (e) => {
   return
 };
 
-const handleChange = (e) => {
+  const handleChange = (e) => {
   const {name} = e.target;
   const {value} = e.target;
 
     setForm({...form , [name] : value})
 };
 
+  const handleForm = async (e) => {
+    e.preventDefault();
+    await createAsset(form)
+    navigate("/home")
+  };
 
-
-useEffect(() => {
+  useEffect(() => {
 },[step])
 
-const handleSubmit = (e) => {
-  
-  navigate("/home");
-  console.log({msg : "creado con exito :", prop : form });
-};
 
-
-const MultiForm = (e) => {
+  const MultiForm = (e) => {
   
   if(step === 1) {
     return (
@@ -94,7 +114,7 @@ const MultiForm = (e) => {
       
             <div className="col-md-5 text-center" >
               <label htmlFor="inputEmail4" className="form-label">Nombre</label>
-              <input type="text" name="name" className="form-control mb-2" id="inputEmail4" placeholder="Nombre de tu propiedad"/>
+              <input type="text" name="name" className="form-control mb-2" id="inputEmail4" onChange={(e) => handleChange(e)} placeholder="Nombre de tu propiedad"/>
             </div>
     
           </div>
@@ -103,32 +123,32 @@ const MultiForm = (e) => {
 
             <div className="col-md-5 m-3 p-1">
               <label htmlFor="inputAddress" className="form-label">Dirección</label>
-              <input type="text" className="form-control " id="inputAddress" placeholder="1234 Main St" required/>
+              <input type="text" name="adress" className="form-control " id="inputAddress" placeholder="1234 Main St" onChange={(e) => handleChange(e)} required/>
             </div>
     
             <div className="col-md-5 m-3 p-1">
               <label htmlFor="inputAddress2" className="form-label">Pais</label>
-              <input type="text" className="form-control" id="inputAddress2" placeholder="Pais de locacion"/>
+              <input type="text"  name="country" className="form-control" id="inputAddress2" onChange={(e) => handleChange(e)} placeholder="Pais de locacion"/>
             </div>
           </div>
     
           <div className="d-flex flex-row justify-content-around align-items-center">
             <div className="col-md-5 m-3 p-1" >                       
               <label htmlFor="inputProv" className="form-label">Provincia</label>
-              <input type="text" className="form-control" id="inputProv" placeholder="Provincia " required/>
+              <input type="text" name="state" className="form-control" id="inputProv" onChange={(e) => handleChange(e)} placeholder="Provincia " required/>
             </div>
                 
             <div className="col-md-5 m-3 p-1">
               <label htmlFor="inputCity" className="form-label">Cuidad</label>
-              <input type="text" className="form-control" id="inputCity" placeholder="Cuidad  " required/>
+              <input type="text" name="city" className="form-control" id="inputCity" onChange={(e) => handleChange(e)} placeholder="Cuidad" required/>
             </div>
           </div>
           <div className="row justify-content-center mt-4 ">
 
           <div className="col-md-4 d-flex flex-column align-items-center text-center ">
            
-              <label htmlFor="inputZip" className="form-label">Codigo Postal</label>
-               <input type="number" className="form-control " id="inputZip"/>
+              <label htmlFor="inputZip"  className="form-label">Codigo Postal</label>
+               <input type="number" name="cp" className="form-control"  onChange={(e) => handleChange(e)} id="inputZip"/>
                </div>
 
           </div>
@@ -159,9 +179,9 @@ const MultiForm = (e) => {
               <div className="col-md-11">
               <label htmlFor="inputState" className="form-label">Tipo de propiedad</label>
 
-              <select id="inputState" className="form-select">
+              <select id="inputState" onChange={(e) => handleChange(e)} name="type" className="form-select">
 
-                <option value="">Elije uno...</option>
+                <option>Elije uno...</option>
                 <option name="type" value="Departamento">Departamento</option>
                 <option name="type" value="Casa">Casa</option>
                 <option name="type" value="Hotel">Hotel</option>
@@ -171,12 +191,12 @@ const MultiForm = (e) => {
 
             <div className="col-md-11 mt-5">
                 <label htmlFor="inputHab" className="form-label">N° de habitaciones</label>
-                <input type="number" className="form-control" id="inputHab" required/>
+                <input type="number" name="rooms" className="form-control" onChange={(e) => handleChange(e)} id="inputHab" required/>
             </div>
 
             <div className="col-md-11 mt-5">
               <label htmlFor="inputBaño" className="form-label">N° de baños</label>
-              <input type="number" className="form-control" id="inputBaño" required/>
+              <input type="number" name="bathrooms" className="form-control" onChange={(e) => handleChange(e)} id="inputBaño" required/>
             </div>
         </div>
 
@@ -186,12 +206,12 @@ const MultiForm = (e) => {
             <label className="form-label">Esta a la venta?</label>
 
             <div className="form-check">
-              <input type="checkbox" name="venta" checked={selectedCkeckbox.venta === "yes"} onChange={handleCheckbox} className="form-check-input" id="checkbox1" value="yes"/> 
+              <input type="checkbox" name="onSale" checked={selectedCkeckbox.onSale === "true"} onChange={(e) =>  {handleCheckbox(e); handleChange(e)}} className="form-check-input" id="checkbox1" value="true"/> 
               <label htmlFor="checkbox1" className="form-check-label" > YES</label>
             </div>
 
             <div className="form-check ">
-              <input type="checkbox" name="venta" checked={selectedCkeckbox.venta === "no"} onChange={handleCheckbox} className="form-check-input" id="checkbox2" value="no"/> 
+              <input type="checkbox" name="onSale" checked={selectedCkeckbox.onSale === "false"} onChange={(e) =>  {handleCheckbox(e); handleChange(e)}} className="form-check-input" id="checkbox2" value="false"/> 
               <label htmlFor="checkbox2"  className="form-check-label" >NO </label>
             </div>
 
@@ -200,24 +220,24 @@ const MultiForm = (e) => {
 
               <div className="form-check">
                 <label htmlFor="inputPark"  className="form-check-label"> SI </label>
-                <input type="checkbox" name="estacionamiento" className="form-check-input" id="inputPark" value="yes" checked={selectedCkeckbox.estacionamiento === "yes"} onChange={handleCheckbox}/>
+                <input type="checkbox" name="parking" className="form-check-input" id="inputPark" onChange={(e) =>  {handleCheckbox(e); handleChange(e)}} value="true" checked={selectedCkeckbox.parking === "true"} />
               </div>
 
               <div className="form-check">
                 <label htmlFor="inputPark" className="form-check-label"> NO </label>
-                <input type="checkbox" name="estacionamiento"  className="form-check-input" id="inputPark" value="no" checked={selectedCkeckbox.estacionamiento === "no"} onChange={handleCheckbox}/>
+                <input type="checkbox" name="parking"  className="form-check-input" id="inputPark" value="false" onChange={(e) =>  {handleCheckbox(e); handleChange(e)}} checked={selectedCkeckbox.parking === "false"} />
               </div>
           <hr></hr>
 
             <label htmlFor="inputTer" className="form-label">Posee terraza?</label>
 
               <div className="form-check">
-                <input type="checkbox" name="terraza" className="form-check-input" id="inputTer" value="yes" checked={selectedCkeckbox.terraza === "yes"} onChange={handleCheckbox}></input>
+                <input type="checkbox" name="terrace" className="form-check-input" id="inputTer" value="true" onChange={(e) =>  {handleCheckbox(e); handleChange(e)}} checked={selectedCkeckbox.terrace === "true"}></input>
                 <label htmlFor="inputTer" className="form-check-label" > YES </label>
               </div>
 
               <div className="form-check">
-              <input type="checkbox" name="terraza" className="form-check-input" id="inputTer" value="no" checked={selectedCkeckbox.terraza === "no"} onChange={handleCheckbox}></input>
+              <input type="checkbox" name="terrace" className="form-check-input" id="inputTer" value="false" onChange={(e) =>  {handleCheckbox(e); handleChange(e)}} checked={selectedCkeckbox.terrace === "false"}></input>
               <label htmlFor="inputTer" className="form-check-label"> NO</label>
               </div>
 
@@ -246,7 +266,7 @@ const MultiForm = (e) => {
   } else if(step === 3 ) {
     return (
 
-      <form className="d-flex flex-column align-items-center   text-center">
+      <form className="d-flex flex-column align-items-center  text-center" onSubmit={handleForm}>
           <fieldset className={`border p-4  m-5 ${style.fieldset} `}>
               <legend className="mb-3 mt-3"> Especificaciones </legend>
               <hr></hr>
@@ -268,9 +288,9 @@ const MultiForm = (e) => {
                   
                 >
     
-    {image.length > 0 ? (
+    {form.images.length > 0 ? (
             <Carousel style={{ width: '100%', height : "100%",maxHeight: '250px' }}>
-              {image.map((imageUrl, index) => (
+              {form.images.map((imageUrl, index) => (
                 <Carousel.Item key={index}>
                  
                   <img
@@ -279,7 +299,6 @@ const MultiForm = (e) => {
                     src={imageUrl}
                     alt={`Image ${index}`}
                   />
-                  
                 </Carousel.Item>
               ))}
             </Carousel>
@@ -296,7 +315,7 @@ const MultiForm = (e) => {
 
                   <div className="form-group ">
                     <label htmlFor="description" className="form-label"> Descripción</label>
-                    <textarea className="form-control" rows="6" cols="50" name="description"></textarea>
+                    <textarea className="form-control" rows="6" cols="50" name="description" onChange={(e) => handleChange(e)}></textarea>
                   </div>
             </div>
          
@@ -323,11 +342,9 @@ const MultiForm = (e) => {
 return (
   <>
   <div className={style.container}>
- {/*  <ul id="progressbar">
-                <li class="active">Personal Details</li>
-                <li>Social Profiles</li>
-                <li>Account Setup</li>
-            </ul> */}
+  <div>
+    
+  </div>
   {MultiForm()}
   </div>
   </>

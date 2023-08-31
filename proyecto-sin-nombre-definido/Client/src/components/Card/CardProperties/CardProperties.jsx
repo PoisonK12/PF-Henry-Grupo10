@@ -4,6 +4,15 @@ import {Link} from "react-router-dom";
 
 
 const CardProperties = (props) => {
+
+  const descripCut = () => {
+    if (props.description.length > 220 ) {
+      const newDesc = props.description.split('').slice(0,220).join('')
+      return <p className="card-text">{newDesc}...</p>
+    }
+    return <p className="card-text">{props.description}</p>
+  }
+
   return (
     <div className={`${style.centeredContent}`} key={props.id}>
               <div className={`card mb-3 ${style.maxWidth}`}>
@@ -18,7 +27,7 @@ const CardProperties = (props) => {
                   <div className="col-md-8">
                     <div className="card-body">
                       <h5 className="card-title">{props.name}</h5>
-                      <p className="card-text">{props.description}</p>
+                      {descripCut()}
                       <p className="card-text">
                         <small className="text-muted">
                           {props.address}, {props.country}, {props.location}
