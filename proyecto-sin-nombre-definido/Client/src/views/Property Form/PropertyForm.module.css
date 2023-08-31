@@ -10,6 +10,7 @@ body {
     width: 100%;
     height: 100%;
     margin: 0 !important;
+    padding : 100px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.658), rgba(216, 216, 216, 0.1)), url(../../assets/images/fondoForm.jpg) ;
     background-repeat: no-repeat;
     background-size: cover;
@@ -17,7 +18,7 @@ body {
 } 
 
 .fieldset {
-    margin-top : 100px !important;
+    margin-top : 50px !important;
     margin-bottom : 150px;
     background: rgba(228, 212, 212, 0.356);
     border-radius: 10px;
