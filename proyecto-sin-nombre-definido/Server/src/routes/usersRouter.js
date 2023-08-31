@@ -1,21 +1,21 @@
-const {Router} = require('express')
+const { Router } = require("express");
 
 const usersRouter = Router();
 
-usersRouter.get('/:id', (req, res) => {
+usersRouter.get("/:id", (req, res) => {
   res.status(200).send("Estoy trayendo una cuenta");
 });
 
-usersRouter.put('/:id', (req, res) => {
-  res.status(200).send("Estoy modificando un usuario")
+usersRouter.put("/", (req, res) => {
+  res.status(200).send("Estoy modificando un usuario");
 });
 
-usersRouter.post('/', (req, res) => {
+usersRouter.post("/", (req, res) => {
   res.status(200).send("Estoy creando una cuenta nueva");
 });
 
-usersRouter.delete('/:id', (req, res) => {
+usersRouter.delete("/:id", (req, res) => {
   res.status(200).send("Estoy eliminando una cuenta");
-})
+});
 
 module.exports = usersRouter;
