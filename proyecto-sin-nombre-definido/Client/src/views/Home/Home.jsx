@@ -6,7 +6,7 @@ import playa3 from "../../assets/images/image0.jpg";
 import style from "./Home.module.css";
 import ButtonUp from "../../components/ButtonUp/ButtonUp";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
-import Cards from '../../components/Cards/Cards';
+import Cards from '../../components/Cards/CardsOffer/CardsOffer';
 import Sale from "../../components/Sale/Sale.jsx";
 
 export const Home = () => {

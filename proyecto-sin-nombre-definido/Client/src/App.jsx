@@ -10,10 +10,16 @@ import Detail  from './views/Details/Detail';
 import AdminDashboard from "./views/AdminDashboard/adminDashboard"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import axios from "axios"
 import {Footer} from "./components/Footer/Footer"
 import PropertyForm from "./views/Property Form/PropertyForm"
+axios.defaults.baseURL = "http://localhost:3001"
 
 function App() {
+
+
+
+  
   const location = useLocation()
 
   return (
