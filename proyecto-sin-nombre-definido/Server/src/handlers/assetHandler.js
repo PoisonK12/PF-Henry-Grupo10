@@ -111,20 +111,20 @@ const createAssetHandler = async (req, res) => {
 });
     const response = await createAsset(
       name,
-      description,
-      address,
-      location,
-      country,
-      images,
-      onSale,
-      sellPrice,
-      rentPrice,
-      rooms,
-      bathrooms,
-      coveredArea,
-      totalArea,
-      amenities,
-      userid);
+    description,
+    address,
+    location,
+    country,
+    images,
+    onSale,
+    sellPrice,
+    rentPrice,
+    rooms,
+    bathrooms,
+    coveredArea,
+    totalArea,
+    amenities,
+    userid);
     res.status(201).json(`La propiedad ${name} se creó correctamente`);
   
   } catch (error) {

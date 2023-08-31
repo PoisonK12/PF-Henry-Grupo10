@@ -1,7 +1,5 @@
 const { z } = require('zod')
 
-const urlRegExp = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-
 const dataSchemePost = z.object({
   body: z.object({
     name: z.string({
@@ -19,8 +17,8 @@ const dataSchemePost = z.object({
     country: z.string({
       message: "String data is required(country)"
     }),
-    images: z.array(z.string().refine(url => urlRegExp.test(url), {
-        message: "Invalid URL format"})).min(3, {
+    
+    images: z.array(z.string().url({message: "Invalid URL format"})).min(3, {
     message: "At least 3 pictures are required"
   }),
 

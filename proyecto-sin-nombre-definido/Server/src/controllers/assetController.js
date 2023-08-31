@@ -125,9 +125,9 @@ const createAsset = async (
     }
   }
   
-  return createAsset;}
+  return createdAsset;}
    catch (error) {
-    console.log("error propiedad")
+    console.log("error createAsset")
     console.log(error);
     throw new Error("Error al registrar la propiedad");
   }
