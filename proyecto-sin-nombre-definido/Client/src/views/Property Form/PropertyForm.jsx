@@ -76,10 +76,11 @@ const MultiForm = (e) => {
 
     
     <form className="d-flex flex-column align-items-center text-center  ">
-    <fieldset className={`border p-2  ${style.fieldset} `}>
+        <fieldset className={`border p-2  ${style.fieldset} `}>
           
-        <h3 className="m-3"> Agrega una nueva propiedad </h3>
-                <hr></hr>
+              <h3 className="m-3"> Agrega una nueva propiedad </h3>
+              <hr></hr>
+
           <div className="row justify-content-center ">
       
             <div className="col-md-5 text-center" >
@@ -88,7 +89,9 @@ const MultiForm = (e) => {
             </div>
     
           </div>
+
           <div className="d-flex flex-row justify-content-around align-items-center">
+
             <div className="col-md-5 m-3 p-1">
               <label htmlFor="inputAddress" className="form-label">Dirección</label>
               <input type="text" className="form-control " id="inputAddress" placeholder="1234 Main St" required/>
@@ -110,16 +113,17 @@ const MultiForm = (e) => {
               <label htmlFor="inputCity" className="form-label">Cuidad</label>
               <input type="text" className="form-control" id="inputCity" placeholder="Cuidad  " required/>
             </div>
-     </div>
-           <div className="row justify-content-center mt-4 ">
+          </div>
+          <div className="row justify-content-center mt-4 ">
+
           <div className="col-md-4 d-flex flex-column align-items-center text-center ">
            
               <label htmlFor="inputZip" className="form-label">Codigo Postal</label>
                <input type="number" className="form-control " id="inputZip"/>
                </div>
-           </div>
-   
-    
+
+          </div>
+  
       <hr></hr>
 
       <div className="col-md-3 container d-flex flex-column justify-content-center">
@@ -127,10 +131,10 @@ const MultiForm = (e) => {
           <div className="col-12 text-center mt-4 mb-3">
             <button type={step === 3 ? "submit" : "button"} className={`ml-4 ${style.button}`} onClick={(e) => handleStep(e)}>Continuar</button>
           </div>
-        </div>
-    
-      </fieldset>
-    </form>
+
+      </div>
+    </fieldset>
+  </form>
     )
   } else if(step === 2) {
 
@@ -138,36 +142,38 @@ const MultiForm = (e) => {
 
       <form className="d-flex flex-column align-items-center   text-center">
           <fieldset className={`border p-4  m-5 ${style.fieldset} `} >
-           <legend className="mb-4">Agrega sus características </legend>
-          <hr></hr>
-          <div className="d-flex  flex-row mt-4 m-3 " >
-           
-         
-          <div className="column  mt-3">
-            <div className="col-md-11">
-            <label htmlFor="inputState" className="form-label">Tipo de propiedad</label>
+             <legend className="mb-4">Agrega sus características </legend>
+            <hr></hr>
+            <div className="d-flex  flex-row mt-4 m-3 " >
+          
+            <div className="column  mt-3">
+              <div className="col-md-11">
+              <label htmlFor="inputState" className="form-label">Tipo de propiedad</label>
 
-            <select id="inputState" className="form-select">
+              <select id="inputState" className="form-select">
 
-            <option value="">Elije uno...</option>
-             <option name="type" value="Departamento">Departamento</option>
-             <option name="type" value="Casa">Casa</option>
-             <option name="type" value="Hotel">Hotel</option>
+                <option value="">Elije uno...</option>
+                <option name="type" value="Departamento">Departamento</option>
+                <option name="type" value="Casa">Casa</option>
+                <option name="type" value="Hotel">Hotel</option>
 
-           </select> 
+              </select> 
           </div>
-           <div className="col-md-11 mt-4">
+
+            <div className="col-md-11 mt-4">
                 <label htmlFor="inputHab" className="form-label">N° de habitaciones</label>
                 <input type="number" className="form-control" id="inputHab" required/>
-              </div>
-             <div className="col-md-11 mt-4">
-            <label htmlFor="inputBaño" className="form-label">N° de baños</label>
-            <input type="number" className="form-control" id="inputBaño" required/>
-          </div>
- </div>
+            </div>
+
+            <div className="col-md-11 mt-4">
+              <label htmlFor="inputBaño" className="form-label">N° de baños</label>
+              <input type="number" className="form-control" id="inputBaño" required/>
+            </div>
+        </div>
+
           <div className="column m-3">
           
-          <fieldset className={`border p-2  ${style.fieldset2}`}>
+            <fieldset className={`border p-2  ${style.fieldset2}`}>
             <label className="form-label">Esta a la venta?</label>
 
             <div className="form-check">
@@ -181,22 +187,26 @@ const MultiForm = (e) => {
             </div>
 
 
-          <label htmlFor="inputPark" className="form-label">Posee estacionamiento?</label>
+            <label htmlFor="inputPark" className="form-label">Posee estacionamiento?</label>
+
               <div className="form-check">
                 <label htmlFor="inputPark"  className="form-check-label"> SI </label>
                 <input type="checkbox" name="estacionamiento" className="form-check-input" id="inputPark" value="yes" checked={selectedCkeckbox.estacionamiento === "yes"} onChange={handleCheckbox}/>
               </div>
+
               <div className="form-check">
                 <label htmlFor="inputPark" className="form-check-label"> NO </label>
                 <input type="checkbox" name="estacionamiento"  className="form-check-input" id="inputPark" value="no" checked={selectedCkeckbox.estacionamiento === "no"} onChange={handleCheckbox}/>
               </div>
 
 
-           <label htmlFor="inputTer" className="form-label">Posee terraza?</label>
+            <label htmlFor="inputTer" className="form-label">Posee terraza?</label>
+
               <div className="form-check">
                 <input type="checkbox" name="terraza" className="form-check-input" id="inputTer" value="yes" checked={selectedCkeckbox.terraza === "yes"} onChange={handleCheckbox}></input>
                 <label htmlFor="inputTer" className="form-check-label" > YES </label>
               </div>
+
               <div className="form-check">
               <input type="checkbox" name="terraza" className="form-check-input" id="inputTer" value="no" checked={selectedCkeckbox.terraza === "no"} onChange={handleCheckbox}></input>
               <label htmlFor="inputTer" className="form-check-label"> NO</label>
@@ -204,23 +214,29 @@ const MultiForm = (e) => {
 
             </fieldset>
            </div>
-     </div>
+        </div>
          
      <div className="col-md-3 container d-flex flex-column ">
         <div className=" d-flex flex-row align-items-center justify-content-around mt-4 ">
-        <div className="m-2 ">
-                    <button type="button"  className={style.button}  value="prev" onClick={(e) => handleStep(e)}>Atras</button>
-                </div>
-                <div className="m-2">
+
+            <div className="m-2 ">
+                <button type="button"  className={style.button}  value="prev" onClick={(e) => handleStep(e)}>Atras</button>
+            </div>
+
+            <div className="m-2">
                 <button type={step === 3 ? "submit" : "button"} className={`ml-4 ${style.button}`} value="next" onClick={(e) => handleStep(e)}>{step === 3 ? "Agregar" : "Continuar"}</button>
-                </div>
+              </div>
+
           </div>
         </div>
+
       </fieldset>
       </form>
     )
+
   } else if(step === 3 ) {
     return (
+
       <form className="d-flex flex-column align-items-center   text-center">
           <fieldset className={`border p-4  m-5 ${style.fieldset} `}>
               <legend className="mb-3 mt-3"> Especificaciones </legend>
@@ -251,8 +267,9 @@ const MultiForm = (e) => {
             </div>
           </div>
       
-              <hr></hr>
+            <hr></hr>
             <div className="d-flex  text-center  mt-4 m-5" >
+
                   <div className="form-group ">
                     <label htmlFor="description" className="form-label"> Descripción</label>
                     <textarea className="form-control" rows="6" cols="50" name="description"></textarea>
@@ -261,12 +278,15 @@ const MultiForm = (e) => {
          
             <div className="col-md-3 container d-flex flex-column ">
               <div className=" d-flex flex-row align-items-center justify-content-around mt-2 ">
+
                 <div className="m-3 ">
                     <button type="button"  className={style.button}  value="prev" onClick={(e) => handleStep(e)}>Atras</button>
                 </div>
+
                 <div className="m-3">
                 <button type={step === 3 ? "submit" : "button"} className={`ml-4 ${style.button}`} value={step === 3 ? "submit" : "next"} onClick={(e) => handleStep(e)}>{step === 3 ? "Agregar" : "Continuar"}</button>
                 </div>
+
               </div>
             </div>
           </fieldset>
@@ -275,8 +295,6 @@ const MultiForm = (e) => {
   }
   
 };
-
-
 
 return (
   <>
@@ -293,6 +311,21 @@ return (
 };
 
 export default PropertyForm;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {/* <div > 
                  <input
                   type="file"
