@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ALL_PROPERTIES } from "./types";
+import { GET_ALL_PROPERTIES, GET_ASSET_BY_ID } from "./types";
 
 
 export const getAllProperties = () => {
@@ -11,7 +11,21 @@ export const getAllProperties = () => {
                 payload: data
             })
         } catch (error) {
-            
+            console.log(error);   
+        }
+    }
+}
+
+export const getAssetById = (id) => {
+    return async(dispatch) => {
+        try {
+            const {data} = await axios("/assets/" + id)
+            return dispatch({
+                type:GET_ASSET_BY_ID,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error);   
         }
     }
 }

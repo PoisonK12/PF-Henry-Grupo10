@@ -1,1 +1,2 @@
 export const  GET_ALL_PROPERTIES = "GET_ALL_PROPERTIES"
+export const GET_ASSET_BY_ID = "GET_ASSET_BY_ID"
