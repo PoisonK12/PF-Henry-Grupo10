@@ -1,5 +1,6 @@
 import React from 'react'
 import style from "./CardProperties.module.css"
+import {Link} from "react-router-dom";
 
 
 const CardProperties = (props) => {
@@ -24,7 +25,9 @@ const CardProperties = (props) => {
                         </small>
                       </p>
                       <div className="d-flex justify-content-end">
+                        <Link to={`/detail/${props.id}`}>
                             <button className="btn btn-primary">Ver Detalles</button>
+                        </Link>
                     </div>
                     </div>
                   </div>

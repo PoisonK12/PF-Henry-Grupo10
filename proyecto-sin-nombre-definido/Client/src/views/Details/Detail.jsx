@@ -1,39 +1,60 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import style from './detail.module.css';
 import imagen1 from '../../assets/images/Modern-Cabin.jpg';
 import imagen2 from '../../assets/images/single-room-2-1920x1188.jpg';
 import imagen3 from '../../assets/images/single-room-1-1920x1409.jpg';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAssetById } from '../../redux/actions';
+import { useParams } from "react-router-dom";
 
 const Detail = () => {
+
+  const dispatch = useDispatch();
+  const assetDetail = useSelector((state) => state.detail)
+  console.log('Detalle', assetDetail);
+
+  const {id} = useParams();
+
+  useEffect(() => {
+    dispatch(getAssetById(id))
+  }, [])
+
     return (
       <div>
-        <div className={`container text-center ${style.container}`}>
-          <div className={`row border ${style.row}`}>
+        <div className={`container text-center  ${style.container}`} >
+          <div className={`row border${style.row}`}>
             <div className={`col-4 border ${style.col}`}>
               <div className={`row ${style.innerRow}`}>
                 <div className={`col-12 ${style.innerCol}`}>
-                    <img className={style.image} src={imagen3} alt="Imagen 3" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
+                    <img className={style.image} src={assetDetail.images?.[0]} alt="Imagen 3" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
                 </div>
               </div>
               <div className={`row border ${style.innerRow}`}>
                 <div className={`col-12 ${style.innerCol}`}>
-                  <img className={style.image} src={imagen2} alt="Imagen 3" />
+                  <img className={style.image} src={assetDetail.images?.[1]} alt="Imagen 3" />
                 </div>
               </div>
             </div>
             <div className="col-md-8">
-              <img className={style.image} src={imagen1} alt="Imagen 1" />
+              <img className={style.image} src={assetDetail.images?.[2]} alt="Imagen 1" />
             </div>
           </div>
           <div className={`row border ${style.row}`}>
             <div className={`col-8 border ${style.col}`}>
-            <h1 className={style.heading}>Bienvenido a la Cabaña Serenidad en el Bosque</h1>
-                <p className={style.paragraph}>Sumérgete en la serenidad de la naturaleza y escapa del ajetreo de la vida cotidiana en nuestra encantadora Cabaña Serenidad en el Bosque. Ubicada en medio de exuberantes paisajes y rodeada por la majestuosidad de los árboles, esta cabaña es el refugio perfecto para quienes buscan tranquilidad y rejuvenecimiento.</p>
-                <p className={style.paragraph}>La cabaña ofrece un espacio completamente privado y tranquilo. Disfruta de momentos de relajación en la terraza, donde podrás escuchar el susurro del viento entre los árboles y observar la danza de las hojas. Al caer la noche, el cielo despejado se convierte en tu techo estrellado personal, creando un ambiente mágico y romántico.</p>
+            <h1 className={style.heading}>{assetDetail.name}</h1>
+                <p className={style.paragraph}>{assetDetail.description}</p>
+                <p className={style.paragraph}>{assetDetail.address}</p>
+                <p className={style.paragraph}>{assetDetail.location}</p>
+                <p className={style.paragraph}>{assetDetail.country}</p>
             </div>
             <div className={`col-4 border ${style.col}`}>
-              <h1 className={style.heading}>Explora el encanto rústico</h1>
-                <p className={style.paragraph}>Nuestra cabaña combina la autenticidad rústica con comodidades modernas. Al adentrarte, serás recibido por una acogedora sala de estar con techos de madera a dos aguas y una chimenea que calentará tus noches. La decoración cuidadosamente seleccionada resalta la belleza natural que te rodea, y cada rincón ha sido diseñado para brindarte una experiencia única.</p>
+              <h1 className={style.heading}>Amenidades</h1>
+                <p className={style.paragraph}>•Habitaciones: {assetDetail.rooms}</p>
+                <p className={style.paragraph}>•Baños: {assetDetail.bathrooms}</p>
+                <p className={style.paragraph}>•Tamaño propiedad: {assetDetail.coveredArea} mt2</p>
+                <p className={style.paragraph}>•Total Area: {assetDetail.totalArea}</p>
+                <p className={style.paragraph}>Precio por noche: $ {assetDetail.rentPrice}</p>
+                
             </div>
           </div>
           <div className={`row border ${style.row}`}>
@@ -51,7 +72,7 @@ const Detail = () => {
           <div className={`row border ${style.row}`}>
             <div className={`col-4 border ${style.col}`}>
                 <h1 className={style.headingStyle}>Reseña de Playa Serena Oasis</h1>
-                <p>"Mi familia y yo tuvimos la mejor experiencia en Playa Serena Oasis. La casa estaba impecable a nuestra llegada, con todas las comodidades que podríamos haber imaginado. La vista al mar desde la terraza era simplemente impresionante, y disfrutamos de inolvidables puestas de sol. Los anfitriones fueron extremadamente amables y estaban disponibles para cualquier pregunta que tuviéramos. Sin duda, este será nuestro destino de vacaciones anual a partir de ahora." - Marta G.</p>
+                <p className={style.paragraph}>{assetDetail.reviews}</p>
             </div>
             <div className={`col-4 border ${style.col}`}>
                 <h1 className={style.headingStyle}>Reseña de Cabaña Molino Rojo</h1>
