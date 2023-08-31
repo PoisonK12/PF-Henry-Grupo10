@@ -104,5 +104,8 @@
 }
 
 .containerFluid{
-    background-color: beige;
+    background-image: url("../../assets/images/homebg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: auto;
 }
