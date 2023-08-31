@@ -1,4 +1,4 @@
-
+@import url('https://fonts.cdnfonts.com/css/avenir');
 
 .carrusel {
     width: 50%;
@@ -17,8 +17,9 @@
 .cajaCarrusel img {
     width: 100vw;
     margin: 0;
+    border-radius: 0 !important;
     /* background-size: contain; */
-    height: 600px;
+    height: 100vh;
 }
 
 .card{
@@ -29,23 +30,23 @@
     align-items: center;
 }
  
-.container-fluid{
+/* .container-fluid{
     padding: 0 !important;
-} 
+}  */
 
 .search{
     position: absolute;
     top: 60%;
-    left: 47%;
+    left: 45%;
     transform: translate(-50%, -50%);
-    z-index: 10000;
+    z-index: 99;
 }
 
 .containerText{
     display: flex;
 	align-items: center;
 	justify-content: center;
-	
+    font-family: 'Avenir', sans-serif; ;
 	color: white;
 }
 
@@ -55,43 +56,53 @@
     z-index: 10000;
     top: 35%;
     left: 50%;
-    color: beige;
+    color: #e6e6e6;
     transform: translate(-50%,-50%);
     text-shadow: 2px 2px 2px black;
     font-size: 3em;
     /* font-weight: 400; */
     text-align: center;
+    font-family: 'Avenir', sans-serif; ;
 }
 
 .cajaCarrusel h1 > span{
     position: relative;
     display: inline-block;
-    color: #FF3C41;
+    color: #5ccff2;
     height: 3.5rem;
-    
+    font-family: 'Avenir', sans-serif; ;
     vertical-align: bottom;
     overflow: hidden;
 }
 .cajaCarrusel h1 > span > span{
     display: block;
     animation: animateWords 5s infinite ease;
+    font-family: 'Avenir', sans-serif; 
 }
 
 @keyframes animateWords {
     
-    10% {
-        transform: translateY(0%);
-    }
-    40% {
-        transform: translateY(-100%);
-    }
-    60% {
-        transform: translateY(-200%);
-    }
-    80% {
-        transform: translateY(-300%);
-    }
-    100% {
-        transform: translateY(-400%);
-    }
+    0% {
+		transform: translateY(0%);
+	}
+	
+	25% {
+		transform: translateY(-100%);
+	}
+	
+	50% {
+		transform: translateY(-200%);
+	}
+	
+	75% {
+		transform: translateY(-300%);
+	}
+	
+	100% {
+		transform: translateY(-400%);
+	}
+}
+
+.containerFluid{
+    background-color: beige;
 }

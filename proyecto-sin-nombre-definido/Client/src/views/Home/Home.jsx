@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import hotel from "../../assets/favorite_people1.jpg";
-import playa from "../../assets/images/imagen 2.jpg";
+import forest from "../../assets/images/imagen 2.jpg";
 import playa2 from "../../assets/images/image02.jpeg";
 import playa3 from "../../assets/images/image0.jpg";
 import style from "./Home.module.css";
 import ButtonUp from "../../components/ButtonUp/ButtonUp";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import Cards from '../../components/Cards/Cards';
+import Sale from "../../components/Sale/Sale.jsx";
 
 export const Home = () => {
   return (
@@ -24,7 +25,7 @@ export const Home = () => {
                       <span>descuentos!</span>
                       {/* <span>hoteles!</span> */}
                       <span>servicios!</span>
-                      <span>experiencias!</span>
+                      <span>destinos!</span>
                       <span>precios!</span>
                     </span>
                   </h1>
@@ -58,7 +59,7 @@ export const Home = () => {
                   <div className="carousel-item active">
                     <img
                       className="d-block mx-auto img-fluid "
-                      src={playa}
+                      src={forest}
                       alt="..."
                     />
                   </div>
@@ -102,11 +103,14 @@ export const Home = () => {
                   <span className="visually-hidden">Next</span>
                 </button>
               </div>
+              
+              
             </div>
           </section>
       </div>
-      <Cards/>
-        <ButtonUp/> 
+
+      <Sale></Sale>
+        
       </div>
     </>
   );

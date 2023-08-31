@@ -1,32 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/images/logo.png";
 import style from "./Nav.module.css";
 
 export const Nav = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
+  const [fixed, setFixed] = useState(false);
+  const handleScroll = () => {
+    if(window.scrollY > 50){
+      setFixed(true)
+    }else{
+      setFixed(false)
+    }
+  }
  
+  useEffect(() => {
+    window.addEventListener("scroll" , handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+}, [])
 
   return (
-    <nav className={`${style.nav}`}>
+    <nav className={`${style.nav} ${fixed ? style.fixed : ""}`}>
       <Link to="/" className={style.logo}>
         <img src={logo}></img>
       </Link>
       <h2>W.I.P</h2>
-      <div
-        className={style.menu}
-        onClick={() => {
-          setMenuOpen(!menuOpen);
-          console.log("hola");
-          console.log(menuOpen);
-        }}
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <ul className={menuOpen ? "open" : ""}>
+     
+      <ul >
         <li>
           <NavLink
             to="/home"
@@ -42,7 +41,7 @@ export const Nav = () => {
             className={({ isActive }) => (isActive ? style.active : "")}
           >
             {" "}
-            <span>Contactos</span>
+            <span>Contacto</span>
           </NavLink>
         </li>
         <li>
@@ -51,6 +50,14 @@ export const Nav = () => {
             className={({ isActive }) => (isActive ? style.active : "")}
           >
             <span>Propiedades</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/property"
+            className={({ isActive }) => (isActive ? style.active : "")}
+          >
+            <span>Houses</span>
           </NavLink>
         </li>
         <li>

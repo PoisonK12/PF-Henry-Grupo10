@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './detail.module.css';
-import imagen1 from '../../assets/favorite_people1.jpg';
-import imagen3 from '../../assets/favorites_people3.jpg'
+import imagen1 from '../../assets/images/single-room-2-1920x1188.jpg';
+import imagen3 from '../../assets/images/single-room-1-1920x1409.jpg';
 
 const Detail = () => {
     return (
@@ -46,16 +46,16 @@ const Detail = () => {
           </div>
           <div className={`row border ${style.row}`}>
             <div className={`col-4 border ${style.col}`}>
-                <h1>Juan Carlos 🔥</h1>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia expedita dolor nisi ducimus suscipit repudiandae quae tenetur non esse quibusdam fugiat accusantium voluptatem, sapiente laudantium doloribus velit aspernatur neque facilis?</p>
+                <h1 className={style.headingStyle}>Reseña de Playa Serena Oasis</h1>
+                <p>"Mi familia y yo tuvimos la mejor experiencia en Playa Serena Oasis. La casa estaba impecable a nuestra llegada, con todas las comodidades que podríamos haber imaginado. La vista al mar desde la terraza era simplemente impresionante, y disfrutamos de inolvidables puestas de sol. Los anfitriones fueron extremadamente amables y estaban disponibles para cualquier pregunta que tuviéramos. Sin duda, este será nuestro destino de vacaciones anual a partir de ahora." - Marta G.</p>
             </div>
             <div className={`col-4 border ${style.col}`}>
-                <h1>Felipe Camilo 🚀</h1>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia expedita dolor nisi ducimus suscipit repudiandae quae tenetur non esse quibusdam fugiat accusantium voluptatem, sapiente laudantium doloribus velit aspernatur neque facilis?</p>
+                <h1 className={style.headingStyle}>Reseña de Cabaña Molino Rojo</h1>
+                <p>"Perderse en la naturaleza nunca había sido tan encantador. La Cabaña Bosque Encantado nos brindó la escapada perfecta del ajetreo y el bullicio de la ciudad. Cada mañana nos despertábamos con el canto de los pájaros y una taza de café en la terraza. El interior de la cabaña estaba decorado con un estilo rústico pero moderno, y nos sentimos como en casa desde el primer momento. Definitivamente, recomiendo esta joya escondida a todos los amantes de la naturaleza." - Carlos M.</p>
             </div>
             <div className={`col-4 border ${style.col}`}>
-                <h1>Jorge Saenza 🐐</h1>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia expedita dolor nisi ducimus suscipit repudiandae quae tenetur non esse quibusdam fugiat accusantium voluptatem, sapiente laudantium doloribus velit aspernatur neque facilis?</p>
+                <h1 className={style.headingStyle}>Reseña de Loft Urbano Vibrante</h1>
+                <p>"Mi viaje de negocios se convirtió en una experiencia emocionante gracias a este loft. Ubicado en el corazón de la ciudad, tenía fácil acceso a todas las comodidades y lugares de interés. La decoración era elegante y moderna, y me encantó la vista panorámica desde el balcón. El anfitrión fue extremadamente atento, y la comunicación fue fluida desde el momento de la reserva hasta el check-out. Sin duda, volveré a reservar este lugar en mi próximo viaje." - Sofia R.</p>
             </div>
           </div>
           
