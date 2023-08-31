@@ -1,6 +1,6 @@
 import React from 'react'
-import utils from '../Cards/utils';
-import Card from '../Card/Card';
+import utils from '../Cards/CardsOffer/utils';
+import Card from '../Card/CardOffer/CardOffer';
 import style from "./Sale.module.css"
 
 const Sale = () => {
