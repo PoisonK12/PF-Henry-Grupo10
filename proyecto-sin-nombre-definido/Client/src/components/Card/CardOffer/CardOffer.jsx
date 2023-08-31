@@ -1,5 +1,5 @@
 import style from "./card.module.css";
-import hotel from "../../assets/favorite_people1.jpg";
+
 import { useState } from "react";
 
 const Card = ({
