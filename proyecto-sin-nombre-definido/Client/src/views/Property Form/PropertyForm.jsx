@@ -151,7 +151,7 @@ const MultiForm = (e) => {
 
       <form className="d-flex flex-column align-items-center   text-center">
           <fieldset className={`border p-4  m-5 ${style.fieldset} `} >
-             <legend className="mb-4">Agrega sus características </legend>
+             <legend className="mb-4 mt-3">Agrega sus características </legend>
             <hr></hr>
             <div className="d-flex  flex-row mt-4 m-3 " >
           
