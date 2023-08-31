@@ -18,7 +18,7 @@ const getAllAssetsHandler = async (req, res) => {
     res.status(200).json(response);
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 
@@ -30,7 +30,7 @@ const getAssetByIdHandler = async (req, res) => {
     res.status(200).json(response);
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 const updateAssetHandler = async (req, res) => {
@@ -65,7 +65,7 @@ const updateAssetHandler = async (req, res) => {
     res.status(200).json(`La propiedad ${name} fue se edito correctamente`);
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -110,10 +110,11 @@ const createAssetHandler = async (req, res) => {
 });
 
     const response = await createAsset(validData);
-    res.status(200).json(`La propiedad ${validData.name} se creó correctamente`);
-  } catch (error) {
+    res.status(201).json(`La propiedad ${validData.name} se creó correctamente`);
+  
+  } catch (validationError) {
 
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: validationError.message });
   }
 };
 
@@ -128,7 +129,7 @@ const deleteAssetByIdHandler = async (req, res) => {
     res.status(200).json(`La propiedad fue eliminada`);
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -139,7 +140,7 @@ const getAllLocationsHandler = async (req, res) => {
     res.status(200).json(response);
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 
@@ -150,7 +151,7 @@ const getAmenitiesHandler = async (req, res) => {
     res.status(200).json(response);
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 
