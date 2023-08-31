@@ -6,8 +6,9 @@ const {filterLocation} = require("../helpers/filterLocation");
 const getAllAssets = async (req) => {
   const pageAsNumber = Number.parseInt(req.query.page);
   const sizeAsNumber = Number.parseInt(req.query.size);
-  // const pageAsNumber = 1
-  // const sizeAsNumber= 30
+  const { location } = req.query
+  const { orderby } = req.query
+
   let page = 1;
   if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
     page = pageAsNumber;
@@ -19,6 +20,7 @@ const getAllAssets = async (req) => {
   }
 
   const assets = await Asset.findAndCountAll({
+    where:{location:location},
     limit: size,
     offset: (page-1) * size,
   });
