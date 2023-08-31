@@ -1,7 +1,6 @@
 const { Asset, Amenity } = require("../db");
 const { Op } = require("sequelize");
 const {filterLocation} = require("../helpers/filterLocation");
-const assets = require("../models/assets");
 
 // Trae todas las propiedades y paginado
 const getAllAssets = async (req) => {
@@ -70,10 +69,12 @@ const updateAsset = async (
   coveredArea,
   amenities
   });
+  if(amenities){
   const amenitiesToUpdate = await Amenity.findAll({
     where: { id: amenities },
-  });
+  });  
   await updateAsset.setAmenities(amenitiesToUpdate);
+}
   return updateAsset;
 };
 
@@ -160,11 +161,26 @@ try {
     throw new Error("Error al obtener las locaciones");
 }
 };
+
+const getAllAmenities = async () => {
+try {
+
+const allAmenities = await Amenity.findAll()
+
+
+  return allAmenities
+} catch (error) {
+  console.log(error);
+    throw new Error("Error al obtener las amenities");
+}
+};
+
 module.exports = {
   deleteAssetById,
   createAsset,
   getAllAssets,
   getAssetById,
   updateAsset,
-  getAllLocations
+  getAllLocations,
+  getAllAmenities
 };

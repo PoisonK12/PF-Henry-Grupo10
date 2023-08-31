@@ -5,7 +5,8 @@ const {
   getAllAssets,
   getAssetById,
   updateAsset,
-  getAllLocations
+  getAllLocations,
+  getAllAmenities
 } = require("../controllers/assetController");
 
 
@@ -123,6 +124,7 @@ const deleteAssetByIdHandler = async (req, res) => {
     await deleteAssetById(id);
     res.status(200).json(`La propiedad fue eliminada`);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: error.message });
   }
 };
@@ -133,14 +135,29 @@ const getAllLocationsHandler = async (req, res) => {
     const response = await getAllLocations();
     res.status(200).json(response);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: error.message });
   }
 };
+
+const getAmenitiesHandler = async (req, res) => {
+  
+  try {
+    const response = await getAllAmenities();
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 module.exports = {
   deleteAssetByIdHandler,
   getAllAssetsHandler,
   createAssetHandler,
   getAssetByIdHandler,
   updateAssetHandler,
-  getAllLocationsHandler
+  getAllLocationsHandler,
+  getAmenitiesHandler
 };
