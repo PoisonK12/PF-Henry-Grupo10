@@ -1,5 +1,7 @@
 const { z } = require('zod')
 
+const urlRegExp = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+
 const dataSchemePost = z.object({
   body: z.object({
     name: z.string({
@@ -17,9 +19,11 @@ const dataSchemePost = z.object({
     country: z.string({
       message: "String data is required(country)"
     }),
-    images: z.array(z.url()).min(3, {
-      message: "At least 3 pictures are required"
-    }),
+    images: z.array(z.string().refine(url => urlRegExp.test(url), {
+        message: "Invalid URL format"})).min(3, {
+    message: "At least 3 pictures are required"
+  }),
+
     onSale: z.boolean(),
 
     sellPrice: z.number().positive().int(),
@@ -36,9 +40,9 @@ const dataSchemePost = z.object({
 
     totalArea: z.number().positive(),
     
-    amenities: z.array(z.string()).min(5, {
-      message: "Should have at least 5 amenities selected"
-    }),
+    // amenities: z.array(z.num()).min(5, {
+    //   message: "Should have at least 5 amenities selected"
+    // }),
   })
 })
 

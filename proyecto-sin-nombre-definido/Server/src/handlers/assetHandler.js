@@ -1,5 +1,5 @@
 const { type } = require("os");
-const { dataSchemePost } = require('../helpers/validation')
+const { dataSchemePost } = require('../helpers/validation.ts')
 const {
   deleteAssetById,
   createAsset,
@@ -86,7 +86,8 @@ const createAssetHandler = async (req, res) => {
     bathrooms,
     coveredArea,
     totalArea,
-    amenities
+    amenities,
+    userid
   } = req.body;
 
   try {
@@ -108,13 +109,26 @@ const createAssetHandler = async (req, res) => {
     amenities
   }
 });
-
-    const response = await createAsset(validData);
-    res.status(201).json(`La propiedad ${validData.name} se creó correctamente`);
+    const response = await createAsset(
+      name,
+      description,
+      address,
+      location,
+      country,
+      images,
+      onSale,
+      sellPrice,
+      rentPrice,
+      rooms,
+      bathrooms,
+      coveredArea,
+      totalArea,
+      amenities,
+      userid);
+    res.status(201).json(`La propiedad ${name} se creó correctamente`);
   
-  } catch (validationError) {
-
-    res.status(400).json({ error: validationError.message });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
 
