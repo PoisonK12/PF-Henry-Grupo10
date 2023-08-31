@@ -76,7 +76,7 @@ const MultiForm = (e) => {
 
     
     <form className="d-flex flex-column align-items-center text-center  ">
-    <fieldset className={`border p-2 m-5 ${style.fieldset} `}>
+    <fieldset className={`border p-2  ${style.fieldset} `}>
           
         <h3 className="m-3"> Agrega una nueva propiedad </h3>
                 <hr></hr>
