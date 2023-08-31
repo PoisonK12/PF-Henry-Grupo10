@@ -10,6 +10,7 @@ import AdminDashboard from "./views/AdminDashboard/adminDashboard"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import {Footer} from "./components/Footer/Footer"
+import PropertyForm from "./views/Property Form/PropertyForm"
 
 function App() {
   const location = useLocation()
@@ -23,6 +24,7 @@ function App() {
       <Route path='/home' element={<><Home/><Footer/></>}/>
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
       <Route path="*" element={<><NotFound/><Footer/></>}/>
+      <Route path='/addProperty' element={<><PropertyForm/><Footer/></>}></Route>
      </Routes>
       
      

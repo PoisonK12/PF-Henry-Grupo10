@@ -47,7 +47,7 @@ export const Nav = () => {
         </li>
         <li>
           <NavLink
-            to="/properties"
+            to='/addProperty'
             className={({ isActive }) => (isActive ? style.active : "")}
           >
             <span>Propiedades</span>
