@@ -18,7 +18,7 @@ const CardsProperties = () => {
 
   return (
     <>
-        {allProperties.rows.map((ele) =>
+        {allProperties.rows?.map((ele) =>
             <CardProperties key={ele.id} id={ele.id} name={ele.name} description={ele.description} address={ele.address} location={ele.location} country={ele.country} images={ele.images}/>
         )}
     </>

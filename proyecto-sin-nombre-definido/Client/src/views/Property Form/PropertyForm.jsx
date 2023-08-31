@@ -1,12 +1,17 @@
 import React, {useState , useEffect} from "react";
 import style from "./PropertyForm.module.css"
 import { useNavigate } from "react-router";
+import { Carousel } from "react-bootstrap";
+
 
 const PropertyForm = () => {
 
 
   const [image, setImage] = useState([]);
   const [step , setStep] = useState(1);
+  const [errors , setErrors] = useState( {
+    image : ""
+  })
   const [selectedCkeckbox , setSelectedCheckbox] = useState({venta : "" , estacionamiento : "" , terraza : ""})
   const [form , setForm] = useState({
     name : "",
@@ -24,6 +29,10 @@ const PropertyForm = () => {
   // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
     event.preventDefault();
+    if(image.length === 3) {
+      setErrors({...errors , image : "Solo puedes tres imagenes"})
+      return
+    }
     const file = event.dataTransfer.files[0];
     handleFile(file)
   
@@ -142,7 +151,7 @@ const MultiForm = (e) => {
 
       <form className="d-flex flex-column align-items-center   text-center">
           <fieldset className={`border p-4  m-5 ${style.fieldset} `} >
-             <legend className="mb-4">Agrega sus características </legend>
+             <legend className="mb-4 mt-3">Agrega sus características </legend>
             <hr></hr>
             <div className="d-flex  flex-row mt-4 m-3 " >
           
@@ -160,12 +169,12 @@ const MultiForm = (e) => {
               </select> 
           </div>
 
-            <div className="col-md-11 mt-4">
+            <div className="col-md-11 mt-5">
                 <label htmlFor="inputHab" className="form-label">N° de habitaciones</label>
                 <input type="number" className="form-control" id="inputHab" required/>
             </div>
 
-            <div className="col-md-11 mt-4">
+            <div className="col-md-11 mt-5">
               <label htmlFor="inputBaño" className="form-label">N° de baños</label>
               <input type="number" className="form-control" id="inputBaño" required/>
             </div>
@@ -181,12 +190,12 @@ const MultiForm = (e) => {
               <label htmlFor="checkbox1" className="form-check-label" > YES</label>
             </div>
 
-            <div className="form-check">
+            <div className="form-check ">
               <input type="checkbox" name="venta" checked={selectedCkeckbox.venta === "no"} onChange={handleCheckbox} className="form-check-input" id="checkbox2" value="no"/> 
               <label htmlFor="checkbox2"  className="form-check-label" >NO </label>
             </div>
 
-
+            <hr></hr>
             <label htmlFor="inputPark" className="form-label">Posee estacionamiento?</label>
 
               <div className="form-check">
@@ -198,7 +207,7 @@ const MultiForm = (e) => {
                 <label htmlFor="inputPark" className="form-check-label"> NO </label>
                 <input type="checkbox" name="estacionamiento"  className="form-check-input" id="inputPark" value="no" checked={selectedCkeckbox.estacionamiento === "no"} onChange={handleCheckbox}/>
               </div>
-
+          <hr></hr>
 
             <label htmlFor="inputTer" className="form-label">Posee terraza?</label>
 
@@ -255,16 +264,31 @@ const MultiForm = (e) => {
                    onDragEnter={(e) => e.preventDefault()}
                    onDragOver={(e) => e.preventDefault()}
                     onDrop={handleDrop}
-                    onClick={() => document.getElementById('imageInput').click()}
+                    /* onClick={() => document.getElementById('imageInput').click()} */
                   
                 >
     
-              {image.length > 0 
-               ? (<img src={image[image.length - 1]} alt="Dropped" style={{ width: '100%', height: '100%' , objectFit : "cover" }} />)
-              : ('Arrastra y suelta la imagen aquí')}
-              
+    {image.length > 0 ? (
+            <Carousel style={{ width: '100%', height : "100%",maxHeight: '250px' }}>
+              {image.map((imageUrl, index) => (
+                <Carousel.Item key={index}>
+                 
+                  <img
+                   className={style.carouselImage}
+                   style={{height : "245px" , width : "100%", }}
+                    src={imageUrl}
+                    alt={`Image ${index}`}
+                  />
+                  
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          ) : (
+            'Arrastra y suelta la imagen aquí'
+          )}
             
             </div>
+            {errors.image ? <p style={{ color : "red"}}>{errors.image}</p> : null}
           </div>
       
             <hr></hr>

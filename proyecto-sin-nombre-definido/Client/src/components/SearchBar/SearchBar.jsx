@@ -3,6 +3,7 @@ import s from "./SearchBar.module.css"
 
 export const SearchBar = () => {
   const [search, setSearch ] = useState("")
+  
 
   const cleanButton = () => {
     setSearch("")
