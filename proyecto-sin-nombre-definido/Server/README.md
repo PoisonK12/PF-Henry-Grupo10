@@ -19,6 +19,9 @@ Get location
 http://localhost:3001/assets/location
 Informacion disponible para lista desplegable de un primer pre-filtro por ubicacion.
 
+Get amenities (devuelve un array de objetos con id y name)
+http://localhost:3001/assets/amenities
+
 Template de post para BBDD local(3)
 
 {
