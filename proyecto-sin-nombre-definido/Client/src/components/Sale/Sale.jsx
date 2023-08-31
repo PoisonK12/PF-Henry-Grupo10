@@ -10,10 +10,10 @@ const Sale = () => {
         <div className={style.sale}>
             <h2>OFERTAS</h2>
             <div className={style.cont}>
-      <div className={style.cardsCont}>
+      <div className={style.cardsCont} >
         
       {
-        info.map((prop) => <Card name={prop.name} description={prop.description} address={prop.address} location={prop.location}
+        info.map((prop, index) => <Card key={index} name={prop.name} description={prop.description} address={prop.address} location={prop.location}
         country={prop.country} images={prop.images[0]} onSale={prop.onSale} total={prop.total} perPerson={prop.perPerson} 
         rooms={prop.rooms} bathrooms={prop.bathrooms} offer={prop.offer} coveredArea={prop.coveredArea} totalArea={prop.totalArea}/>)
       }
