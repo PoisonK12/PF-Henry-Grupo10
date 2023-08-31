@@ -9,6 +9,9 @@ const PropertyForm = () => {
 
   const [image, setImage] = useState([]);
   const [step , setStep] = useState(1);
+  const [errors , setErrors] = useState( {
+    image : ""
+  })
   const [selectedCkeckbox , setSelectedCheckbox] = useState({venta : "" , estacionamiento : "" , terraza : ""})
   const [form , setForm] = useState({
     name : "",
@@ -26,6 +29,10 @@ const PropertyForm = () => {
   // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
     event.preventDefault();
+    if(image.length === 3) {
+      setErrors({...errors , image : "Solo puedes tres imagenes"})
+      return
+    }
     const file = event.dataTransfer.files[0];
     handleFile(file)
   
@@ -262,13 +269,13 @@ const MultiForm = (e) => {
                 >
     
     {image.length > 0 ? (
-            <Carousel>
+            <Carousel style={{ width: '100%', height : "100%",maxHeight: '250px' }}>
               {image.map((imageUrl, index) => (
                 <Carousel.Item key={index}>
                  
                   <img
                    className={style.carouselImage}
-                   style={{height : "100%" , width : "100%", objectFit : "cover"}}
+                   style={{height : "245px" , width : "100%", }}
                     src={imageUrl}
                     alt={`Image ${index}`}
                   />
@@ -281,6 +288,7 @@ const MultiForm = (e) => {
           )}
             
             </div>
+            {errors.image ? <p style={{ color : "red"}}>{errors.image}</p> : null}
           </div>
       
             <hr></hr>
