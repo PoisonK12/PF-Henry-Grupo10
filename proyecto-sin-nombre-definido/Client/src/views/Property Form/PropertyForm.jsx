@@ -151,7 +151,7 @@ const MultiForm = (e) => {
 
       <form className="d-flex flex-column align-items-center   text-center">
           <fieldset className={`border p-4  m-5 ${style.fieldset} `} >
-             <legend className="mb-4">Agrega sus características </legend>
+             <legend className="mb-4 mt-3">Agrega sus características </legend>
             <hr></hr>
             <div className="d-flex  flex-row mt-4 m-3 " >
           
@@ -169,12 +169,12 @@ const MultiForm = (e) => {
               </select> 
           </div>
 
-            <div className="col-md-11 mt-4">
+            <div className="col-md-11 mt-5">
                 <label htmlFor="inputHab" className="form-label">N° de habitaciones</label>
                 <input type="number" className="form-control" id="inputHab" required/>
             </div>
 
-            <div className="col-md-11 mt-4">
+            <div className="col-md-11 mt-5">
               <label htmlFor="inputBaño" className="form-label">N° de baños</label>
               <input type="number" className="form-control" id="inputBaño" required/>
             </div>
@@ -190,12 +190,12 @@ const MultiForm = (e) => {
               <label htmlFor="checkbox1" className="form-check-label" > YES</label>
             </div>
 
-            <div className="form-check">
+            <div className="form-check ">
               <input type="checkbox" name="venta" checked={selectedCkeckbox.venta === "no"} onChange={handleCheckbox} className="form-check-input" id="checkbox2" value="no"/> 
               <label htmlFor="checkbox2"  className="form-check-label" >NO </label>
             </div>
 
-
+            <hr></hr>
             <label htmlFor="inputPark" className="form-label">Posee estacionamiento?</label>
 
               <div className="form-check">
@@ -207,7 +207,7 @@ const MultiForm = (e) => {
                 <label htmlFor="inputPark" className="form-check-label"> NO </label>
                 <input type="checkbox" name="estacionamiento"  className="form-check-input" id="inputPark" value="no" checked={selectedCkeckbox.estacionamiento === "no"} onChange={handleCheckbox}/>
               </div>
-
+          <hr></hr>
 
             <label htmlFor="inputTer" className="form-label">Posee terraza?</label>
 
