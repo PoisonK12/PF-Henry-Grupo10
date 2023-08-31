@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllProperties } from '../../../redux/actions'
+
 import CardProperties from '../../Card/CardProperties/CardProperties'
+import { getAllProperties } from '../../../redux/actions'
 
 const CardsProperties = () => {
     const dispatch = useDispatch()
