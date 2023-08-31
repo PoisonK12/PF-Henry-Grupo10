@@ -1,4 +1,5 @@
 const { type } = require("os");
+const { dataSchemePost } = require('../helpers/validation')
 const {
   deleteAssetById,
   createAsset,
@@ -32,18 +33,18 @@ const getAssetByIdHandler = async (req, res) => {
   }
 };
 const updateAssetHandler = async (req, res) => {
-  const {id} = req.params
+  const { id } = req.params
   const {
-  name,
-  description,
-  images,
-  onSale,
-  sellPrice,
-  rentPrice,
-  rooms,
-  bathrooms,
-  coveredArea,
-  amenities
+    name,
+    description,
+    images,
+    onSale,
+    sellPrice,
+    rentPrice,
+    rooms,
+    bathrooms,
+    coveredArea,
+    amenities
   } = req.body;
 
   try {
@@ -86,27 +87,31 @@ const createAssetHandler = async (req, res) => {
     totalArea,
     amenities
   } = req.body;
- 
+
   try {
-    const response = await createAsset(
-      name,
-      description,
-      address,
-      location,
-      country,
-      images,
-      onSale,
-      sellPrice,
-      rentPrice,
-      rooms,
-      bathrooms,
-      coveredArea,
-      totalArea,
-      amenities
-    );
-    res.status(200).json(`La propiedad ${name} se creó correctamente`);
+    const validData = dataSchemePost.parse({
+  body: {
+    name,
+    description,
+    address,
+    location, 
+    country,
+    images,
+    onSale,
+    sellPrice,
+    rentPrice,
+    rooms,
+    bathrooms,
+    coveredArea,
+    totalArea,
+    amenities
+  }
+});
+
+    const response = await createAsset(validData);
+    res.status(200).json(`La propiedad ${validData.name} se creó correctamente`);
   } catch (error) {
-    
+
     res.status(500).json({ error: error.message });
   }
 };
@@ -126,7 +131,7 @@ const deleteAssetByIdHandler = async (req, res) => {
 };
 
 const getAllLocationsHandler = async (req, res) => {
-  
+
   try {
     const response = await getAllLocations();
     res.status(200).json(response);
