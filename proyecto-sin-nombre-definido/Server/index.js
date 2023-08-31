@@ -1,5 +1,10 @@
 const server = require('./src/server')
+const { sequelize } = require('./src/db')
 
-server.listen(3001, () => {
-  console.log('Server is running on port 3001');
-})
+const port = process.env.PORT || 3001;
+
+sequelize.sync({ alter: true }).then(() => {
+  server.listen(port, () => {
+    console.log(`Server listening at ${port}`); // eslint-disable-line no-console
+  });
+});

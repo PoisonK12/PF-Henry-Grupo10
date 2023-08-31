@@ -36,9 +36,11 @@ module.exports = (sequelize) => {
       onSale: {
         type: DataTypes.BOOLEAN,
       },
-      price: {
+      sellPrice: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+      },
+      rentPrice: {
+        type: DataTypes.INTEGER,
       },
       rooms: {
         type: DataTypes.INTEGER,
