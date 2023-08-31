@@ -104,8 +104,5 @@
 }
 
 .containerFluid{
-    background-image: url("../../assets/images/homebg.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: auto;
+    background: linear-gradient(to bottom right, rgb(56, 82, 94),rgb(66, 107, 114), rgba(175, 194, 199, 0.753), rgb(231, 219, 108));
 }

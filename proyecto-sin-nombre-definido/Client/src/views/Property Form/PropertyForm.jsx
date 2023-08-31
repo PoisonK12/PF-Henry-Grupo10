@@ -1,6 +1,8 @@
 import React, {useState , useEffect} from "react";
 import style from "./PropertyForm.module.css"
 import { useNavigate } from "react-router";
+import { Carousel } from "react-bootstrap";
+
 
 const PropertyForm = () => {
 
@@ -255,14 +257,28 @@ const MultiForm = (e) => {
                    onDragEnter={(e) => e.preventDefault()}
                    onDragOver={(e) => e.preventDefault()}
                     onDrop={handleDrop}
-                    onClick={() => document.getElementById('imageInput').click()}
+                    /* onClick={() => document.getElementById('imageInput').click()} */
                   
                 >
     
-              {image.length > 0 
-               ? (<img src={image[image.length - 1]} alt="Dropped" style={{ width: '100%', height: '100%' , objectFit : "cover" }} />)
-              : ('Arrastra y suelta la imagen aquí')}
-              
+    {image.length > 0 ? (
+            <Carousel>
+              {image.map((imageUrl, index) => (
+                <Carousel.Item key={index}>
+                 
+                  <img
+                   className={style.carouselImage}
+                   style={{height : "100%" , width : "100%", objectFit : "cover"}}
+                    src={imageUrl}
+                    alt={`Image ${index}`}
+                  />
+                  
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          ) : (
+            'Arrastra y suelta la imagen aquí'
+          )}
             
             </div>
           </div>

@@ -12,7 +12,7 @@ const Landing = () => {
   useEffect(() => {
     const redirectTimeout = setTimeout(() => {
       window.location.href = "/home"; // Redireccionar después de 3 segundos
-    }, 7000);
+    }, 5000);
 
     return () => {
       clearTimeout(redirectTimeout);
