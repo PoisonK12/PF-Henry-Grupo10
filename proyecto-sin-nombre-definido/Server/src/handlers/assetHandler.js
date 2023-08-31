@@ -84,8 +84,7 @@ const createAssetHandler = async (req, res) => {
     bathrooms,
     coveredArea,
     totalArea,
-    amenities,
-    userId
+    amenities
   } = req.body;
  
   try {
@@ -103,8 +102,7 @@ const createAssetHandler = async (req, res) => {
       bathrooms,
       coveredArea,
       totalArea,
-      amenities,
-      userId
+      amenities
     );
     res.status(200).json(`La propiedad ${name} se creó correctamente`);
   } catch (error) {
