@@ -15,3 +15,16 @@ export const getAllProperties = () => {
         }
     }
 }
+
+export const createAsset = async (form) => {
+
+    try {                         
+     const {data} = await axios.post("/assets/create" , form);
+     if(data) {
+        alert(data)
+       return
+     }
+    } catch (error) {
+     return console.log(error.response);
+    }
+ };
