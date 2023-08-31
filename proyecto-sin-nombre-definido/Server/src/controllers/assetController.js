@@ -1,7 +1,6 @@
 const { Asset, Amenity } = require("../db");
 const { Op } = require("sequelize");
 const {filterLocation} = require("../helpers/filterLocation");
-const assets = require("../models/assets");
 
 // Trae todas las propiedades y paginado
 const getAllAssets = async (req) => {
