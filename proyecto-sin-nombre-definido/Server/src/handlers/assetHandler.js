@@ -125,7 +125,8 @@ const createAssetHandler = async (req, res) => {
     totalArea,
     amenities,
     userid);
-    res.status(201).json(`La propiedad ${name} se creó correctamente`);
+    
+    res.status(201).json(response);
   
   } catch (error) {
     res.status(400).json({ error: error.message });
