@@ -21,12 +21,12 @@ export const Home = () => {
                   <h1 className={style.h2}>
                     Encuentra los mejores
                     <span>
-                      <span>precios!</span>
-                      <span>descuentos!</span>
+                      <span>precios</span>
+                      <span>descuentos</span>
                       {/* <span>hoteles!</span> */}
-                      <span>servicios!</span>
-                      <span>destinos!</span>
-                      <span>precios!</span>
+                      <span>servicios</span>
+                      <span>destinos</span>
+                      <span>precios</span>
                     </span>
                   </h1>
                 </div>

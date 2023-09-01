@@ -7,7 +7,7 @@ import { createAsset } from "../../redux/actions";
 
 const PropertyForm = () => {
 
-
+  const [price , setPrice ] = useState(false)
   const [step , setStep] = useState(1);
   const [errors , setErrors] = useState( {
     image : ""
@@ -25,9 +25,10 @@ const PropertyForm = () => {
     images : [],
     country : "",
     state : "",
-    adress : "",
-    city : "",
-    cp : "",
+    address : "",
+    location : "",
+    sellPrice : 0,
+    rentPrice : 0,
     type : "",
     rooms : 0,
     bathrooms : 0 ,
@@ -35,8 +36,14 @@ const PropertyForm = () => {
     onSale : false,
     parking : false,
     terrace : false,
-    totalArea : 0,
-  })
+    coveredArea:87.6,
+    totalArea:300,
+    reviews:"asdasdasd",
+    nearby:"asd",
+    nearbyScore:1,
+    amenities:[1,2,3]
+})
+
   
     console.log(form);
 
@@ -44,8 +51,13 @@ const PropertyForm = () => {
 
 
   const handleCheckbox = (e) => {
-      setSelectedCheckbox({...selectedCkeckbox, [e.target.name] : e.target.value})
-  }
+    if (e.target.name === "onSale" && e.target.value === "true") {
+      setPrice(true);
+    } else {
+      setPrice(false);
+    }
+    setSelectedCheckbox({ ...selectedCkeckbox, [e.target.name]: e.target.value });
+  };
 
 
   // Función para manejar el evento de soltar la imagen
@@ -89,6 +101,7 @@ const PropertyForm = () => {
 };
 
   const handleForm = async (e) => {
+    console.log("y?");
     e.preventDefault();
     await createAsset(form)
     navigate("/home")
@@ -104,57 +117,88 @@ const PropertyForm = () => {
     return (
 
     
-    <form className="d-flex flex-column align-items-center text-center  ">
-        <fieldset className={`border p-2  ${style.fieldset} `}>
-          
+    <form className="d-flex flex-row align-items-center justify-content-center text-center  ">
+        <fieldset className={`border p-3 d-flex flex-column ${style.fieldset} `}>
+
               <h3 className="m-3"> Agrega una nueva propiedad </h3>
               <hr></hr>
-
+              <div className="d-flex flex-row justify-content-center align-items-center">
+              <div > 
+                 <input
+                  type="file"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={(e) => handleFile(e.target.files[0])}
+                  
+                />
+    
+                <div className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
+                   style={{ border: '2px dashed #ccc', margin : `20px 40px` ,textAlign: 'center', width: '400px', height: '250px'}}
+                   onDragEnter={(e) => e.preventDefault()}
+                   onDragOver={(e) => e.preventDefault()}
+                    onDrop={handleDrop}
+                    /* onClick={() => document.getElementById('imageInput').click()} */
+                  
+                >
+    
+    {form.images.length > 0 ? (
+            <Carousel style={{ width: '100%', height : "100%",maxHeight: '250px' }}>
+              {form.images.map((imageUrl, index) => (
+                <Carousel.Item key={index}>
+                 
+                  <img
+                   className={style.carouselImage}
+                   style={{height : "245px" , width : "100%", }}
+                    src={imageUrl}
+                    alt={`Image ${index}`}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          ) : (
+            'Arrastra y suelta la imagen aquí'
+          )}
+            
+            </div>
+            {errors.image ? <p style={{ color : "red"}}>{errors.image}</p> : null}
+          </div>
+          <div className="column">
           <div className="row justify-content-center ">
       
-            <div className="col-md-5 text-center" >
-              <label htmlFor="inputEmail4" className="form-label">Nombre</label>
-              <input type="text" name="name" className="form-control mb-2" id="inputEmail4" onChange={(e) => handleChange(e)} placeholder="Nombre de tu propiedad"/>
+            <div className="col-md-6 text-center" >
+              <label htmlFor="inputName" className="form-label">Nombre</label>
+              <input type="text" name="name" className="form-control mb-1" id="inputName" onChange={(e) => handleChange(e)} placeholder="Nombre de tu propiedad"/>
             </div>
     
           </div>
-
+          <hr></hr>
           <div className="d-flex flex-row justify-content-around align-items-center">
 
-            <div className="col-md-5 m-3 p-1">
+            <div className="col-md-5 m-2 p-1">
               <label htmlFor="inputAddress" className="form-label">Dirección</label>
-              <input type="text" name="adress" className="form-control " id="inputAddress" placeholder="1234 Main St" onChange={(e) => handleChange(e)} required/>
+              <input type="text" name="address" className="form-control " id="inputAddress" placeholder="1234 Main St" onChange={(e) => handleChange(e)} required/>
             </div>
     
-            <div className="col-md-5 m-3 p-1">
+            <div className="col-md-5 m-2 p-1">
               <label htmlFor="inputAddress2" className="form-label">Pais</label>
               <input type="text"  name="country" className="form-control" id="inputAddress2" onChange={(e) => handleChange(e)} placeholder="Pais de locacion"/>
             </div>
           </div>
     
           <div className="d-flex flex-row justify-content-around align-items-center">
-            <div className="col-md-5 m-3 p-1" >                       
+            <div className="col-md-5 m-2 p-1" >                       
               <label htmlFor="inputProv" className="form-label">Provincia</label>
               <input type="text" name="state" className="form-control" id="inputProv" onChange={(e) => handleChange(e)} placeholder="Provincia " required/>
             </div>
                 
-            <div className="col-md-5 m-3 p-1">
+            <div className="col-md-5 m-2 p-1">
               <label htmlFor="inputCity" className="form-label">Cuidad</label>
-              <input type="text" name="city" className="form-control" id="inputCity" onChange={(e) => handleChange(e)} placeholder="Cuidad" required/>
+              <input type="text" name="location" className="form-control" id="inputCity" onChange={(e) => handleChange(e)} placeholder="Cuidad" required/>
             </div>
           </div>
-          <div className="row justify-content-center mt-4 ">
-
-          <div className="col-md-4 d-flex flex-column align-items-center text-center ">
-           
-              <label htmlFor="inputZip"  className="form-label">Codigo Postal</label>
-               <input type="number" name="cp" className="form-control"  onChange={(e) => handleChange(e)} id="inputZip"/>
-               </div>
-
-          </div>
-  
       <hr></hr>
-
+</div>
+</div>
       <div className="col-md-3 container d-flex flex-column justify-content-center">
         
           <div className="col-12 text-center mt-4 mb-3">
@@ -175,7 +219,7 @@ const PropertyForm = () => {
             <hr></hr>
             <div className="d-flex  flex-row mt-4 m-3 " >
           
-            <div className="column  mt-3">
+            <div className="column  mt-2">
               <div className="col-md-11">
               <label htmlFor="inputState" className="form-label">Tipo de propiedad</label>
 
@@ -189,15 +233,22 @@ const PropertyForm = () => {
               </select> 
           </div>
 
-            <div className="col-md-11 mt-5">
+            <div className="col-md-11 mt-3">
                 <label htmlFor="inputHab" className="form-label">N° de habitaciones</label>
                 <input type="number" name="rooms" className="form-control" onChange={(e) => handleChange(e)} id="inputHab" required/>
             </div>
 
-            <div className="col-md-11 mt-5">
+            <div className="col-md-11 mt-3">
               <label htmlFor="inputBaño" className="form-label">N° de baños</label>
               <input type="number" name="bathrooms" className="form-control" onChange={(e) => handleChange(e)} id="inputBaño" required/>
             </div>
+
+            <div className="col-md-11 mt-3">
+              <label htmlFor="inputBaño" className="form-label">N° de baños</label>
+              <input type="number" name="bathrooms" className="form-control" onChange={(e) => handleChange(e)} id="inputBaño" required/>
+            </div>
+
+
         </div>
 
           <div className="column m-3">
@@ -240,11 +291,22 @@ const PropertyForm = () => {
               <input type="checkbox" name="terrace" className="form-check-input" id="inputTer" value="false" onChange={(e) =>  {handleCheckbox(e); handleChange(e)}} checked={selectedCkeckbox.terrace === "false"}></input>
               <label htmlFor="inputTer" className="form-check-label"> NO</label>
               </div>
-
             </fieldset>
            </div>
         </div>
-         
+          <div className="d-flex  flex-row justify-content-center align-items-center">
+               
+                <div className="col-md-5 m-3 p-1">
+                    <label htmlFor="inputPriceR" className="input-label">Precio de Renta</label>
+                    <input type="number" name="rentPrice" id="inputPriceR" className="form-control" onChange={(e) => {handleChange(e)}} ></input>
+                </div> 
+
+                <div className={`col-md-5 m-3 p-1 ${price  ?  "d-block" : "d-none"}`}>
+                    <label htmlFor="inputPriceS" className="input-label"> Precio de Venta </label>
+                    <input type="number" id="inputPriceS" name={"SellPrice"} className=" form-control" onChange={(e) => {handleChange(e)}}></input>
+                </div>
+
+          </div>
      <div className="col-md-3 container d-flex flex-column ">
         <div className=" d-flex flex-row align-items-center justify-content-around mt-4 ">
 
@@ -270,45 +332,7 @@ const PropertyForm = () => {
           <fieldset className={`border p-4  m-5 ${style.fieldset} `}>
               <legend className="mb-3 mt-3"> Especificaciones </legend>
               <hr></hr>
-        <div > 
-                 <input
-                  type="file"
-                  accept="image/*"
-                  style={{ display: 'none' }}
-                  onChange={(e) => handleFile(e.target.files[0])}
-                  
-                />
-    
-                <div className="d-flex text-center justify-content-center bg-light align-items-center"
-                   style={{ border: '2px dashed #ccc', margin : `20px 40px` ,textAlign: 'center', width: '500px', height: '250px'}}
-                   onDragEnter={(e) => e.preventDefault()}
-                   onDragOver={(e) => e.preventDefault()}
-                    onDrop={handleDrop}
-                    /* onClick={() => document.getElementById('imageInput').click()} */
-                  
-                >
-    
-    {form.images.length > 0 ? (
-            <Carousel style={{ width: '100%', height : "100%",maxHeight: '250px' }}>
-              {form.images.map((imageUrl, index) => (
-                <Carousel.Item key={index}>
-                 
-                  <img
-                   className={style.carouselImage}
-                   style={{height : "245px" , width : "100%", }}
-                    src={imageUrl}
-                    alt={`Image ${index}`}
-                  />
-                </Carousel.Item>
-              ))}
-            </Carousel>
-          ) : (
-            'Arrastra y suelta la imagen aquí'
-          )}
-            
-            </div>
-            {errors.image ? <p style={{ color : "red"}}>{errors.image}</p> : null}
-          </div>
+        
       
             <hr></hr>
             <div className="d-flex  text-center  mt-4 m-5" >
@@ -327,7 +351,7 @@ const PropertyForm = () => {
                 </div>
 
                 <div className="m-3">
-                <button type={step === 3 ? "submit" : "button"} className={`ml-4 ${style.button}`} value={step === 3 ? "submit" : "next"} onClick={(e) => handleStep(e)}>{step === 3 ? "Agregar" : "Continuar"}</button>
+                <button type="submit" className={`ml-4 ${style.button}`} value="submit">Continuar</button>
                 </div>
 
               </div>
@@ -342,9 +366,6 @@ const PropertyForm = () => {
 return (
   <>
   <div className={style.container}>
-  <div>
-    
-  </div>
   {MultiForm()}
   </div>
   </>
