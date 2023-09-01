@@ -4,6 +4,11 @@
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
 } */
+.container{
+    margin-top: 50px;
+    padding: 15px;
+    width: 100%;
+}
 .table-responsive {
     margin: 30px 0;
 }

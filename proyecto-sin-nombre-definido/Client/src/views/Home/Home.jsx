@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import hotel from "../../assets/favorite_people1.jpg";
+// import hotel from "../../assets/favorite_people1.jpg";
 import forest from "../../assets/images/imagen 2.jpg";
 import playa2 from "../../assets/images/image02.jpeg";
 import playa3 from "../../assets/images/image0.jpg";

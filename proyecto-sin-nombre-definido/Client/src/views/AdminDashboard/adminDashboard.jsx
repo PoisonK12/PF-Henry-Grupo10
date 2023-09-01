@@ -1,7 +1,16 @@
-import React from "react";
-import s from "./adminDashboard.module.css"
+import React, { useEffect } from "react";
+import style from "./adminDashboard.module.css"
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProperties } from "../../redux/actions";
 
 const AdminDashboard = () => {
+
+  const dispatch = useDispatch();
+  const  propCreate = useSelector((state) => state.properties);
+  useEffect(() => {
+    dispatch(getAllProperties())
+  },[])
+
   return (
     <div>
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -10,7 +19,7 @@ const AdminDashboard = () => {
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 {/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link> */}
-    <div className="container">
+    <div className={style.container}>
       <div className="table-responsive">
         <div className="table-wrapper">
           <div className="table-title">
@@ -19,8 +28,8 @@ const AdminDashboard = () => {
                 <h2>User <b>Management</b></h2>
               </div>
               <div className="col-xs-7">
-                <a href="#" className={`btn btn-primary ${s.margin}`}><i className="material-icons">&#xE147;</i> <span>Add New User</span></a>
-                <a href="#" className={`btn btn-primary ${s.margin}`}><i className="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
+                <a href="#" className={`btn btn-primary ${style.margin}`}><i className="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                <a href="#" className={`btn btn-primary ${style.margin}`}><i className="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
               </div>
             </div>
           </div>
@@ -108,6 +117,35 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
+      <div className={`${style.centeredContent}`} key={props.id}>
+              <div className={`card mb-3 ${style.maxWidth}`}>
+                <div className="row g-0">
+                  <div className="col-md-4">
+                    <img
+                      src={props.images[0]}
+                      className="img-fluid rounded-start"
+                      alt="..."
+                    />
+                  </div>
+                  <div className="col-md-8">
+                    <div className="card-body">
+                      <h5 className="card-title">{props.name}</h5>
+                      {descripCut()}
+                      <p className="card-text">
+                        <small className="text-muted">
+                          {props.address}, {props.country}, {props.location}
+                        </small>
+                      </p>
+                      <div className="d-flex justify-content-end">
+                        <Link to={`/detail/${props.id}`}>
+                            <button className="btn btn-primary">Ver Detalles</button>
+                        </Link>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
     </div>
     </div>
   );

@@ -27,13 +27,13 @@ const PropertyForm = () => {
     state : "",
     address : "",
     location : "",
+    onSale : false,
     sellPrice : 0,
     rentPrice : 0,
     type : "",
     rooms : 0,
     bathrooms : 0 ,
     description : "",
-    onSale : false,
     parking : false,
     terrace : false,
     coveredArea:87.6,
@@ -53,8 +53,8 @@ const PropertyForm = () => {
   const handleCheckbox = (e) => {
     if (e.target.name === "onSale" && e.target.value === "true") {
       setPrice(true);
-    } else {
-      setPrice(false);
+    } else if(e.target.name === "onSale" && e.target.value === "false") {
+        setPrice(false);
     }
     setSelectedCheckbox({ ...selectedCkeckbox, [e.target.name]: e.target.value });
   };
@@ -96,12 +96,23 @@ const PropertyForm = () => {
   const handleChange = (e) => {
   const {name} = e.target;
   const {value} = e.target;
+   
+
+    if(e.target.type === "number") {
+      setForm({...form , [name] : Number(value)})
+      return 
+    };
+
+    if(e.target.type === "checkbox") {
+      setForm({...form , [name] : JSON.parse(value)})
+      return
+    };
 
     setForm({...form , [name] : value})
 };
 
   const handleForm = async (e) => {
-    console.log("y?");
+    
     e.preventDefault();
     await createAsset(form)
     navigate("/home")
@@ -303,7 +314,7 @@ const PropertyForm = () => {
 
                 <div className={`col-md-5 m-3 p-1 ${price  ?  "d-block" : "d-none"}`}>
                     <label htmlFor="inputPriceS" className="input-label"> Precio de Venta </label>
-                    <input type="number" id="inputPriceS" name={"SellPrice"} className=" form-control" onChange={(e) => {handleChange(e)}}></input>
+                    <input type="number" id="inputPriceS" name="sellPrice" className=" form-control" onChange={(e) => {handleChange(e)}}></input>
                 </div>
 
           </div>
