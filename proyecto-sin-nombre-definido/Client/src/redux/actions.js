@@ -39,3 +39,15 @@ export const SearchByLocation = (query) => {
         }
     }
 }
+
+export const createAsset = async (form) => {
+
+    try {                         
+     const {data} = await axios.post("/assets/create" , form);
+     if(data) {
+       return console.log(data);
+     }
+    } catch (error) {
+     return console.log(error.response);
+    }
+ };

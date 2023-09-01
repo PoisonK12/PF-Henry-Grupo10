@@ -16,7 +16,7 @@
 }
 .table-title {
     padding-bottom: 15px;
-    background: #299be4;
+    background: #0000006e;
     color: #fff;
     padding: 16px 30px;
     margin: -20px -25px 10px;
@@ -100,6 +100,7 @@ table.table td i {
 }
 table.table .avatar {
     border-radius: 50%;
+
     vertical-align: middle;
     margin-right: 10px;
 }
