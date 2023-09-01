@@ -10,13 +10,14 @@
 .sale h2{
     /* font-size: 60px; */
     margin-top: 30px;
+    color: rgb(39, 39, 39);
     font: 700 60px/1 'Lato', sans-serif;
     text-align: center;
 }
 
 .cont{
     /* box-shadow: 2px 2px 2px black; */
-    border-top: 1px solid black;
+    border-top: 1px solid rgb(37, 37, 37);
     margin: 30px;
 
 }

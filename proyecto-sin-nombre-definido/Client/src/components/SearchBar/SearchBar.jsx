@@ -7,6 +7,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 export const SearchBar = () => {
   const [search, setSearch] = useState("");
   const allLocation = useSelector((state) => state.location);
+ 
   const [showLocation, setShowLocation] = useState(false);
   const [location, setLocation] = useState(allLocation.locations);
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ export const SearchBar = () => {
     }
   },[allLocation.locations])
 
+ ;
+
+
   const handleSearch = (e) => {
     const { value } = e.target;
     setSearch(value);
@@ -32,20 +36,29 @@ export const SearchBar = () => {
       );
 
       setLocation(filteredLocation);
-    } else setLocation(allLocation.locations);
-  };
+    } else {
+      setLocation(allLocation.locations)
+      
+    };
 
+  };
+  
   const handleOnClick = (e) => {
     setShowLocation(true);
   };
 
   const handleSubmit = () => {
-    dispatch(SearchByLocation(search));
-    navigate("/property");
+    if(search.length === 0){
+      return
+    }else{
+
+      dispatch(SearchByLocation(search));
+      navigate("/property");
+    }
   };
 
   const handleClickSearch = (e) => {
-    console.log(e);
+ 
     setSearch(e);
     // setShowLocation(false)
   };
@@ -55,9 +68,12 @@ export const SearchBar = () => {
     }, 220); // Adjust the delay as needed
   };
 
+
+
+
   return (
-    <div className={s.major}>
-      <div className={s.form}>
+    <div className={`${s.major} `}>
+      <div className={`${s.form}`}>
         <input
           className={s.input}
           type="text"
