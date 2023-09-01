@@ -2,11 +2,23 @@ import React, { useEffect } from "react";
 import style from "./adminDashboard.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProperties } from "../../redux/actions";
+import {Link} from "react-router-dom";
 
 const AdminDashboard = () => {
 
   const dispatch = useDispatch();
   const  propCreate = useSelector((state) => state.properties);
+  console.log('echo', propCreate);
+  
+
+  const descripCut = () => {
+    if (propCreate.description?.length > 220 ) {
+      const newDesc = propCreate.description.split('').slice(0,220).join('')
+      return <p className="card-text">{newDesc}...</p>
+    }
+    return <p className="card-text">{propCreate.description}</p>
+  }
+
   useEffect(() => {
     dispatch(getAllProperties())
   },[])
@@ -117,27 +129,27 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      <div className={`${style.centeredContent}`} key={props.id}>
+      <div className={`${style.centeredContent}`} key={propCreate.id}>
               <div className={`card mb-3 ${style.maxWidth}`}>
                 <div className="row g-0">
                   <div className="col-md-4">
                     <img
-                      src={props.images[0]}
+                      src={propCreate.images?.[0]}
                       className="img-fluid rounded-start"
                       alt="..."
                     />
                   </div>
                   <div className="col-md-8">
                     <div className="card-body">
-                      <h5 className="card-title">{props.name}</h5>
+                      <h5 className="card-title">{propCreate.name}</h5>
                       {descripCut()}
                       <p className="card-text">
                         <small className="text-muted">
-                          {props.address}, {props.country}, {props.location}
+                          {propCreate.address}, {propCreate.country}, {propCreate.location}
                         </small>
                       </p>
                       <div className="d-flex justify-content-end">
-                        <Link to={`/detail/${props.id}`}>
+                        <Link to={`/detail/${propCreate.id}`}>
                             <button className="btn btn-primary">Ver Detalles</button>
                         </Link>
                     </div>
