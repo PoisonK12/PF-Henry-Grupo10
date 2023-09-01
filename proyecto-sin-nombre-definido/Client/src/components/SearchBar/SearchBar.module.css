@@ -132,6 +132,7 @@
   
   .list li{
     cursor: pointer;
+    list-style: none;
   }
 
   .list li:hover{
