@@ -4,10 +4,10 @@ Get all asset & count
 http://localhost:3001/assets?size=10&page=1
 
 Get all aplicando filtro de location. Desconozco si desde el front hay que generar una logica para incluir los %20 en vez de espacios
-http://localhost:3001/assets/1?size=10&page=1&location=Provincia%20de%20Buenos%20Aires
+http://localhost:3001/assets?size=10&page=1&location=Provincia%20de%20Buenos%20Aires
 
 Ruta tentativa ordenamiento
-http://localhost:3001/assets?size=10&page=Provincia%20de%20Buenos%20Aires&location=CABA&orderby=asc
+http://localhost:3001/assets?size=10&page=1&location=CABA&orderby=asc
 
 
 

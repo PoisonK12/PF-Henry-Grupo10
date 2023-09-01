@@ -1,4 +1,4 @@
-const { Asset, Amenity } = require("../db");
+const { Asset, Amenity, assetAmenities} = require("../db");
 const { Op } = require("sequelize");
 const {filterLocation} = require("../helpers/filterLocation");
 
@@ -6,8 +6,52 @@ const {filterLocation} = require("../helpers/filterLocation");
 const getAllAssets = async (req) => {
   const pageAsNumber = Number.parseInt(req.query.page);
   const sizeAsNumber = Number.parseInt(req.query.size);
-  const { location } = req.query
-  const { orderby } = req.query
+  const { location,rooms,bathrooms,onSale,sellPriceMin,sellPriceMax,rentPriceMin,rentPriceMax,amenities,orderBy } = req.query
+
+  const filter = {}
+//Recibo los filtros requeridos desde el front por query y ensamblo un objeto dependiendo de cuantas propiedades requiera
+  if(location){
+    filter.location = location
+  }
+  if(rooms){
+    filter.rooms =rooms
+  }
+  if(bathrooms){
+    filter.bathrooms = bathrooms
+  }
+  if(onSale){
+    filter.onSale = onSale
+  }
+  // if(sellPriceMin){
+  //   filter.sellPriceMin = sellPriceMin
+  // }
+  // if(sellPriceMax){
+  //   filter.sellPriceMax =sellPriceMax
+  // }
+  // if(rentPriceMin){
+  //   filter.rentPriceMin =rentPriceMin 
+  // }
+  // if(rentPriceMax){
+  //   filter.rentPriceMax =rentPriceMax 
+  // }
+  // if(coveredAreaMin){
+  //   filter.coveredAreaMin =coveredAreaMin 
+  // }
+  // if(coveredAreaMax){
+  //   filter.coveredAreaMax =coveredAreaMax 
+  // }
+  // if(totalAreaMin){
+  //   filter.totalAreaMin =totalAreaMin 
+  // }
+  // if(totalAreaMax){
+  //   filter.totalAreaMax =totalAreaMax 
+  // // }
+  // if(amenities){
+  //   filter.amenities = amenities
+  // }
+  // if(orderBy){
+  //   filter.orderBy = orderBy
+  // }
 
   let page = 1;
   if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
@@ -20,9 +64,16 @@ const getAllAssets = async (req) => {
   }
 
   const assets = await Asset.findAndCountAll({
-    where:{location:location},
+    where:
+      filter
+    ,
+    order: orderBy,
     limit: size,
     offset: (page-1) * size,
+    include: {
+      model: Amenity,
+      through: { joinTableAttributes: [] },
+    },
   });
   
   return assets;
@@ -36,7 +87,7 @@ const getAssetById = async (id) => {
     },
     include: {
       model: Amenity,
-      through: { attribute: [] },
+      through:  { joinTableAttributes: [] },
     },
   });
   return asset;
