@@ -48,6 +48,6 @@ export const createAsset = async (form) => {
        return console.log(data);
      }
     } catch (error) {
-     return console.log(error.response);
+     return console.log(error.response.data.request);
     }
  };
