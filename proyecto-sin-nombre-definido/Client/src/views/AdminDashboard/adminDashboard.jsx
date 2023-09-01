@@ -38,7 +38,7 @@ const AdminDashboard = () => {
             <tbody>
               <tr>
                 <td>1</td>
-                <td><a href="#"><img src="/examples/images/avatar/1.jpg" className="avatar" alt="Avatar" /> Michael Holz</a></td>
+                <td><a href="#"><img src="../../../src/assets/images/pexels1.jpg" className="avatar" alt="Avatar"/> Michael Holz</a></td>
                 <td>04/10/2013</td>
                 <td>Admin</td>
                 <td><span className="status text-success">&bull;</span> Active</td>
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
               </tr>
               <tr>
                 <td>2</td>
-                <td><a href="#"><img src="/examples/images/avatar/2.jpg" className="avatar" alt="Avatar" /> Paula Wilson</a></td>
+                <td><a href="#"><img src="../../../src/assets/images/pexels2.jpg" className="avatar" alt="Avatar" /> Paula Wilson</a></td>
                 <td>05/08/2014</td>
                 <td>Publisher</td>
                 <td><span className="status text-success">&bull;</span> Active</td>
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
               </tr>
               <tr>
                 <td>3</td>
-                <td><a href="#"><img src="/examples/images/avatar/3.jpg" className="avatar" alt="Avatar" /> Antonio Moreno</a></td>
+                <td><a href="#"><img src="../../../src/assets/images/pexels3.jpg" className="avatar" alt="Avatar" /> Antonio Moreno</a></td>
                 <td>11/05/2015</td>
                 <td>Publisher</td>
                 <td><span className="status text-danger">&bull;</span> Suspended</td>
@@ -71,7 +71,7 @@ const AdminDashboard = () => {
               </tr>
               <tr>
                 <td>4</td>
-                <td><a href="#"><img src="/examples/images/avatar/4.jpg" className="avatar" alt="Avatar" /> Mary Saveley</a></td>
+                <td><a href="#"><img src="../../../src/assets/images/pexels4.jpg" className="avatar" alt="Avatar" /> Mary Saveley</a></td>
                 <td>06/09/2016</td>
                 <td>Reviewer</td>
                 <td><span className="status text-success">&bull;</span> Active</td>
@@ -82,7 +82,7 @@ const AdminDashboard = () => {
               </tr>
               <tr>
                 <td>5</td>
-                <td><a href="#"><img src="/examples/images/avatar/5.jpg" className="avatar" alt="Avatar" /> Martin Sommer</a></td>
+                <td><a href="#"><img src="../../../src/assets/images/pexels5.jpg" className="avatar" alt="Avatar" /> Martin Sommer</a></td>
                 <td>12/08/2017</td>
                 <td>Moderator</td>
                 <td><span className="status text-warning">&bull;</span> Inactive</td>
