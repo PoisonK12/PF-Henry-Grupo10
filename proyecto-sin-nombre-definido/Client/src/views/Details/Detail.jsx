@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import style from "./detail.module.css";
-import imagen1 from "../../assets/images/Modern-Cabin.jpg";
-import imagen2 from "../../assets/images/single-room-2-1920x1188.jpg";
-import imagen3 from "../../assets/images/single-room-1-1920x1409.jpg";
+// import imagen1 from "../../assets/images/Modern-Cabin.jpg";
+// import imagen2 from "../../assets/images/single-room-2-1920x1188.jpg";
+// import imagen3 from "../../assets/images/single-room-1-1920x1409.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { getAssetById } from "../../redux/actions";
 import { useParams } from "react-router-dom";
