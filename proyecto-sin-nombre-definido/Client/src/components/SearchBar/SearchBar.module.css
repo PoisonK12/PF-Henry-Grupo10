@@ -9,7 +9,7 @@
     color: #dfdfdf;
     border-radius: 0 10px 10px 0    ;
     /* padding: 4px 9px; */
-    left: 40px;
+    left: 27px;
     /* margin: 0; */
     align-items: center;
     justify-content: center;
@@ -35,6 +35,7 @@
     background: var(--input-bg,rgba(254,254,254, 0.3));
     margin-top: 5px;
     left: 50px;
+    z-index: 20;
   }
   /* styling of Input */
   .input {
@@ -92,6 +93,7 @@
   input:not(:placeholder-shown) ~ .reset {
     /* opacity: 1; */
     visibility: visible;
+    
   }
   /* sizing svg icons */
   .form svg {
@@ -100,12 +102,18 @@
   }
 
   .results{
+    visibility: hidden;
+    z-index: 1;
     position: absolute;
     overflow-y: auto;
     margin-top: 0.25rem;
-    width: 100%;
+    top: 36px;
+    width: 105%;
+    left: 0;
     padding: 0.5rem;
-    background-color: #ffffff;
+    
+    color: #dfdfdf;
+    background-color: rgba(28,28,28, 0.7);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     border-bottom-left-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem; 
@@ -113,17 +121,26 @@
   }
 
   .major{
+    z-index: 1;
+
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .list{
+  
+  .list li{
     cursor: pointer;
+    list-style: none;
   }
 
-  .list:hover{
+  .list li:hover{
     background-color: rgba(0, 0, 0, 0.5);
 
   }
+
+  .results.show{
+    visibility: visible;
+  }
+

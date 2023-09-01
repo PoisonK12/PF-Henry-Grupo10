@@ -68,7 +68,7 @@
 .cajaCarrusel h1 > span{
     position: relative;
     display: inline-block;
-    color: #5ccff2;
+    color: rgb(4, 202, 209);
     height: 3.5rem;
     font-family: 'Avenir', sans-serif; ;
     vertical-align: bottom;
@@ -79,6 +79,7 @@
     animation: animateWords 5s infinite ease;
     font-family: 'Avenir', sans-serif; 
 }
+
 
 @keyframes animateWords {
     
@@ -104,5 +105,17 @@
 }
 
 .containerFluid{
-    background: linear-gradient(to bottom right, rgb(56, 82, 94),rgb(66, 107, 114), rgba(175, 194, 199, 0.753), rgb(231, 219, 108));
+    overflow: hidden;
+    background: #EAE0D5;
 }
+.svg {
+    position: absolute;
+    /* z-index: 2; */
+    bottom: -100px;
+    color: black;
+  }
+
+  .sale{
+    position: relative;
+    z-index: 6;
+  }

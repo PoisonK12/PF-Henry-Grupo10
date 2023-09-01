@@ -23,7 +23,7 @@ export const Nav = () => {
       <Link to="/" className={style.logo}>
         <img src={logo}></img>
       </Link>
-      <h2>W.I.P</h2>
+      
      
       <ul >
         <li>
@@ -52,14 +52,14 @@ export const Nav = () => {
             <span>Propiedades</span>
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink
             to="/property"
             className={({ isActive }) => (isActive ? style.active : "")}
           >
             <span>Houses</span>
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink
             to="/adminDashboard"

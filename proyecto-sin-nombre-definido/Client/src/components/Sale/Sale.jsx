@@ -8,7 +8,7 @@ const Sale = () => {
     return (
 
         <div className={style.sale}>
-            <h2>OFERTAS</h2>
+            <h2>OFERTAS!</h2>
             <div className={style.cont}>
       <div className={style.cardsCont} >
         
