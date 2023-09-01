@@ -98,3 +98,32 @@
     width: 17px;
     margin-top: -2px;
   }
+
+  .results{
+    position: absolute;
+    overflow-y: auto;
+    margin-top: 0.25rem;
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem; 
+    max-height: 9rem;
+  }
+
+  .major{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .list{
+    cursor: pointer;
+  }
+
+  .list:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+
+  }

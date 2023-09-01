@@ -1,22 +1,27 @@
-import React, { useState } from 'react'
-import s from "./SearchBar.module.css"
+import React, { useState } from "react";
+import s from "./SearchBar.module.css";
 
 export const SearchBar = () => {
-  const [search, setSearch ] = useState("")
-  
+  const [search, setSearch] = useState("");
 
   const cleanButton = () => {
-    setSearch("")
-  }
+    setSearch("");
+  };
 
   const handleSearch = (e) => {
-    setSearch(e.target.value)
-  }
+    setSearch(e.target.value);
+  };
 
   return (
-    
+    <div className={s.major}>
     <div className={s.form}>
-        <input className={s.input} type="text" placeholder='Search name...' value={search} onChange={handleSearch} />
+      <input
+        className={s.input}
+        type="text"
+        placeholder="Search name..."
+        value={search}
+        onChange={handleSearch}
+      />
 
       <button className={s.buttons}>
         <svg
@@ -36,8 +41,24 @@ export const SearchBar = () => {
           ></path>
         </svg>
       </button>
-        <button className={s.reset} onClick={cleanButton}></button>
-        
+      <button className={s.reset} onClick={cleanButton}></button>
+      <div className={s.results}>
+        <div className={s.list}>
+          <p>Juli</p>
+          <p>Juli</p>
+          <p>Juli</p>
+          <p>Juli</p>
+          <p>Juli</p>
+          <p>Juli</p>
+          <p>Juli</p>
+          <p>Juli</p>
+          {/* <li>Julian</li>
+          <li>Luque</li>
+          <li>Luque x2</li>
+          <li>Luque x3</li> */}
+        </div>
+      </div>
     </div>
-  )
-}
+    </div>
+  );
+};

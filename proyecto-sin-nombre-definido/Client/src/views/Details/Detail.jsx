@@ -35,7 +35,7 @@ const Detail = () => {
 
   return (
     <>
-      {assetDetail.length ? (<div className={style.container}>
+     <div className={style.container}>
       <div className={`  ${style.container}`}>
         <div className={style.wrapper}>
           <header>
@@ -176,7 +176,7 @@ const Detail = () => {
           </div>
         </div>
       </div>
-    </div>) : <NotFoundPage/>}
+    </div>
     
     
     </>

@@ -29,3 +29,13 @@ export const getAssetById = (id) => {
         }
     }
 }
+
+export const SearchByLocation = (query) => {
+    return async (dispatch) => {
+        try {
+            const {data} = await axios("/assets/1?size=10&page=1&location=Provincia%20de%20Buenos%20Aires")
+        } catch (error) {
+            
+        }
+    }
+}
