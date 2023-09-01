@@ -46,9 +46,10 @@ const getAllAssets = async (req) => {
   // if(totalAreaMax){
   //   filter.totalAreaMax =totalAreaMax 
   // // }
-  // if(amenities){
-  //   filter.amenities = amenities
-  // }
+    const amenityIds = []
+  if(amenities){
+    const amenityIds = amenities.split(',').map(Number);
+  }
   // if(orderBy){
   //   filter.orderBy = orderBy
   // }
@@ -64,16 +65,27 @@ const getAllAssets = async (req) => {
   }
 
   const assets = await Asset.findAndCountAll({
-    where:
-      filter
-    ,
-    order: orderBy,
+    where: filter,
+    // order: orderBy,
     limit: size,
-    offset: (page-1) * size,
-    include: {
-      model: Amenity,
-      through: { joinTableAttributes: [] },
-    },
+    offset: (page - 1) * size,
+    include:[
+      {
+        model: Amenity,
+        where: {
+          id: {
+            [Op.in]: amenityIds,
+          },
+        },
+        through: { attributes: [] },
+        required: true, // Esto garantiza que solo se seleccionen activos que tengan al menos una de las amenidades especificadas.
+      },
+      {
+        model: Amenity, // Esta segunda inclusión de Amenity es para obtener la lista completa de amenidades de cada activo.
+        through: { attributes: [] },
+        as: 'Amenities', // Asigna un alias para evitar conflictos.
+      },
+    ],
   });
   
   return assets;
