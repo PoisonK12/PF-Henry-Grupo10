@@ -1,16 +1,22 @@
 import React, {useState , useEffect} from "react";
 import style from "./PropertyForm.module.css"
 import { useNavigate } from "react-router";
-import { Carousel} from "react-bootstrap";
+import { Carousel , Modal } from "react-bootstrap";
 import { createAsset } from "../../redux/actions";
+import Card from "../../components/Card/CardOffer/CardOffer";
 
 
 const PropertyForm = () => {
 
-  const [price , setPrice ] = useState(false)
+
+  const [modal , setModal] = useState(false);
+  const [modalBody , setModalBody] = useState({response : []})
+  const [price , setPrice ] = useState(false);
   const [step , setStep] = useState(1);
   const [errors , setErrors] = useState( {
-    image : ""
+    image : "",
+    errorsBack : []
+
   })
   const [selectedCkeckbox , setSelectedCheckbox] = useState({
     onSale : "" ,
@@ -28,8 +34,8 @@ const PropertyForm = () => {
     address : "",
     location : "",
     onSale : false,
-    sellPrice : 0,
-    rentPrice : 0,
+    sellPrice : 1,
+    rentPrice : 1,
     type : "",
     rooms : 0,
     bathrooms : 0 ,
@@ -75,10 +81,18 @@ const PropertyForm = () => {
 
   // Función para manejar el archivo seleccionado
   const handleFile = (file) => {
+  console.log(file);
+    if(!file.type.startsWith("image/")){
+      setErrors({image : "Tiene q ser una imagen"})
+      return
 
-    // Realizar las acciones necesarias con el archivo
-    const imageURL = URL.createObjectURL( new Blob([file]));
-    setForm({...form , images : [... form.images , imageURL]})
+    }
+    if(file.type.startsWith('image/')) {
+      const imageURL = URL.createObjectURL( new Blob([file]));
+      setErrors({image : ""})
+      setForm({...form , images : [... form.images , imageURL]})
+      return
+    }
   };
 
   const handleStep = (e) => {
@@ -114,15 +128,31 @@ const PropertyForm = () => {
   const handleForm = async (e) => {
     
     e.preventDefault();
-    await createAsset(form)
-    navigate("/home")
+    await createAsset(form , setModal , setModalBody, setErrors, errors,  navigate);
+
+    if(typeof modalBody.response === "object") {
+       return setTimeout(() => {
+        navigate("/home")
+      }, 2000)
+    } else if(typeof modalBody.response === "string") {
+      return setTimeout(() => {
+        setModal(false)
+      },2000)
+    }
+
   };
+console.log({modal :modal , modalbody : modalBody.response});
+
 
   useEffect(() => {
+  
 },[step])
 
 
+
+
   const MultiForm = (e) => {
+
   
   if(step === 1) {
     return (
@@ -377,8 +407,36 @@ const PropertyForm = () => {
 return (
   <>
   <div className={style.container}>
-  {MultiForm()}
-  </div>
+  {/* modal ? 
+ <div className={style.container2}>
+  <br></br>
+  <br></br>
+  
+     <Modal show={modal }  centered>
+    
+      <Modal.Header className="d-flex justify-content-center ">
+        <Modal.Title className="text-success" >Creado con éxito ✔ </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="w-auto">{
+        <Card
+        name = {modalBody.response.name}
+                description={modalBody.response.description}        
+                address = {modalBody.response.address}
+                location = {modalBody.response.location}
+                country = {modalBody.response.country}
+                images = {modalBody.response.images[0]}
+                id = {modalBody.response.id}
+          ></Card> 
+      }</Modal.Body>
+      <Modal.Footer>
+    
+      </Modal.Footer>
+    </Modal>
+    
+ </div>
+   : */ MultiForm()
+ }
+ </div>
   </>
   )
 };

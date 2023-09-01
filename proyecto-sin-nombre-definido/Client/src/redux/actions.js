@@ -40,14 +40,19 @@ export const SearchByLocation = (query) => {
     }
 }
 
-export const createAsset = async (form) => {
+export const createAsset = async (form , setModal,setModalBody ) => {
 
     try {                         
      const {data} = await axios.post("/assets/create" , form);
      if(data) {
-       return console.log(data);
+         setModalBody({response: data})
+         setModal(true);
+         console.log(data);
      }
     } catch (error) {
-     return console.log(error.response.data.request);
+        setModalBody({ response :  error.response.data});
+
+      setModal(true)
+     return console.log(error);
     }
  };

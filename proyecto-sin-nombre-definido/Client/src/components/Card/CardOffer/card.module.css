@@ -10,6 +10,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); 
 }
 
+
 img{
     border-top-left-radius: 5px; /* Cambia el valor según tus preferencias */
     border-top-right-radius: 5px;
@@ -67,4 +68,5 @@ img{
     top: 30px;
     transform: rotate(45deg);
   }
+  
   
