@@ -1,0 +1,11 @@
+.background
+{
+background-image: url("../404/404.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+width: 100%;
+position: absolute;
+height: 100%;
+margin: 0;
+padding: 0;
+}

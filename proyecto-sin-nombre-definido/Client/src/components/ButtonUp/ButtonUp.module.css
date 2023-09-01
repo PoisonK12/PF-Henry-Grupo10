@@ -1,0 +1,31 @@
+
+.buttonScrollToTop{
+    position: fixed;
+    bottom: 20px;
+    z-index: 200;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: chartreuse;
+    color: #fff;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.5s ease , transform 0.5s ease, background-color 0.3s ease;
+}
+
+.buttonScrollToTop.visible{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.buttonScrollToTop:hover{
+    background-color: seagreen;
+}
