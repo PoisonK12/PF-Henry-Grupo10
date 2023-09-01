@@ -1,0 +1,20 @@
+
+.imageContainer {
+  position: relative;
+}
+
+.centeredCaption {
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  color: bisque;
+}
+
+/* Agrega una nueva clase para el subtítulo */
+.subtitle {
+  font-size: 6em; /* Ajusta el tamaño de fuente según tus preferencias */
+}
