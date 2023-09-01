@@ -1,16 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from "./SearchBar.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { SearchByLocation, getLocation } from "../../redux/actions";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export const SearchBar = () => {
   const [search, setSearch] = useState("");
+  const allLocation = useSelector((state) => state.location)
+  const [showLocation , setShowLocation] = useState(false)
+  const [location , setLocation] = useState(allLocation.locations)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const cleanButton = () => {
-    setSearch("");
-  };
+  useEffect(() => {
+    dispatch(getLocation())
+    console.log("Luquinho",allLocation)
+  }, [dispatch])
 
   const handleSearch = (e) => {
-    setSearch(e.target.value);
+    const {value} = e.target
+    setSearch(value);
+    
+    if(!value){
+      setLocation(allLocation.locations)
+    }
+    const filteredLocation = allLocation.locations.filter((ele) =>
+      ele.toLowerCase().includes(value.toLowerCase()) 
+    )
+  
+    setLocation(filteredLocation)
   };
+
+  const handleOnClick = (e) => {
+    setShowLocation(true)
+  } 
+  
+  
+  const handleSubmit = () => {
+    dispatch(SearchByLocation(search))
+    navigate("/property")
+  }
+
+  const handleClickSearch = (e) => {
+    console.log(e)
+    setSearch(e)
+    // setShowLocation(false)
+    
+  }
+  const handleOnClose = () => {
+    setTimeout(() => {
+      setShowLocation(false);
+    }, 220); // Adjust the delay as needed
+  };
+
 
   return (
     <div className={s.major}>
@@ -21,9 +63,11 @@ export const SearchBar = () => {
         placeholder="Search name..."
         value={search}
         onChange={handleSearch}
+        onClick={handleOnClick}
+        onBlur={handleOnClose}
       />
 
-      <button className={s.buttons}>
+      <button className={s.buttons} onClick={handleSubmit}>
         <svg
           width="17"
           height="16"
@@ -41,21 +85,17 @@ export const SearchBar = () => {
           ></path>
         </svg>
       </button>
-      <button className={s.reset} onClick={cleanButton}></button>
-      <div className={s.results}>
+      {/* <button className={s.reset} onClick={cleanButton}></button> */}
+      <div className={`${s.results} ${showLocation ? s.show : ""}`}>
         <div className={s.list}>
-          <p>Juli</p>
-          <p>Juli</p>
-          <p>Juli</p>
-          <p>Juli</p>
-          <p>Juli</p>
-          <p>Juli</p>
-          <p>Juli</p>
-          <p>Juli</p>
-          {/* <li>Julian</li>
-          <li>Luque</li>
-          <li>Luque x2</li>
-          <li>Luque x3</li> */}
+          
+         {location.map((ele) =>{
+          return (
+          <li key={ele} onClick={() => handleClickSearch(ele)}>
+            {ele}
+            </li>
+            )
+         })}
         </div>
       </div>
     </div>

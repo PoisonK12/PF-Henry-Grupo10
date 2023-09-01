@@ -1,7 +1,8 @@
-import { GET_ALL_PROPERTIES, GET_ASSET_BY_ID} from "./types"
+import { GET_ALL_PROPERTIES, GET_ASSET_BY_ID, GET_LOCATIONS, SEARCH_BY_LOCATION} from "./types"
 
 const initialState = {
     properties: [],
+    location: [],
     users: [],
     detail: {}
 }
@@ -12,9 +13,14 @@ const rootReducer = (state = initialState, action) => {
         case GET_ALL_PROPERTIES:
             return {...state, properties: action.payload}
 
+        case SEARCH_BY_LOCATION:
+            return {...state, properties: action.payload}
 
         case GET_ASSET_BY_ID:
             return {...state, detail: action.payload}
+
+        case GET_LOCATIONS:
+            return {...state, location: action.payload}
         default:
             return state
     }
