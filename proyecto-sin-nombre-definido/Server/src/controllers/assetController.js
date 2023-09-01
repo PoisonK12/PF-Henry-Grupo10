@@ -1,26 +1,37 @@
-const { Asset, Amenity, assetAmenities} = require("../db");
+const { Asset, Amenity, assetAmenities } = require("../db");
 const { Op } = require("sequelize");
-const {filterLocation} = require("../helpers/filterLocation");
+const { filterLocation } = require("../helpers/filterLocation");
 
 // Trae todas las propiedades y paginado
 const getAllAssets = async (req) => {
   const pageAsNumber = Number.parseInt(req.query.page);
   const sizeAsNumber = Number.parseInt(req.query.size);
-  const { location,rooms,bathrooms,onSale,sellPriceMin,sellPriceMax,rentPriceMin,rentPriceMax,amenities,orderBy } = req.query
+  const {
+    location,
+    rooms,
+    bathrooms,
+    onSale,
+    sellPriceMin,
+    sellPriceMax,
+    rentPriceMin,
+    rentPriceMax,
+    amenities,
+    orderBy,
+  } = req.query;
 
-  const filter = {}
-//Recibo los filtros requeridos desde el front por query y ensamblo un objeto dependiendo de cuantas propiedades requiera
-  if(location){
-    filter.location = location
+  const filter = {};
+  //Recibo los filtros requeridos desde el front por query y ensamblo un objeto dependiendo de cuantas propiedades requiera
+  if (location) {
+    filter.location = location;
   }
-  if(rooms){
-    filter.rooms =rooms
+  if (rooms) {
+    filter.rooms = rooms;
   }
-  if(bathrooms){
-    filter.bathrooms = bathrooms
+  if (bathrooms) {
+    filter.bathrooms = bathrooms;
   }
-  if(onSale){
-    filter.onSale = onSale
+  if (onSale) {
+    filter.onSale = onSale;
   }
   // if(sellPriceMin){
   //   filter.sellPriceMin = sellPriceMin
@@ -29,26 +40,26 @@ const getAllAssets = async (req) => {
   //   filter.sellPriceMax =sellPriceMax
   // }
   // if(rentPriceMin){
-  //   filter.rentPriceMin =rentPriceMin 
+  //   filter.rentPriceMin =rentPriceMin
   // }
   // if(rentPriceMax){
-  //   filter.rentPriceMax =rentPriceMax 
+  //   filter.rentPriceMax =rentPriceMax
   // }
   // if(coveredAreaMin){
-  //   filter.coveredAreaMin =coveredAreaMin 
+  //   filter.coveredAreaMin =coveredAreaMin
   // }
   // if(coveredAreaMax){
-  //   filter.coveredAreaMax =coveredAreaMax 
+  //   filter.coveredAreaMax =coveredAreaMax
   // }
   // if(totalAreaMin){
-  //   filter.totalAreaMin =totalAreaMin 
+  //   filter.totalAreaMin =totalAreaMin
   // }
   // if(totalAreaMax){
-  //   filter.totalAreaMax =totalAreaMax 
+  //   filter.totalAreaMax =totalAreaMax
   // // }
-    const amenityIds = []
-  if(amenities){
-    const amenityIds = amenities.split(',').map(Number);
+  const amenityIds = [];
+  if (amenities) {
+    const amenityIds = amenities ? amenities.split(",").map(Number) : [];
   }
   // if(orderBy){
   //   filter.orderBy = orderBy
@@ -66,10 +77,10 @@ const getAllAssets = async (req) => {
 
   const assets = await Asset.findAndCountAll({
     where: filter,
-    // order: orderBy,
+    order: orderBy,
     limit: size,
     offset: (page - 1) * size,
-    include:[
+    include: [
       {
         model: Amenity,
         where: {
@@ -83,11 +94,11 @@ const getAllAssets = async (req) => {
       {
         model: Amenity, // Esta segunda inclusión de Amenity es para obtener la lista completa de amenidades de cada activo.
         through: { attributes: [] },
-        as: 'Amenities', // Asigna un alias para evitar conflictos.
+        as: "Amenities", // Asigna un alias para evitar conflictos.
       },
     ],
   });
-  
+
   return assets;
 };
 //!------------------------------------------------------------------------
@@ -99,7 +110,7 @@ const getAssetById = async (id) => {
     },
     include: {
       model: Amenity,
-      through:  { joinTableAttributes: [] },
+      through: { joinTableAttributes: [] },
     },
   });
   return asset;
@@ -124,7 +135,32 @@ const updateAsset = async (
   });
   await updateAsset.update({
     name,
+    description,
+    images,
+    onSale,
+    sellPrice,
+    rentPrice,
+    rooms,
+    bathrooms,
+    coveredArea,
+    amenities,
+  });
+  if (amenities) {
+    const amenitiesToUpdate = await Amenity.findAll({
+      where: { id: amenities },
+    });
+    await updateAsset.setAmenities(amenitiesToUpdate);
+  }
+  return updateAsset;
+};
+
+//!------------------------------------------------------------------------
+const createAsset = async (
+  name,
   description,
+  address,
+  location,
+  country,
   images,
   onSale,
   sellPrice,
@@ -132,71 +168,44 @@ const updateAsset = async (
   rooms,
   bathrooms,
   coveredArea,
-  amenities
-  });
-  if(amenities){
-  const amenitiesToUpdate = await Amenity.findAll({
-    where: { id: amenities },
-  });  
-  await updateAsset.setAmenities(amenitiesToUpdate);
-}
-  return updateAsset;
-};
-
-//!------------------------------------------------------------------------
-const createAsset = async (
-    name,
-    description,
-    address,
-    location,
-    country,
-    images,
-    onSale,
-    sellPrice,
-    rentPrice,
-    rooms,
-    bathrooms,
-    coveredArea,
-    totalArea,
-    amenities,
-    userId
+  totalArea,
+  amenities,
+  userId
 ) => {
-  try{
-  const createdAsset = await Asset.create({
-    name,
-    description,
-    address,
-    location,
-    country,
-    images,
-    onSale,
-    sellPrice,
-    rentPrice,
-    rooms,
-    bathrooms,
-    coveredArea,
-    totalArea,
-    amenities,
-    userId,
-  });
-  
-  for (const findId of amenities) {    
-    const findAmen = await Amenity.findOne({
-      where: { id: findId },
+  try {
+    const createdAsset = await Asset.create({
+      name,
+      description,
+      address,
+      location,
+      country,
+      images,
+      onSale,
+      sellPrice,
+      rentPrice,
+      rooms,
+      bathrooms,
+      coveredArea,
+      totalArea,
+      amenities,
+      userId,
     });
-    if (findAmen) {
-      await createdAsset.addAmenity(findAmen);
-      
+
+    for (const findId of amenities) {
+      const findAmen = await Amenity.findOne({
+        where: { id: findId },
+      });
+      if (findAmen) {
+        await createdAsset.addAmenity(findAmen);
+      }
     }
-  }
-  
-  return createdAsset;}
-   catch (error) {
-    console.log("error createAsset")
+
+    return createdAsset;
+  } catch (error) {
+    console.log("error createAsset");
     console.log(error);
     throw new Error("Error al registrar la propiedad");
   }
-  
 };
 
 const deleteAssetById = async (id) => {
@@ -216,29 +225,27 @@ const deleteAssetById = async (id) => {
 };
 
 const getAllLocations = async () => {
-try {
-  const allAssets = await Asset.findAll()
-  // console.log(allAssets)
-  const response = filterLocation(allAssets)
-  // console.log(response)
-  return response
-} catch (error) {
-  console.log(error);
+  try {
+    const allAssets = await Asset.findAll();
+    // console.log(allAssets)
+    const response = filterLocation(allAssets);
+    // console.log(response)
+    return response;
+  } catch (error) {
+    console.log(error);
     throw new Error("Error al obtener las locaciones");
-}
+  }
 };
 
 const getAllAmenities = async () => {
-try {
+  try {
+    const allAmenities = await Amenity.findAll();
 
-const allAmenities = await Amenity.findAll()
-
-
-  return allAmenities
-} catch (error) {
-  console.log(error);
+    return allAmenities;
+  } catch (error) {
+    console.log(error);
     throw new Error("Error al obtener las amenities");
-}
+  }
 };
 
 module.exports = {
@@ -248,5 +255,5 @@ module.exports = {
   getAssetById,
   updateAsset,
   getAllLocations,
-  getAllAmenities
+  getAllAmenities,
 };
