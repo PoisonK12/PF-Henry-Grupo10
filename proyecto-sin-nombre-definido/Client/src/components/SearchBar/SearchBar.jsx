@@ -89,7 +89,7 @@ export const SearchBar = () => {
       <div className={`${s.results} ${showLocation ? s.show : ""}`}>
         <div className={s.list}>
           
-         {location.map((ele) =>{
+         {location?.map((ele) =>{
           return (
           <li key={ele} onClick={() => handleClickSearch(ele)}>
             {ele}
