@@ -36,8 +36,7 @@ export const createAsset = async (form) => {
     try {                         
      const {data} = await axios.post("/assets/create" , form);
      if(data) {
-        alert(data)
-       return
+       return console.log(data);
      }
     } catch (error) {
      return console.log(error.response);
