@@ -4,7 +4,8 @@ import {
   GET_ASSET_BY_ID,
   GET_LOCATIONS,
   SEARCH_BY_LOCATION,
-  PUT_PROPERTY
+  PUT_PROPERTY,
+  GET_ALL_ALL_PROPERTIES
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -21,6 +22,20 @@ export const getAllProperties = (page) => {
   };
 };
 
+export const getAllReallyProperties = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios("/assets/menosmalquediegodijoquenonosllenemosderutas")
+      return dispatch({
+        type: GET_ALL_ALL_PROPERTIES,
+        payload: data
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 export const getAssetById = (id) => {
   return async (dispatch) => {
     try {
@@ -35,10 +50,10 @@ export const getAssetById = (id) => {
   };
 };
 
-export const SearchByLocation = (query) => {
+export const SearchByLocation = (query, page) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios(`/assets?size=10&page=1&location=${query}`);
+      const { data } = await axios(`/assets?size=10&page=${page}&location=${query}`);
       console.log(data);
       return dispatch({
         type: SEARCH_BY_LOCATION,
@@ -85,7 +100,9 @@ export const getLocation = () => {
 };
 
 export const putProperty = (id, form) => {
+  console.log(id, form)
   return async (dispatch) => {
+    
     try {
       const {data} = await axios.put(`/assets/${id}`, form)
       return dispatch({

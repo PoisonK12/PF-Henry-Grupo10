@@ -3,64 +3,67 @@ import style from "./adminDashboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getAllProperties } from "../../redux/actions";
+import { getAllProperties, getAllReallyProperties, putProperty } from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
-  const allProperties = useSelector((state) => state.properties);
+  const allProperties = useSelector((state) => state.propertiesCopy);
   console.log(allProperties);
-  const [price , setPrice ] = useState(false)
-  const [selectedCkeckbox , setSelectedCheckbox] = useState({
-    onSale : "" ,
-    parking : "" ,
-    terrace : ""
+  const [price, setPrice] = useState(false);
+  const [idHouse, setIdHouse] = useState("ea6107b3-908a-4936-affb-30582f7ed570");
+  const [selectedCkeckbox, setSelectedCheckbox] = useState({
+    onSale: "",
+    parking: "",
+    terrace: "",
   });
   const [form, setForm] = useState({
-    onSale : false,
-    images: []
-  })
-  const [errors , setErrors] = useState( {
-    image : ""
-  })
-  
+    name: "",
+    
+    onSale: false,
+    images: [],
+  });
+  const [errors, setErrors] = useState({
+    image: "",
+  });
+
   const handleCheckbox = (e) => {
     if (e.target.name === "onSale" && e.target.value === "true") {
       setPrice(true);
-    } else if(e.target.name === "onSale" && e.target.value === "false") {
-        setPrice(false);
+    } else if (e.target.name === "onSale" && e.target.value === "false") {
+      setPrice(false);
     }
-    setSelectedCheckbox({ ...selectedCkeckbox, [e.target.name]: e.target.value });
+    setSelectedCheckbox({
+      ...selectedCkeckbox,
+      [e.target.name]: e.target.value,
+    });
   };
   const handleChange = (e) => {
-    const {name} = e.target;
-    const {value} = e.target;
+    const { name } = e.target;
+    const { value } = e.target;
 
-      if(e.target.type === "checkbox") {
-        setForm({...form , [name] : JSON.parse(value)})
-        return
-      };
-      setForm({...form , [name] : value})
+    // if (e.target.type === "checkbox") {
+    //   setForm({ ...form, [name]: JSON.parse(value) });
+    //   return;
+    // }
+    setForm((prevData) => ({ ...prevData, [name]: value }));
   };
 
   // Función para manejar el archivo seleccionado
   const handleFile = (file) => {
-
     // Realizar las acciones necesarias con el archivo
-    const imageURL = URL.createObjectURL( new Blob([file]));
-    setForm({...form , images : [... form.images , imageURL]})
+    const imageURL = URL.createObjectURL(new Blob([file]));
+    setForm({ ...form, images: [...form.images, imageURL] });
   };
 
-    // Función para manejar el evento de soltar la imagen
+  // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
-      event.preventDefault();
-      if(form.images.length === 3) {
-        setErrors({...errors , image : "Solo puedes tres imagenes"})
-        return
-      }
-      const file = event.dataTransfer.files[0];
-      handleFile(file)
-    
-      
+    event.preventDefault();
+    if (form.images.length === 3) {
+      setErrors({ ...errors, image: "Solo puedes tres imagenes" });
+      return;
+    }
+    const file = event.dataTransfer.files[0];
+    handleFile(file);
   };
   function handleDelete(index) {
     const updatedImages = [...form.images];
@@ -68,10 +71,14 @@ const AdminDashboard = () => {
     setForm({ ...form, images: updatedImages });
   }
 
-  const handleUpdate = () => {
-    setForm({
-    })
-  }
+  const handleUpdate = async (id) => {
+    console.log("entre al handle");
+    try {
+     await dispatch(putProperty(id, form));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const descripCut = (description) => {
     if (description.length > 220) {
@@ -82,7 +89,7 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllProperties());
+    dispatch(getAllReallyProperties());
   }, []);
 
   return (
@@ -102,306 +109,102 @@ const AdminDashboard = () => {
         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       ></link>
       {/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link> */}
-      <div className={style.container}>
-        <div className="table-responsive">
-          <div className="table-wrapper">
-            <div className="table-title">
-              <div className="row">
-                <div className="col-xs-5">
-                  <h2>
-                    User <b>Management</b>
-                  </h2>
-                </div>
-                <div className="col-xs-7">
-                  <a href="#" className={`btn btn-primary ${style.margin}`}>
-                    <i className="material-icons">&#xE147;</i>{" "}
-                    <span>Add New User</span>
-                  </a>
-                  <a href="#" className={`btn btn-primary ${style.margin}`}>
-                    <i className="material-icons">&#xE24D;</i>{" "}
-                    <span>Export to Excel</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <table className="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Date Created</th>
-                  <th>Role</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>
-                    <a href="#">
-                      <img
-                        src="../../../src/assets/images/pexels1.jpg"
-                        className="avatar"
-                        alt="Avatar"
-                      />{" "}
-                      Michael Holz
-                    </a>
-                  </td>
-                  <td>04/10/2013</td>
-                  <td>Admin</td>
-                  <td>
-                    <span className="status text-success">&bull;</span> Active
-                  </td>
-                  <td>
-                    <a
-                      href="#"
-                      className="settings"
-                      title="Settings"
-                      data-toggle="tooltip"
-                    >
-                      <i className="material-icons">&#xE8B8;</i>
-                    </a>
-                    <a
-                      href="#"
-                      className="delete"
-                      title="Delete"
-                      data-toggle="tooltip"
-                    >
-                      <i className="material-icons">&#xE5C9;</i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>
-                    <a href="#">
-                      <img
-                        src="../../../src/assets/images/pexels2.jpg"
-                        className="avatar"
-                        alt="Avatar"
-                      />{" "}
-                      Paula Wilson
-                    </a>
-                  </td>
-                  <td>05/08/2014</td>
-                  <td>Publisher</td>
-                  <td>
-                    <span className="status text-success">&bull;</span> Active
-                  </td>
-                  <td>
-                    <a
-                      href="#"
-                      className="settings"
-                      title="Settings"
-                      data-toggle="tooltip"
-                    >
-                      <i className="material-icons">&#xE8B8;</i>
-                    </a>
-                    <a
-                      href="#"
-                      className="delete"
-                      title="Delete"
-                      data-toggle="tooltip"
-                    >
-                      <i className="material-icons">&#xE5C9;</i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>
-                    <a href="#">
-                      <img
-                        src="../../../src/assets/images/pexels3.jpg"
-                        className="avatar"
-                        alt="Avatar"
-                      />{" "}
-                      Antonio Moreno
-                    </a>
-                  </td>
-                  <td>11/05/2015</td>
-                  <td>Publisher</td>
-                  <td>
-                    <span className="status text-danger">&bull;</span> Suspended
-                  </td>
-                  <td>
-                    <a
-                      href="#"
-                      className="settings"
-                      title="Settings"
-                      data-toggle="tooltip"
-                    >
-                      <i className="material-icons">&#xE8B8;</i>
-                    </a>
-                    <a
-                      href="#"
-                      className="delete"
-                      title="Delete"
-                      data-toggle="tooltip"
-                    >
-                      <i className="material-icons">&#xE5C9;</i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>
-                    <a href="#">
-                      <img
-                        src="../../../src/assets/images/pexels4.jpg"
-                        className="avatar"
-                        alt="Avatar"
-                      />{" "}
-                      Mary Saveley
-                    </a>
-                  </td>
-                  <td>06/09/2016</td>
-                  <td>Reviewer</td>
-                  <td>
-                    <span className="status text-success">&bull;</span> Active
-                  </td>
-                  <td>
-                    <a
-                      href="#"
-                      className="settings"
-                      title="Settings"
-                      data-toggle="tooltip"
-                    >
-                      <i className="material-icons">&#xE8B8;</i>
-                    </a>
-                    <a
-                      href="#"
-                      className="delete"
-                      title="Delete"
-                      data-toggle="tooltip"
-                    >
-                      <i className="material-icons">&#xE5C9;</i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>
-                    <a href="#">
-                      <img
-                        src="../../../src/assets/images/pexels5.jpg"
-                        className="avatar"
-                        alt="Avatar"
-                      />{" "}
-                      Martin Sommer
-                    </a>
-                  </td>
-                  <td>12/08/2017</td>
-                  <td>Moderator</td>
-                  <td>
-                    <span className="status text-warning">&bull;</span> Inactive
-                  </td>
-                  <td>
-                    <a
-                      href="#"
-                      className="settings"
-                      title="Settings"
-                      data-toggle="tooltip"
-                    >
-                      <i className="material-icons">&#xE8B8;</i>
-                    </a>
-                    <a
-                      href="#"
-                      className="delete"
-                      title="Delete"
-                      data-toggle="tooltip"
-                    >
-                      <i className="material-icons">&#xE5C9;</i>
-                    </a>
-                  </td>
-                </tr>
-                {/* ... more table rows */}
-              </tbody>
-            </table>
-            <div className="clearfix">
-              <div className="hint-text">
-                Showing <b>5</b> out of <b>25</b> entries
-              </div>
-              <ul className="pagination">
-                <li className="page-item disabled">
-                  <a href="#" className="page-link">
-                    Previous
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a href="#" className="page-link">
-                    1
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a href="#" className="page-link">
-                    2
-                  </a>
-                </li>
-                <li className="page-item active">
-                  <a href="#" className="page-link">
-                    3
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a href="#" className="page-link">
-                    4
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a href="#" className="page-link">
-                    5
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a href="#" className="page-link">
-                    Next
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <div>
-        {allProperties.rows?.map((props) => (
+        {allProperties?.map((props) => (
           <div className={`${style.centeredContent}`} key={props.id}>
             <div className={`card mb-3 ${style.maxWidth}`}>
               <div className="row g-0">
                 <div className="col-md-4">
-                  <div id="carouselExampleIndicators" className="carousel slide">
+                  <div
+                    id="carouselExampleIndicators"
+                    className="carousel slide"
+                  >
                     <div className="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                      
+                      <button
+                        type="button"
+                        data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="0"
+                        className="active"
+                        aria-current="true"
+                        aria-label="Slide 1"
+                      ></button>
+                      <button
+                        type="button"
+                        data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="1"
+                        aria-label="Slide 2"
+                      ></button>
+                      <button
+                        type="button"
+                        data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="2"
+                        aria-label="Slide 3"
+                      ></button>
                     </div>
                     <div className="carousel-inner">
                       <div className="carousel-item active">
-                        <img src={props.images?.[0]} className="d-block w-100" alt="..." />
-                        
+                        <img
+                          src={props.images?.[0]}
+                          className="d-block w-100"
+                          alt="..."
+                        />
                       </div>
                       <div className="carousel-item">
-                        <img src={props.images?.[1]} className="d-block w-100" alt="..." />
+                        <img
+                          src={props.images?.[1]}
+                          className="d-block w-100"
+                          alt="..."
+                        />
                       </div>
                       <div className="carousel-item">
-                        <img src={props.images?.[2]} className="d-block w-100" alt="..." />
+                        <img
+                          src={props.images?.[2]}
+                          className="d-block w-100"
+                          alt="..."
+                        />
                       </div>
                     </div>
-                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                      <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <button
+                      className="carousel-control-prev"
+                      type="button"
+                      data-bs-target="#carouselExampleIndicators"
+                      data-bs-slide="prev"
+                    >
+                      <span
+                        className="carousel-control-prev-icon"
+                        aria-hidden="true"
+                      ></span>
                       <span className="visually-hidden">Previous</span>
                     </button>
-                    <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                      <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <button
+                      className="carousel-control-next"
+                      type="button"
+                      data-bs-target="#carouselExampleIndicators"
+                      data-bs-slide="next"
+                    >
+                      <span
+                        className="carousel-control-next-icon"
+                        aria-hidden="true"
+                      ></span>
                       <span className="visually-hidden">Next</span>
                     </button>
-                    
-                    <button className={style.customButton} data-bs-target="#exampleModalToggle4" data-bs-toggle="modal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" className={`bi bi-pencil-fill ${style.icon}`} viewBox="0 0 16 16">
-                      <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                    </svg>
+
+                    <button
+                      className={style.customButton}
+                      data-bs-target="#exampleModalToggle4"
+                      data-bs-toggle="modal"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="35"
+                        height="35"
+                        fill="currentColor"
+                        className={`bi bi-pencil-fill ${style.icon}`}
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                      </svg>
                     </button>
                   </div>
                 </div>
@@ -425,7 +228,7 @@ const AdminDashboard = () => {
                         className="btn btn-primary"
                         data-bs-target="#exampleModalToggle"
                         data-bs-toggle="modal"
-                        onClick={() =>  handleUpdate}
+                        onClick={() => setIdHouse(props.id)}
                       >
                         Editar
                       </button>
@@ -437,6 +240,26 @@ const AdminDashboard = () => {
           </div>
         ))}
       </div>
+      <form
+        onSubmit={(e) => {
+          handleUpdate(idHouse);
+            e.preventDefault();
+        }}
+      >
+        <label htmlFor="inputName" className="form-label">
+          Nombre
+        </label>
+        <input
+          type="text"
+          name="name"
+          onChange={(e) => handleChange(e)}
+          value={form.name}
+          className="form-control mb-1"
+          id="inputName"
+          placeholder="Nombre de tu propiedad"
+        />
+        <button type="submit">aca</button>
+      </form>
       <div
         className="modal fade"
         id="exampleModalToggle"
@@ -460,40 +283,85 @@ const AdminDashboard = () => {
             <div className="modal-body">
               Inicio del formulario
               <form className="d-flex flex-row align-items-center justify-content-center text-center  ">
-              <div className="column">
-                  <div className="col-md-12 text-center" >
-                  <div className="row justify-content-center ">
-                  <div className="col-md-8 text-center" >
-                    <label htmlFor="inputName" className="form-label">Nombre</label>
-                    <input type="text" name="name" className="form-control mb-1" id="inputName" placeholder="Nombre de tu propiedad"/>
+                <div className="column">
+                  <div className="col-md-12 text-center">
+                    <div className="row justify-content-center ">
+                      <div className="col-md-8 text-center">
+                        <label htmlFor="inputName" className="form-label">
+                          Nombre
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          className="form-control mb-1"
+                          id="inputName"
+                          placeholder="Nombre de tu propiedad"
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
                   </div>
+                  <div className="d-flex flex-row justify-content-around align-items-center">
+                    <div className="col-md-6 m-2 p-1">
+                      <label htmlFor="inputAddress" className="form-label">
+                        Dirección
+                      </label>
+                      <input
+                        type="text"
+                        name="address"
+                        className="form-control "
+                        id="inputAddress"
+                        placeholder="1234 Main St"
+                        onChange={(e) => handleChange(e)}
+                        required
+                      />
+                    </div>
 
-                </div>
-                </div>
-                <div className="d-flex flex-row justify-content-around align-items-center">
-                  <div className="col-md-6 m-2 p-1">
-                    <label htmlFor="inputAddress" className="form-label">Dirección</label>
-                    <input type="text" name="address" className="form-control " id="inputAddress" placeholder="1234 Main St" onChange={(e) => handleChange(e)} required/>
+                    <div className="col-md-6 m-2 p-1">
+                      <label htmlFor="inputAddress2" className="form-label">
+                        Pais
+                      </label>
+                      <input
+                        type="text"
+                        name="country"
+                        className="form-control"
+                        id="inputAddress2"
+                        onChange={(e) => handleChange(e)}
+                        placeholder="Pais de locacion"
+                      />
+                    </div>
                   </div>
-          
-                  <div className="col-md-6 m-2 p-1">
-                    <label htmlFor="inputAddress2" className="form-label">Pais</label>
-                    <input type="text"  name="country" className="form-control" id="inputAddress2" onChange={(e) => handleChange(e)} placeholder="Pais de locacion"/>
-                  </div>
-                </div>
-                <div className="d-flex flex-row justify-content-around align-items-center">
-                  <div className="col-md-6 m-2 p-1">
-                    <label htmlFor="inputAddress" className="form-label">Provincia</label>
-                    <input type="text" name="address" className="form-control " id="inputAddress" placeholder="1234 Main St" onChange={(e) => handleChange(e)} required/>
-                  </div>
-          
-                  <div className="col-md-6 m-2 p-1">
-                    <label htmlFor="inputAddress2" className="form-label">Ciudad</label>
-                    <input type="text"  name="country" className="form-control" id="inputAddress2" onChange={(e) => handleChange(e)} placeholder="Pais de locacion"/>
-                  </div>
-                </div>
+                  <div className="d-flex flex-row justify-content-around align-items-center">
+                    <div className="col-md-6 m-2 p-1">
+                      <label htmlFor="inputAddress" className="form-label">
+                        Provincia
+                      </label>
+                      <input
+                        type="text"
+                        name="address"
+                        className="form-control "
+                        id="inputAddress"
+                        placeholder="1234 Main St"
+                        onChange={(e) => handleChange(e)}
+                        required
+                      />
+                    </div>
 
-              </div>
+                    <div className="col-md-6 m-2 p-1">
+                      <label htmlFor="inputAddress2" className="form-label">
+                        Ciudad
+                      </label>
+                      <input
+                        type="text"
+                        name="country"
+                        className="form-control"
+                        id="inputAddress2"
+                        onChange={(e) => handleChange(e)}
+                        placeholder="Pais de locacion"
+                      />
+                    </div>
+                  </div>
+                </div>
               </form>
             </div>
             <div className="modal-footer">
@@ -502,9 +370,7 @@ const AdminDashboard = () => {
                 data-bs-target="#exampleModalToggle2"
                 data-bs-toggle="modal"
               >
-
                 Siguiente
-               
               </button>
             </div>
           </div>
@@ -531,86 +397,180 @@ const AdminDashboard = () => {
               ></button>
             </div>
             <div className="modal-body">
-            <form className="d-flex flex-row align-items-center justify-content-center text-center  ">
-              <div className="column">
-                <div className="d-flex flex-row justify-content-around align-items-center">
-                  <div className="col-md-6 m-2 p-1">
-                  <label htmlFor="inputState" className="form-label">Tipo de propiedad</label>
+              <form className="d-flex flex-row align-items-center justify-content-center text-center  ">
+                <div className="column">
+                  <div className="d-flex flex-row justify-content-around align-items-center">
+                    <div className="col-md-6 m-2 p-1">
+                      <label htmlFor="inputState" className="form-label">
+                        Tipo de propiedad
+                      </label>
 
-                  <select id="inputState" onChange={(e) => handleChange(e)} name="type" className="form-select">
-
-                    <option>Elije uno...</option>
-                    <option name="type" value="Yes">Yes</option>
-                    <option name="type" value="No">No</option>
-                
-                  </select> 
-                  </div>
-          
-                  <div className="col-md-6 m-2 p-1">
-                  <label htmlFor="inputHab" className="form-label">N° de habitaciones</label>
-                  <input type="number" name="rooms" className="form-control" onChange={(e) => handleChange(e)} id="inputHab" placeholder="N° habitaciones" required/>
-                  </div>
-                </div>
-                <div className="d-flex flex-row justify-content-around align-items-center">
-                  <div className="col-md-6 m-2 p-1">
-                  <label htmlFor="inputHab" className="form-label">N° de baños</label>
-                  <input type="number" name="rooms" className="form-control" onChange={(e) => handleChange(e)} id="inputHab" placeholder="N° baños" required/>
-                  </div>
-          
-                  <div className="col-md-6 m-2 p-1">
-                    <label htmlFor="inputAddress2" className="form-label">Posee estacionamiento?</label>
-                    <select id="inputState" onChange={(e) => handleChange(e)} name="type" className="form-select">
-
-                    <option>Elije uno...</option>
-                    <option name="type" value="Departamento">Yes</option>
-                    <option name="type" value="Casa">Casa</option>
-
-
-                  </select> 
-                  </div>
-                </div>
-                <div className="d-flex flex-row justify-content-around align-items-center">
-                  <div className="col-md-6 m-2 p-1">
-                  <label htmlFor="inputAddress2" className="form-label">Posee terraza?</label>
-                    <select id="inputState" onChange={(e) => handleChange(e)} name="type" className="form-select">
-
-                    <option>Elije uno...</option>
-                    <option name="type" value="Departamento">Yes</option>
-                    <option name="type" value="Casa">No</option>
-
-
-                  </select> 
-                  </div>
-          
-                  <div className="col-md-6 m-2 p-1">
-                  <label className="form-label">Esta a la venta?</label>
-                    <div className="form-check">
-                      <input type="checkbox" name="onSale" checked={selectedCkeckbox.onSale === "true"} onChange={(e) =>  {handleCheckbox(e); handleChange(e)}} className="form-check-input" id="checkbox1" value="true"/> 
-                      <label htmlFor="checkbox1" className="form-check-label" > YES</label>
+                      <select
+                        id="inputState"
+                        onChange={(e) => handleChange(e)}
+                        name="type"
+                        className="form-select"
+                      >
+                        <option>Elije uno...</option>
+                        <option name="type" value="Yes">
+                          Yes
+                        </option>
+                        <option name="type" value="No">
+                          No
+                        </option>
+                      </select>
                     </div>
 
-                    <div className="form-check ">
-                      <input type="checkbox" name="onSale" checked={selectedCkeckbox.onSale === "false"} onChange={(e) =>  {handleCheckbox(e); handleChange(e)}} className="form-check-input" id="checkbox2" value="false"/> 
-                      <label htmlFor="checkbox2"  className="form-check-label" >NO </label>
+                    <div className="col-md-6 m-2 p-1">
+                      <label htmlFor="inputHab" className="form-label">
+                        N° de habitaciones
+                      </label>
+                      <input
+                        type="number"
+                        name="rooms"
+                        className="form-control"
+                        onChange={(e) => handleChange(e)}
+                        id="inputHab"
+                        placeholder="N° habitaciones"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex flex-row justify-content-around align-items-center">
+                    <div className="col-md-6 m-2 p-1">
+                      <label htmlFor="inputHab" className="form-label">
+                        N° de baños
+                      </label>
+                      <input
+                        type="number"
+                        name="rooms"
+                        className="form-control"
+                        onChange={(e) => handleChange(e)}
+                        id="inputHab"
+                        placeholder="N° baños"
+                        required
+                      />
+                    </div>
+
+                    <div className="col-md-6 m-2 p-1">
+                      <label htmlFor="inputAddress2" className="form-label">
+                        Posee estacionamiento?
+                      </label>
+                      <select
+                        id="inputState"
+                        onChange={(e) => handleChange(e)}
+                        name="type"
+                        className="form-select"
+                      >
+                        <option>Elije uno...</option>
+                        <option name="type" value="Departamento">
+                          Yes
+                        </option>
+                        <option name="type" value="Casa">
+                          Casa
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-row justify-content-around align-items-center">
+                    <div className="col-md-6 m-2 p-1">
+                      <label htmlFor="inputAddress2" className="form-label">
+                        Posee terraza?
+                      </label>
+                      <select
+                        id="inputState"
+                        onChange={(e) => handleChange(e)}
+                        name="type"
+                        className="form-select"
+                      >
+                        <option>Elije uno...</option>
+                        <option name="type" value="Departamento">
+                          Yes
+                        </option>
+                        <option name="type" value="Casa">
+                          No
+                        </option>
+                      </select>
+                    </div>
+
+                    <div className="col-md-6 m-2 p-1">
+                      <label className="form-label">Esta a la venta?</label>
+                      <div className="form-check">
+                        <input
+                          type="checkbox"
+                          name="onSale"
+                          checked={selectedCkeckbox.onSale === "true"}
+                          onChange={(e) => {
+                            handleCheckbox(e);
+                            handleChange(e);
+                          }}
+                          className="form-check-input"
+                          id="checkbox1"
+                          value="true"
+                        />
+                        <label htmlFor="checkbox1" className="form-check-label">
+                          {" "}
+                          YES
+                        </label>
+                      </div>
+
+                      <div className="form-check ">
+                        <input
+                          type="checkbox"
+                          name="onSale"
+                          checked={selectedCkeckbox.onSale === "false"}
+                          onChange={(e) => {
+                            handleCheckbox(e);
+                            handleChange(e);
+                          }}
+                          className="form-check-input"
+                          id="checkbox2"
+                          value="false"
+                        />
+                        <label htmlFor="checkbox2" className="form-check-label">
+                          NO{" "}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="d-flex  flex-row justify-content-center align-items-center">
+                    <div className="col-md-5 m-3 p-1">
+                      <label htmlFor="inputPriceR" className="input-label">
+                        Precio de Renta
+                      </label>
+                      <input
+                        type="number"
+                        name="rentPrice"
+                        id="inputPriceR"
+                        className="form-control"
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      ></input>
+                    </div>
+
+                    <div
+                      className={`col-md-5 m-3 p-1 ${
+                        price ? "d-block" : "d-none"
+                      }`}
+                    >
+                      <label htmlFor="inputPriceS" className="input-label">
+                        {" "}
+                        Precio de Venta{" "}
+                      </label>
+                      <input
+                        type="number"
+                        id="inputPriceS"
+                        name="sellPrice"
+                        className=" form-control"
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      ></input>
                     </div>
                   </div>
                 </div>
-
-                <div className="d-flex  flex-row justify-content-center align-items-center">
-               
-                <div className="col-md-5 m-3 p-1">
-                    <label htmlFor="inputPriceR" className="input-label">Precio de Renta</label>
-                    <input type="number" name="rentPrice" id="inputPriceR" className="form-control" onChange={(e) => {handleChange(e)}} ></input>
-                </div> 
-
-                <div className={`col-md-5 m-3 p-1 ${price  ?  "d-block" : "d-none"}`}>
-                    <label htmlFor="inputPriceS" className="input-label"> Precio de Venta </label>
-                    <input type="number" id="inputPriceS" name="sellPrice" className=" form-control" onChange={(e) => {handleChange(e)}}></input>
-                </div>
-
-          </div>
-
-              </div>
               </form>
             </div>
             <div className="modal-footer">
@@ -653,22 +613,36 @@ const AdminDashboard = () => {
               ></button>
             </div>
             <div className="modal-body">
-            <form className="d-flex flex-row align-items-center justify-content-center text-center  ">
-              <div className="column">
-                <div className="d-flex flex-row justify-content-around align-items-center">
-                  <div className="col-md-12 m-2 p-1">
-        
-
-                  <div className="form-group ">
-                    <label htmlFor="description" className="form-label"> Descripción</label>
-                    <textarea className="form-control" rows="6" cols="50" name="description" onChange={(e) => handleChange(e)}></textarea>
-                  </div>
+              <form
+                className="d-flex flex-row align-items-center justify-content-center text-center"
+                onSubmit={(e) => {
+                  e.preventDefault(); // Prevent the default form submission
+                  console.log("Form submitted"); // Check if this message is logged
+                  handleUpdate(idHouse);
+                }}
+              >
+                <div className="column">
+                  <div className="d-flex flex-row justify-content-around align-items-center">
+                    <div className="col-md-12 m-2 p-1">
+                      <div className="form-group ">
+                        <label htmlFor="description" className="form-label">
+                          {" "}
+                          Descripción
+                        </label>
+                        <textarea
+                          className="form-control"
+                          rows="6"
+                          cols="50"
+                          name="description"
+                          onChange={(e) => handleChange(e)}
+                        ></textarea>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
               </form>
-            </div>
-            <div className="modal-footer">
+            </div> 
+      <div className="modal-footer">
               <button
                 className="btn btn-primary"
                 data-bs-target="#exampleModalToggle2"
@@ -678,8 +652,9 @@ const AdminDashboard = () => {
               </button>
               <button
                 className="btn btn-primary"
-                data-bs-target="#exampleModalToggle"
-                data-bs-toggle="modal"
+                type="submit"
+                // data-bs-target="#exampleModalToggle"
+                // data-bs-toggle="modal"
               >
                 Enviar
               </button>
@@ -708,58 +683,73 @@ const AdminDashboard = () => {
               ></button>
             </div>
             <div className="modal-body">
-            <form className="d-flex flex-row align-items-center justify-content-center text-center  ">
-              <div className="column">
-                <div className="d-flex flex-row justify-content-around align-items-center">
-                  <div className="col-md-12 m-2 p-1">
-        
+              <form className="d-flex flex-row align-items-center justify-content-center text-center  ">
+                <div className="column">
+                  <div className="d-flex flex-row justify-content-around align-items-center">
+                    <div className="col-md-12 m-2 p-1">
+                      <div className="form-group ">
+                        <label htmlFor="description" className="form-label">
+                          {" "}
+                          Editar Imagenes
+                        </label>
+                        <div>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            style={{ display: "none" }}
+                            onChange={(e) => handleFile(e.target.files[0])}
+                          />
 
-                  <div className="form-group ">
-                    <label htmlFor="description" className="form-label"> Editar Imagenes</label>
-                    <div > 
-                 <input
-                  type="file"
-                  accept="image/*"
-                  style={{ display: 'none' }}
-                  onChange={(e) => handleFile(e.target.files[0])}
-                  
-                />
-    
-                <div className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
-                   style={{ border: '2px dashed #ccc', margin : `20px 40px` ,textAlign: 'center', width: '400px', height: '250px'}}
-                   onDragEnter={(e) => e.preventDefault()}
-                   onDragOver={(e) => e.preventDefault()}
-                    onDrop={handleDrop}
-                  
-                >
-    
-    {form.images.length > 0 ? (
-            <Carousel style={{ width: '100%', height : "100%",maxHeight: '250px' }}>
-              {form.images.map((imageUrl, index) => (
-                <Carousel.Item key={index}>
-                 
-                  <img
-                   className={style.carouselImage}
-                   style={{height : "245px" , width : "100%", }}
-                    src={imageUrl}
-                    alt={`Image ${index}`}
-                  />
-                  <button className={style.buton} onClick={() => handleDelete(index)}>X</button>
-
-                </Carousel.Item>
-              ))}
-            </Carousel>
-          ) : (
-            'Arrastra y suelta la imagen aquí'
-          )}
-            
-            </div>
-            {errors.image ? <p style={{ color : "red"}}>{errors.image}</p> : null}
-          </div>
-                  </div>
+                          <div
+                            className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
+                            style={{
+                              border: "2px dashed #ccc",
+                              margin: `20px 40px`,
+                              textAlign: "center",
+                              width: "400px",
+                              height: "250px",
+                            }}
+                            onDragEnter={(e) => e.preventDefault()}
+                            onDragOver={(e) => e.preventDefault()}
+                            onDrop={handleDrop}
+                          >
+                            {form.images?.length > 0 ? (
+                              <Carousel
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  maxHeight: "250px",
+                                }}
+                              >
+                                {form.images?.map((imageUrl, index) => (
+                                  <Carousel.Item key={index}>
+                                    <img
+                                      className={style.carouselImage}
+                                      style={{ height: "245px", width: "100%" }}
+                                      src={imageUrl}
+                                      alt={`Image ${index}`}
+                                    />
+                                    <button
+                                      className={style.buton}
+                                      onClick={() => handleDelete(index)}
+                                    >
+                                      X
+                                    </button>
+                                  </Carousel.Item>
+                                ))}
+                              </Carousel>
+                            ) : (
+                              "Arrastra y suelta la imagen aquí"
+                            )}
+                          </div>
+                          {errors.image ? (
+                            <p style={{ color: "red" }}>{errors.image}</p>
+                          ) : null}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
               </form>
             </div>
             <div className="modal-footer">

@@ -32,6 +32,7 @@ function App() {
       <Route path='/home' element={<><Home/><Footer/></>}/>
       <Route path='/property' element={<><Property/><Footer/></>}/>
       <Route path='/contacts' element={<><Contatcs/><Footer/></>}/>
+      <Route path='/property/:location' element={<><Property/><Footer/></>}/>
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
       <Route path="*" element={<><NotFound/><Footer/></>}/>
       <Route path='/addProperty' element={<><PropertyForm/><Footer/></>}></Route>
