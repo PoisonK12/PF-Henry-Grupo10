@@ -77,7 +77,7 @@ const getAllAssets = async (req) => {
 
   const assets = await Asset.findAndCountAll({
     where: filter,
-    order: orderBy,
+    order: [orderBy],
     limit: size,
     offset: (page - 1) * size,
     include: [
@@ -173,12 +173,12 @@ const createAsset = async (
   userId
 ) => {
   try {
-        // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando
+    // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando
     const existingAsset = await Asset.findOne({ where: { name } });
-        
-    if (existingAsset) {      
+
+    if (existingAsset) {
       throw new Error("La Asset ya existe");
-    };
+    }
     const createdAsset = await Asset.create({
       name,
       description,
@@ -208,7 +208,6 @@ const createAsset = async (
 
     return createdAsset;
   } catch (error) {
-    
     console.log(error);
     throw new Error("Error al registrar la propiedad");
   }
