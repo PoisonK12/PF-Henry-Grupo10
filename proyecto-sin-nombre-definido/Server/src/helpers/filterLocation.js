@@ -1,5 +1,5 @@
 function filterLocation (assets) {
-  const locations = ["Seleccione locación"]
+  const locations = []
   assets.forEach(asset => {
     if(!locations.includes(asset.location)){
       locations.push(asset.location)
