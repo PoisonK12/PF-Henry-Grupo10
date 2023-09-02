@@ -85,7 +85,9 @@ export const getLocation = () => {
 };
 
 export const putProperty = (id, form) => {
+  console.log(id, form)
   return async (dispatch) => {
+    
     try {
       const {data} = await axios.put(`/assets/${id}`, form)
       return dispatch({
