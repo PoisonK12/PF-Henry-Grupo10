@@ -47,48 +47,17 @@ const Card = ({
                 <h3 className="card-title font-weight-bold d-flex justify-content-center">
                   <a>{name}</a>
                 </h3>
-                <p className="card-text">{description}</p>
-                <ul className="list-unstyled list-inline mb-0">
-                  <li className="list-inline-item me-0">
-                    <i className="fas fa-star text-primary fa-xs">
-                      {" "}
-                      • Bathroom 🛀 {bathrooms}
-                    </i>
-                  </li>
-                  <li className="list-inline-item me-0">
-                    <i className="fas fa-star text-primary fa-xs">
-                      {" "}
-                      • Rooms 🛌 {rooms}
-                    </i>
-                  </li>
-                  <li className="list-inline-item me-0">
-                    <i className="fas fa-star text-primary fa-xs">
-                      {" "}
-                      • House Mt2 🏠 {coveredArea}
-                    </i>
-                  </li>
-                  <li className="list-inline-item me-0">
-                    <i className="fas fa-star text-primary fa-xs">
-                      {" "}
-                      • Area 🌱 {totalArea}
-                    </i>
-                  </li>
-                  <li className="list-inline-item">
-                    <i className="fas fa-star-half-alt text-primary fa-xs">
-                      {" "}
-                      • Person 🧑🏽‍💼 {perPerson}
-                    </i>
-                  </li>
-                </ul>
-
-                <hr className="my-4" />
-                <p className="lead">
+                <p className={`lead ${style.cardLocation}`}>
                   <h4>
                     {location}, {country}
                   </h4>
-                  <h6>{address}</h6>
                 </p>
-                <p className="mb-2">Price $ {total}</p>
+                <p className="card-text">{description}</p>
+                
+
+                <hr className="my-4" />
+                
+                <p className={`mb-2 ${style.price}`}>Precio ${total}</p>
                 
               </div>
             </div>

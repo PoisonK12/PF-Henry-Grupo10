@@ -9,7 +9,7 @@
     color: #dfdfdf;
     border-radius: 0 10px 10px 0    ;
     /* padding: 4px 9px; */
-    left: 40px;
+    left: 27px;
     /* margin: 0; */
     align-items: center;
     justify-content: center;
@@ -129,6 +129,7 @@
     justify-content: center;
   }
 
+  
   .list li{
     cursor: pointer;
     list-style: none;
@@ -142,3 +143,4 @@
   .results.show{
     visibility: visible;
   }
+
