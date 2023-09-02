@@ -28,7 +28,10 @@
   background-color: #cccccc;
   background-size: cover;
   background-position: center bottom;
+  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.8);
   background-repeat: no-repeat;
+  border-radius: 15px;
+  margin-bottom: 15px;
 }
 
 .thumbnail:hover .thumbnailImage, .selected .thumbnailImage {
@@ -36,22 +39,121 @@
 }
 
 .thumbnailImage {
-  width: 100px;
-  height: 100px;
-  margin: 20px auto;
+  width: 300px;
+  height: 120px;
+  margin: auto;
+  margin-top: 15px;
+  margin-right: 55px;
+  margin-bottom: 15px;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   border: 4px solid transparent;
+  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
 }
 
 .container{
   margin: 0 !important;
   width: 100vw !important;
   padding-top: 50px;
-  background-color: aquamarine;
+  background-color: #eae0d5;
+}
+.row {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 20px;
 }
 
+
+/* Estilos para las reseñas */
+.reviewCol {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+
+.reviewCol h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.reviewCol p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para el contenedor principal */
+.propertyDetails {
+  justify-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
+}
+.reseña{
+  justify-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+/* Estilos para la información de la propiedad */
+.propertyInfo {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.propertyInfo h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.propertyInfo p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para la lista de amenidades */
+.propertyAmenities {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.propertyAmenities h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.amenitiesList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.amenitiesItem {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.amenitiesItem span {
+  font-weight: bold;
+  margin-right: 5px;
+}
 
 
 
