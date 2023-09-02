@@ -16,10 +16,12 @@ const getAmenitiesById = async (id, location) => {
     where: {
       id: id,
     },
+    order: [location],
     include: {
       model: Asset,
       through: { joinTableAttributes: [] },
     },
+    order: [],
   });
   return ameni;
 };

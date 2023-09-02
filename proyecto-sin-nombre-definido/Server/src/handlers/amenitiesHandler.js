@@ -14,8 +14,9 @@ const getAllAmenitiesHandler = async (req, res) => {
 };
 const getAmenitiesByIdHandler = async (req, res) => {
   const { id } = req.params;
+  const { dato } = req.query;
   try {
-    const response = await getAmenitiesById(id);
+    const response = await getAmenitiesById(id, dato);
     res.status(200).json(response);
   } catch (error) {
     console.log(error);

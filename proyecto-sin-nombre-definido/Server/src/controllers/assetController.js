@@ -16,10 +16,25 @@ const getAllAssets = async (req) => {
     rentPriceMin,
     rentPriceMax,
     amenities,
-    orderBy,
+    sortBy,
   } = req.query;
 
-  const filter = {};
+  let amenityIds = [];
+
+  console.log(typeof amenities);
+  amenityIds = amenities ? amenities.split(",").map(Number) : [];
+  // console.log(amenityIds);
+  let filter = {
+    model: Amenity,
+    where: {
+      id: {
+        [Op.in]: amenityIds,
+      },
+    },
+    through: { joinTableAttributes: [] },
+    required: true, // Esto garantiza que solo se seleccionen activos que tengan al menos una de las amenidades especificadas.
+    as: "Amenities",
+  };
   //Recibo los filtros requeridos desde el front por query y ensamblo un objeto dependiendo de cuantas propiedades requiera
   if (location) {
     filter.location = location;
@@ -33,6 +48,8 @@ const getAllAssets = async (req) => {
   if (onSale) {
     filter.onSale = onSale;
   }
+  console.log(filter);
+
   // if(sellPriceMin){
   //   filter.sellPriceMin = sellPriceMin
   // }
@@ -57,10 +74,6 @@ const getAllAssets = async (req) => {
   // if(totalAreaMax){
   //   filter.totalAreaMax =totalAreaMax
   // // }
-  const amenityIds = [];
-  if (amenities) {
-    const amenityIds = amenities ? amenities.split(",").map(Number) : [];
-  }
   // if(orderBy){
   //   filter.orderBy = orderBy
   // }
@@ -76,24 +89,16 @@ const getAllAssets = async (req) => {
   }
 
   const assets = await Asset.findAndCountAll({
-    where: filter,
-    order: [orderBy],
+    where: {
+      filter,
+    },
+    order: [sortBy],
     limit: size,
     offset: (page - 1) * size,
     include: [
       {
-        model: Amenity,
-        where: {
-          id: {
-            [Op.in]: amenityIds,
-          },
-        },
-        through: { attributes: [] },
-        required: true, // Esto garantiza que solo se seleccionen activos que tengan al menos una de las amenidades especificadas.
-      },
-      {
         model: Amenity, // Esta segunda inclusión de Amenity es para obtener la lista completa de amenidades de cada activo.
-        through: { attributes: [] },
+        through: { joinTableAttributes: [] },
         as: "Amenities", // Asigna un alias para evitar conflictos.
       },
     ],
