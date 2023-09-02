@@ -1,4 +1,4 @@
-const { Asset, Amenity, assetAmenities } = require("../db");
+const { Asset, Amenity } = require("../db");
 const { Op } = require("sequelize");
 const { filterLocation } = require("../helpers/filterLocation");
 
@@ -11,31 +11,40 @@ const getAllAssets = async (req) => {
     rooms,
     bathrooms,
     onSale,
-    sellPriceMin,
-    sellPriceMax,
-    rentPriceMin,
-    rentPriceMax,
     amenities,
-    sortBy,
+    rentPriceMax,
+    rentPriceMin,
+    sellPriceMax,
+    sellPriceMin,
+    // sortBy,
   } = req.query;
 
   let amenityIds = [];
 
   console.log(typeof amenities);
   amenityIds = amenities ? amenities.split(",").map(Number) : [];
-  // console.log(amenityIds);
-  let filter = {
-    model: Amenity,
-    where: {
-      id: {
-        [Op.in]: amenityIds,
-      },
-    },
-    through: { joinTableAttributes: [] },
-    required: true, // Esto garantiza que solo se seleccionen activos que tengan al menos una de las amenidades especificadas.
-    as: "Amenities",
-  };
-  //Recibo los filtros requeridos desde el front por query y ensamblo un objeto dependiendo de cuantas propiedades requiera
+
+  let filter = {};
+
+  // if (amenityIds.length > 0) {
+  //   filter.id = {
+  //     [Op.in]: amenityIds,
+  //   };
+  // }
+
+  if (rentPriceMin) {
+    filter.rentPrice = { ...filter.rentPrice, [Op.gte]: rentPriceMin };
+  }
+  if (rentPriceMax) {
+    filter.rentPrice = { ...filter.rentPrice, [Op.lte]: rentPriceMax };
+  }
+  if (sellPriceMin) {
+    filter.rentPrice = { ...filter.sellPrice, [Op.gte]: sellPriceMin };
+  }
+  if (sellPriceMax) {
+    filter.rentPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
+  }
+
   if (location) {
     filter.location = location;
   }
@@ -50,34 +59,6 @@ const getAllAssets = async (req) => {
   }
   console.log(filter);
 
-  // if(sellPriceMin){
-  //   filter.sellPriceMin = sellPriceMin
-  // }
-  // if(sellPriceMax){
-  //   filter.sellPriceMax =sellPriceMax
-  // }
-  // if(rentPriceMin){
-  //   filter.rentPriceMin =rentPriceMin
-  // }
-  // if(rentPriceMax){
-  //   filter.rentPriceMax =rentPriceMax
-  // }
-  // if(coveredAreaMin){
-  //   filter.coveredAreaMin =coveredAreaMin
-  // }
-  // if(coveredAreaMax){
-  //   filter.coveredAreaMax =coveredAreaMax
-  // }
-  // if(totalAreaMin){
-  //   filter.totalAreaMin =totalAreaMin
-  // }
-  // if(totalAreaMax){
-  //   filter.totalAreaMax =totalAreaMax
-  // // }
-  // if(orderBy){
-  //   filter.orderBy = orderBy
-  // }
-
   let page = 1;
   if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
     page = pageAsNumber;
@@ -87,21 +68,15 @@ const getAllAssets = async (req) => {
   if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
     size = sizeAsNumber;
   }
-
   const assets = await Asset.findAndCountAll({
-    where: {
-      filter,
-    },
-    order: [sortBy],
+    where: filter,
+    order: [],
     limit: size,
     offset: (page - 1) * size,
-    include: [
-      {
-        model: Amenity, // Esta segunda inclusión de Amenity es para obtener la lista completa de amenidades de cada activo.
-        through: { joinTableAttributes: [] },
-        as: "Amenities", // Asigna un alias para evitar conflictos.
-      },
-    ],
+    include: {
+      model: Amenity,
+      through: { joinTableAttributes: [] },
+    },
   });
 
   return assets;
