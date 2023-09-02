@@ -4,6 +4,7 @@ import {
   GET_ASSET_BY_ID,
   GET_LOCATIONS,
   SEARCH_BY_LOCATION,
+  PUT_PROPERTY
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -74,3 +75,17 @@ export const getLocation = () => {
     }
   };
 };
+
+export const putProperty = (id, form) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.put(`/assets/${id}`, form)
+      return dispatch({
+        type: PUT_PROPERTY,
+        payload: data
+      })
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
