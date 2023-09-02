@@ -3,6 +3,17 @@ const { Op } = require("sequelize");
 const { filterLocation } = require("../helpers/filterLocation");
 
 // Trae todas las propiedades y paginado
+
+const getAllButAllAssets = async (req, res) => {
+  try {
+    const response = await Asset.findAll({});
+
+    return response;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 const getAllAssets = async (req) => {
   const pageAsNumber = Number.parseInt(req.query.page);
   const sizeAsNumber = Number.parseInt(req.query.size);
@@ -25,12 +36,6 @@ const getAllAssets = async (req) => {
   amenityIds = amenities ? amenities.split(",").map(Number) : [];
 
   let filter = {};
-
-  // if (amenityIds.length > 0) {
-  //   filter.id = {
-  //     [Op.in]: amenityIds,
-  //   };
-  // }
 
   if (rentPriceMin) {
     filter.rentPrice = { ...filter.rentPrice, [Op.gte]: rentPriceMin };
@@ -241,4 +246,5 @@ module.exports = {
   updateAsset,
   getAllLocations,
   getAllAmenities,
+  getAllButAllAssets,
 };
