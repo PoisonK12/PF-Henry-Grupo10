@@ -173,6 +173,12 @@ const createAsset = async (
   userId
 ) => {
   try {
+        // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando
+    const existingAsset = await Asset.findOne({ where: { name } });
+        
+    if (existingAsset) {      
+      throw new Error("La Asset ya existe");
+    };
     const createdAsset = await Asset.create({
       name,
       description,
@@ -202,7 +208,7 @@ const createAsset = async (
 
     return createdAsset;
   } catch (error) {
-    console.log("error createAsset");
+    
     console.log(error);
     throw new Error("Error al registrar la propiedad");
   }
