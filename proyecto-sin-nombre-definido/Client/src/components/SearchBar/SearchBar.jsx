@@ -52,8 +52,8 @@ export const SearchBar = () => {
       return
     }else{
 
-      dispatch(SearchByLocation(search));
-      navigate("/property");
+      dispatch(SearchByLocation(search, 0));
+      navigate(`/property/${search}`);
     }
   };
 

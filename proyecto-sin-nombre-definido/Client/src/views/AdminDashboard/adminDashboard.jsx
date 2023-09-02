@@ -3,11 +3,11 @@ import style from "./adminDashboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getAllProperties, putProperty } from "../../redux/actions";
+import { getAllProperties, getAllReallyProperties, putProperty } from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
-  const allProperties = useSelector((state) => state.properties);
+  const allProperties = useSelector((state) => state.propertiesCopy);
   console.log(allProperties);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("ea6107b3-908a-4936-affb-30582f7ed570");
@@ -18,8 +18,9 @@ const AdminDashboard = () => {
   });
   const [form, setForm] = useState({
     name: "",
-    // onSale: false,
-    // images: [],
+    
+    onSale: false,
+    images: [],
   });
   const [errors, setErrors] = useState({
     image: "",
@@ -88,7 +89,7 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllProperties());
+    dispatch(getAllReallyProperties());
   }, []);
 
   return (
@@ -110,7 +111,7 @@ const AdminDashboard = () => {
       {/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link> */}
 
       <div>
-        {allProperties.rows?.map((props) => (
+        {allProperties?.map((props) => (
           <div className={`${style.centeredContent}`} key={props.id}>
             <div className={`card mb-3 ${style.maxWidth}`}>
               <div className="row g-0">
@@ -259,7 +260,7 @@ const AdminDashboard = () => {
         />
         <button type="submit">aca</button>
       </form>
-      {/* <div
+      <div
         className="modal fade"
         id="exampleModalToggle"
         aria-hidden="true"
@@ -640,8 +641,8 @@ const AdminDashboard = () => {
                   </div>
                 </div>
               </form>
-            </div> */}
-      {/* <div className="modal-footer">
+            </div> 
+      <div className="modal-footer">
               <button
                 className="btn btn-primary"
                 data-bs-target="#exampleModalToggle2"
@@ -660,7 +661,7 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
       <div
         className="modal fade"
         id="exampleModalToggle4"
