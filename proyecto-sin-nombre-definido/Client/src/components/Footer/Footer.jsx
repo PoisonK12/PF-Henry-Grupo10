@@ -61,7 +61,7 @@ export const Footer = () => {
                     <a className="text-white">Pablo Andrada</a>
                   </p>
                   <p>
-                    <a className="text-white">German </a>
+                    <a className="text-white">German Guenov</a>
                   </p>
                 </div>
 

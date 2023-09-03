@@ -3,13 +3,17 @@ import style from "./adminDashboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getAllProperties, getAllReallyProperties, putProperty } from "../../redux/actions";
+import {
+  getAllProperties,
+  getAllReallyProperties,
+  putProperty,
+} from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);
   console.log(allProperties);
-  const [updated, setUpdated] = useState(false)
+  const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
@@ -261,14 +265,14 @@ const AdminDashboard = () => {
                         </button>
                       </Link>
                       <button
-  className={`btn btn-danger ${style.customButton}`}
-  onClick={() => {
-    // Llama a la función handleDelete para mostrar el modal de confirmación
-    handleDeleteAsset(props.id);
-  }}
->
-  Eliminar
-</button>
+                        className={`btn btn-danger ${style.customButton}`}
+                        onClick={() => {
+                          // Llama a la función handleDelete para mostrar el modal de confirmación
+                          handleDeleteAsset(props.id);
+                        }}
+                      >
+                        Eliminar
+                      </button>
                       <button
                         className="btn btn-primary"
                         data-bs-target="#exampleModalToggle"
@@ -338,7 +342,6 @@ const AdminDashboard = () => {
                         <input
                           type="text"
                           name="name"
-                          
                           value={form.name}
                           className="form-control mb-1"
                           id="inputName"
@@ -719,8 +722,8 @@ const AdminDashboard = () => {
                     // data-bs-target="#exampleModalToggle"
                     // data-bs-toggle="modal"
                     onClick={() => alertHandler()}
-                data-bs-dismiss="modal"
-                aria-label="Close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
                   >
                     Enviar
                   </button>
@@ -730,8 +733,14 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      {updated ? <div className={`${style.alert} ${style.show}`}><Alerts/> </div> :"" }
-        
+      {updated ? (
+        <div className={`${style.alert} ${style.show}`}>
+          <Alerts />{" "}
+        </div>
+      ) : (
+        ""
+      )}
+
       <div
         className="modal fade"
         id="exampleModalToggle4"
