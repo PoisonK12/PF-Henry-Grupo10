@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAssetById } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 import NotFoundPage from "../404/404";
+import Calendar from "./Calendar";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -139,70 +140,8 @@ const Detail = () => {
             ></iframe>
           </div>
           <div className={`col-8 ${style.propertyAmenities}`}>
-          
-          <table class="table">
-            <thead>
-                <tr>
-                    <th>Lunes</th>
-                    <th>Martes</th>
-                    <th>Miércoles</th>
-                    <th>Jueves</th>
-                    <th>Viernes</th>
-                    <th>Sabado</th>
-                    <th>Domingo</th>
-                </tr>
-            </thead>
-            <tbody>
-              <tr class="table-active">
-               <th scope="row">1</th>
-                <td colspan="2" class="table-active">Larry the Bird</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-              </tr>
-              <tr>
-               <th scope="row">2</th>
-                <td colspan="2" class="table-active">Larry the Bird</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td colspan="2" class="table-active">Larry the Bird</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-              </tr>
-              <tr>
-               <th scope="row">4</th>
-                <td colspan="2" class="table-active">Larry the Bird</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td colspan="2" class="table-active">Larry the Bird</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-              </tr>
-              <tr>
-                <th scope="row">6</th>
-                <td colspan="2" class="table-active">Larry the Bird</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-                <td>Day ...</td>
-              </tr>
-            </tbody>
-          </table>
+          <Calendar/>
+        
           </div>
           </div>
           <div className={`${style.reseña}`}>
