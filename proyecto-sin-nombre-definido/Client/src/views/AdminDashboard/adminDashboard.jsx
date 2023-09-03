@@ -10,12 +10,17 @@ import {
   putProperty,
 } from "../../redux/actions";
 import axios from "axios";
+import {
+  getAllProperties,
+  getAllReallyProperties,
+  putProperty,
+} from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);
-
-  const [updated, setUpdated] = useState(false);
+  console.log(allProperties);
+  const [updated, setUpdated] = useState(false)
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
@@ -277,15 +282,15 @@ const AdminDashboard = () => {
                       </Link>
                       <div className={style.left}>
                       <button
-                        className={`btn btn-danger ${style.left} `}
-                        
+                                              className={`btn btn-danger ${style.left} `}
+                                              
                         onClick={() => {
-                          // Llama a la función handleDelete para mostrar el modal de confirmación
-                          handleDeleteAsset(props.id);
-                        }}
-                      >
-                        Eliminar
-                      </button>
+                                                // Llama a la función handleDelete para mostrar el modal de confirmación
+                                                handleDeleteAsset(props.id);
+                                              }}
+                                            >
+                                              Eliminar
+                                            </button>
                       <button
                         className={`btn btn-primary ${style.left}`}
                         data-bs-target="#exampleModalToggle"

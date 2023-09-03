@@ -4,6 +4,12 @@
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
 } */
+.buttonGroup {
+    display: flex;
+    justify-content: space-between; /* Distribuye los botones horizontalmente */
+    align-items: center; /* Alinea los botones verticalmente en el centro */
+  }
+  
 .container{
     margin-top: 50px;
     padding: 15px;
@@ -174,8 +180,8 @@ table.table .avatar {
 }
 .customButton {
 position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 62%;
+  left: 90%;
   transform: translate(-50%, -50%);
   text-align: center;
   background-color:#fffefe98;
