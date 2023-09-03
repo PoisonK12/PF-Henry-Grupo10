@@ -7,6 +7,7 @@ import {
   PUT_PROPERTY,
   GET_ALL_ALL_PROPERTIES,
   SEARCH_BY_FILTER,
+  DELETE_ASSET_BY_ID
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -70,21 +71,29 @@ export const SearchByLocation = (query, page) => {
   };
 };
 
-export const createAsset = async (form, setModal, setModalBody) => {
-  try {
-    const { data } = await axios.post("/assets/create", form);
-    if (data) {
-      setModalBody({ response: data });
-      setModal(true);
-      console.log(data);
-    }
-  } catch (error) {
-    setModalBody({ response: error.response.data });
+export const createAsset = async (form , setModal,setModalBody ) => {
 
-    setModal(true);
-    return console.log(error);
-  }
-};
+    try {                         
+     const {data} = await axios.post("/assets/create" , form);
+     if(data) {
+         setModalBody({response: data})
+         setModal(true);
+         console.log(data);
+     }
+    } catch (error) {
+      
+      if( error.response.data.error.includes("propiedad")) {
+        setModalBody({ response :  error.response.data.error});
+        return
+      } 
+        setModalBody({ response :  JSON.parse(error.response.data.error)});
+      
+      setModal(true)
+     return console.log(error);
+    }
+  } 
+
+
 
 export const getLocation = () => {
   return async (dispatch) => {
@@ -145,4 +154,22 @@ export const searchByFilter = ({
       
     }
   }
+}
+
+// Acción para eliminar una propiedad por su ID
+export const deleteAssetById = (id) => {
+  return async (dispatch) => {
+    try {
+      // Realiza la solicitud de eliminación al servidor
+      await axios.delete(`/assets/delete/${id}`);
+
+      // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
+      dispatch({
+        type: DELETE_ASSET_BY_ID,
+        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 };

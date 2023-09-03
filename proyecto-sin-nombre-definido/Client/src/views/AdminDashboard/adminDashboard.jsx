@@ -3,13 +3,7 @@ import style from "./adminDashboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {
-  getAllProperties,
-  getAllReallyProperties,
-  putProperty,
-} from "../../redux/actions";
-import axios from "axios";
-import Alerts from "../../components/Alerts/Alerts";
+import { getAllProperties, getAllReallyProperties, putProperty } from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -67,7 +61,6 @@ const AdminDashboard = () => {
   const [errors, setErrors] = useState({
     image: "",
   });
-
   const handleCheckbox = (e) => {
     if (e.target.name === "onSale" && e.target.value === "true") {
       setPrice(true);
@@ -89,7 +82,6 @@ const AdminDashboard = () => {
     }
     setForm((prevData) => ({ ...prevData, [name]: value }));
   };
-
   // Función para manejar el archivo seleccionado
   const handleFile = (file) => {
     // Realizar las acciones necesarias con el archivo
@@ -104,7 +96,6 @@ const AdminDashboard = () => {
       return
     }
   };
-
   // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
     event.preventDefault();
@@ -120,7 +111,6 @@ const AdminDashboard = () => {
     updatedImages.splice(index, 1); // Elimina la imagen en el índice especificado
     setForm({ ...form, images: updatedImages });
   }
-
   const handleUpdate = async (id) => {
     console.log("entre al handle");
     try {
@@ -130,13 +120,6 @@ const AdminDashboard = () => {
     }
   };
 
-  const alertHandler = () => {
-    setUpdated(true)
-    setTimeout(() =>{
-      setUpdated(false)
-    },5000)
-  }
-
   const descripCut = (description) => {
     if (description.length > 220) {
       const newDesc = description.split("").slice(0, 220).join("");
@@ -144,10 +127,15 @@ const AdminDashboard = () => {
     }
     return <p className="card-text">{description}</p>;
   };
-
+  const handleDeleteAsset = (id) => {
+    if (window.confirm("¿Seguro que deseas eliminar esta propiedad?")) {
+      // Llama a la acción para eliminar la propiedad por su ID
+      dispatch(deleteAssetById(id));
+    }
+  };
   useEffect(() => {
     dispatch(getAllReallyProperties());
-  }, [allProperties]);
+  }, []);
 
   return (
     <div>
@@ -285,7 +273,15 @@ const AdminDashboard = () => {
                           Ver Detalles
                         </button>
                       </Link>
-
+                      <button
+  className={`btn btn-danger ${style.customButton}`}
+  onClick={() => {
+    // Llama a la función handleDelete para mostrar el modal de confirmación
+    handleDeleteAsset(props.id);
+  }}
+>
+  Eliminar
+</button>
                       <button
                         className="btn btn-primary"
                         data-bs-target="#exampleModalToggle"
