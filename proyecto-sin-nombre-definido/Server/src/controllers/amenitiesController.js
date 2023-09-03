@@ -5,7 +5,7 @@ const getAllAmenities = async (req, res) => {
     const response = await Amenity.findAll({
       attributes: ["id", "name"],
     });
-
+//
     return response;
   } catch (error) {
     console.error(error.message);
