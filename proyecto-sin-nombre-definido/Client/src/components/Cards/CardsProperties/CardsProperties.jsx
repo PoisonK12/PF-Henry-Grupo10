@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CardProperties from "../../Card/CardProperties/CardProperties";
 import { SearchByLocation, getLocation } from "../../../redux/actions";
+import NotFoundPage from "../../../views/404/404";
 
 
 const CardsProperties = () => {
@@ -43,6 +44,8 @@ const CardsProperties = () => {
 
   return (
     <>
+    {!allProperties.length ? (
+      <>
     <div ref={listContainerRef}> 
       {allProperties.rows?.map((ele) => {
        return <CardProperties
@@ -62,6 +65,8 @@ const CardsProperties = () => {
         <button onClick={prevHandler}>PREV</button>
         <button onClick={nextHandler}>NEXT</button>
       </div>
+      </>
+    ) : <NotFoundPage/> }
     </>
   );
 };

@@ -78,7 +78,7 @@ const Property = () => {
               <div>
                 <label>Localidad</label>
                 <select name="location" onChange={handleChange}>
-                  <option name="location">{location}</option>
+                  <option name="location">Cambiar localidad</option>
                   {locations
                     ? locations.map((ele) => (
                         <option value={ele} key={ele} name="location">

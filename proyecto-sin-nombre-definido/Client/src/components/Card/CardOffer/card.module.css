@@ -1,6 +1,7 @@
 .cardContainer{
     background-color: rgba(0, 0, 0, 0.1);
     height: 225px;
+    width: 100%;
 }
 .card{
     width: 100%;
