@@ -105,7 +105,7 @@ export const SearchBar = () => {
         {/* <button className={s.reset} onClick={cleanButton}></button> */}
         <div className={`${s.results} ${showLocation ? s.show : ""}`}>
           <div className={s.list}>
-            {location?.map((ele) => {
+            {location?.slice(0,5).map((ele) => {
               return (
                 <li key={ele} onClick={() => handleClickSearch(ele)}>
                   {ele}

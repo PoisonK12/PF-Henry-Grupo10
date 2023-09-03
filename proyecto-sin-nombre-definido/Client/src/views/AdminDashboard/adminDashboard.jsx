@@ -9,11 +9,13 @@ import {
   putProperty,
 } from "../../redux/actions";
 import axios from "axios";
+import Alerts from "../../components/Alerts/Alerts";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);
   console.log(allProperties);
+  const [updated, setUpdated] = useState(false)
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
@@ -119,6 +121,13 @@ const AdminDashboard = () => {
       console.log(error);
     }
   };
+
+  const alertHandler = () => {
+    setUpdated(true)
+    setTimeout(() =>{
+      setUpdated(false)
+    },5000)
+  }
 
   const descripCut = (description) => {
     if (description.length > 220) {
@@ -713,6 +722,7 @@ const AdminDashboard = () => {
                     type="submit"
                     // data-bs-target="#exampleModalToggle"
                     // data-bs-toggle="modal"
+                    onClick={() => alertHandler()}
                 data-bs-dismiss="modal"
                 aria-label="Close"
                   >
@@ -724,6 +734,8 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
+      {updated ? <div className={`${style.alert} ${style.show}`}><Alerts/> </div> :"" }
+        
       <div
         className="modal fade"
         id="exampleModalToggle4"
