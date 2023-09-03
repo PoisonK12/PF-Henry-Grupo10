@@ -5,7 +5,8 @@ import {
   GET_LOCATIONS,
   SEARCH_BY_LOCATION,
   PUT_PROPERTY,
-  GET_ALL_ALL_PROPERTIES
+  GET_ALL_ALL_PROPERTIES,
+  DELETE_ASSET_BY_ID
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -114,3 +115,21 @@ export const putProperty = (id, form) => {
     }
   }
 }
+
+// Acción para eliminar una propiedad por su ID
+export const deleteAssetById = (id) => {
+  return async (dispatch) => {
+    try {
+      // Realiza la solicitud de eliminación al servidor
+      await axios.delete(`/assets/delete/${id}`);
+
+      // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
+      dispatch({
+        type: DELETE_ASSET_BY_ID,
+        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
