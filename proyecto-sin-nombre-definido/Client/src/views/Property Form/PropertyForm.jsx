@@ -45,7 +45,6 @@ console.log(errors);
     name : "",
     images : [],
     country : "",
-    state : "",
     address : "",
     location : "",
     onSale : false,
@@ -57,8 +56,8 @@ console.log(errors);
     description : "",
     parking : false,
     terrace : false,
-    coveredArea: 0,
-    totalArea:0,
+    coveredArea: undefined,
+    totalArea:undefined,
     reviews:"asdasdasd",
     nearby:"asd",
     nearbyScore:1,
@@ -133,7 +132,8 @@ console.log(errors);
   }
 
   if(step === 1) {
-     setErrors(validation({ images : form.images ,name :  form.name , location :  form.location , country : form.country ,  address : form.address}))
+  
+setErrors(validation({...form}));
     const  step1 = Object.values({images : errors.images ,  name : errors.name , location : errors.location , country : errors.country , address : errors.address});
   console.log(step1);
   if (step1.some(error => typeof error === "string")) {
@@ -142,7 +142,8 @@ console.log(errors);
 }
 
 if(step === 2) {
-  setErrors(validation({bathrooms : form.bathrooms , rooms : form.rooms , totalArea : form.totalArea , coveredArea : form.coveredArea , rentPrice : form.rentPrice , sellPrice : form.sellPrice}))
+  
+  
   const  step2 = Object.values({bathrooms : errors.bathrooms , rooms : errors.rooms , totalArea : errors.totalArea , coveredArea : errors.coveredArea , rentPrice : errors.rentPrice , sellPrice : errors.sellPrice});
 console.log(step2);
 if (step2.some(error => typeof error === "string")) {
@@ -151,7 +152,7 @@ if (step2.some(error => typeof error === "string")) {
 }
 
 if(step === 3) {
-  setErrors(validation({description : form.description }))
+  
   const  step3 = Object.values({description : errors.description });
 console.log(step3);
 if (step3.some(error => typeof error === "string")) {
@@ -172,7 +173,7 @@ const handleChange = (e) => {
   const {value} = e.target;
    
     
-  const errorDetect = validation({...form, [name] : value})
+  const errorDetect = validation({...form ,[name] : value})
   setErrors((prevError) => ({
    ...prevError, [name] : errorDetect[name]
   }))
@@ -207,7 +208,7 @@ const handleChange = (e) => {
       else if(typeof modalBody.response === "object") {
         return setTimeout(() => {
          navigate("/home")
-       }, 2000)
+       }, 1500)
     }  
 
   };
