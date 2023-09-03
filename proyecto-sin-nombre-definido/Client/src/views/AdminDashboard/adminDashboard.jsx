@@ -3,14 +3,19 @@ import style from "./adminDashboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getAllProperties, getAllReallyProperties, putProperty } from "../../redux/actions";
+import {
+  getAllProperties,
+  getAllReallyProperties,
+  putProperty,
+} from "../../redux/actions";
+import axios from "axios";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);
   console.log(allProperties);
   const [price, setPrice] = useState(false);
-  const [idHouse, setIdHouse] = useState("ea6107b3-908a-4936-affb-30582f7ed570");
+  const [idHouse, setIdHouse] = useState("");
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
     onSale: "",
     parking: "",
@@ -18,10 +23,45 @@ const AdminDashboard = () => {
   });
   const [form, setForm] = useState({
     name: "",
-    
+    description: "",
+    country: "",
+    state: "",
+    address: "",
+    location: "",
     onSale: false,
     images: [],
+    sellPrice: 1,
+    rentPrice: 1,
+    rooms: 0,
+    bathrooms: 0,
+    coveredArea: 0,
+    totalArea: 0,
   });
+
+  useEffect(() => {
+    const getDataForFrom = async () => {
+      const { data } = await axios(`/assets/` + idHouse);
+      setForm({
+        name: data.name,
+        country: data?.country,
+        state: data?.state,
+        address: data?.address,
+        location: data?.location,
+        description: data.description,
+        onSale: data.onSale,
+        images: data.image,
+        sellPrice: data?.sellPrice,
+        rentPrice: data?.rentPrice,
+        rooms: data.rooms,
+        bathrooms: data.bathrooms,
+        coveredArea: data.coveredArea,
+        totalArea: data.totalArea,
+      });
+      console.log(form);
+    };
+    getDataForFrom();
+  }, [idHouse]);
+
   const [errors, setErrors] = useState({
     image: "",
   });
@@ -41,10 +81,10 @@ const AdminDashboard = () => {
     const { name } = e.target;
     const { value } = e.target;
 
-    // if (e.target.type === "checkbox") {
-    //   setForm({ ...form, [name]: JSON.parse(value) });
-    //   return;
-    // }
+    if (e.target.type === "checkbox") {
+      setForm({ ...form, [name]: JSON.parse(value) });
+      return;
+    }
     setForm((prevData) => ({ ...prevData, [name]: value }));
   };
 
@@ -74,7 +114,7 @@ const AdminDashboard = () => {
   const handleUpdate = async (id) => {
     console.log("entre al handle");
     try {
-     await dispatch(putProperty(id, form));
+      dispatch(putProperty(id, form));
     } catch (error) {
       console.log(error);
     }
@@ -90,7 +130,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     dispatch(getAllReallyProperties());
-  }, []);
+  }, [allProperties]);
 
   return (
     <div>
@@ -243,7 +283,7 @@ const AdminDashboard = () => {
       <form
         onSubmit={(e) => {
           handleUpdate(idHouse);
-            e.preventDefault();
+          e.preventDefault();
         }}
       >
         <label htmlFor="inputName" className="form-label">
@@ -293,6 +333,8 @@ const AdminDashboard = () => {
                         <input
                           type="text"
                           name="name"
+                          
+                          value={form.name}
                           className="form-control mb-1"
                           id="inputName"
                           placeholder="Nombre de tu propiedad"
@@ -309,11 +351,13 @@ const AdminDashboard = () => {
                       <input
                         type="text"
                         name="address"
+                        value={form.address}
                         className="form-control "
                         id="inputAddress"
                         placeholder="1234 Main St"
                         onChange={(e) => handleChange(e)}
                         required
+                        disabled
                       />
                     </div>
 
@@ -324,6 +368,8 @@ const AdminDashboard = () => {
                       <input
                         type="text"
                         name="country"
+                        disabled
+                        value={form.country}
                         className="form-control"
                         id="inputAddress2"
                         onChange={(e) => handleChange(e)}
@@ -338,9 +384,11 @@ const AdminDashboard = () => {
                       </label>
                       <input
                         type="text"
-                        name="address"
+                        name="location"
                         className="form-control "
                         id="inputAddress"
+                        disabled
+                        value={form.location}
                         placeholder="1234 Main St"
                         onChange={(e) => handleChange(e)}
                         required
@@ -353,7 +401,9 @@ const AdminDashboard = () => {
                       </label>
                       <input
                         type="text"
-                        name="country"
+                        name="state"
+                        disabled
+                        value={form.state}
                         className="form-control"
                         id="inputAddress2"
                         onChange={(e) => handleChange(e)}
@@ -412,11 +462,14 @@ const AdminDashboard = () => {
                         className="form-select"
                       >
                         <option>Elije uno...</option>
-                        <option name="type" value="Yes">
-                          Yes
+                        <option name="type" value="Departamento">
+                          Departamento
                         </option>
-                        <option name="type" value="No">
-                          No
+                        <option name="type" value="Casa">
+                          Casa
+                        </option>
+                        <option name="type" value="Hotel">
+                          Hotel
                         </option>
                       </select>
                     </div>
@@ -428,6 +481,7 @@ const AdminDashboard = () => {
                       <input
                         type="number"
                         name="rooms"
+                        value={form.rooms}
                         className="form-control"
                         onChange={(e) => handleChange(e)}
                         id="inputHab"
@@ -443,7 +497,8 @@ const AdminDashboard = () => {
                       </label>
                       <input
                         type="number"
-                        name="rooms"
+                        name="bathrooms"
+                        value={form.bathrooms}
                         className="form-control"
                         onChange={(e) => handleChange(e)}
                         id="inputHab"
@@ -459,15 +514,16 @@ const AdminDashboard = () => {
                       <select
                         id="inputState"
                         onChange={(e) => handleChange(e)}
+                        value={form.parking}
                         name="type"
                         className="form-select"
                       >
                         <option>Elije uno...</option>
-                        <option name="type" value="Departamento">
+                        <option name="type" value={true}>
                           Yes
                         </option>
-                        <option name="type" value="Casa">
-                          Casa
+                        <option name="type" value={false}>
+                          No
                         </option>
                       </select>
                     </div>
@@ -481,6 +537,7 @@ const AdminDashboard = () => {
                         id="inputState"
                         onChange={(e) => handleChange(e)}
                         name="type"
+                        value={form.terrace}
                         className="form-select"
                       >
                         <option>Elije uno...</option>
@@ -506,7 +563,7 @@ const AdminDashboard = () => {
                           }}
                           className="form-check-input"
                           id="checkbox1"
-                          value="true"
+                          value={true}
                         />
                         <label htmlFor="checkbox1" className="form-check-label">
                           {" "}
@@ -525,7 +582,7 @@ const AdminDashboard = () => {
                           }}
                           className="form-check-input"
                           id="checkbox2"
-                          value="false"
+                          value={false}
                         />
                         <label htmlFor="checkbox2" className="form-check-label">
                           NO{" "}
@@ -547,6 +604,7 @@ const AdminDashboard = () => {
                         onChange={(e) => {
                           handleChange(e);
                         }}
+                        value={form.rentPrice}
                       ></input>
                     </div>
 
@@ -563,6 +621,7 @@ const AdminDashboard = () => {
                         type="number"
                         id="inputPriceS"
                         name="sellPrice"
+                        value={form.sellPrice}
                         className=" form-control"
                         onChange={(e) => {
                           handleChange(e);
@@ -614,7 +673,7 @@ const AdminDashboard = () => {
             </div>
             <div className="modal-body">
               <form
-                className="d-flex flex-row align-items-center justify-content-center text-center"
+                // className="d-flex flex-row align-items-center justify-content-center text-center"
                 onSubmit={(e) => {
                   e.preventDefault(); // Prevent the default form submission
                   console.log("Form submitted"); // Check if this message is logged
@@ -633,6 +692,7 @@ const AdminDashboard = () => {
                           className="form-control"
                           rows="6"
                           cols="50"
+                          value={form.description}
                           name="description"
                           onChange={(e) => handleChange(e)}
                         ></textarea>
@@ -640,24 +700,26 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 </div>
+                <div className="modal-footer">
+                  <button
+                    className="btn btn-primary"
+                    data-bs-target="#exampleModalToggle2"
+                    data-bs-toggle="modal"
+                  >
+                    Anterior
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    // data-bs-target="#exampleModalToggle"
+                    // data-bs-toggle="modal"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                  >
+                    Enviar
+                  </button>
+                </div>
               </form>
-            </div> 
-      <div className="modal-footer">
-              <button
-                className="btn btn-primary"
-                data-bs-target="#exampleModalToggle2"
-                data-bs-toggle="modal"
-              >
-                Anterior
-              </button>
-              <button
-                className="btn btn-primary"
-                type="submit"
-                // data-bs-target="#exampleModalToggle"
-                // data-bs-toggle="modal"
-              >
-                Enviar
-              </button>
             </div>
           </div>
         </div>
