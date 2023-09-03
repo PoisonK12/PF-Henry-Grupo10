@@ -60,8 +60,8 @@ export const createAsset = async (form , setModal,setModalBody ) => {
          console.log(data);
      }
     } catch (error) {
-        setModalBody({ response :  error.response.data});
-
+        setModalBody({ response :  JSON.parse(error.response.data.error)});
+      
       setModal(true)
      return console.log(error);
     }
