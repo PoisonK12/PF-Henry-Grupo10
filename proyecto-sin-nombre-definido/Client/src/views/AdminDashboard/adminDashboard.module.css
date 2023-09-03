@@ -186,6 +186,8 @@ position: absolute;
   padding: 20px; /* Espacio alrededor del texto */
   z-index: 10;
 }
+
+
 .buton {
     background-color: #ff0000;
     color: #ffffff;
@@ -195,6 +197,28 @@ position: absolute;
     cursor: pointer;
     width: 75px;
 }
+
+
+.divButton{
+    width: 100%;
+    margin: 0 auto;
+
+    display: flex !important;
+    align-items: center !important;
+    /* justify-content: center !important; */
+    justify-content: start;
+}
+
+.divButton button{
+    margin-right:10px ;
+}
+
+.left{
+    display:flex;
+    margin-left:auto !important ;
+}
+
+
 
 .alert{
     position: fixed;
@@ -207,4 +231,11 @@ position: absolute;
 
 .alert.show{
     opacity: 1;
+}
+
+.background{
+    font-family: montserrat, arial, verdana;
+    background-color: rgb(231, 231, 231);
+    padding: 20px;
+    padding-top: 100px;
 }
