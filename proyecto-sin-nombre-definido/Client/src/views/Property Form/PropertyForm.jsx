@@ -1,4 +1,4 @@
-import React, {useState , useEffect} from "react";
+import React, {useState , useEffect, useRef} from "react";
 import style from "./PropertyForm.module.css"
 import { useNavigate } from "react-router";
 import { Carousel , Modal } from "react-bootstrap";
@@ -9,11 +9,12 @@ import validation from "./Validation";
 
 const PropertyForm = () => {
 
-
+  const ref = useRef(null)
   const [modal , setModal] = useState(false);
   const [modalBody , setModalBody] = useState({response : []})
   const [price , setPrice ] = useState(false);
   const [step , setStep] = useState(1);
+
   const [errors , setErrors] = useState( {
     
     name  : "",
@@ -109,7 +110,6 @@ console.log(errors);
         handle()
       },1000)
       return
-
     }
     if(file.type.startsWith('image/')) {
       const imageURL = URL.createObjectURL( new Blob([file]));
@@ -119,9 +119,35 @@ console.log(errors);
     }
     
   };
+  
+  const handleDelete = (index, number) => {
+    setForm({ ...form, images: form.images.filter(ele => ele !== index) });
+    if (ref.current || ref.current === 0) {
+      ref.current.carousel(number)
+    }
+    
+  }
 
-
+  const disabled = () => {
+    let disabled = true;
+    if (!errors) {
+      disabled = false;
+    }
+    // for (const err in errors) {
+    //     if (errors[err] === "") {
+    //         disabled = false;
+    //     } else {
+    //         disabled = true;
+    //         return disabled; 
+    //     }
+    // }
+    return disabled;
+  }
   const handleStep = (e) => {
+  if (errors.length) {
+    disabled()
+  }
+
   e.preventDefault()
 
 
@@ -231,7 +257,7 @@ console.log({modal :modal , modalbody : modalBody.response});
     return (
 
     
-    <form className="d-flex flex-row align-items-center justify-content-center text-center  ">
+    <form className="d-flex flex-row align-items-center justify-content-center text-center ">
         <fieldset className={`border p-3 d-flex flex-column ${style.fieldset} `}>
             
               <h3 className="m-3 display-6" > Agrega una nueva propiedad </h3>
@@ -256,7 +282,7 @@ console.log({modal :modal , modalbody : modalBody.response});
                 >
     
     {form.images.length > 0 ? (
-            <Carousel style={{ width: '100%', height : "100%",maxHeight: '250px' }}>
+            <Carousel ref={ref} style={{ width: '100%', height : "100%",maxHeight: '250px' }}>
               {form.images.map((imageUrl, index) => (
                 <Carousel.Item key={index}>
                  
@@ -266,6 +292,12 @@ console.log({modal :modal , modalbody : modalBody.response});
                     src={imageUrl}
                     alt={`Image ${index}`}
                   />
+                  <button 
+                  className={`${style.buton}`}
+                  onClick={() => handleDelete(imageUrl,0)}
+                  >
+                    X
+                  </button>
                 </Carousel.Item>
               ))}
             </Carousel>
@@ -318,12 +350,12 @@ console.log({modal :modal , modalbody : modalBody.response});
             
           </div>
       <hr></hr>
-</div>
-</div>
+        </div>
+        </div>
       <div className="col-md-3 container d-flex flex-column justify-content-center">
         
           <div className="col-12 text-center mt-4 mb-3">
-            <button type={step === 3 ? "submit" : "button"} className={`ml-4 ${style.button}`} onClick={(e) => handleStep(e)}>Continuar</button>
+            <button type={step === 3 ? "submit" : "button"} className={`ml-4 ${style.button}`} onClick={(e) => handleStep(e)} disabled={disabled()}>Continuar</button>
           </div>
 
       </div>

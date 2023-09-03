@@ -29,19 +29,39 @@ export const Footer = () => {
 
                 <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
                   <h6 className="text-uppercase mb-4 font-weight-bold">
-                    Products
+                    Created By
                   </h6>
                   <p>
-                    <a className="text-white">MDBootstrap</a>
+                    <a className="text-white">Justina Mihura</a>
                   </p>
                   <p>
-                    <a className="text-white">MDWordPress</a>
+                    <a className="text-white">Brian Andrais</a>
                   </p>
                   <p>
-                    <a className="text-white">BrandFlow</a>
+                    <a className="text-white">Julian Luque</a>
                   </p>
                   <p>
-                    <a className="text-white">Bootstrap Angular</a>
+                    <a className="text-white">Sebastian Campos</a>
+                  </p>
+                </div>
+
+                <hr className="w-100 clearfix d-md-none" />
+
+                <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                  <h6 className="text-uppercase mb-4 font-weight-bold">
+                    ⭐⭐⭐⭐⭐
+                  </h6>
+                  <p>
+                    <a className="text-white">Oscar Sierra</a>
+                  </p>
+                  <p>
+                    <a className="text-white">Armando Urbina</a>
+                  </p>
+                  <p>
+                    <a className="text-white">Pablo Andrada</a>
+                  </p>
+                  <p>
+                    <a className="text-white">German </a>
                   </p>
                 </div>
 
@@ -54,7 +74,7 @@ export const Footer = () => {
                     Contacto
                   </h6>
                   <p>
-                    <i className="fas fa-home mr-3"></i> New York, NY 10012, US
+                    <i className="fas fa-home mr-3"></i> HENRY, NY 10012, ARG
                   </p>
                   <p>
                     <i className="fas fa-envelope mr-3"></i> info@gmail.com
@@ -115,8 +135,10 @@ export const Footer = () => {
                       fill="currentColor"
                       class="bi bi-google"
                       viewBox="0 0 16 16"
+                      
                     >
-                      <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                      <path  d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                      
                     </svg>
                   </a>
                   <a
@@ -156,7 +178,7 @@ export const Footer = () => {
                   <a
                     className={`btn btn-primary btn-floating m-1 ${style.borderNone}`}
                     style={{ backgroundColor: "#333333" }}
-                    href="#!"
+                    href="https://github.com/PoisonK12/PF-Henry-Grupo10"
                     role="button"
                   >
                     <svg

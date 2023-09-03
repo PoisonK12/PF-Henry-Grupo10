@@ -18,9 +18,14 @@ const dataSchemePost = z.object({
       message: "String data is required(country)"
     }),
     
-    images: z.array(z.string().url({message: "Invalid URL format"})).min(3, {
-    message: "At least 3 pictures are required"
-  }),
+    images: z
+      .array(z.string().url({ message: "Invalid URL format" }))
+      .min(1, {
+        message: "At least 1 pictures is required",
+      })
+      .max(3, {
+        message: "A maximum of 3 pictures are required",
+      }),
 
     onSale: z.boolean(),
 
