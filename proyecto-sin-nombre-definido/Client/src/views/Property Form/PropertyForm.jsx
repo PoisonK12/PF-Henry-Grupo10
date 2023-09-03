@@ -128,21 +128,6 @@ console.log(errors);
     
   }
 
-  const disabled = () => {
-    let disabled = true;
-    if (!errors) {
-      disabled = false;
-    }
-    // for (const err in errors) {
-    //     if (errors[err] === "") {
-    //         disabled = false;
-    //     } else {
-    //         disabled = true;
-    //         return disabled; 
-    //     }
-    // }
-    return disabled;
-  }
   const handleStep = (e) => {
   if (errors.length) {
     disabled()
@@ -223,7 +208,12 @@ const handleChange = (e) => {
     e.preventDefault();
     await createAsset(form , setModal , setModalBody, setErrors, errors,  navigate);
 
-    
+    if(typeof modalBody.response === "string") {
+      return setTimeout(() => {
+        setModal(false)
+        setStep(1)
+      },1000)
+    }
 
       if(Array.isArray(modalBody.response)) {
             return setTimeout(() => {
@@ -355,7 +345,7 @@ console.log({modal :modal , modalbody : modalBody.response});
       <div className="col-md-3 container d-flex flex-column justify-content-center">
         
           <div className="col-12 text-center mt-4 mb-3">
-            <button type={step === 3 ? "submit" : "button"} className={`ml-4 ${style.button}`} onClick={(e) => handleStep(e)} disabled={disabled()}>Continuar</button>
+            <button type={step === 3 ? "submit" : "button"} className={`ml-4 ${style.button}`} onClick={(e) => handleStep(e)} >Continuar</button>
           </div>
 
       </div>
@@ -542,7 +532,7 @@ console.log({modal :modal , modalbody : modalBody.response});
 return (
   <>
   
-  {(modal && Array.isArray(modalBody.response)) ?
+  {(modal && Array.isArray(modalBody.response) ) ?
        <div className={style.container2}>
        <br></br>
         <br></br>
@@ -561,7 +551,25 @@ return (
     </Modal.Footer>
   </Modal>
 </div>
+  : (modal && typeof modalBody.response === "string") ?
+  <div className={style.container2}>
+  <br></br>
+   <br></br>
 
+<Modal show={modal}  centered>
+
+<Modal.Header className="d-flex justify-content-center ">
+ <Modal.Title className="text-success text-danger" > Algo salió mal ❌ </Modal.Title>
+</Modal.Header>
+<Modal.Body className="w-auto">
+    Esa propiedad ya existe 
+ 
+</Modal.Body>
+<Modal.Footer>
+
+</Modal.Footer>
+</Modal>
+</div>
 
   : (modal && typeof modalBody.response === "object") ? 
       <div className={style.container2}>

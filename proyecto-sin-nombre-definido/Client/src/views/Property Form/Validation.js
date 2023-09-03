@@ -20,11 +20,7 @@ const validation = (form) => {
     else if (form.country.length > 25)
         errors.country = "El pais  es muy largo";
 
-    if (!form.state) errors.state = "Ingrese un provincia ";
-    else if (form.state.length < 6)
-        errors.state = "El provincia  es muy corto";
-    else if (form.state.length > 25)
-        errors.state = "El provincia  es muy largo";
+   
 
     if (!form.location) errors.location = "Ingrese un locacion ";
     else if (form.location.length < 6)
@@ -37,7 +33,7 @@ const validation = (form) => {
      if (form.images.length === 0) {
     errors.images = "Debes subir al menos una imagen"
     } 
-
+    
     if(!form.rooms) {
         errors.rooms = "Debes seleccionar al menos una habitación"
     } else if (form.rooms.length > 3) {

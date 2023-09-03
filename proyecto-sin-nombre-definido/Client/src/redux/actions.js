@@ -81,6 +81,11 @@ export const createAsset = async (form , setModal,setModalBody ) => {
          console.log(data);
      }
     } catch (error) {
+      
+      if( error.response.data.error.includes("propiedad")) {
+        setModalBody({ response :  error.response.data.error});
+        return
+      } 
         setModalBody({ response :  JSON.parse(error.response.data.error)});
       
       setModal(true)
