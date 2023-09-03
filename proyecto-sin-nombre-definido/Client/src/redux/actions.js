@@ -71,21 +71,29 @@ export const SearchByLocation = (query, page) => {
   };
 };
 
-export const createAsset = async (form, setModal, setModalBody) => {
-  try {
-    const { data } = await axios.post("/assets/create", form);
-    if (data) {
-      setModalBody({ response: data });
-      setModal(true);
-      console.log(data);
-    }
-  } catch (error) {
-    setModalBody({ response: error.response.data });
+export const createAsset = async (form , setModal,setModalBody ) => {
 
-    setModal(true);
-    return console.log(error);
-  }
-};
+    try {                         
+     const {data} = await axios.post("/assets/create" , form);
+     if(data) {
+         setModalBody({response: data})
+         setModal(true);
+         console.log(data);
+     }
+    } catch (error) {
+      
+      if( error.response.data.error.includes("propiedad")) {
+        setModalBody({ response :  error.response.data.error});
+        return
+      } 
+        setModalBody({ response :  JSON.parse(error.response.data.error)});
+      
+      setModal(true)
+     return console.log(error);
+    }
+  } 
+
+
 
 export const getLocation = () => {
   return async (dispatch) => {
