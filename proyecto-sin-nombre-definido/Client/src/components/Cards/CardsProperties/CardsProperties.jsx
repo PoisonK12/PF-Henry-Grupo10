@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CardProperties from "../../Card/CardProperties/CardProperties";
-import { SearchByLocation } from "../../../redux/actions";
+import { SearchByLocation, getLocation } from "../../../redux/actions";
 
 
 const CardsProperties = () => {
   const [currentPage, setCurrentPage] = useState(0);
-
+  
+ 
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.properties);
   const listContainerRef = useRef(null);
@@ -37,7 +38,8 @@ const CardsProperties = () => {
     console.log(allProperties.count);
   }, [currentPage, dispatch]);
 
-
+  useEffect(() =>{
+  }, [allProperties])
 
   return (
     <>
@@ -52,6 +54,7 @@ const CardsProperties = () => {
           location={ele.location}
           country={ele.country}
           images={ele.images}
+          rentPrice={ele.rentPrice}
         />
       })}
       </div>    

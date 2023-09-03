@@ -1,19 +1,23 @@
-import React, {useState , useEffect} from "react";
+import React, {useState , useEffect, useRef} from "react";
 import style from "./PropertyForm.module.css"
 import { useNavigate } from "react-router";
 import { Carousel , Modal } from "react-bootstrap";
 import { createAsset } from "../../redux/actions";
 import Card from "../../components/Card/CardOffer/CardOffer";
+import validation from "./Validation";
+
 
 
 const PropertyForm = () => {
 
-
+  const ref = useRef(null)
   const [modal , setModal] = useState(false);
   const [modalBody , setModalBody] = useState({response : []})
   const [price , setPrice ] = useState(false);
   const [step , setStep] = useState(1);
+
   const [errors , setErrors] = useState( {
+    name: "",
     image : "",
     errorsBack : []
 
@@ -69,8 +73,7 @@ const PropertyForm = () => {
   // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
     event.preventDefault();
-    if(form.images.length === 3) {
-      setErrors({...errors , image : "Solo puedes tres imagenes"})
+    if(form.images.length >= 3) {
       return
     }
     const file = event.dataTransfer.files[0];
@@ -83,19 +86,45 @@ const PropertyForm = () => {
   const handleFile = (file) => {
   console.log(file);
     if(!file.type.startsWith("image/")){
-      setErrors({image : "Tiene q ser una imagen"})
+      setErrors({...errors, image : "Tiene q ser una imagen"})
       return
-
     }
     if(file.type.startsWith('image/')) {
       const imageURL = URL.createObjectURL( new Blob([file]));
-      setErrors({image : ""})
+      setErrors({...errors, image : ""})
       setForm({...form , images : [... form.images , imageURL]})
       return
     }
   };
+  
+  const handleDelete = (index, number) => {
+    setForm({ ...form, images: form.images.filter(ele => ele !== index) });
+    if (ref.current || ref.current === 0) {
+      ref.current.carousel(number)
+    }
+    
+  }
 
+  const disabled = () => {
+    let disabled = true;
+    if (!errors) {
+      disabled = false;
+    }
+    // for (const err in errors) {
+    //     if (errors[err] === "") {
+    //         disabled = false;
+    //     } else {
+    //         disabled = true;
+    //         return disabled; 
+    //     }
+    // }
+    return disabled;
+  }
   const handleStep = (e) => {
+  if (errors.length) {
+    disabled()
+  }
+
   e.preventDefault()
   if(e.target.value === "prev") {
     setStep(step - 1)
@@ -110,8 +139,8 @@ const PropertyForm = () => {
   const handleChange = (e) => {
   const {name} = e.target;
   const {value} = e.target;
-   
-
+    
+console.log('err',errors)
     if(e.target.type === "number") {
       setForm({...form , [name] : Number(value)})
       return 
@@ -158,7 +187,7 @@ console.log({modal :modal , modalbody : modalBody.response});
     return (
 
     
-    <form className="d-flex flex-row align-items-center justify-content-center text-center  ">
+    <form className="d-flex flex-row align-items-center justify-content-center text-center ">
         <fieldset className={`border p-3 d-flex flex-column ${style.fieldset} `}>
 
               <h3 className="m-3"> Agrega una nueva propiedad </h3>
@@ -183,7 +212,7 @@ console.log({modal :modal , modalbody : modalBody.response});
                 >
     
     {form.images.length > 0 ? (
-            <Carousel style={{ width: '100%', height : "100%",maxHeight: '250px' }}>
+            <Carousel ref={ref} style={{ width: '100%', height : "100%",maxHeight: '250px' }}>
               {form.images.map((imageUrl, index) => (
                 <Carousel.Item key={index}>
                  
@@ -193,6 +222,12 @@ console.log({modal :modal , modalbody : modalBody.response});
                     src={imageUrl}
                     alt={`Image ${index}`}
                   />
+                  <button 
+                  className={`${style.buton}`}
+                  onClick={() => handleDelete(imageUrl,0)}
+                  >
+                    X
+                  </button>
                 </Carousel.Item>
               ))}
             </Carousel>
@@ -201,7 +236,7 @@ console.log({modal :modal , modalbody : modalBody.response});
           )}
             
             </div>
-            {errors.image ? <p style={{ color : "red"}}>{errors.image}</p> : null}
+            {form.images.length < 3 ?  <p style={{ color : "red"}}>{'Faltan imagenes'}</p> : null}
           </div>
           <div className="column">
           <div className="row justify-content-center ">
@@ -238,12 +273,12 @@ console.log({modal :modal , modalbody : modalBody.response});
             </div>
           </div>
       <hr></hr>
-</div>
-</div>
+        </div>
+        </div>
       <div className="col-md-3 container d-flex flex-column justify-content-center">
         
           <div className="col-12 text-center mt-4 mb-3">
-            <button type={step === 3 ? "submit" : "button"} className={`ml-4 ${style.button}`} onClick={(e) => handleStep(e)}>Continuar</button>
+            <button type={step === 3 ? "submit" : "button"} className={`ml-4 ${style.button}`} onClick={(e) => handleStep(e)} disabled={disabled()}>Continuar</button>
           </div>
 
       </div>

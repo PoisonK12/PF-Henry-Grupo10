@@ -139,6 +139,7 @@ const Detail = () => {
             ></iframe>
           </div>
           <div className={`col-8 ${style.propertyAmenities}`}>
+          
           <table class="table">
             <thead>
                 <tr>
