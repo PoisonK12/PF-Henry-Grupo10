@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
+  deleteAssetById,
   getAllProperties,
   getAllReallyProperties,
   putProperty,
@@ -140,7 +141,7 @@ const AdminDashboard = () => {
   };
   useEffect(() => {
     dispatch(getAllReallyProperties());
-  }, []);
+  }, [allProperties]);
 
   return (
     <div className={style.background}>
