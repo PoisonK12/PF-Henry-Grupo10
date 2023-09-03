@@ -1,7 +1,8 @@
 Endpoint definidos
 
 Get all asset & count
-http://localhost:3001/assets?size=10&page=1
+http://localhost:3001/assets?size=10&page=1 etc...
+(Variables agregables, no excluyentes dentro de query: location, rooms, bathrooms, onSale, amenities, rentPriceMax, rentPriceMin, sellPriceMax, sellPriceMin)
 
 Get all aplicando filtro de location. Desconozco si desde el front hay que generar una logica para incluir los %20 en vez de espacios
 http://localhost:3001/assets?size=10&page=1&location=Provincia%20de%20Buenos%20Aires
@@ -10,16 +11,16 @@ Ruta tentativa ordenamiento
 http://localhost:3001/assets?size=10&page=1&location=CABA&orderby=asc
 
 Get asset by ID
-http://localhost:3001/assets/uuid
+http://localhost:3001/assets/:uuid
 
 Post asset
 http://localhost:3001/assets/create
 
 Put asset
-http://localhost:3001/assets/uuid
+http://localhost:3001/assets/
 
 Delete asset (falta borrado logico)
-http://localhost:3001/assets/delete/uuid
+http://localhost:3001/assets/delete/:uuid
 
 Get location
 http://localhost:3001/assets/location
