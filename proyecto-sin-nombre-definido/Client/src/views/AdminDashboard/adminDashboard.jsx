@@ -10,11 +10,11 @@ import {
   putProperty,
 } from "../../redux/actions";
 import axios from "axios";
-import {
-  getAllProperties,
-  getAllReallyProperties,
-  putProperty,
-} from "../../redux/actions";
+// import {
+//   getAllProperties,
+//   getAllReallyProperties,
+//   putProperty,
+// } from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
