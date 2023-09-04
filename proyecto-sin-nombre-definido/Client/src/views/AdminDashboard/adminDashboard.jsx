@@ -10,17 +10,17 @@ import {
   putProperty,
 } from "../../redux/actions";
 import axios from "axios";
-// import {
-//   getAllProperties,
-//   getAllReallyProperties,
-//   putProperty,
-// } from "../../redux/actions";
+import {
+  getAllProperties,
+  getAllReallyProperties,
+  putProperty,
+} from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);
   console.log(allProperties);
-  const [updated, setUpdated] = useState(false)
+  const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
@@ -198,9 +198,10 @@ const AdminDashboard = () => {
                         aria-label="Slide 3"
                       ></button>
                     </div>
-                    <div className="carousel-inner">
+                    <div className={`carousel-inner ${style.containerImg}`}>
                       <div className="carousel-item active">
                         <img
+                        style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
                           src={props.images[0]}
                           className="d-block " style={{width: "100%", height : "238px", objectFit: "cover"}}
                           alt="..."
@@ -208,13 +209,14 @@ const AdminDashboard = () => {
                       </div>
                       <div className="carousel-item">
                         <img
-                          src={props.images[1]} style={{width: "100%" , height : "238px", objectFit: "cover"}}
-                          className="d-block "
+                          src={props.images[1]}
+                          className="d-block w-100"
                           alt="..."
                         />
                       </div>
                       <div className="carousel-item">
                         <img
+                        style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
                           src={props.images[2]}
                           className="d-block " style={{width: "100%" ,  height : "238px", objectFit: "cover"}}
                           alt="..."
@@ -281,24 +283,23 @@ const AdminDashboard = () => {
                         </button>
                       </Link>
                       <div className={style.left}>
-                      <button
-                                              className={`btn btn-danger ${style.left} `}
-                                              
-                        onClick={() => {
-                                                // Llama a la función handleDelete para mostrar el modal de confirmación
-                                                handleDeleteAsset(props.id);
-                                              }}
-                                            >
-                                              Eliminar
-                                            </button>
-                      <button
-                        className={`btn btn-primary ${style.left}`}
-                        data-bs-target="#exampleModalToggle"
-                        data-bs-toggle="modal"
-                        onClick={() => setIdHouse(props.id)}
-                      >
-                        Editar
-                      </button>
+                        <button
+                          className={`btn btn-danger ${style.left} `}
+                          onClick={() => {
+                            // Llama a la función handleDelete para mostrar el modal de confirmación
+                            handleDeleteAsset(props.id);
+                          }}
+                        >
+                          Eliminar
+                        </button>
+                        <button
+                          className={`btn btn-primary ${style.left}`}
+                          data-bs-target="#exampleModalToggle"
+                          data-bs-toggle="modal"
+                          onClick={() => setIdHouse(props.id)}
+                        >
+                          Editar
+                        </button>
                       </div>
                     </div>
                   </div>

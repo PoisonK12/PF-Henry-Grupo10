@@ -7,6 +7,7 @@ import { getLocation, searchByFilter } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const Property = () => {
+  const allProp = useSelector(state => state.properties)
     const { location} = useParams();
     const history = useNavigate()
     console.log(history)
@@ -49,6 +50,8 @@ const Property = () => {
     }
   };
 
+
+
   const handleCheckbox = (e) => {
     if (e.target.name === "onSale" && e.target.value === "true") {
       setOnSale(true);
@@ -66,6 +69,8 @@ const Property = () => {
     dispatch(searchByFilter(filter));
   };
 
+  console.log(allProp)
+
   return (
     <div className={style.container}>
       <div className="row" style={{ paddingTop: "5rem" }}>
@@ -74,10 +79,10 @@ const Property = () => {
             className={`${style.centeredContent}  ${style.cardWrapper}`}
             style={{ paddingLeft: "40px" }}
           >
-            <div className={`card-body `}>
+            <div className={`card-body ${style.cardBody} `}>
               <div>
-                <label>Localidad</label>
-                <select name="location" onChange={handleChange}>
+                <label className={`form-label ${style.label}`}> Localidad</label>
+                <select name="location" className={style.input} onChange={handleChange}>
                   <option name="location">Cambiar localidad</option>
                   {locations
                     ? locations.map((ele) => (
@@ -90,10 +95,11 @@ const Property = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="inputName" className="form-label">
+                <label  htmlFor="inputName" className={`form-label ${style.label}`}>
                   Precio de renta maximo
                 </label>
                 <input
+                className={style.range}
                   type="range"
                   name="rentPriceMax"
                   min={0}
@@ -107,10 +113,11 @@ const Property = () => {
                 <p>${filter.rentPriceMax}</p>
               </div>
               <div>
-                <label htmlFor="inputName" className="form-label">
+                <label htmlFor="inputName" className={`form-label ${style.label}`}>
                   Precio de renta minimo
                 </label>
                 <input
+                className={style.range}
                   type="range"
                   name="rentPriceMin"
                   min={0}
@@ -124,10 +131,11 @@ const Property = () => {
                 <p>${filter.rentPriceMin}</p>
               </div>
               <div>
-                <label htmlFor="inputName" className="form-label">
+                <label htmlFor="inputName" className={`form-label ${style.label}`}>
                   Baños
                 </label>
                 <input
+                className={style.input}
                   type="number"
                   name="bathrooms"
                   min={0}
@@ -141,10 +149,11 @@ const Property = () => {
               </div>
 
               <div>
-                <label htmlFor="inputName" className="form-label">
+                <label htmlFor="inputName" className={`form-label ${style.label}`}>
                   Habitaciones
                 </label>
                 <input
+                className={style.input}
                   type="number"
                   name="rooms"
                   min={0}
@@ -159,10 +168,13 @@ const Property = () => {
 
               <div>
                 <h4>Renta</h4>
-                <label htmlFor="inputName" className="form-label">
+                <div className={style.checkboxContainer}>
+                  <div className={style.yes}>
+                <label htmlFor="inputName" className={`form-label ${style.label}`}>
                   No
                 </label>
                 <input
+               className={style.checkbox}
                   type="checkbox"
                   name="onSale"
                   onChange={(e) => {
@@ -174,11 +186,13 @@ const Property = () => {
                   id="inputName"
                   placeholder="Nombre de tu propiedad"
                 />
-
-                <label htmlFor="inputName" className="form-label">
+            </div>
+            <div className={style.no}>
+                <label htmlFor="inputName" className={`form-label ${style.label}`}>
                   Si
                 </label>
                 <input
+                className={style.checkbox}
                   type="checkbox"
                   name="onSale"
                   checked={onSale === true}
@@ -190,14 +204,17 @@ const Property = () => {
                   id="inputName"
                   placeholder="Nombre de tu propiedad"
                 />
+                </div>
+                </div>
               </div>
               {onSale ? (
                 <>
                   <div>
-                    <label htmlFor="inputName" className="form-label">
+                    <label htmlFor="inputName" className={`form-label ${style.label}`}>
                       Precio de venta maximo
                     </label>
                     <input
+                    className={style.range}
                       type="range"
                       name="sellPriceMax"
                       min={0}
@@ -211,10 +228,11 @@ const Property = () => {
                     <p>${filter.sellPriceMax}</p>
                   </div>
                   <div>
-                    <label htmlFor="inputName" className="form-label">
+                    <label htmlFor="inputName" className={`form-label ${style.label}`}>
                       Precio de renta minimo
                     </label>
                     <input
+                    className={style.range}
                       type="range"
                       name="sellPriceMin"
                       min={0}
@@ -231,7 +249,7 @@ const Property = () => {
               ) : (
                 ""
               )}
-              <button onClick={(e) => handleSubmit(e)}>aca</button>
+              <button onClick={(e) => handleSubmit(e) } className={style.button} >Aplicar filtros!</button>
               {/* <h5 className="card-title">Card title</h5>
               <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />

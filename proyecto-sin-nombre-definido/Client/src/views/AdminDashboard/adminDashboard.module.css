@@ -180,8 +180,8 @@ table.table .avatar {
 }
 .customButton {
 position: absolute;
-  top: 62%;
-  left: 90%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   background-color:#fffefe98;
@@ -244,4 +244,8 @@ position: absolute;
     background-color: rgb(76, 131, 228);
     padding: 20px;
     padding-top: 100px;
+}
+
+.containerImg img{
+    object-position: center bottom !important;
 }

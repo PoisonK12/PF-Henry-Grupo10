@@ -38,7 +38,7 @@ body {
 .fieldset {
     margin-top : 150px !important;
     margin-bottom : 150px;
-    background-color: rgba(228, 212, 212, 0.493);
+    background-color: rgba(228, 212, 212, 0.589);
     border-radius: 10px;
     box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.438);
     /*stacking fieldsets above each other*/
