@@ -9,3 +9,4 @@ const tokenSign = async (user) => {
   {expiresIn:'1h'}) 
 }
 
+module.exports = tokenSign
