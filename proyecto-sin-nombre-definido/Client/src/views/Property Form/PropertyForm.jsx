@@ -104,6 +104,10 @@ console.log(errors);
   // Función para manejar el archivo seleccionado
   const handleFile = (file) => {
   console.log(file);
+  const fileData = new FormData()
+  fileData.append("file", form.images)
+  fileData.append("upload_preset", "Usuarios")
+  
     if(!file.type.startsWith("image/")){
       setErrors({...errors, images : "Tiene q ser una imagen"})
       setTimeout(() => {
