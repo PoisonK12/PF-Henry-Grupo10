@@ -49,20 +49,17 @@ module.exports = (sequelize) => {
       bathrooms: {
         type: DataTypes.INTEGER,
       },
-      reviews: {
-        type: DataTypes.JSON
-      },
-      nearby: {
-        type: DataTypes.JSON
-      },
-      nearbyScore: {
-        type: DataTypes.INTEGER
+      averageScore: {
+        type: DataTypes.ARRAY(DataTypes.FLOAT)
       },
       coveredArea: {
         type: DataTypes.FLOAT
       },
       totalArea: {
         type: DataTypes.FLOAT
+      },
+      amenities: {
+        type: DataTypes.ARRAY(DataTypes.INTEGER)
       }
     },
     { timestamps: false }
