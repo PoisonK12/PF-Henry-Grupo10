@@ -1,4 +1,5 @@
 const { encrypt, compare } = require('../handlers/handleBcrypt');
+const {tokenSign} = require('../helpers/generateToken')
 const { User } = require('../db');
 
 const registerCtrl = async (req, res) => {
