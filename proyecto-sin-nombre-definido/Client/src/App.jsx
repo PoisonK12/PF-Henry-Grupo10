@@ -14,8 +14,8 @@ import axios from "axios"
 import {Footer} from "./components/Footer/Footer"
 import PropertyForm from "./views/Property Form/PropertyForm"
 import Contatcs from './views/Contacts/Contatcs';
-import Chatbot from './components/Chatbot/Chatbot';
 import UserPanel from './views/User/UserPanel';
+import Chatbot from './components/Chatbot/Chatbot';
 
 
 axios.defaults.baseURL = "http://localhost:3001"
@@ -38,8 +38,10 @@ function App() {
       <Route path='/property' element={<><Property/><Footer/></>}/>
       <Route path='/contacts' element={<><Contatcs/><Footer/></>}/>
       <Route path='/property/:location' element={<><Property/><Footer/></>}/>
-      <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>   
+      <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
+      <Route path='/userPanel' element={<><UserPanel/><Footer/></>}/>
       <Route path='/addProperty' element={<><PropertyForm/><Footer/></>}></Route> 
+      <Route path="/chatbot" element={<Chatbot />} /> 
       <Route path="*" element={<><NotFound/><Footer/></>}/>
      </Routes>
       
