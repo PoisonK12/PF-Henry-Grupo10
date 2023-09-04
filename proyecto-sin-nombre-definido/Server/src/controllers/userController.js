@@ -33,47 +33,51 @@ const getAllUserController = async () => {
 }
 
 //!------------------------------------------------------------------------
-const updateAsset = async (
-  id,
-  name,
-  description,
-  images,
-  onSale,
-  sellPrice,
-  rentPrice,
-  rooms,
-  bathrooms,
-  coveredArea,
-  amenities
+const updateUser = async (
+  userName,
+  //edicion por usuario
+  fullName,
+  profilePic,
+  phoneNumber,
+  verificationNumber,
+  gender,
+  address,
+  nationality,
+  email,
+  password,
+  landlord,
+  //edicion por sistema
+  averageScore,
+  favorites,
+  history,
 ) => {
   const updateAsset = await Asset.findOne({
-    where: { id: id },
-    include: Amenity,
+    where: { userName: userName },
   });
   await updateAsset.update({
-    name,
-    description,
-    images,
-    onSale,
-    sellPrice,
-    rentPrice,
-    rooms,
-    bathrooms,
-    coveredArea,
-    amenities,
+    //edicion por usuario
+  fullName,
+  profilePic,
+  phoneNumber,
+  verificationNumber,
+  gender,
+  address,
+  nationality,
+  email,
+  password,
+  landlord,
+  //edicion por sistema
+  averageScore,
+  favorites,
+  history,
   });
-  if (amenities) {
-    const amenitiesToUpdate = await Amenity.findAll({
-      where: { id: amenities },
-    });
-    await updateAsset.setAmenities(amenitiesToUpdate);
-  }
+  
   return updateAsset;
 };
 
 //!------------------------------------------------------------------------
 const createUserController = async (
-  userName,
+      userName,
       fullName,
       profilePic,
       birthDate,
@@ -98,59 +102,56 @@ const createUserController = async (
       !email ||
       !password ||
       !landlord
-    ) {}
+    ) {return res.status(400).json({ error: "Falta informacion obligatoria" })}
     
+    const [createdUser, created] = await User.findOrCreate({
+      where:{userName},
+      defaults: {
+        fullName,
+        profilePic,
+        birthDate,
+        phoneNumber,
+        verificationNumber,
+        gender,
+        address,
+        nationality,
+        email,
+        password,
+        landlord
+      }
+    })
+    if(!created)
+    {return res.status(400).json({error: "El nombre de usuario ya existe."})}
     
-    
-    return createdAsset;
+    return res.status(200).json(`Exito al crear el usuario ${userName}`);
   } catch (error) {
     console.log(error);
-    throw new Error("Error al registrar la propiedad");
+    throw new Error("Error en createUserController");
   }
 };
 
-const deleteAssetById = async (id) => {
+const deleteUserById = async (id) => {
   //TODO agregar borrado logico
-  const asset = await Asset.findOne({
+  const asset = await User.findOne({
     where: {
       id: id,
     },
   });
 
   if (!asset) {
-    throw new Error("Asset not found");
+    throw new Error("Usuario no encontrado");
   }
   await asset.destroy();
 
-  return "Asset deleted successfully";
+  return "Usuario eliminado con exito";
 };
 
-const getAllLocations = async () => {
-  try {
-    const allAssets = await Asset.findAll();
-    // console.log(allAssets)
-    const response = filterLocation(allAssets);
-    // console.log(response)
-    return response;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Error al obtener las locaciones");
-  }
-};
 
-const getAllAmenities = async () => {
-  try {
-    const allAmenities = await Amenity.findAll();
-
-    return allAmenities;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Error al obtener las amenities");
-  }
-};
 
 module.exports = {
   getUserByIdController,
   getAllUserController,
-
+  deleteUserById,
+  createUserController,
+  updateUser
 };
