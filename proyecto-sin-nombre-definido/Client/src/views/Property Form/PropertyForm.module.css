@@ -75,3 +75,8 @@ body {
     background-color: rgba(135, 128, 229, 0.267);
     margin-left: 10px;
 }
+
+form p{
+    position: absolute;
+    margin: 0;
+}
