@@ -38,17 +38,23 @@
 }
 
 .nav ul li a {
-font-size: 16px !important;
+font-size: 16px ;
 font-family: 'Avenir', sans-serif; 
   display: block;
   font-weight: 500;
   
   text-decoration: none;
   color: white;
-  padding: 1.95rem 1.2rem !important ;
+  padding: 1.95rem 1.2rem  ;
   height: 100%;
   margin: 0 0.5rem;
   /* border-radius: 0.9rem; */
+}
+.customLi {
+  /* Estilos personalizados para el <li> */
+  list-style-type: none; /* Quita los puntos de lista, por ejemplo */
+  margin: 0;
+  padding: 0;
 }
 
 .nav ul li a:not(.active):hover{
@@ -74,7 +80,9 @@ font-family: 'Avenir', sans-serif;
   height: 2rem;
   z-index: 1000;
 }
-
+.navbarra li{
+  padding: 0;
+}
 .nav .menu span{
   height: 0.4rem;
   width: 100%;

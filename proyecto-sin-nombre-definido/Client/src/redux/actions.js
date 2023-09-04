@@ -8,7 +8,6 @@ import {
   GET_ALL_ALL_PROPERTIES,
   SEARCH_BY_FILTER,
   DELETE_ASSET_BY_ID,
-  POST_IMAGE,
   GET_LOGIN
 } from "./types";
 
@@ -176,20 +175,6 @@ export const deleteAssetById = (id) => {
   };
 };
 
-export const postImage = (url) => {
-  return async (dispatch) =>{
-    try {
-      const {data} = await axios.post(`https://api.cloudinary.com/v1_1/dkdounmsa/image/upload`, url)
-      dispatch({
-        type: POST_IMAGE,
-        payload: data
-      })
-    } catch (error) {
-      console.error(error);
-      
-    }
-  }
-};
 
 /* const getLogin = async (login) => {
 

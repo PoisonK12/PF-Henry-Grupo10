@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import style from "./Nav.module.css";
+import Menu from "./Menu/Menu";
 
 export const Nav = () => {
   const [fixed, setFixed] = useState(false);
@@ -70,6 +71,7 @@ export const Nav = () => {
             <span>Houses</span>
           </NavLink>
         </li> */}
+        
         <li>
           <NavLink
             to="/adminDashboard"
@@ -77,6 +79,12 @@ export const Nav = () => {
           >
             <span>Admin</span>
           </NavLink>
+        </li>
+        <li>
+          <div style={{marginTop : "15px", marginRight: "15px"}}>
+            <Menu />
+
+          </div>
         </li>
       </ul>
     </nav>
