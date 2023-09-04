@@ -10,11 +10,11 @@ import {
   putProperty,
 } from "../../redux/actions";
 import axios from "axios";
-import {
-  getAllProperties,
-  getAllReallyProperties,
-  putProperty,
-} from "../../redux/actions";
+// import {
+//   getAllProperties,
+//   getAllReallyProperties,
+//   putProperty,
+// } from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -202,21 +202,21 @@ const AdminDashboard = () => {
                       <div className="carousel-item active">
                         <img
                           src={props.images[0]}
-                          className="d-block w-100"
+                          className="d-block " style={{width: "100%", height : "238px", objectFit: "cover"}}
                           alt="..."
                         />
                       </div>
                       <div className="carousel-item">
                         <img
-                          src={props.images[1]}
-                          className="d-block w-100"
+                          src={props.images[1]} style={{width: "100%" , height : "238px", objectFit: "cover"}}
+                          className="d-block "
                           alt="..."
                         />
                       </div>
                       <div className="carousel-item">
                         <img
                           src={props.images[2]}
-                          className="d-block w-100"
+                          className="d-block " style={{width: "100%" ,  height : "238px", objectFit: "cover"}}
                           alt="..."
                         />
                       </div>
@@ -308,7 +308,7 @@ const AdminDashboard = () => {
           </div>
         ))}
       </div>
-      <form
+      {/* <form
         onSubmit={(e) => {
           handleUpdate(idHouse);
           e.preventDefault();
@@ -327,7 +327,7 @@ const AdminDashboard = () => {
           placeholder="Nombre de tu propiedad"
         />
         <button type="submit">aca</button>
-      </form>
+      </form> */}
       <div
         className="modal fade"
         id="exampleModalToggle"

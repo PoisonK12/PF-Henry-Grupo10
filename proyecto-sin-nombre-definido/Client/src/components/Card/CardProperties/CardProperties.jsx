@@ -17,7 +17,7 @@ const CardProperties = (props) => {
         <div className="row g-0">
           <div className="col-md-4">
             <img
-              src={props.images[0]}
+              src={props.images[0]} style={{width: "100%" , height : "270px", objectFit: "cover"}}
               className="img-fluid rounded-start"
               alt="..."
             />
