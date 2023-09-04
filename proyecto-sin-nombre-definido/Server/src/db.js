@@ -22,8 +22,8 @@ ReviewModel(sequelize);
 
 const { User, Rent, Asset, Review } = sequelize.models;
 
-User.belongsToMany(Asset, { through: "userAssets", foreignKey: 'userId' });
-Asset.belongsTo(User, { through: "userAssets" ,foreignKey: 'assetId' });
+User.belongsToMany(Asset, { through: "userAssets"});
+Asset.belongsTo(User, { through: "userAssets" });
 
 User.belongsToMany(Rent, { through: "userRents" });
 Rent.belongsTo(User, { through: "userRents" });

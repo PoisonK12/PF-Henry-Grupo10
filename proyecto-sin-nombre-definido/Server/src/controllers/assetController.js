@@ -178,17 +178,16 @@ const createAsset = async (
       coveredArea,
       totalArea,
       amenities,
-      userId,
     });
 
-    for (const findId of amenities) {
-      const findAmen = await Amenity.findOne({
-        where: { id: findId },
-      });
-      if (findAmen) {
-        await createdAsset.addAmenity(findAmen);
-      }
-    }
+    // for (const findId of amenities) {
+    //   const findAmen = await Amenity.findOne({
+    //     where: { id: findId },
+    //   });
+    //   if (findAmen) {
+    //     await createdAsset.addAmenity(findAmen);
+    //   }
+    // }
 
     return createdAsset;
   } catch (error) {
