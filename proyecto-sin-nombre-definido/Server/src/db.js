@@ -4,7 +4,7 @@ require("dotenv").config();
 const UserModel = require("./models/users");
 const RentModel = require("./models/rents");
 const AssetModel = require("./models/assets");
-const AmenityModel = require("./models/amenities");
+const ReviewModel = require("./models/reviews");
 
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 console.log(DB_HOST);
@@ -18,9 +18,9 @@ const sequelize = new Sequelize(
 UserModel(sequelize);
 RentModel(sequelize);
 AssetModel(sequelize);
-AmenityModel(sequelize);
+ReviewModel(sequelize);
 
-const { User, Rent, Asset, Amenity } = sequelize.models;
+const { User, Rent, Asset, Review } = sequelize.models;
 
 User.belongsToMany(Asset, { through: "userAssets", foreignKey: 'userId' });
 Asset.belongsTo(User, { through: "userAssets" ,foreignKey: 'assetId' });
@@ -30,6 +30,9 @@ Rent.belongsTo(User, { through: "userRents" });
 
 Asset.belongsToMany(Review, { through: "assetReview"});
 Review.belongsTo(Asset, { through: "assetReview" });
+
+User.belongsToMany(Review, { through: "userReview"});
+Review.belongsTo(User, { through: "userReview" });
 
 module.exports = {
   sequelize,

@@ -24,12 +24,12 @@ module.exports = (sequelize) => {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
-      verificationNumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       phoneNumber: {
         type: DataTypes.STRING, // Cambiado: NUMBER a STRING si incluye caracteres no numéricos
+        allowNull: false,
+      },
+      verificationNumber: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
       gender: {
@@ -56,20 +56,19 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      review: {
-        type: DataTypes.JSON, // Cambiado de ARRAY(DataTypes.STRING) a JSON
-        defaultValue: {},
-      },
       landLord: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
+      averageScore: {
+        type: DataTypes.ARRAY(DataTypes.FLOAT)
+      },
       favorites: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.ARRAY(DataTypes.UUID),
         allowNull: true,
       },
       history: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.ARRAY(DataTypes.UUID),
         allowNull: false,
       },
     },

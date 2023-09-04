@@ -38,33 +38,6 @@ const getAllAssets = async (req) => {
 
   let filter = {};
 
-  if (rentPriceMin) {
-    filter.rentPrice = { ...filter.rentPrice, [Op.gte]: rentPriceMin };
-  }
-  if (rentPriceMax) {
-    filter.rentPrice = { ...filter.rentPrice, [Op.lte]: rentPriceMax };
-  }
-  if (sellPriceMin) {
-    filter.rentPrice = { ...filter.sellPrice, [Op.gte]: sellPriceMin };
-  }
-  if (sellPriceMax) {
-    filter.rentPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
-  }
-
-  if (location) {
-    filter.location = location;
-  }
-  if (rooms) {
-    filter.rooms = rooms;
-  }
-  if (bathrooms) {
-    filter.bathrooms = bathrooms;
-  }
-  if (onSale) {
-    filter.onSale = onSale;
-  }
-  console.log(filter);
-
   let page = 1;
   if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
     page = pageAsNumber;
