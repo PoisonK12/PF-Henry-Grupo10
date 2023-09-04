@@ -203,7 +203,7 @@ const AdminDashboard = () => {
                         <img
                         style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
                           src={props.images[0]}
-                          className="d-block " style={{width: "100%", height : "238px", objectFit: "cover"}}
+                          className="d-block " 
                           alt="..."
                         />
                       </div>
@@ -218,7 +218,7 @@ const AdminDashboard = () => {
                         <img
                         style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
                           src={props.images[2]}
-                          className="d-block " style={{width: "100%" ,  height : "238px", objectFit: "cover"}}
+                          className="d-block "
                           alt="..."
                         />
                       </div>
