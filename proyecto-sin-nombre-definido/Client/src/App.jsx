@@ -14,7 +14,7 @@ import axios from "axios"
 import {Footer} from "./components/Footer/Footer"
 import PropertyForm from "./views/Property Form/PropertyForm"
 import Contatcs from './views/Contacts/Contatcs';
-
+import Chatbot from './components/Chatbot/Chatbot';
 
 axios.defaults.baseURL = "http://localhost:3001"
 
@@ -31,13 +31,14 @@ function App() {
       {location.pathname !== "/" && <Nav/>}
      <Routes>
       <Route path='/' element={<><Landing/></>} />
-      <Route path='/detail/:id' element={<><Detail/><Footer/></>} />
-      <Route path='/home' element={<><Home/><Footer/></>}/>
-      <Route path='/property' element={<><Property/><Footer/></>}/>
-      <Route path='/contacts' element={<><Contatcs/><Footer/></>}/>
-      <Route path='/property/:location' element={<><Property/><Footer/></>}/>
+      <Route path='/detail/:id' element={<><Detail/><Footer/><Chatbot /></>} />
+      <Route path='/home' element={<><Home/><Footer/><Chatbot /></>}/>
+      <Route path='/property' element={<><Property/><Footer/><Chatbot /></>}/>
+      <Route path='/contacts' element={<><Contatcs/><Footer/><Chatbot /></>}/>
+      <Route path='/property/:location' element={<><Property/><Chatbot /><Footer/></>}/>
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>   
-      <Route path='/addProperty' element={<><PropertyForm/><Footer/></>}></Route> 
+      <Route path='/addProperty' element={<><PropertyForm/><Chatbot /><Footer/></>}></Route> 
+      <Route path="/chatbot" element={<Chatbot />} /> {/* Ruta específica para el chatbot */}
       <Route path="*" element={<><NotFound/><Footer/></>}/>
      </Routes>
       
