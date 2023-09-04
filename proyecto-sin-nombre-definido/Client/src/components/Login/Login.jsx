@@ -70,21 +70,22 @@ const Login = ({setConditional}) => {
                         </button>
                        <hr className={style.hr}></hr>
                            </div>
-                
-                <div class=" d-flex flex-row align-items-center justify-content-center ">
-                  <span style={{color : "white", fontSize: "18px"}}> Es hora de entrar! </span>
-                  <div class="col-xs-6 p-1 m-3 ">
-                    <button type="submit" class="btn btn-danger"> Acceder </button>
-                  </div>
-                   
-                </div>
-                  <div class= "d-flex flex-row align-items-center justify-content-center">
-                    <span style={{color : "white" ,  fontSize: "18px"}}> No tienes una cuenta? </span>
+
+                <div class= "d-flex flex-row align-items-center justify-content-center">
+                    <span style={{color : "white" ,  fontSize: "18px"}}> No tienes una cuenta? 👉🏼 </span>
                     <div class= "col-xs-6 m-3">
                       <button type="button" class="btn btn-danger" onClick={handleConditional}> Registrarse</button>
                       </div>
             </div>
 
+                <div class=" d-flex flex-row align-items-center justify-content-center ">
+                  <span style={{color : "white", fontSize: "18px"}}> Es hora de entrar! 👉🏼</span>
+                  <div class="col-xs-6 p-1 m-3 ">
+                    <button type="submit" class="btn btn-primary"> Acceder </button>
+                  </div>
+                   
+                </div>
+                  
                 </fieldset>
             </form>
         </>
