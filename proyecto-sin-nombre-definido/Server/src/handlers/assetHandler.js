@@ -1,4 +1,5 @@
 const { type } = require("os");
+
 const { dataSchemePost } = require("../helpers/validation.ts");
 const {
   deleteAssetById,
@@ -9,6 +10,7 @@ const {
   getAllLocations,
   getAllAmenities,
   getAllButAllAssets,
+  getAllAssetsWithAmenities,
 } = require("../controllers/assetController");
 
 const getAllButAllAssetsHandler = async (req, res) => {
@@ -173,6 +175,17 @@ const getAmenitiesHandler = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
+const getAllAssetsWithAmenitiesHandler = async (req, res) => {
+  const { amenitiesss } = req.query;
+  console.log(amenitiesss);
+  try {
+    const response = await getAllAssetsWithAmenities(amenitiesss);
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: error.message });
+  }
+};
 
 module.exports = {
   deleteAssetByIdHandler,
@@ -183,4 +196,5 @@ module.exports = {
   getAllLocationsHandler,
   getAmenitiesHandler,
   getAllButAllAssetsHandler,
+  getAllAssetsWithAmenitiesHandler,
 };

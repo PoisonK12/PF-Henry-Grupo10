@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Amenity, Asset } = require("../db");
 
 const getAllAmenities = async (req, res) => {
@@ -5,21 +6,20 @@ const getAllAmenities = async (req, res) => {
     const response = await Amenity.findAll({
       attributes: ["id", "name"],
     });
-//
+    //
     return response;
   } catch (error) {
     console.error(error.message);
   }
 };
 const getAmenitiesById = async (id, location) => {
-  const ameni = await Amenity.findOne({
-    where: {
-      id: id,
-    },
-    order: [location],
+  const ameni = await Amenity.findAll({
+    where: { id: id },
+
     include: {
       model: Asset,
-      through: { joinTableAttributes: [] },
+      where: { location: location },
+      // through: { joinTableAttributes: [] },
     },
     order: [],
   });

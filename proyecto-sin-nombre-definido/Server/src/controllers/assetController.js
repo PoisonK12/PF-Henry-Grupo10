@@ -1,6 +1,7 @@
 const { Asset, Amenity } = require("../db");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const { filterLocation } = require("../helpers/filterLocation");
+// const { sequelize } = require("../models/index");
 
 // Trae todas las propiedades y paginado
 
@@ -87,6 +88,31 @@ const getAllAssets = async (req) => {
   return assets;
 };
 //!------------------------------------------------------------------------
+const getAllAssetsWithAmenities = async (amenitiesss, res) => {
+  const amenitieSS = [];
+
+  for (const amn of amenitiesss) amenitieSS.push(Number(amn));
+
+  console.log(amenitieSS);
+
+  const response = await Asset.findAndCountAll({
+    include: [
+      {
+        model: Amenity,
+        as: "Amenities",
+        where: {
+          id: amenitieSS,
+        },
+        required: true,
+        // joinTableAttributes: [],
+      },
+    ],
+    // group: ["Asset.id"],
+    // having: Sequelize.literal(`COUNT(Amenities.id) >= ${amenitieSS.length}`),
+  });
+  return response;
+};
+
 // Trae una propiedad especificada por el id
 const getAssetById = async (id) => {
   const asset = await Asset.findOne({
@@ -247,4 +273,5 @@ module.exports = {
   getAllLocations,
   getAllAmenities,
   getAllButAllAssets,
+  getAllAssetsWithAmenities,
 };

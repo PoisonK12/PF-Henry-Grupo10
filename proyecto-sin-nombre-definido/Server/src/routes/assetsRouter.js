@@ -8,6 +8,7 @@ const {
   getAllLocationsHandler,
   getAmenitiesHandler,
   getAllButAllAssetsHandler,
+  getAllAssetsWithAmenitiesHandler,
 } = require("../handlers/assetHandler");
 
 const assetsRouter = Router();
@@ -18,6 +19,7 @@ assetsRouter.get("/location", getAllLocationsHandler);
 
 //! Temporal, hay que desarrollar el CRUD completo de amenities
 assetsRouter.get("/amenities", getAmenitiesHandler);
+assetsRouter.get("/filtroporamenities", getAllAssetsWithAmenitiesHandler);
 
 assetsRouter.get(
   "/menosmalquediegodijoquenonosllenemosderutas",
