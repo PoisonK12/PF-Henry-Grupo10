@@ -7,7 +7,8 @@ import {
   PUT_PROPERTY,
   GET_ALL_ALL_PROPERTIES,
   SEARCH_BY_FILTER,
-  DELETE_ASSET_BY_ID
+  DELETE_ASSET_BY_ID,
+  POST_IMAGE
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -173,3 +174,18 @@ export const deleteAssetById = (id) => {
     }
   };
 };
+
+export const postImage = (url) => {
+  return async (dispatch) =>{
+    try {
+      const {data} = await axios.post(`https://api.cloudinary.com/v1_1/dkdounmsa/image/upload`, url)
+      dispatch({
+        type: POST_IMAGE,
+        payload: data
+      })
+    } catch (error) {
+      console.error(error);
+      
+    }
+  }
+}

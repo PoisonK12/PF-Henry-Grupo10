@@ -10,6 +10,11 @@ import {
   putProperty,
 } from "../../redux/actions";
 import axios from "axios";
+// import {
+//   getAllProperties,
+//   getAllReallyProperties,
+//   putProperty,
+// } from "../../redux/actions";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -18,6 +23,7 @@ const AdminDashboard = () => {
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
+  const [previousProperties, setPreviousProperties] = useState([]);
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
     onSale: "",
     parking: "",
@@ -141,6 +147,16 @@ const AdminDashboard = () => {
   };
   useEffect(() => {
     dispatch(getAllReallyProperties());
+  }, []);
+
+  useEffect(() => {
+    // Lógica para detectar eliminaciones
+    const deletedItems = previousProperties.filter(item => !allProperties.includes(item));
+    // Hacer algo con los elementos eliminados si es necesario
+    console.log('Elementos eliminados:', deletedItems);
+    
+    // Actualizar el estado anterior con el estado actual
+    setPreviousProperties(allProperties);
   }, [allProperties]);
 
   return (
@@ -162,7 +178,7 @@ const AdminDashboard = () => {
       {/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link> */}
 
       <div>
-        {allProperties.map((props, index) => (
+        {previousProperties?.map((props, index) => (
           <div className={`${style.centeredContent}`} key={props.id}>
             <div className={`card mb-3 ${style.maxWidth}`}>
               <div className="row g-0">
@@ -198,13 +214,12 @@ const AdminDashboard = () => {
                         <img
                         style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
                           src={props.images[0]}
-                          className="d-block w-100"
+                          className="d-block " 
                           alt="..."
                         />
                       </div>
                       <div className="carousel-item">
                         <img
-                        style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
                           src={props.images[1]}
                           className="d-block w-100"
                           alt="..."
@@ -214,7 +229,7 @@ const AdminDashboard = () => {
                         <img
                         style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
                           src={props.images[2]}
-                          className="d-block w-100"
+                          className="d-block "
                           alt="..."
                         />
                       </div>
@@ -305,7 +320,7 @@ const AdminDashboard = () => {
           </div>
         ))}
       </div>
-      <form
+      {/* <form
         onSubmit={(e) => {
           handleUpdate(idHouse);
           e.preventDefault();
@@ -324,7 +339,7 @@ const AdminDashboard = () => {
           placeholder="Nombre de tu propiedad"
         />
         <button type="submit">aca</button>
-      </form>
+      </form> */}
       <div
         className="modal fade"
         id="exampleModalToggle"
