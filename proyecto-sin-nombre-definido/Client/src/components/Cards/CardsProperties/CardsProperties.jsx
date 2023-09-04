@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import CardProperties from "../../Card/CardProperties/CardProperties";
 import { SearchByLocation, getLocation } from "../../../redux/actions";
 import NotFoundPage from "../../../views/404/404";
+import style from "./CardsProperties.module.css"
 
 
 const CardsProperties = () => {
@@ -17,7 +18,7 @@ const CardsProperties = () => {
 
  
   
-  const totalProp = Math.ceil(allProperties.count / 10);
+  const totalProp = Math.ceil(allProperties?.rows.length / 10);
 
   const scrollToTop = () => {
    window.scrollTo({behavior:"smooth", top:0})
@@ -37,16 +38,16 @@ const CardsProperties = () => {
   useEffect(() => {
     dispatch(SearchByLocation(location ,currentPage + 1));
     console.log(allProperties.count);
-  }, [currentPage, dispatch]);
+  }, [currentPage, dispatch, location]);
 
   useEffect(() =>{
   }, [allProperties])
-
+  console.log(allProperties)
   return (
     <>
     {!allProperties.length ? (
       <>
-    <div ref={listContainerRef}> 
+    <div className={style.background} ref={listContainerRef}> 
       {allProperties.rows?.map((ele) => {
        return <CardProperties
           key={ele.id}
@@ -61,9 +62,10 @@ const CardsProperties = () => {
         />
       })}
       </div>    
-      <div>
-        <button onClick={prevHandler}>PREV</button>
-        <button onClick={nextHandler}>NEXT</button>
+      <div className={style.buttonContainer}>
+        <button onClick={prevHandler} className={style.button}>PREV</button>
+        <p>Pagina {currentPage + 1} de {totalProp}</p>
+        <button onClick={nextHandler} className={style.button}>NEXT</button>
       </div>
       </>
     ) : <NotFoundPage/> }
