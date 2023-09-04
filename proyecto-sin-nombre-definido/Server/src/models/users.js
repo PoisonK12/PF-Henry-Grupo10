@@ -64,11 +64,11 @@ module.exports = (sequelize) => {
         type: DataTypes.ARRAY(DataTypes.FLOAT)
       },
       favorites: {
-        type: DataTypes.ARRAY(DataTypes.UUID),
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
       },
       history: {
-        type: DataTypes.ARRAY(DataTypes.UUID),
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
       },
     },

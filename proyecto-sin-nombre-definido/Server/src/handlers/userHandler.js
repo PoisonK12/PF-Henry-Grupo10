@@ -52,6 +52,7 @@ const getUserHandler = async (req, res) => {
 
 const userPutHandler = async (req, res) => {
   const {  
+    userName,
     //edicion por usuario
     fullName,
     profilePic,
@@ -71,6 +72,7 @@ const userPutHandler = async (req, res) => {
 
   try {
     await userEditController(
+    userName,
      //edicion por usuario
     fullName,
     profilePic,
