@@ -35,6 +35,16 @@ export const Nav = () => {
             <span>Home </span>
           </NavLink>
         </li>
+         <li>
+
+          <NavLink
+            to="/checkIn"
+            className={({ isActive }) => (isActive ? style.active : "")}
+          >
+            {" "}
+            <span> 👩‍💻 Acceder </span>
+          </NavLink>
+        </li>
         <li>
           <NavLink
             to="/contacts"
