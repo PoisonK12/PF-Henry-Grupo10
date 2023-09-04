@@ -23,7 +23,6 @@ const getAllAssets = async (req) => {
     rooms,
     bathrooms,
     onSale,
-    amenities,
     rentPriceMax,
     rentPriceMin,
     sellPriceMax,
@@ -36,7 +35,16 @@ const getAllAssets = async (req) => {
   console.log(typeof amenities);
   amenityIds = amenities ? amenities.split(",").map(Number) : [];
 
-  let filter = {};
+  let filter = {
+    location,
+    rooms,
+    bathrooms,
+    onSale,
+    rentPriceMax,
+    rentPriceMin,
+    sellPriceMax,
+    sellPriceMin,
+  };
 
   let page = 1;
   if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
@@ -110,6 +118,7 @@ const updateAsset = async (
   rentPrice,
   rooms,
   bathrooms,
+  averageScore,
   coveredArea,
   amenities
 ) => {
@@ -126,6 +135,7 @@ const updateAsset = async (
     rentPrice,
     rooms,
     bathrooms,
+    averageScore,
     coveredArea,
     amenities,
   });
@@ -154,7 +164,6 @@ const createAsset = async (
   coveredArea,
   totalArea,
   amenities,
-  userId
 ) => {
   try {
     // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando

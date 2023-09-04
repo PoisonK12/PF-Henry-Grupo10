@@ -54,6 +54,7 @@ const updateAssetHandler = async (req, res) => {
     rentPrice,
     rooms,
     bathrooms,
+    averageScore,
     coveredArea,
     amenities,
   } = req.body;
@@ -69,6 +70,7 @@ const updateAssetHandler = async (req, res) => {
       rentPrice,
       rooms,
       bathrooms,
+      averageScore,
       coveredArea,
       amenities
     );
@@ -97,7 +99,6 @@ const createAssetHandler = async (req, res) => {
     coveredArea,
     totalArea,
     amenities,
-    userid,
   } = req.body;
 
   try {
@@ -134,7 +135,6 @@ const createAssetHandler = async (req, res) => {
       coveredArea,
       totalArea,
       amenities,
-      userid
     );
 
     res.status(201).json(response);
