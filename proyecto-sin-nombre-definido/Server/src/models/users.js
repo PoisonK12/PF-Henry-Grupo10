@@ -60,8 +60,13 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
+      admin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
       averageScore: {
-        type: DataTypes.ARRAY(DataTypes.FLOAT)
+        type: DataTypes.ARRAY(DataTypes.NUMERIC),
       },
       favorites: {
         type: DataTypes.ARRAY(DataTypes.STRING),

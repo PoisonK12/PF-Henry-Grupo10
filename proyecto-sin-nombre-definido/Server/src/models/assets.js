@@ -50,8 +50,7 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
       },
       averageScore: {
-        type: DataTypes.FLOAT,
-        default:0
+        type: DataTypes.ARRAY(DataTypes.NUMERIC),
       },
       coveredArea: {
         type: DataTypes.FLOAT
