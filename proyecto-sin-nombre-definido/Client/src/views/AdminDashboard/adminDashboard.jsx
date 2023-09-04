@@ -221,6 +221,7 @@ const AdminDashboard = () => {
                       <div className="carousel-item">
                         <img
                           src={props.images[1]}
+                          style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
                           className="d-block w-100"
                           alt="..."
                         />
