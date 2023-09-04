@@ -13,11 +13,12 @@ const CardProperties = (props) => {
 
   return (
     <div className={`${style.centeredContent}`} key={props.id}>
-      <div className={`card mb-3 ${style.maxWidth}`}>
+      <div className={`card mb-4 ${style.maxWidth}`}>
         <div className="row g-0">
           <div className="col-md-4">
             <img
               src={props.images[0]}
+              style={{width: "100%" , height : "270px", objectFit: "cover", objectPosition: "center bottom"}}
               className="img-fluid rounded-start"
               alt="..."
             />

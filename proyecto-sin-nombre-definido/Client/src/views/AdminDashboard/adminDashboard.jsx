@@ -3,13 +3,19 @@ import style from "./adminDashboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getAllProperties, getAllReallyProperties, putProperty } from "../../redux/actions";
+import {
+  deleteAssetById,
+  getAllProperties,
+  getAllReallyProperties,
+  putProperty,
+} from "../../redux/actions";
+import axios from "axios";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);
   console.log(allProperties);
-  const [updated, setUpdated] = useState(false)
+  const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
@@ -45,7 +51,7 @@ const AdminDashboard = () => {
         location: data?.location,
         description: data.description,
         onSale: data.onSale,
-        images: data.image,
+        images: data.images,
         sellPrice: data?.sellPrice,
         rentPrice: data?.rentPrice,
         rooms: data.rooms,
@@ -53,9 +59,9 @@ const AdminDashboard = () => {
         coveredArea: data.coveredArea,
         totalArea: data.totalArea,
       });
-      console.log(form);
     };
     getDataForFrom();
+    console.log(form);
   }, [idHouse]);
 
   const [errors, setErrors] = useState({
@@ -85,8 +91,16 @@ const AdminDashboard = () => {
   // Función para manejar el archivo seleccionado
   const handleFile = (file) => {
     // Realizar las acciones necesarias con el archivo
-    const imageURL = URL.createObjectURL(new Blob([file]));
-    setForm({ ...form, images: [...form.images, imageURL] });
+    if (!file.type.startsWith("image/")) {
+      setErrors({ ...errors, image: "Tiene q ser una imagen" });
+      return;
+    }
+    if (file.type.startsWith("image/")) {
+      const imageURL = URL.createObjectURL(new Blob([file]));
+      setErrors({ ...errors, image: "" });
+      setForm({ ...form, images: [...form.images, imageURL] });
+      return;
+    }
   };
   // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
@@ -127,10 +141,10 @@ const AdminDashboard = () => {
   };
   useEffect(() => {
     dispatch(getAllReallyProperties());
-  }, []);
+  }, [allProperties]);
 
   return (
-    <div>
+    <div className={style.background}>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       <link
@@ -148,19 +162,19 @@ const AdminDashboard = () => {
       {/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link> */}
 
       <div>
-        {allProperties?.map((props) => (
+        {allProperties.map((props, index) => (
           <div className={`${style.centeredContent}`} key={props.id}>
             <div className={`card mb-3 ${style.maxWidth}`}>
               <div className="row g-0">
                 <div className="col-md-4">
                   <div
-                    id="carouselExampleIndicators"
+                    id={`carouselExampleIndicators-${index}`}
                     className="carousel slide"
                   >
                     <div className="carousel-indicators">
                       <button
                         type="button"
-                        data-bs-target="#carouselExampleIndicators"
+                        data-bs-target={`#carouselExampleIndicators-${index}`}
                         data-bs-slide-to="0"
                         className="active"
                         aria-current="true"
@@ -168,35 +182,38 @@ const AdminDashboard = () => {
                       ></button>
                       <button
                         type="button"
-                        data-bs-target="#carouselExampleIndicators"
+                        data-bs-target={`#carouselExampleIndicators-${index}`}
                         data-bs-slide-to="1"
                         aria-label="Slide 2"
                       ></button>
                       <button
                         type="button"
-                        data-bs-target="#carouselExampleIndicators"
+                        data-bs-target={`#carouselExampleIndicators-${index}`}
                         data-bs-slide-to="2"
                         aria-label="Slide 3"
                       ></button>
                     </div>
-                    <div className="carousel-inner">
+                    <div className={`carousel-inner ${style.containerImg}`}>
                       <div className="carousel-item active">
                         <img
-                          src={props.images?.[0]}
+                        style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
+                          src={props.images[0]}
                           className="d-block w-100"
                           alt="..."
                         />
                       </div>
                       <div className="carousel-item">
                         <img
-                          src={props.images?.[1]}
+                        style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
+                          src={props.images[1]}
                           className="d-block w-100"
                           alt="..."
                         />
                       </div>
                       <div className="carousel-item">
                         <img
-                          src={props.images?.[2]}
+                        style={{width: "100%" , height : "238px", objectFit: "cover", backgroundPosition:"center bottom"}}
+                          src={props.images[2]}
                           className="d-block w-100"
                           alt="..."
                         />
@@ -205,7 +222,7 @@ const AdminDashboard = () => {
                     <button
                       className="carousel-control-prev"
                       type="button"
-                      data-bs-target="#carouselExampleIndicators"
+                      data-bs-target={`#carouselExampleIndicators-${index}`}
                       data-bs-slide="prev"
                     >
                       <span
@@ -217,7 +234,7 @@ const AdminDashboard = () => {
                     <button
                       className="carousel-control-next"
                       type="button"
-                      data-bs-target="#carouselExampleIndicators"
+                      data-bs-target={`#carouselExampleIndicators-${index}`}
                       data-bs-slide="next"
                     >
                       <span
@@ -231,6 +248,7 @@ const AdminDashboard = () => {
                       className={style.customButton}
                       data-bs-target="#exampleModalToggle4"
                       data-bs-toggle="modal"
+                      onClick={() => setIdHouse(props.id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -254,29 +272,31 @@ const AdminDashboard = () => {
                         {props.address}, {props.country}
                       </small>
                     </p>
-                    <div className="d-flex justify-content-between m-2">
+                    <div className={`  m-2 ${style.divButton}`}>
                       <Link to={`/detail/${props.id}`}>
                         <button className="btn btn-primary">
                           Ver Detalles
                         </button>
                       </Link>
-                      <button
-  className={`btn btn-danger ${style.customButton}`}
-  onClick={() => {
-    // Llama a la función handleDelete para mostrar el modal de confirmación
-    handleDeleteAsset(props.id);
-  }}
->
-  Eliminar
-</button>
-                      <button
-                        className="btn btn-primary"
-                        data-bs-target="#exampleModalToggle"
-                        data-bs-toggle="modal"
-                        onClick={() => setIdHouse(props.id)}
-                      >
-                        Editar
-                      </button>
+                      <div className={style.left}>
+                        <button
+                          className={`btn btn-danger ${style.left} `}
+                          onClick={() => {
+                            // Llama a la función handleDelete para mostrar el modal de confirmación
+                            handleDeleteAsset(props.id);
+                          }}
+                        >
+                          Eliminar
+                        </button>
+                        <button
+                          className={`btn btn-primary ${style.left}`}
+                          data-bs-target="#exampleModalToggle"
+                          data-bs-toggle="modal"
+                          onClick={() => setIdHouse(props.id)}
+                        >
+                          Editar
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -338,7 +358,6 @@ const AdminDashboard = () => {
                         <input
                           type="text"
                           name="name"
-                          
                           value={form.name}
                           className="form-control mb-1"
                           id="inputName"
@@ -719,8 +738,8 @@ const AdminDashboard = () => {
                     // data-bs-target="#exampleModalToggle"
                     // data-bs-toggle="modal"
                     onClick={() => alertHandler()}
-                data-bs-dismiss="modal"
-                aria-label="Close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
                   >
                     Enviar
                   </button>
@@ -730,8 +749,14 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      {updated ? <div className={`${style.alert} ${style.show}`}><Alerts/> </div> :"" }
-        
+      {updated ? (
+        <div className={`${style.alert} ${style.show}`}>
+          <Alerts />{" "}
+        </div>
+      ) : (
+        ""
+      )}
+
       <div
         className="modal fade"
         id="exampleModalToggle4"
@@ -753,7 +778,14 @@ const AdminDashboard = () => {
               ></button>
             </div>
             <div className="modal-body">
-              <form className="d-flex flex-row align-items-center justify-content-center text-center  ">
+              <form
+                className="d-flex flex-row align-items-center justify-content-center text-center  "
+                onSubmit={(e) => {
+                  e.preventDefault(); // Prevent the default form submission
+                  console.log("Form submitted"); // Check if this message is logged
+                  handleUpdate(idHouse);
+                }}
+              >
                 <div className="column">
                   <div className="d-flex flex-row justify-content-around align-items-center">
                     <div className="col-md-12 m-2 p-1">
@@ -819,17 +851,18 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                   </div>
+                  <div className="modal-footer">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      data-bs-target="#exampleModalToggle7"
+                      data-bs-toggle="modal"
+                    >
+                      Enviar
+                    </button>
+                  </div>
                 </div>
               </form>
-            </div>
-            <div className="modal-footer">
-              <button
-                className="btn btn-primary"
-                data-bs-target="#exampleModalToggle7"
-                data-bs-toggle="modal"
-              >
-                Enviar
-              </button>
             </div>
           </div>
         </div>

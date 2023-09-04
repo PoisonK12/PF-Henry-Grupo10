@@ -4,6 +4,12 @@
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
 } */
+.buttonGroup {
+    display: flex;
+    justify-content: space-between; /* Distribuye los botones horizontalmente */
+    align-items: center; /* Alinea los botones verticalmente en el centro */
+  }
+  
 .container{
     margin-top: 50px;
     padding: 15px;
@@ -186,6 +192,8 @@ position: absolute;
   padding: 20px; /* Espacio alrededor del texto */
   z-index: 10;
 }
+
+
 .buton {
     background-color: #ff0000;
     color: #ffffff;
@@ -195,6 +203,28 @@ position: absolute;
     cursor: pointer;
     width: 75px;
 }
+
+
+.divButton{
+    width: 100%;
+    margin: 0 auto;
+
+    display: flex !important;
+    align-items: center !important;
+    /* justify-content: center !important; */
+    justify-content: start;
+}
+
+.divButton button{
+    margin-right:10px ;
+}
+
+.left{
+    display:flex;
+    margin-left:auto !important ;
+}
+
+
 
 .alert{
     position: fixed;
@@ -207,4 +237,15 @@ position: absolute;
 
 .alert.show{
     opacity: 1;
+}
+
+.background{
+    font-family: montserrat, arial, verdana;
+    background-color: rgb(34, 108, 237);
+    padding: 20px;
+    padding-top: 100px;
+}
+
+.containerImg img{
+    object-position: center bottom !important;
 }

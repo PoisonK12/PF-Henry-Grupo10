@@ -1,24 +1,80 @@
-body {
-    font-family: montserrat, arial, verdana;
-    background: transparent;
-    background-color: #eae0d5;   
-   
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap");
+
+.cont {
+  font-family: montserrat, arial, verdana;
+  background-color: rgb(231, 231, 231);
+  padding: 20px;
+  display: flex;
 }
 
-.custom-container {/* Ajusta la cantidad de padding superior que desees */
-    width: 40%;
-    margin: 0 auto; /* Esto centrará el contenido horizontalmente */
-    border-radius: 15px;
-    margin-bottom: 15px;
-    margin-top: 75px;
-    padding:15px;
-    box-shadow: 8px 4px 8px 8px rgba(0, 0, 0, 0.6);
-    background-color: rgb(175, 164, 152);
+.background .img {
+  width: 100%;
+  height: 250px;
+  margin: 0;
+  background-position: bottom;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.cont form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+    position: relative;
+  z-index: 500;
+
+  border: 5px solid rgb(51, 141, 194);
+}
+
+.background h1 {
+  font-weight: 400;
+  letter-spacing: 5px;
+  font-family: "Noto Sans", sans-serif;
+  top: 100px;
+  color: whitesmoke;
+  text-shadow: 2px 2px 2px black;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.custom-container {
+  /* Ajusta la cantidad de padding superior que desees */
+  width: 40%;
+  margin: 0 auto; /* Esto centrará el contenido horizontalmente */
+  border-radius: 15px;
+  padding: 15px;
+  background-color: rgb(66, 164, 221);
 }
 .title {
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold; /* Establecer el texto en negrilla */
-  }
+  text-align: center;
+  font-family: "Noto Sans", sans-serif;
+
+  font-weight: bold; /* Establecer el texto en negrilla */
+}
+
+.info{
+    flex: 2;
+    margin: auto 0;
+    background-color: aqua;
+}
+
+
+.svg {
+  width: 100%;
+  z-index: 2;
+  left: 0;
+  position: absolute;
+  transform: translate(0%,-90%);
+  color: black;
   
-  
+}
+
+.personaje{
+    right: -250px;
+    position: absolute;
+    z-index: 0;
+    top: 100%;
+    transform: translate(-50%, -50%) scaleX(-1) ;
+}

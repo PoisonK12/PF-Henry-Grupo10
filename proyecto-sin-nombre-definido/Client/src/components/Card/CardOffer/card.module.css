@@ -1,6 +1,7 @@
 .cardContainer{
     background-color: rgba(0, 0, 0, 0.1);
     height: 225px;
+    width: 100%;
 }
 .card{
     width: 100%;
@@ -33,14 +34,14 @@ img{
   z-index: -1;
   content: '';
   display: block;
-  border: 3px solid #598392;
+  border: 3px solid rgb(34, 108, 237)2;
 }
 .ribbon span {
   position: absolute;
   display: block;
   width: 165px;
   padding: 5px 0;
-  background-color: #598392;
+  background-color: rgb(34, 108, 237);
   box-shadow: 0 5px 10px rgba(0,0,0,.1);
 }
 
