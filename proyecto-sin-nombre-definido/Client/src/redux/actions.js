@@ -8,7 +8,8 @@ import {
   GET_ALL_ALL_PROPERTIES,
   SEARCH_BY_FILTER,
   DELETE_ASSET_BY_ID,
-  POST_IMAGE
+  POST_IMAGE,
+  GET_LOGIN
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -188,4 +189,15 @@ export const postImage = (url) => {
       
     }
   }
-}
+};
+
+/* const getLogin = async (login) => {
+
+      const {email , password} = login;
+
+  try {
+    const {data} = await 
+  } catch (error) {
+    
+  }
+} */
