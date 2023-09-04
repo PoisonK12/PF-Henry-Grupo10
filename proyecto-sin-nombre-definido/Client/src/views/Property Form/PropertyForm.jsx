@@ -2,7 +2,7 @@ import React, {useState , useEffect, useRef} from "react";
 import style from "./PropertyForm.module.css"
 import { useNavigate } from "react-router";
 import { Carousel , Modal } from "react-bootstrap";
-import { createAsset, postImage } from "../../redux/actions";
+import { createAsset} from "../../redux/actions";
 import Card from "../../components/Card/CardOffer/CardOffer";
 import validation from "./Validation";
 import axios from "axios";
@@ -111,20 +111,6 @@ console.log(errors);
   fileData.append("cloud_name", "dkdounmsa")
   const {data} = await axios.post(`https://api.cloudinary.com/v1_1/dkdounmsa/image/upload`, fileData)
   setForm({...form, images: [...form.images,data.secure_url ] })
-  // setForm({...form, images: data.secure_url})
-    // if(!file.type.startsWith("image/")){
-    //   setErrors({...errors, images : "Tiene q ser una imagen"})
-    //   setTimeout(() => {
-    //     handle()
-    //   },1000)
-    //   return
-    // }
-    // if(file.type.startsWith('image/')) {
-    //   const imageURL = URL.createObjectURL( new Blob([file]));
-    //   setErrors({...errors , images : undefined})
-    //   setForm({...form , images : [... form.images , imageURL]})
-    //   return
-    // }
     
   };
   

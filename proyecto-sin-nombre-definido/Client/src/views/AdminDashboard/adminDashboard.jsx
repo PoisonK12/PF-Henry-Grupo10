@@ -19,7 +19,7 @@ import axios from "axios";
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);
-  console.log(allProperties);
+
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
@@ -95,18 +95,15 @@ const AdminDashboard = () => {
     setForm((prevData) => ({ ...prevData, [name]: value }));
   };
   // Función para manejar el archivo seleccionado
-  const handleFile = (file) => {
-    // Realizar las acciones necesarias con el archivo
-    if (!file.type.startsWith("image/")) {
-      setErrors({ ...errors, image: "Tiene q ser una imagen" });
-      return;
-    }
-    if (file.type.startsWith("image/")) {
-      const imageURL = URL.createObjectURL(new Blob([file]));
-      setErrors({ ...errors, image: "" });
-      setForm({ ...form, images: [...form.images, imageURL] });
-      return;
-    }
+  const handleFile = async (file) => {
+    console.log('Imagen',file);
+    const fileEdit = new FormData()
+    fileEdit.append("file", file)
+    fileEdit.append("upload_preset", "Imagenes")
+    fileEdit.append("cloud_name", "dkdounmsa")
+    const {data} = await axios.post(`https://api.cloudinary.com/v1_1/dkdounmsa/image/upload`, fileEdit)
+    setForm({...form, images: [...form.images, data.secure_url]})
+
   };
   // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
@@ -178,7 +175,7 @@ const AdminDashboard = () => {
       {/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link> */}
 
       <div>
-        {previousProperties?.map((props, index) => (
+        {allProperties?.map((props, index) => (
           <div className={`${style.centeredContent}`} key={props.id}>
             <div className={`card mb-3 ${style.maxWidth}`}>
               <div className="row g-0">
