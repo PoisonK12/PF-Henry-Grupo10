@@ -1,7 +1,7 @@
 const { encrypt, compare } = require('../handlers/handleBcrypt');
-const {tokenSign} = require('../helpers/generateToken')
+const { tokenSign } = require('../helpers/generateToken')
 const { User } = require('../db');
-const {tokenSign} = require('../helpers/generateToken')
+const { tokenSign } = require('../helpers/generateToken')
 
 // const registerCtrl = async (req, res) => {
 //   try {
@@ -23,23 +23,24 @@ const loginCtrl = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+
     if (!user) {
-      return res.status(401).json({ msg: 'Invalid credentials' }); 
+      return res.status(401).json({ success: false, msg: 'Correo electrónico no válido' });
     }
-    const checkedPassword = await compare(password, user.password);
-    if (checkedPassword) {
-      const tokenSession = await tokenSign(user); 
-      res.send({
-        data: user,
-        token: tokenSession,
-      });
+
+    const isPasswordValid = await compare(password, user.password);
+
+    if (isPasswordValid) {
+      const tokenSession = await tokenSign(user);
+      res.status(200).json({ success: true, data: user, token: tokenSession });
     } else {
-      res.status(503).json({ msg: 'Error' }); // 
+      res.status(401).json({ success: false, msg: 'Contraseña incorrecta' });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message }); 
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
 
-module.exports = {registerCtrl, loginCtrl}
+
+module.exports = { registerCtrl, loginCtrl }
