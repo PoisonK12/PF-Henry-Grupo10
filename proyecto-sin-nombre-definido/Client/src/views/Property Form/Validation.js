@@ -1,4 +1,4 @@
-const validation = (form) => {
+const assetValidation = (form) => {
     let errors = {};
 
      if (!form.image) {
@@ -13,4 +13,4 @@ const validation = (form) => {
     }
 
 }
-export default validation;
+export default assetValidation;

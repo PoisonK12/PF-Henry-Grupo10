@@ -1,6 +1,6 @@
 const { type } = require("os");
 
-const { dataSchemePost } = require("../helpers/assetValidation.js");
+const { dataSchemePost } = require("../helpers/assetValidation.ts");
 const {
   deleteAssetById,
   createAsset,
@@ -96,6 +96,7 @@ const createAssetHandler = async (req, res) => {
     rentPrice,
     rooms,
     bathrooms,
+    averageScore,
     coveredArea,
     totalArea,
     amenities,
@@ -132,6 +133,7 @@ const createAssetHandler = async (req, res) => {
       rentPrice,
       rooms,
       bathrooms,
+      averageScore,
       coveredArea,
       totalArea,
       amenities,
@@ -175,6 +177,7 @@ const getAmenitiesHandler = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
+
 const getAllAssetsWithAmenitiesHandler = async (req, res) => {
   const { amenitiesss } = req.query;
   console.log(amenitiesss);

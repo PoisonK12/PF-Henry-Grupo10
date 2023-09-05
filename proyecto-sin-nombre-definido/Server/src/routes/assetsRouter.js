@@ -19,12 +19,10 @@ assetsRouter.get("/location", getAllLocationsHandler);
 
 //! Temporal, hay que desarrollar el CRUD completo de amenities
 assetsRouter.get("/amenities", getAmenitiesHandler);
+
 assetsRouter.get("/filtroporamenities", getAllAssetsWithAmenitiesHandler);
 
-assetsRouter.get(
-  "/menosmalquediegodijoquenonosllenemosderutas",
-  getAllButAllAssetsHandler
-);
+assetsRouter.get("/menosmalquediegodijoquenonosllenemosderutas",getAllButAllAssetsHandler);
 
 assetsRouter.get("/:id", getAssetByIdHandler);
 
