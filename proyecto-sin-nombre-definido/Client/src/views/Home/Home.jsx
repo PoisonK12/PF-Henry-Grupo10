@@ -20,6 +20,7 @@ export const Home = () => {
                 <div className={style.containerText}>
                   <h1 className={style.h2}>
                     Encuentra los mejores
+                    <br></br>
                     <span>
                       <span>precios</span>
                       <span>descuentos</span>
