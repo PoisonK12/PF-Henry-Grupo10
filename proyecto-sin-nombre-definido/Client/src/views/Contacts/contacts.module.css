@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap");
 
 .cont {
-  font-family: montserrat, arial, verdana;
+  /* font-family: montserrat, arial, verdana; */
   background-color: rgb(231, 231, 231);
   padding: 20px;
   display: flex;
@@ -19,19 +19,20 @@
 .cont form {
     flex: 1;
     display: flex;
+    font-family: 'Avenir', sans-serif;
     flex-direction: column;
     margin-left: 0;
     position: relative;
   z-index: 500;
-
-  border: 5px solid rgb(51, 141, 194);
+  box-shadow:  0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
 }
 
 .background h1 {
   font-weight: 400;
   letter-spacing: 5px;
-  font-family: "Noto Sans", sans-serif;
-  top: 100px;
+  font:700 60px/1 'Lato', sans-serif;
+  /* font-family: "Noto Sans", sans-serif; */
+  top: 120px;
   color: whitesmoke;
   text-shadow: 2px 2px 2px black;
   left: 50%;
@@ -50,6 +51,8 @@
 .title {
   text-align: center;
   font-family: "Noto Sans", sans-serif;
+  font:700 30px/1 'Lato', sans-serif;
+  text-transform: uppercase;
 
   font-weight: bold; /* Establecer el texto en negrilla */
 }
@@ -77,4 +80,15 @@
     z-index: 0;
     top: 100%;
     transform: translate(-50%, -50%) scaleX(-1) ;
+}
+
+.button{
+  transition: all 0.5s ease;
+  border: 2px solid rgb(66, 164, 221);
+}
+
+.button:hover{
+  color: #0A58CA;
+  background-color: azure;
+  
 }
