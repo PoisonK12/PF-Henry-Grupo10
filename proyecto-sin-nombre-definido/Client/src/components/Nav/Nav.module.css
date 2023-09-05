@@ -57,10 +57,11 @@ font-family: 'Avenir', sans-serif;
   padding: 0;
 }
 
-.nav ul li a:not(.active):hover{
+.navHover:not(.active):hover{
   background-color: rgba(31, 28, 28, 0.452);
 
 }
+
 
 /* Estilo para el logotipo */
 .nav img {

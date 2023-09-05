@@ -1,0 +1,15 @@
+.nav ul li{
+
+    padding: 0;
+}
+
+.nav ul li:hover{
+    background-color: rgba(76, 132, 228, 0.768);
+}
+
+.nav button{
+    border: none !important
+}
+.nav button:focus{
+    box-shadow: none;
+}

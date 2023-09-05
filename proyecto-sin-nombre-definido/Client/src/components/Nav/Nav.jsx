@@ -30,7 +30,7 @@ export const Nav = () => {
         <li>
           <NavLink
             to="/home"
-            className={({ isActive }) => (isActive ? style.active : "")}
+            className={({ isActive }) => (isActive ? style.active : style.navHover)}
           >
             {" "}
             <span>Home </span>
@@ -39,7 +39,7 @@ export const Nav = () => {
         <li>
           <NavLink
             to="/contacts"
-            className={({ isActive }) => (isActive ? style.active : "")}
+            className={({ isActive }) => (isActive ? style.active : style.navHover)}
           >
             {" "}
             <span>Contacto</span>
@@ -48,7 +48,7 @@ export const Nav = () => {
         <li>
           <NavLink
             to='/addProperty'
-            className={({ isActive }) => (isActive ? style.active : "")}
+            className={({ isActive }) => (isActive ? style.active : style.navHover)}
           >
             <span>Propiedades</span>
           </NavLink>
@@ -65,7 +65,7 @@ export const Nav = () => {
         <li>
           <NavLink
             to="/adminDashboard"
-            className={({ isActive }) => (isActive ? style.active : "")}
+            className={({ isActive }) => (isActive ? style.active : style.navHover)}
           >
             <span>Admin</span>
           </NavLink>

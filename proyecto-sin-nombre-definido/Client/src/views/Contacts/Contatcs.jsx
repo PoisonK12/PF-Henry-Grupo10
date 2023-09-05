@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./contacts.module.css";
 import fondo from "../../assets/images/Exteriores/image12.jpeg";
 import personaje from "../../assets/images/svg/contact.png"
+import { useDispatch, useSelector } from "react-redux";
+import { getAllReallyProperties } from "../../redux/actions";
 
 const Contacts = () => {
+  const allCount = useSelector(state => state.propertiesCopy) 
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllReallyProperties())
+    console.log(allCount)
+  }, [])
+
   return (
     <div className={style.background}>
-      <h1>CONTACTANOS!</h1>
+      <h1>QUIENES SOMOS?</h1>
       <img className={style.img} src={fondo}></img>
       <div className={style.cont}>
         <form className={`${style["row-cols-1"]} ${style["custom-container"]}`}>
@@ -69,7 +78,7 @@ const Contacts = () => {
             ></textarea>
           </div>
           <div className="text-center">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className={`btn w-100 btn-primary ${style.button}`}>
               Enviar
             </button>
           </div>
