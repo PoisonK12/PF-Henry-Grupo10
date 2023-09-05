@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       gender: {
-        type: DataTypes.ENUM("Male", "Female", "Undefined", "No apply"),
+        type: DataTypes.ENUM("Male", "Female", "agender", "No binary"),
         allowNull: false,
       },
       address: {
@@ -63,7 +63,7 @@ module.exports = (sequelize) => {
       admin: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: false
+        defaultValue: false,
       },
       averageScore: {
         type: DataTypes.ARRAY(DataTypes.NUMERIC),

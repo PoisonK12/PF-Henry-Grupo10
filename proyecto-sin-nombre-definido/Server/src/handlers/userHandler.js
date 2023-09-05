@@ -1,7 +1,8 @@
+const userSchemePost = require("../helpers/userValidation");
 // const {createUserController} = require("../controllers/createUserController");
 
 const userPostHandler = async (req, res) => {
-  const { 
+  const {
     userName,
     fullName,
     profilePic,
@@ -13,11 +14,31 @@ const userPostHandler = async (req, res) => {
     nationality,
     email,
     password,
-    landlord    
-   } = req.body
+    landlord,
+  } = req.body;
 
-   try {
-     const user = await createUserController(
+  try {
+    const validData = userSchemePost.parse({
+      body: {
+        userName,
+        fullName,
+        birthDate,
+        phoneNumber,
+        verificationNumber,
+        profilePic,
+        gender,
+        address,
+        nationality,
+        email,
+        password,
+        landlord,
+        admin,
+        averageScore,
+        favorites,
+        history,
+      },
+    });
+    const user = await createUserController(
       userName,
       fullName,
       profilePic,
@@ -30,28 +51,28 @@ const userPostHandler = async (req, res) => {
       email,
       password,
       landlord
-     )
-    res.status(200).json("Usuario creado con exito!")
-   } catch (error) {
-    console.log(error)
-    res.status(404).json("Error en la creacion del usuario!")
-   }
-}
+    );
+    res.status(200).json("Usuario creado con exito!");
+  } catch (error) {
+    console.log(error);
+    res.status(404).json("Error en la creacion del usuario!");
+  }
+};
 
 const getUserHandler = async (req, res) => {
-  const { id } = req.params
-  
+  const { id } = req.params;
+
   try {
-    const user = id ? await getUserByIdController(id) : getAllUserController()
-    res.status(200).json(user)
+    const user = id ? await getUserByIdController(id) : getAllUserController();
+    res.status(200).json(user);
   } catch (error) {
-    console.log(error)
-    res.status(404).json("Error encontrando el usuario!")  
+    console.log(error);
+    res.status(404).json("Error encontrando el usuario!");
   }
-}
+};
 
 const userPutHandler = async (req, res) => {
-  const {  
+  const {
     userName,
     //edicion por usuario
     fullName,
@@ -68,51 +89,50 @@ const userPutHandler = async (req, res) => {
     averageScore,
     favorites,
     history,
-  } = req.body
+  } = req.body;
 
   try {
     await userEditController(
-    userName,
-     //edicion por usuario
-    fullName,
-    profilePic,
-    phoneNumber,
-    verificationNumber,
-    gender,
-    address,
-    nationality,
-    email,
-    password,
-    landlord,
-    //edicion por sistema
-    averageScore,
-    favorites,
-    history,
-    )
-    res.status(200).json("Usuario editado con exito!")
+      userName,
+      //edicion por usuario
+      fullName,
+      profilePic,
+      phoneNumber,
+      verificationNumber,
+      gender,
+      address,
+      nationality,
+      email,
+      password,
+      landlord,
+      //edicion por sistema
+      averageScore,
+      favorites,
+      history
+    );
+    res.status(200).json("Usuario editado con exito!");
   } catch (error) {
-    console.log(error)
-    res.status(404).json("Error editando el usuario!")  
+    console.log(error);
+    res.status(404).json("Error editando el usuario!");
   }
-}
+};
 
 const userDeleteOrBanHandler = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
   //por seguridad hay que modificarlo para recibirlo por body
   try {
-  await deleteUserById(id);
+    await deleteUserById(id);
 
     res.status(200).json(`El usuario fue eliminada`);
   } catch (error) {
-    console.log(error)
-    res.status(404).json("Error eliminando el usuario!")
+    console.log(error);
+    res.status(404).json("Error eliminando el usuario!");
   }
-}
-
+};
 
 module.exports = {
   userPostHandler,
   getUserHandler,
   userPutHandler,
-  userDeleteOrBanHandler
+  userDeleteOrBanHandler,
 };
