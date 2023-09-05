@@ -16,7 +16,7 @@
 
 .form {
     background-color: transparent;
-    background-color: rgba(255, 255, 255, 0.144);
+    background-color: rgba(255, 255, 255, 0.055);
     /* rgba(245, 245, 245, 0.589) */
     box-shadow: 4px  4px rgba(255, 255, 255, 0.534);
     border-radius: 10px ;
@@ -72,4 +72,9 @@
 
 .inputs::placeholder :hover {
     color : blanchedalmond
+}
+
+
+.inputs:focus {
+    background-color:rgba(255, 255, 255, 0.096) !important;
 }
