@@ -1,6 +1,6 @@
 const { type } = require("os");
 
-const { dataSchemePost } = require("../helpers/validation.ts");
+const { dataSchemePost } = require("../helpers/assetValidation.js");
 const {
   deleteAssetById,
   createAsset,

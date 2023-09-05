@@ -104,6 +104,11 @@ const createUserController = async (
       !landlord
     ) {return res.status(400).json({ error: "Falta informacion obligatoria" })}
     
+//! validacion
+//! hash
+password = hash(password)
+
+
     const [createdUser, created] = await User.findOrCreate({
       where:{userName},
       defaults: {
