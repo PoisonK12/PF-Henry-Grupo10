@@ -206,17 +206,15 @@ const createAsset = async (
 };
 
 const deleteAssetById = async (id) => {
-  //TODO agregar borrado logico
-  const asset = await Asset.findOne({
-    where: {
-      id: id,
-    },
-  });
+  // Buscar el activo por su ID
+  const asset = await Asset.findByPk(id);
 
   if (!asset) {
     throw new Error("Asset not found");
   }
-  await asset.destroy();
+
+  // Realizar soft delete
+  await asset.softDelete();
 
   return "Asset deleted successfully";
 };
