@@ -4,6 +4,18 @@ const { filterLocation } = require("../helpers/filterLocation");
 const amenities = require("../models/amenities");
 // const { sequelize } = require("../models/index");
 
+//Prototipos de borralo logico
+
+// Método para soft delete
+Asset.prototype.softDelete = function () {
+  return this.update({ eliminado: true });
+};
+
+// Método para restaurar
+Asset.prototype.restore = function () {
+  return this.update({ eliminado: false });
+};
+
 // Trae todas las propiedades y paginado
 //!------------------------------------------------------------------------
 
