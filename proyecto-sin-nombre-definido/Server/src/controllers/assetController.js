@@ -1,6 +1,7 @@
 const { Asset, Amenity } = require("../db");
 const { Op, Sequelize } = require("sequelize");
 const { filterLocation } = require("../helpers/filterLocation");
+const amenities = require("../models/amenities");
 // const { sequelize } = require("../models/index");
 
 // Trae todas las propiedades y paginado
@@ -30,29 +31,32 @@ const getAllAssets = async (req) => {
     rentPriceMin,
     sellPriceMax,
     sellPriceMin,
+    averageScore,
     sortBy,
   } = req.query;
   
-const average = averageScore[0]
-
   let page = 1;
   let size = 10;
   if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {page = pageAsNumber;}
   if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {size = sizeAsNumber;}
-
+  
+  let filter = {};
+  
+  if (rentPriceMin) {filter.rentPrice = {...filter.rentPrice, [Op.gte]: rentPriceMin };}
+  if (rentPriceMax) {filter.rentPrice = {...filter.rentPrice, [Op.lte]: rentPriceMax };}
+  if (sellPriceMin) {filter.rentPrice = {...filter.sellPrice, [Op.gte]: sellPriceMin };}
+  if (sellPriceMax) {filter.rentPrice = {...filter.sellPrice, [Op.lte]: sellPriceMax };}
+  if (amenities)    {filter.amenities = {...filter.amenities, [Op.overlap]: amenities };}
+  
+  if (bathrooms) {filter.bathrooms = bathrooms;}
+  if (averageScore) {const average = averageScore[0]}
+  if (location) {filter.location = location;}
+  if (onSale) {filter.onSale = onSale;}
+  if (rooms) {filter.rooms = rooms;}
+  if (amenities) {filter.eliminado=false}
 
   const assets = await Asset.findAndCountAll({
-    where:  {location,
-    country,
-    rooms,
-    bathrooms,
-    average,
-    onSale,
-    rentPriceMax,
-    rentPriceMin,
-    sellPriceMax,
-    sellPriceMin,
-    amenities:{ [ Op.contains ] : amenities }},
+    where:  filter,
     order: [],
     limit: size,
     offset: (page - 1) * size,
@@ -64,11 +68,14 @@ const average = averageScore[0]
 
 // Trae una propiedad especificada por el id
 const getAssetById = async (id) => {
+
   const asset = await Asset.findOne({
     where: {
       id: id,
     }
   });
+
+
   return asset;
 };
 
@@ -136,8 +143,6 @@ const createAsset = async (
     // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando
     const existingAsset = await Asset.findOne({ where: { name } });
 
-    console.log(typeof averageScore)
-    console.log(averageScore)
     if (existingAsset) {
       throw new Error("La Asset ya existe");
     }
@@ -240,5 +245,4 @@ module.exports = {
   getAllLocations,
   getAllAmenities,
   getAllButAllAssets,
-  getAllAssetsWithAmenities,
 };
