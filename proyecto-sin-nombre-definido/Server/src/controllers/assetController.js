@@ -49,42 +49,33 @@ const getAllAssets = async (req) => {
     amenities,
     sortBy,
   } = req.query;
-  
+
   let page = 1;
   let size = 10;
-  if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {page = pageAsNumber;}
-  if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {size = sizeAsNumber;}
-  
+  if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
+    page = pageAsNumber;
+  }
+  if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
+    size = sizeAsNumber;
+  }
+
   let filter = {};
-  
+  console.log(amenities)
   if (rentPriceMin) {filter.rentPrice = {...filter.rentPrice, [Op.gte]: rentPriceMin };}
   if (rentPriceMax) {filter.rentPrice = {...filter.rentPrice, [Op.lte]: rentPriceMax };}
   if (sellPriceMin) {filter.rentPrice = {...filter.sellPrice, [Op.gte]: sellPriceMin };}
   if (sellPriceMax) {filter.rentPrice = {...filter.sellPrice, [Op.lte]: sellPriceMax };}
   if (amenities)    {filter.amenities = {...filter.amenities, [Op.overlap]: amenities};}
   
-  // promedio    # de votos
-  // [   4.7         ,          5         ]
-  // nuevo voto: 3
-  
-  // nuevo promedio = ((4.7 * 5) + 3)/(5+1)
-  // nueva # de voto = 5 + 1
-
-  // separar columnas average score y hacer un filtrado de estrellas minimo a 5 
-  // if (averageScore) {filter.averageScore = {...filter.averageScore, [Op.gte]: averageScoreMin };}
-  // if (averageScore) {filter.averageScore = {...filter.averageScore, [Op.lte]: averageScoreMax };}
-  
-  
-  
   if (bathrooms) {filter.bathrooms = bathrooms;}
+  if (averageScore) {const average = averageScore[0]}
   if (location) {filter.location = location;}
   if (onSale) {filter.onSale = onSale;}
   if (rooms) {filter.rooms = rooms;}
-
-  filter.eliminado=false
+  if (amenities) {filter.eliminado=false}
 
   const assets = await Asset.findAndCountAll({
-    where:  filter,
+    where: filter,
     order: [],
     limit: size,
     offset: (page - 1) * size,
@@ -96,13 +87,11 @@ const getAllAssets = async (req) => {
 
 // Trae una propiedad especificada por el id
 const getAssetById = async (id) => {
-
   const asset = await Asset.findOne({
     where: {
       id: id,
-    }
+    },
   });
-
 
   return asset;
 };
@@ -122,8 +111,7 @@ const updateAsset = async (
   coveredArea,
   amenities
 ) => {
-
-  const updateAsset = await Asset.findOne({where: { id: id }});
+  const updateAsset = await Asset.findOne({ where: { id: id } });
 
   await updateAsset.update({
     name,
@@ -165,7 +153,7 @@ const createAsset = async (
   averageScore,
   coveredArea,
   totalArea,
-  amenities,
+  amenities
 ) => {
   try {
     // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando

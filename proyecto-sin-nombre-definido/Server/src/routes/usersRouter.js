@@ -1,21 +1,22 @@
 const { Router } = require("express");
+const {
+  userPostHandler,
+  getUserHandler,
+  getUserByIdHandler,
+  updateUserHandler,
+  userDeleteOrBanHandler,
+} = require("../handlers/userHandler");
 
 const usersRouter = Router();
 
-usersRouter.get("/:id", (req, res) => {
-  res.status(200).send("Estoy trayendo una cuenta");
-});
+usersRouter.get("/:id", getUserByIdHandler);
 
-usersRouter.put("/", (req, res) => {
-  res.status(200).send("Estoy modificando un usuario");
-});
+usersRouter.get("/", getUserHandler);
 
-usersRouter.post("/", (req, res) => {
-  res.status(200).send("Estoy creando una cuenta nueva");
-});
+usersRouter.put("/", updateUserHandler);
 
-usersRouter.delete("/:id", (req, res) => {
-  res.status(200).send("Estoy eliminando una cuenta");
-});
+usersRouter.post("/", userPostHandler);
+
+usersRouter.delete("/:id", userDeleteOrBanHandler);
 
 module.exports = usersRouter;

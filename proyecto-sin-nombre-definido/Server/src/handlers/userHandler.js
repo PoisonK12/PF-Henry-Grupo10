@@ -1,5 +1,22 @@
-const userSchemePost = require("../helpers/userValidation");
+const userSchemePost = require("../helpers/userValidation.ts");
 // const {createUserController} = require("../controllers/createUserController");
+
+const {
+  getUserByIdController,
+  getAllUserController,
+  deleteUserById,
+  createUserController,
+  updateUser,
+} = require("../controllers/userController");
+
+const getUserByIdHandler = async (req, res) => {
+  try {
+    const response = await getUserByIdController(req);
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: message.error });
+  }
+};
 
 const userPostHandler = async (req, res) => {
   const {
@@ -71,7 +88,7 @@ const getUserHandler = async (req, res) => {
   }
 };
 
-const userPutHandler = async (req, res) => {
+const updateUserHandler = async (req, res) => {
   const {
     userName,
     //edicion por usuario
@@ -92,7 +109,7 @@ const userPutHandler = async (req, res) => {
   } = req.body;
 
   try {
-    await userEditController(
+    await updateUser(
       userName,
       //edicion por usuario
       fullName,
@@ -133,6 +150,7 @@ const userDeleteOrBanHandler = async (req, res) => {
 module.exports = {
   userPostHandler,
   getUserHandler,
-  userPutHandler,
+  updateUserHandler,
   userDeleteOrBanHandler,
+  getUserByIdHandler,
 };
