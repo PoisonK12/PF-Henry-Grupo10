@@ -4,6 +4,7 @@ const { filterLocation } = require("../helpers/filterLocation");
 // const { sequelize } = require("../models/index");
 
 // Trae todas las propiedades y paginado
+//!------------------------------------------------------------------------
 
 const getAllButAllAssets = async (req, res) => {
   try {
@@ -14,6 +15,8 @@ const getAllButAllAssets = async (req, res) => {
     console.error(error.message);
   }
 };
+
+//!------------------------------------------------------------------------
 
 const getAllAssets = async (req) => {
   const pageAsNumber = Number.parseInt(req.query.page);
@@ -27,86 +30,48 @@ const getAllAssets = async (req) => {
     rentPriceMin,
     sellPriceMax,
     sellPriceMin,
-    // sortBy,
+    sortBy,
   } = req.query;
+  
+const average = averageScore[0]
 
-  let amenityIds = [];
+  let page = 1;
+  let size = 10;
+  if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {page = pageAsNumber;}
+  if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {size = sizeAsNumber;}
 
-  console.log(typeof amenities);
-  amenityIds = amenities ? amenities.split(",").map(Number) : [];
 
-  let filter = {
-    location,
+  const assets = await Asset.findAndCountAll({
+    where:  {location,
+    country,
     rooms,
     bathrooms,
+    average,
     onSale,
     rentPriceMax,
     rentPriceMin,
     sellPriceMax,
     sellPriceMin,
-  };
-
-  let page = 1;
-  if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
-    page = pageAsNumber;
-  }
-
-  let size = 10;
-  if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
-    size = sizeAsNumber;
-  }
-  const assets = await Asset.findAndCountAll({
-    where: filter,
+    amenities:{ [ Op.contains ] : amenities }},
     order: [],
     limit: size,
     offset: (page - 1) * size,
-    include: {
-      model: Amenity,
-      through: { joinTableAttributes: [] },
-    },
   });
 
   return assets;
 };
 //!------------------------------------------------------------------------
-const getAllAssetsWithAmenities = async (amenitiesss, res) => {
-  const amenitieSS = [];
-
-  for (const amn of amenitiesss) amenitieSS.push(Number(amn));
-
-  console.log(amenitieSS);
-
-  const response = await Asset.findAndCountAll({
-    include: [
-      {
-        model: Amenity,
-        as: "Amenities",
-        where: {
-          id: amenitieSS,
-        },
-        required: true,
-        // joinTableAttributes: [],
-      },
-    ],
-    // group: ["Asset.id"],
-    // having: Sequelize.literal(`COUNT(Amenities.id) >= ${amenitieSS.length}`),
-  });
-  return response;
-};
 
 // Trae una propiedad especificada por el id
 const getAssetById = async (id) => {
   const asset = await Asset.findOne({
     where: {
       id: id,
-    },
-    include: {
-      model: Amenity,
-      through: { joinTableAttributes: [] },
-    },
+    }
   });
   return asset;
 };
+
 //!------------------------------------------------------------------------
 const updateAsset = async (
   id,
@@ -122,10 +87,9 @@ const updateAsset = async (
   coveredArea,
   amenities
 ) => {
-  const updateAsset = await Asset.findOne({
-    where: { id: id },
-    include: Amenity,
-  });
+
+  const updateAsset = await Asset.findOne({where: { id: id }});
+
   await updateAsset.update({
     name,
     description,
@@ -139,12 +103,14 @@ const updateAsset = async (
     coveredArea,
     amenities,
   });
-  if (amenities) {
-    const amenitiesToUpdate = await Amenity.findAll({
-      where: { id: amenities },
-    });
-    await updateAsset.setAmenities(amenitiesToUpdate);
-  }
+
+  // if (amenities) {
+  //   const amenitiesToUpdate = await Amenity.findAll({
+  //     where: { id: amenities },
+  //   });
+  //   await updateAsset.setAmenities(amenitiesToUpdate);
+  // }
+
   return updateAsset;
 };
 
@@ -161,6 +127,7 @@ const createAsset = async (
   rentPrice,
   rooms,
   bathrooms,
+  averageScore,
   coveredArea,
   totalArea,
   amenities,
@@ -169,6 +136,8 @@ const createAsset = async (
     // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando
     const existingAsset = await Asset.findOne({ where: { name } });
 
+    console.log(typeof averageScore)
+    console.log(averageScore)
     if (existingAsset) {
       throw new Error("La Asset ya existe");
     }
@@ -184,6 +153,7 @@ const createAsset = async (
       rentPrice,
       rooms,
       bathrooms,
+      averageScore,
       coveredArea,
       totalArea,
       amenities,
