@@ -11,6 +11,7 @@ const {
   getAllAmenities,
   getAllButAllAssets,
   getAllAssetsWithAmenities,
+  restoreAssetById
 } = require("../controllers/assetController");
 
 const getAllButAllAssetsHandler = async (req, res) => {
@@ -158,6 +159,17 @@ const deleteAssetByIdHandler = async (req, res) => {
   }
 };
 
+const restoreAssetByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await restoreAssetById(id);
+    res.status(200).json(`La propiedad fue restaurada`);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const getAllLocationsHandler = async (req, res) => {
   try {
     const response = await getAllLocations();
@@ -200,4 +212,5 @@ module.exports = {
   getAmenitiesHandler,
   getAllButAllAssetsHandler,
   getAllAssetsWithAmenitiesHandler,
+  restoreAssetByIdHandler
 };
