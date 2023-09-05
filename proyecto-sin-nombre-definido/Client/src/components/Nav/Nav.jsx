@@ -47,20 +47,21 @@ export const Nav = () => {
           </NavLink>
         </li>
         <li>
+        <NavLink
+            to='/addProperty'
+            className={({ isActive }) => (isActive ? style.active : "")}
+          >
+            <span>Propiedades</span>
+          </NavLink>
+        </li>
+        <li>
+         
           <NavLink
             to="/contacts"
             className={({ isActive }) => (isActive ? style.active : "")}
           >
             {" "}
             <span>Contacto</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/addProperty'
-            className={({ isActive }) => (isActive ? style.active : "")}
-          >
-            <span>Propiedades</span>
           </NavLink>
         </li>
         {/* <li>

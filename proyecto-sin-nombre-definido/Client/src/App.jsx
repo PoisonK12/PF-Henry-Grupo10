@@ -34,17 +34,16 @@ function App() {
       {location.pathname !== "/" && <Nav/>}
      <Routes>
       <Route path='/' element={<><Landing/></>} />
-      <Route path='/detail/:id' element={<><Detail/><Footer/></>} />
-      <Route path='/home' element={<><Home/><Footer/></>}/>
-      <Route path='/property' element={<><Property/><Footer/></>}/>
-      <Route path='/contacts' element={<><Contatcs/><Footer/></>}/>
-      <Route path='/property/:location' element={<><Property/><Footer/></>}/>
+      <Route path='/detail/:id' element={<><Detail/><Footer/><Chatbot/></>} />
+      <Route path='/home' element={<><Home/><Footer/><Chatbot/></>}/>
+      <Route path='/property' element={<><Property/><Footer/><Chatbot/></>}/>
+      <Route path='/contacts' element={<><Contatcs/><Footer/><Chatbot/></>}/>
+      <Route path='/property/:location' element={<><Property/><Chatbot/><Footer/></>}/>
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
       <Route path='/userPanel' element={<><UserPanel/><Footer/></>}/>
-      <Route path='/addProperty' element={<><PropertyForm/><Footer/></>}></Route> 
-      <Route path="/chatbot" element={<Chatbot />} /> 
-      <Route path="*" element={<><NotFound/><Footer/></>}/>
+      <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>           
       <Route path="/checkIn" element={<><LoginRegister/><Footer/></>}></Route>
+      <Route path="*" element={<><NotFound/><Footer/></>}/>
      </Routes>
       
      
