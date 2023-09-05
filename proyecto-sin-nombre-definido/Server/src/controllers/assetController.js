@@ -206,7 +206,7 @@ const createAsset = async (
 };
 
 const deleteAssetById = async (id) => {
-  //TODO agregar borrado logico
+  //Borrado logico añadido
   const asset = await Asset.findOne({
     where: {
       id: id,
@@ -216,9 +216,24 @@ const deleteAssetById = async (id) => {
   if (!asset) {
     throw new Error("Asset not found");
   }
-  await asset.destroy();
+  await asset.softDelete();
 
   return "Asset deleted successfully";
+};
+
+const restoreAssetById = async (id) => {
+  const asset = await Asset.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!asset) {
+    throw new Error("Asset not found");
+  }
+  await asset.restore();
+
+  return "Asset restored successfully";
 };
 
 const getAllLocations = async () => {
@@ -247,6 +262,7 @@ const getAllAmenities = async () => {
 
 module.exports = {
   deleteAssetById,
+  restoreAssetById,
   createAsset,
   getAllAssets,
   getAssetById,
