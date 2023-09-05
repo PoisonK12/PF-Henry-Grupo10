@@ -69,5 +69,4 @@ module.exports = (sequelize) => {
     },
     { timestamps: false }
   );
-  return Asset;
 };
