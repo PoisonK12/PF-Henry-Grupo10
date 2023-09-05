@@ -60,8 +60,7 @@ module.exports = (sequelize) => {
         type: DataTypes.FLOAT
       },
       amenities: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
-        allowNull: true
+        type: DataTypes.ARRAY(DataTypes.INTEGER)
       },
       eliminado: { 
         type: DataTypes.BOOLEAN,
@@ -70,15 +69,5 @@ module.exports = (sequelize) => {
     },
     { timestamps: false }
   );
-
- 
-  // // Método para soft delete
-  // Asset.prototype.softDelete = function () {
-  //   return this.update({ eliminado: true });
-  // };
-
-  // // Método para restaurar
-  // Asset.prototype.restore = function () {
-  //   return this.update({ eliminado: false });
-  // };
+  return Asset;
 };
