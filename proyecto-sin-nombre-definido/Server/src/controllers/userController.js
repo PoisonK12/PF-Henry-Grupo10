@@ -1,36 +1,29 @@
-const { User} = require("../db");
+const { User } = require("../db");
 const { Op, Sequelize } = require("sequelize");
 
-
-
 const getUserByIdController = async (req) => {
-   const { id } = req.query;
-try {
-  const assets = await Asset.findOne({where: {id : id}});
-  
-  return assets;
+  const { id } = req.query;
+  try {
+    const response = await User.findOne({ where: { id: id } });
 
-} catch (error) {
-  console.log(error)
- throw new Error ("Error en el getUserByIdController")
-}
-  
+    return response;
+  } catch (error) {
+    console.error(error.message);
+  }
 };
 //!------------------------------------------------------------------------
 const getAllUserController = async () => {
- try {
-  const users = await User.findAll()
+  try {
+    const response = await User.findAll();
 
-  if (users.length === 0) {
-    throw new Error("No hay usuarios registrados!");
+    if (response.length === 0) {
+      throw new Error("No hay usuarios registrados!");
+    }
+    return response;
+  } catch (error) {
+    console.error(error.message);
   }
-  return users;
-
- } catch (error) {
-  console.log(error)
- throw new Error ("Error en el getAllUserController")
- }
-}
+};
 
 //!------------------------------------------------------------------------
 const updateUser = async (
@@ -49,15 +42,38 @@ const updateUser = async (
   //edicion por sistema
   averageScore,
   favorites,
-  history,
+  history
 ) => {
-  const updateAsset = await Asset.findOne({
+  const updateUser = await User.findOne({
     where: { userName: userName },
   });
-  await updateAsset.update({
+  await updateUser.update({
     //edicion por usuario
+    fullName,
+    profilePic,
+    phoneNumber,
+    verificationNumber,
+    gender,
+    address,
+    nationality,
+    email,
+    password,
+    landlord,
+    //edicion por sistema
+    averageScore,
+    favorites,
+    history,
+  });
+
+  return updateUser;
+};
+
+//!------------------------------------------------------------------------
+const createUserController = async (
+  userName,
   fullName,
   profilePic,
+  birthDate,
   phoneNumber,
   verificationNumber,
   gender,
@@ -65,30 +81,7 @@ const updateUser = async (
   nationality,
   email,
   password,
-  landlord,
-  //edicion por sistema
-  averageScore,
-  favorites,
-  history,
-  });
-  
-  return updateAsset;
-};
-
-//!------------------------------------------------------------------------
-const createUserController = async (
-      userName,
-      fullName,
-      profilePic,
-      birthDate,
-      phoneNumber,
-      verificationNumber,
-      gender,
-      address,
-      nationality,
-      email,
-      password,
-      landlord
+  landlord
 ) => {
   try {
     if (
@@ -102,15 +95,16 @@ const createUserController = async (
       !email ||
       !password ||
       !landlord
-    ) {return res.status(400).json({ error: "Falta informacion obligatoria" })}
-    
-//! validacion
-//! hash
-password = hash(password)
+    ) {
+      return res.status(400).json({ error: "Falta informacion obligatoria" });
+    }
 
+    //! validacion
+    //! hash
+    password = hash(password);
 
     const [createdUser, created] = await User.findOrCreate({
-      where:{userName},
+      where: { userName },
       defaults: {
         fullName,
         profilePic,
@@ -122,28 +116,28 @@ password = hash(password)
         nationality,
         email,
         password,
-        landlord
-      }
-    })
-    if(!created)
-    {return res.status(400).json({error: "El nombre de usuario ya existe."})}
-    
+        landlord,
+      },
+    });
+    if (!created) {
+      return res.status(400).json({ error: "El nombre de usuario ya existe." });
+    }
+
     return res.status(200).json(`Exito al crear el usuario ${userName}`);
   } catch (error) {
-    console.log(error);
-    throw new Error("Error en createUserController");
+    console.error(error.message);
   }
 };
 
 const deleteUserById = async (id) => {
   //TODO agregar borrado logico
-  const asset = await User.findOne({
+  const user = await User.findOne({
     where: {
       id: id,
     },
   });
 
-  if (!asset) {
+  if (!user) {
     throw new Error("Usuario no encontrado");
   }
   await asset.destroy();
@@ -151,12 +145,10 @@ const deleteUserById = async (id) => {
   return "Usuario eliminado con exito";
 };
 
-
-
 module.exports = {
   getUserByIdController,
   getAllUserController,
   deleteUserById,
   createUserController,
-  updateUser
+  updateUser,
 };

@@ -96,7 +96,6 @@ const createAssetHandler = async (req, res) => {
     rentPrice,
     rooms,
     bathrooms,
-    averageScore,
     coveredArea,
     totalArea,
     amenities,
@@ -133,10 +132,9 @@ const createAssetHandler = async (req, res) => {
       rentPrice,
       rooms,
       bathrooms,
-      averageScore,
       coveredArea,
       totalArea,
-      amenities,
+      amenities
     );
 
     res.status(201).json(response);
@@ -177,7 +175,6 @@ const getAmenitiesHandler = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
-
 const getAllAssetsWithAmenitiesHandler = async (req, res) => {
   const { amenitiesss } = req.query;
   console.log(amenitiesss);
