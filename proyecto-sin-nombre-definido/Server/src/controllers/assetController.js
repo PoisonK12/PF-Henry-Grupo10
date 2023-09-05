@@ -206,17 +206,34 @@ const createAsset = async (
 };
 
 const deleteAssetById = async (id) => {
-  // Buscar el activo por su ID
-  const asset = await Asset.findByPk(id);
+  //Borrado logico añadido
+  const asset = await Asset.findOne({
+    where: {
+      id: id,
+    },
+  });
 
   if (!asset) {
     throw new Error("Asset not found");
   }
-
-  // Realizar soft delete
   await asset.softDelete();
 
   return "Asset deleted successfully";
+};
+
+const restoreAssetById = async (id) => {
+  const asset = await Asset.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!asset) {
+    throw new Error("Asset not found");
+  }
+  await asset.restore();
+
+  return "Asset restored successfully";
 };
 
 const getAllLocations = async () => {
@@ -245,6 +262,7 @@ const getAllAmenities = async () => {
 
 module.exports = {
   deleteAssetById,
+  restoreAssetById,
   createAsset,
   getAllAssets,
   getAssetById,
