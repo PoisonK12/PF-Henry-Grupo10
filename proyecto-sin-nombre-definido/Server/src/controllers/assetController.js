@@ -53,12 +53,12 @@ const getAllAssets = async (req) => {
   if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {size = sizeAsNumber;}
   
   let filter = {};
-  
+  console.log(amenities)
   if (rentPriceMin) {filter.rentPrice = {...filter.rentPrice, [Op.gte]: rentPriceMin };}
   if (rentPriceMax) {filter.rentPrice = {...filter.rentPrice, [Op.lte]: rentPriceMax };}
   if (sellPriceMin) {filter.rentPrice = {...filter.sellPrice, [Op.gte]: sellPriceMin };}
   if (sellPriceMax) {filter.rentPrice = {...filter.sellPrice, [Op.lte]: sellPriceMax };}
-  if (amenities)    {filter.amenities = {...filter.amenities, [Op.overlap]: amenities };}
+  if (amenities)    {filter.amenities = {...filter.amenities, [Op.overlap]: amenities};}
   
   if (bathrooms) {filter.bathrooms = bathrooms;}
   if (averageScore) {const average = averageScore[0]}
