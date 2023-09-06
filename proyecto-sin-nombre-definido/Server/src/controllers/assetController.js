@@ -77,11 +77,13 @@ const getAllAssets = async (req) => {
   if (rentPriceMax) {
     filter.rentPrice = { ...filter.rentPrice, [Op.lte]: rentPriceMax };
   }
-  if (sellPriceMin) {
-    filter.rentPrice = { ...filter.sellPrice, [Op.gte]: sellPriceMin };
-  }
-  if (sellPriceMax) {
-    filter.rentPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
+  if (sellPriceMin !== 1) {
+    if (sellPriceMin) {
+      filter.sellPrice = { ...filter.sellPrice, [Op.gte]: sellPriceMin };
+    }
+    if (sellPriceMax) {
+      filter.sellPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
+    }
   }
   if (amenities) {
     filter.amenities = { ...filter.amenities, [Op.contains]: amenities };
