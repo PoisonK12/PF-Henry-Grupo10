@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import s from "./SearchBar.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { SearchByLocation, getLocation } from "../../redux/actions";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { getLocation } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 export const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -52,8 +52,8 @@ export const SearchBar = () => {
       return
     }else{
 
-      dispatch(SearchByLocation(search, 0));
-      navigate(`/property/${search}`);
+      // dispatch(SearchByLocation(search, 0));
+      navigate(`/property?location=${search}`);
     }
   };
 

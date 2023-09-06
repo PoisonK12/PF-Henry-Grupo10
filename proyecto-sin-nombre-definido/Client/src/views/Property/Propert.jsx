@@ -2,33 +2,41 @@ import style from "./property.module.css";
 
 import CardsProperties from "../../components/Cards/CardsProperties/CardsProperties";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getLocation, searchByFilter } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const Property = () => {
   const allProp = useSelector((state) => state.properties);
   const [visible, setVisible] = useState(false);
-
-  const { location } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const locationValue = searchParams.get('location')
+  const rentPriceMaxValue = searchParams.get('rentPriceMax')
+  const rentPriceMinValue = searchParams.get('rentPriceMin')
+  console.log(locationValue);
+  // const { location } = useParams();
   const history = useNavigate();
   console.log(history);
   const dispatch = useDispatch();
   const [filter, setFilter] = useState({
-    location: location,
+    location: locationValue,
     rooms: 0,
     bathrooms: 0,
     onSale: false,
-    rentPriceMax: 0,
-    rentPriceMin: 0,
+    rentPriceMax: rentPriceMaxValue ? rentPriceMaxValue : 0,
+    rentPriceMin: rentPriceMinValue ? rentPriceMinValue : 0,
     sellPriceMax: 0,
     sellPriceMin: 0,
   });
   const [onSale, setOnSale] = useState(false);
-
+  useEffect(() => {
+    dispatch(searchByFilter(filter))
+  },[])
   const allLocation = useSelector((state) => state.location);
   const [locations, setLocations] = useState(allLocation.locations);
-
+  
+  
   useEffect(() => {
     if (allLocation.locations) {
       setLocations(allLocation.locations);
@@ -44,7 +52,7 @@ const Property = () => {
       return;
     }
     if (name == "location") {
-      history(`/property/${value}`);
+      history(`/property?location=${value}`);
       window.location.reload();
     } else {
       setFilter({ ...filter, [name]: value });
