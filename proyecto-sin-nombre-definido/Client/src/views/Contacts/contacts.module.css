@@ -5,6 +5,7 @@
   background-color: rgb(231, 231, 231);
   padding: 20px;
   display: flex;
+  padding-top: 70px;
 }
 
 .background .img {
@@ -21,9 +22,10 @@
     display: flex;
     font-family: 'Avenir', sans-serif;
     flex-direction: column;
-    margin-left: 0;
+    margin-left: -300px;
     position: relative;
   z-index: 500;
+  transition: margin-left 0.5s ease-in-out;
   box-shadow:  0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
 }
 
@@ -40,13 +42,18 @@
   position: absolute;
 }
 
+.cont form label{
+  color: #000;
+}
+
 .custom-container {
+  color: #000;
   /* Ajusta la cantidad de padding superior que desees */
   width: 40%;
   margin: 0 auto; /* Esto centrará el contenido horizontalmente */
   border-radius: 15px;
   padding: 15px;
-  background-color: rgb(66, 164, 221);
+  background-color: whitesmoke;
 }
 .title {
   text-align: center;
@@ -57,10 +64,8 @@
   font-weight: bold; /* Establecer el texto en negrilla */
 }
 
-.info{
-    flex: 2;
-    margin: auto 0;
-    background-color: aqua;
+.formulario-entrada.formulario-visible{
+  margin-left: 0;
 }
 
 
@@ -84,11 +89,55 @@
 
 .button{
   transition: all 0.5s ease;
-  border: 2px solid rgb(66, 164, 221);
+  /* border: 2px solid rgb(66, 164, 221); */
 }
 
 .button:hover{
   color: #0A58CA;
   background-color: azure;
   
+}
+
+.info{
+  padding: 20px;
+  padding-left: 50px;
+  transition: all ease-in-out;
+
+  margin: 0 auto;
+  flex: 2;
+}
+
+.info h2, .info h2 span{
+  text-align: justify;
+  /* text-align: justify; */
+  font:700 70px/1 'Lato', sans-serif;
+}
+.info h2 span{
+  color: #0A58CA;
+}
+
+.parrafo p{
+  text-align: justify;
+  margin-top: 20px;
+  font:300 30px/1 'Lato', sans-serif;
+}
+
+.parrafo span{
+  color: #0A58CA;
+}
+
+
+.icons{
+  position: relative;
+  z-index: 20;
+  display: flex;
+  text-align: end;
+  flex-direction: column
+}
+
+.icons svg, .icons p{
+  color: #000;
+  font-size: 20px;
+  /* text-align: center; */
+  margin-right: 10px;
 }

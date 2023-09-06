@@ -7,10 +7,12 @@ import { getLocation, searchByFilter } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const Property = () => {
-  const allProp = useSelector(state => state.properties)
-    const { location} = useParams();
-    const history = useNavigate()
-    console.log(history)
+  const allProp = useSelector((state) => state.properties);
+  const [visible, setVisible] = useState(false);
+
+  const { location } = useParams();
+  const history = useNavigate();
+  console.log(history);
   const dispatch = useDispatch();
   const [filter, setFilter] = useState({
     location: location,
@@ -35,22 +37,19 @@ const Property = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(filter)
+    console.log(filter);
     if (e.target.type === "range") {
       setFilter({ ...filter, [name]: Number(value) });
       console.log(filter);
       return;
     }
-    if(name == "location"){
-        history(`/property/${value}`);
-        window.location.reload()
-    }else{
-
-        setFilter({ ...filter, [name]: value });
+    if (name == "location") {
+      history(`/property/${value}`);
+      window.location.reload();
+    } else {
+      setFilter({ ...filter, [name]: value });
     }
   };
-
-
 
   const handleCheckbox = (e) => {
     if (e.target.name === "onSale" && e.target.value === "true") {
@@ -61,6 +60,8 @@ const Property = () => {
   };
 
   useEffect(() => {
+    setVisible(true);
+
     dispatch(getLocation());
   }, []);
 
@@ -69,7 +70,7 @@ const Property = () => {
     dispatch(searchByFilter(filter));
   };
 
-  console.log(allProp)
+  console.log(allProp);
 
   return (
     <div className={style.container}>
@@ -81,8 +82,15 @@ const Property = () => {
           >
             <div className={`card-body ${style.cardBody} `}>
               <div>
-                <label className={`form-label ${style.label}`}> Localidad</label>
-                <select name="location" className={style.input} onChange={handleChange}>
+                <label className={`form-label ${style.label}`}>
+                  {" "}
+                  Localidad
+                </label>
+                <select
+                  name="location"
+                  className={style.input}
+                  onChange={handleChange}
+                >
                   <option name="location">Cambiar localidad</option>
                   {locations
                     ? locations.map((ele) => (
@@ -95,11 +103,14 @@ const Property = () => {
                 </select>
               </div>
               <div>
-                <label  htmlFor="inputName" className={`form-label ${style.label}`}>
+                <label
+                  htmlFor="inputName"
+                  className={`form-label ${style.label}`}
+                >
                   Precio de renta maximo
                 </label>
                 <input
-                className={style.range}
+                  className={style.range}
                   type="range"
                   name="rentPriceMax"
                   min={0}
@@ -113,11 +124,14 @@ const Property = () => {
                 <p>${filter.rentPriceMax}</p>
               </div>
               <div>
-                <label htmlFor="inputName" className={`form-label ${style.label}`}>
+                <label
+                  htmlFor="inputName"
+                  className={`form-label ${style.label}`}
+                >
                   Precio de renta minimo
                 </label>
                 <input
-                className={style.range}
+                  className={style.range}
                   type="range"
                   name="rentPriceMin"
                   min={0}
@@ -131,11 +145,14 @@ const Property = () => {
                 <p>${filter.rentPriceMin}</p>
               </div>
               <div>
-                <label htmlFor="inputName" className={`form-label ${style.label}`}>
+                <label
+                  htmlFor="inputName"
+                  className={`form-label ${style.label}`}
+                >
                   Baños
                 </label>
                 <input
-                className={style.input}
+                  className={style.input}
                   type="number"
                   name="bathrooms"
                   min={0}
@@ -149,11 +166,14 @@ const Property = () => {
               </div>
 
               <div>
-                <label htmlFor="inputName" className={`form-label ${style.label}`}>
+                <label
+                  htmlFor="inputName"
+                  className={`form-label ${style.label}`}
+                >
                   Habitaciones
                 </label>
                 <input
-                className={style.input}
+                  className={style.input}
                   type="number"
                   name="rooms"
                   min={0}
@@ -170,51 +190,60 @@ const Property = () => {
                 <h4>Renta</h4>
                 <div className={style.checkboxContainer}>
                   <div className={style.yes}>
-                <label htmlFor="inputName" className={`form-label ${style.label}`}>
-                  No
-                </label>
-                <input
-               className={style.checkbox}
-                  type="checkbox"
-                  name="onSale"
-                  onChange={(e) => {
-                    handleChange(e);
-                    handleCheckbox(e);
-                  }}
-                  value={false}
-                  checked={onSale === false}
-                  id="inputName"
-                  placeholder="Nombre de tu propiedad"
-                />
-            </div>
-            <div className={style.no}>
-                <label htmlFor="inputName" className={`form-label ${style.label}`}>
-                  Si
-                </label>
-                <input
-                className={style.checkbox}
-                  type="checkbox"
-                  name="onSale"
-                  checked={onSale === true}
-                  onChange={(e) => {
-                    handleChange(e);
-                    handleCheckbox(e);
-                  }}
-                  value={true}
-                  id="inputName"
-                  placeholder="Nombre de tu propiedad"
-                />
-                </div>
+                    <label
+                      htmlFor="inputName"
+                      className={`form-label ${style.label}`}
+                    >
+                      No
+                    </label>
+                    <input
+                      className={style.checkbox}
+                      type="checkbox"
+                      name="onSale"
+                      onChange={(e) => {
+                        handleChange(e);
+                        handleCheckbox(e);
+                      }}
+                      value={false}
+                      checked={onSale === false}
+                      id="inputName"
+                      placeholder="Nombre de tu propiedad"
+                    />
+                  </div>
+                  <div className={style.no}>
+                    <label
+                      htmlFor="inputName"
+                      className={`form-label ${style.label}`}
+                    >
+                      Si
+                    </label>
+                    <input
+                      className={style.checkbox}
+                      type="checkbox"
+                      name="onSale"
+                      checked={onSale === true}
+                      onChange={(e) => {
+                        handleChange(e);
+                        handleCheckbox(e);
+                      }}
+                      value={true}
+                      id="inputName"
+                      placeholder="Nombre de tu propiedad"
+                    />
+                  </div>
                 </div>
               </div>
               {onSale ? (
                 <>
                   <div>
-                    <label htmlFor="inputName" className={`form-label ${style.label}`}>
+                    <label
+                      htmlFor="inputName"
+                      className={`form-label ${style.label}`}
+                    >
                       Precio de venta maximo
                     </label>
                     <input
-                    className={style.range}
+                      className={style.range}
                       type="range"
                       name="sellPriceMax"
                       min={0}
@@ -228,11 +257,14 @@ const Property = () => {
                     <p>${filter.sellPriceMax}</p>
                   </div>
                   <div>
-                    <label htmlFor="inputName" className={`form-label ${style.label}`}>
+                    <label
+                      htmlFor="inputName"
+                      className={`form-label ${style.label}`}
+                    >
                       Precio de renta minimo
                     </label>
                     <input
-                    className={style.range}
+                      className={style.range}
                       type="range"
                       name="sellPriceMin"
                       min={0}
@@ -249,8 +281,9 @@ const Property = () => {
               ) : (
                 ""
               )}
-              <button onClick={(e) => handleSubmit(e) } className={style.button} >Aplicar filtros!</button>
-              
+              <button onClick={(e) => handleSubmit(e)} className={style.button}>
+                Aplicar filtros!
+              </button>
             </div>
           </div>
         </div>

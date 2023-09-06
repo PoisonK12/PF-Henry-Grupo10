@@ -287,7 +287,7 @@ const AdminDashboard = () => {
                     </p>
                     <div className={`  m-2 ${style.divButton}`}>
                       <Link to={`/detail/${props.id}`}>
-                        <button className="btn btn-primary">
+                        <button className={`btn btn-primary ${style.detail}`}>
                           Ver Detalles
                         </button>
                       </Link>

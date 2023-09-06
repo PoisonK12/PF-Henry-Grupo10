@@ -9,7 +9,7 @@ import { SearchBar } from "../../components/SearchBar/SearchBar";
 import Cards from '../../components/Cards/CardsOffer/CardsOffer';
 import Sale from "../../components/Sale/Sale.jsx";
 
-export const Home = () => {
+export const Home = () => { 
   return (
     <>
       <div className={`${style.containerFluid} ${style.container}`}>
