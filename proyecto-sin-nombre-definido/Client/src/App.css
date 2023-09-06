@@ -12,3 +12,6 @@
 label{
   color: black !important;
 }
+ul li{
+  list-style: none;
+}

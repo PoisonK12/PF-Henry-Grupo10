@@ -13,7 +13,7 @@ const Detail = () => {
   const dispatch = useDispatch();
   const assetDetail = useSelector((state) => state.detail);
   const [imageUrl, setImageUrl] = useState(null);
-  console.log("Detalle", assetDetail.images);
+  console.log("Detalle", assetDetail);
 
   const { id } = useParams();
 
@@ -26,15 +26,11 @@ const Detail = () => {
     setImageUrl(e.target.style["background-image"]);
   };
 
-  const areOrNull = () => {
-    if (!assetDetail) {
-      <NotFoundPage />;
-    }
-  };
+ 
 
   return (
     <>
-      <div className={style.container}>
+    {assetDetail ?  <div className={style.container}>
         <div className={`  ${style.container}`}>
           <div className={style.wrapper}>
             <header>
@@ -183,7 +179,8 @@ const Detail = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>: <NotFoundPage></NotFoundPage>}
+     
     </>
   );
 };
