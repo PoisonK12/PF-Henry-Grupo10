@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 .cont {
   /* font-family: montserrat, arial, verdana; */
   background-color: rgb(231, 231, 231);
@@ -31,12 +31,13 @@
 
 .background h1 {
   font-weight: 400;
+  width: 100%;
   letter-spacing: 5px;
-  font:700 60px/1 'Lato', sans-serif;
+  font:700 100px/1 'Pacifico', cursive;
   /* font-family: "Noto Sans", sans-serif; */
   top: 120px;
-  color: whitesmoke;
-  text-shadow: 2px 2px 2px black;
+  color: rgba(36, 113, 201, 0.815);
+  text-shadow: 0px 2px 2px rgb(14, 66, 145);
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
@@ -85,6 +86,10 @@
     z-index: 0;
     top: 100%;
     transform: translate(-50%, -50%) scaleX(-1) ;
+}
+
+.contImg{
+  position: relative;
 }
 
 .button{

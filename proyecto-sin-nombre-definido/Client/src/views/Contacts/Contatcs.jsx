@@ -8,6 +8,7 @@ const Contacts = () => {
   const allCount = useSelector((state) => state.propertiesCopy);
   const [visible, setVisible] = useState(false)
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(getAllReallyProperties());
     setVisible(true)
@@ -15,8 +16,10 @@ const Contacts = () => {
 
   return (
     <div className={style.background}>
-      <h1>QUIENES SOMOS?</h1>
+      <div className={style.contImg}>
+
       <img className={style.img} src={fondo}></img>
+      </div>
       <div className={style.cont}>
         <form className={`${style["row-cols-1"]} ${style["custom-container"]} ${style['formulario-entrada']} ${visible ?  style['formulario-visible'] : ""}`}>
           <h2 className={style.title}>Contacts</h2>

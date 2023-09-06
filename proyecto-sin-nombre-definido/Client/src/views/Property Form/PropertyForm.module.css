@@ -22,7 +22,6 @@ body {
     height: 100lvh;
     margin: 0 !important;
     padding : 50px;
-    background: linear-gradient(to bottom, rgba(20, 20, 20, 0.473), rgba(216, 216, 216, 0.1)), url(../../assets/images/fondoForm.jpg) ;
     background-repeat: no-repeat;
     background-size: cover;
     
@@ -76,9 +75,9 @@ body {
     /* padding: 20px; */
     object-fit: cover;
     height: 100%;
-    margin-left: -500px;
+    margin-left: -600px;
     background: linear-gradient(to bottom, rgba(20, 20, 20, 0.473), rgba(216, 216, 216, 0.1)), url(../../assets/images/fondoForm.jpg) ;
-    transition: margin-left 1s ease-in-out;
+    transition: margin-left 1s ease-out;
     border-radius: 0 !important;
 }
 

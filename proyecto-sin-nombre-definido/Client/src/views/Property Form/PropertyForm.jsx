@@ -125,6 +125,7 @@ const PropertyForm = () => {
 
   const handleStep = (e) => {
 
+
     e.preventDefault();
 
     if (e.target.value === "prev") {
@@ -292,6 +293,9 @@ const PropertyForm = () => {
               className={`d-flex flex-row justify-content-center align-items-center ${style.formmer}`}
             >
               <div>
+              {errors.images && (
+                  <p style={{ color: "red" }}>{errors.images}</p>
+                )}
                 <input
                   type="file"
                   id="imageInput"
@@ -302,6 +306,7 @@ const PropertyForm = () => {
 
                 <div
                   className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
+                  
                   style={{
                     border: "2px dashed #ccc",
                     margin: `20px 20px`,
@@ -313,6 +318,7 @@ const PropertyForm = () => {
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={handleDrop}
                 >
+                  
                   {form.images.length > 0 ? (
                     <Carousel
                       ref={ref}
@@ -371,9 +377,7 @@ const PropertyForm = () => {
                     </div>
                   )}
                 </div>
-                {errors.images && (
-                  <p style={{ color: "red" }}>{errors.images}</p>
-                )}
+                
               </div>
               <div className={style.formContainer}>
                 <div className="d-flex space-between">
