@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
       },
       birthDate: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       phoneNumber: {
