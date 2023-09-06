@@ -24,7 +24,7 @@ assetsRouter.get("/amenities", getAmenitiesHandler);
 
 assetsRouter.get("/filtroporamenities", getAllAssetsWithAmenitiesHandler);
 
-assetsRouter.get("/menosmalquediegodijoquenonosllenemosderutas",getAllButAllAssetsHandler);
+assetsRouter.get("/admin",getAllButAllAssetsHandler);
 
 assetsRouter.get("/:id", getAssetByIdHandler);
 
