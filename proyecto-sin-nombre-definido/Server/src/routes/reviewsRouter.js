@@ -15,7 +15,7 @@ reviewsRouter.get("/", getReviewHandler);
 
 reviewsRouter.put("/", updateReviewHandler);
 
-reviewsRouter.post("/assets", reviewAssetsHandler);
+// reviewsRouter.post("/assets", reviewAssetsHandler);
 reviewsRouter.post("/users", reviewUserHandler);
 
 reviewsRouter.delete("/:id", reviewDeleteOrBanHandler);
