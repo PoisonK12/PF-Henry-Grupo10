@@ -39,14 +39,17 @@ const dataSchemePost = z.object({
     bathrooms: z.number().gte(1, {
       message: "At least a room is required",
     }),
-    averageScore: z.array(z.number().positive()),
+    averageScore: z.number().positive(),
     coveredArea: z.number().positive(),
     totalArea: z.number().positive(),
     // coordenates: z.array(z.number()),
 
-    amenities: z.array(z.number().min(5, {
-        message: "Should have at least 5 amenities selected"})
-      .max(30, { message: "Can't have more than 30 amenities" })),
+    amenities: z
+      .array(z.number())
+      .min(5, {
+        message: "Should have at least 5 amenities selected",
+      })
+      .max(30, { message: "Can't have more than 30 amenities" }),
   }),
 });
 
