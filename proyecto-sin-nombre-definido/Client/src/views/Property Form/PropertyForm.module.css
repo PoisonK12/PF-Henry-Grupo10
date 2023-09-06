@@ -76,8 +76,9 @@ body {
     /* padding: 20px; */
     object-fit: cover;
     height: 100%;
+    margin-left: -500px;
     background: linear-gradient(to bottom, rgba(20, 20, 20, 0.473), rgba(216, 216, 216, 0.1)), url(../../assets/images/fondoForm.jpg) ;
-
+    transition: margin-left 1s ease-in-out;
     border-radius: 0 !important;
 }
 
@@ -100,6 +101,18 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.fieldset .selects{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.buttonFor2{
+    position: relative;
+    bottom: 50px;
+    right: 200px;
+}
+
 
 .title {
     background-color: rgba(82, 113, 139, 0.295);
@@ -113,6 +126,15 @@ body {
     background-color: rgb(35, 90, 163);
     transition: background-color 0.3s ease;
 
+}
+
+.fieldset3{
+    width: 818px;
+    max-height: 490px;
+    
+    margin-top : 100px !important  ;
+    /* margin-bottom : 150px; */
+    background-color: rgb(230, 233, 237);
 }
  
 .fieldset2 {
@@ -140,8 +162,9 @@ body {
 .gridForm{
     display: flex;
     grid-template-columns: repeat(2,1fr);
-    justify-content: space-around;
-    /* grid-row-gap: 20px;  */
-    
-    
+    justify-content: space-around; 
 }
+
+.formulario-entrada.formulario-visible{
+    margin-left: 0;
+  }

@@ -15,16 +15,10 @@ const validation = (form) => {
     errors.address = "El direccion es muy largo";
 
   if (form.country && !form.country) errors.country = "Ingrese un pais ";
-  else if (form.country && form.country.length < 6)
-    errors.country = "El pais  es muy corto";
-  else if (form.country && form.country.length > 25)
-    errors.country = "El pais  es muy largo";
 
-  if (form.location && !form.location) errors.location = "Ingrese un locacion ";
-  else if (form.location && form.location.length < 6)
-    errors.location = "El locacion  es muy corto";
-  else if (form.location && form.location.length > 25)
-    errors.location = "El locacion  es muy largo";
+  if (form.location && form.location == "") errors.location = "Ingrese un locacion ";
+  else if (form.location && form.location == "Seleccione una ciudad")
+    errors.location = "Ingrese una ciudad";
 
   if (form.images && form.images.length === 0) {
     errors.images = "Debes subir al menos una imagen";

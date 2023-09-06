@@ -15,11 +15,11 @@ const PropertyForm = () => {
   const [modalBody, setModalBody] = useState({ response: [] });
   const [price, setPrice] = useState(false);
   const [step, setStep] = useState(1);
-  const [showCities, setShowCities] = useState(false)
+  const [showCities, setShowCities] = useState(true);
+  const [visible, setVisible] = useState(false)
   const dispatch = useDispatch();
   const allCountries = useSelector((state) => state.countries.data);
-  const [states, setStates] = useState([])
- 
+  const [states, setStates] = useState([]);
 
   const [errors, setErrors] = useState({
     name: "",
@@ -52,16 +52,16 @@ const PropertyForm = () => {
     address: "",
     location: "",
     onSale: false,
-    sellPrice: undefined,
-    rentPrice: undefined,
+    sellPrice: 0,
+    rentPrice: 0,
     type: "",
-    rooms: undefined,
-    bathrooms: undefined,
+    rooms: 0,
+    bathrooms: 0,
     description: "",
     parking: false,
     terrace: false,
-    coveredArea: undefined,
-    totalArea: undefined,
+    coveredArea: 0,
+    totalArea: 0,
     reviews: "asdasdasd",
     nearby: "asd",
     nearbyScore: 1,
@@ -77,7 +77,7 @@ const PropertyForm = () => {
     } else if (e.target.name === "onSale" && e.target.value === "false") {
       setPrice(false);
     }
-    
+
     setSelectedCheckbox({
       ...selectedCkeckbox,
       [e.target.name]: e.target.value,
@@ -124,9 +124,6 @@ const PropertyForm = () => {
   };
 
   const handleStep = (e) => {
-    if (errors.length) {
-      disabled();
-    }
 
     e.preventDefault();
 
@@ -187,8 +184,9 @@ const PropertyForm = () => {
       [name]: errorDetect[name],
     }));
 
-    if(name === "country" && value == "default"){
-      return
+    if (name === "country" && value == "default") {
+      
+      return;
     }
 
     if (type === "number") {
@@ -236,42 +234,51 @@ const PropertyForm = () => {
 
   console.log({ modal: modal, modalbody: modalBody.response });
 
+  useEffect(() => {}, [step]);
   useEffect(() => {
-  }, [step]);
-  useEffect(() =>{
     dispatch(getCountries());
+    setVisible(true)
+  }, []);
 
-  }, [])  
-  
-  const handlerState = async (e) =>{
-
-    if(!states.length){
-      setShowCities(true)
-    }
-      setShowCities(false)
-    
-
-
-
-
+  const handlerState = async (e) => {
+    const {value, name} = e.target
     const stateSave = {
-      country: e.target.value.toLowerCase()
-    }
-    const {data} = await axios.post("https://countriesnow.space/api/v0.1/countries/states", stateSave)
+      country: e.target.value.toLowerCase(),
+    };
+    const { data } = await axios.post(
+      "https://countriesnow.space/api/v0.1/countries/states",
+      stateSave
+    );
 
-    const noProvince = data.data.states.map((ele) =>{
-      if(ele.name.includes("Province") || ele.name.includes("Department")){
-        return ele.name.split(" ").shift()
+    const noProvince = data.data.states.map((ele) => {
+      if (
+        ele.name.includes("Province") ||
+        ele.name.includes("Department") ||
+        ele.name.includes("Governorate") ||
+        ele.name.includes("Region") ||
+        ele.name.includes("District")
+      ) {
+        return ele.name
+          .split(" ")
+          .shift()
       }
-      return ele.name
-    })
+      return ele.name;
+    });
 
-    setStates(noProvince)
-    console.log(noProvince)
+    if(name == "country"){
+      setForm({ ...form, location: "", country: value});
+    }
 
-    
-  }
+    if(noProvince.length === 0){
+      setForm({...form, location:""})
+      setErrors({...errors, location:"No hay localidades para este pais"})
+    }
+    setStates(noProvince);
 
+    setShowCities(noProvince.length === 0);
+
+    console.log(noProvince);
+  };
 
   const MultiForm = (e) => {
     if (step === 1) {
@@ -408,47 +415,56 @@ const PropertyForm = () => {
                   </div>
                 </div>
 
-                <div className="d-flex flex-row justify-content-around align-items-center">
-                  <div className=" m-2 ">
+                <div className={style.selects}>
+                  <div>
                     <label htmlFor="inputAddress2" className="form-label">
                       Pais
                     </label>
                     <select
-                      onChange={(e) => {handleChange(e); handlerState(e) }}
+                      onChange={(e) => {
+                        handleChange(e);
+                        handlerState(e);
+                      }}
                       value={form.country}
                       name="country"
                       className="form-select"
                     >
-                      <option name="country" value="default">Seleccione un pais</option>
+                      <option name="country" value="default">
+                        Seleccione un pais
+                      </option>
                       {allCountries?.map((ele) => {
-                        return <option name="country" value={ele.country}>{ele.country}</option>
+                        return (
+                          <option name="country" value={ele.country}>
+                            {ele.country}
+                          </option>
+                        );
                       })}
                     </select>
-                    
+
                     {errors.country && (
                       <span style={{ color: "red" }}>{errors.country}</span>
                     )}
                   </div>
-                  <div className=" m-2  ">
+                  <div className={""}>
                     <label htmlFor="inputCity" className="form-label">
                       Locación
                     </label>
-                    <select  disabled={showCities} onChange={(e) => handleChange(e)} value={form.location} name="location"className="form-select">
+                    <select
+                      disabled={showCities}
+                      onChange={(e) => handleChange(e)}
+                      value={form.location}
+                      name="location"
+                      className="form-select"
+                    >
                       <option name="location">Seleccione una ciudad</option>
                       {states?.map((ele) => {
-                        return <option name="location" value={ele}>{ele}</option>
+                        return (
+                          <option name="location" value={ele}>
+                            {ele}
+                          </option>
+                        );
                       })}
                     </select>
-                    <input
-                      type="text"
-                      name="location"
-                      value={form.location}
-                      className="form-control"
-                      id="inputCity"
-                      onChange={(e) => handleChange(e)}
-                      placeholder="Cuidad"
-                      required
-                    />
                     {errors.location && (
                       <span style={{ color: "red" }}>{errors.location}</span>
                     )}
@@ -751,7 +767,7 @@ const PropertyForm = () => {
             </div>
             <div className="d-flex  flex-row justify-content-center align-items-center"></div>
             <div className="col-md-3 container d-flex flex-column ">
-              <div className=" d-flex flex-row align-items-center justify-content-around mt-4 ">
+              <div className={`d-flex  flex-row align-items-center justify-content-around mt-4 ${style.buttonFor2}`}>
                 <div className="m-2 ">
                   <button
                     type="button"
@@ -785,10 +801,8 @@ const PropertyForm = () => {
           className="d-flex flex-column align-items-center  text-center"
           onSubmit={handleForm}
         >
-          <fieldset className={`border p-4  m-5 ${style.fieldset} `}>
+          <fieldset className={`border ${style.fieldset3} `}>
             <legend className="mb-3 mt-3"> Especificaciones </legend>
-            <hr></hr>
-
             <hr></hr>
             <div className="d-flex  text-center  mt-4 m-5">
               <div className="form-group ">
@@ -799,8 +813,9 @@ const PropertyForm = () => {
                 <textarea
                   className="form-control"
                   value={form.description}
-                  rows="6"
-                  cols="50"
+                  rows="8"
+              style={{ resize: "none" }}
+              cols="500"
                   name="description"
                   onChange={(e) => handleChange(e)}
                 ></textarea>
@@ -905,7 +920,7 @@ const PropertyForm = () => {
         </div>
       ) : (
         <div className={style.container}>
-          <img src={fondo} className={style.imageForm}></img>
+          <img src={fondo} className={`${style.imageForm} ${style['formulario-entrada']} ${visible ?  style['formulario-visible'] : ""}`}></img>
           <div style={{ flex: "1", padding: "20px" }}>{MultiForm()}</div>
         </div>
       )}
