@@ -140,7 +140,7 @@ const deleteUserById = async (id) => {
   if (!user) {
     throw new Error("Usuario no encontrado");
   }
-  await asset.destroy();
+  await user.destroy();
 
   return "Usuario eliminado con exito";
 };
