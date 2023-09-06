@@ -125,6 +125,7 @@ const PropertyForm = () => {
 
   const handleStep = (e) => {
 
+
     e.preventDefault();
 
     if (e.target.value === "prev") {
@@ -217,18 +218,18 @@ const PropertyForm = () => {
       return setTimeout(() => {
         setModal(false);
         setStep(1);
-      }, 1000);
+      }, 2000);
     }
 
     if (Array.isArray(modalBody.response)) {
       return setTimeout(() => {
         setModal(false);
         setStep(1);
-      }, 1000);
+      }, 2000);
     } else if (typeof modalBody.response === "object") {
       return setTimeout(() => {
         navigate("/home");
-      }, 1500);
+      }, 3500);
     }
   };
 
@@ -292,6 +293,9 @@ const PropertyForm = () => {
               className={`d-flex flex-row justify-content-center align-items-center ${style.formmer}`}
             >
               <div>
+              {errors.images && (
+                  <p style={{ color: "red" }}>{errors.images}</p>
+                )}
                 <input
                   type="file"
                   id="imageInput"
@@ -302,8 +306,10 @@ const PropertyForm = () => {
 
                 <div
                   className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
+                  
                   style={{
                     border: "2px dashed #ccc",
+                    background: "rgba(169, 181, 197, 0.562)",
                     margin: `20px 20px`,
                     textAlign: "center",
                     width: "300px",
@@ -313,6 +319,7 @@ const PropertyForm = () => {
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={handleDrop}
                 >
+                  
                   {form.images.length > 0 ? (
                     <Carousel
                       ref={ref}
@@ -371,9 +378,7 @@ const PropertyForm = () => {
                     </div>
                   )}
                 </div>
-                {errors.images && (
-                  <p style={{ color: "red" }}>{errors.images}</p>
-                )}
+                
               </div>
               <div className={style.formContainer}>
                 <div className="d-flex space-between">
@@ -814,7 +819,7 @@ const PropertyForm = () => {
                   className="form-control"
                   value={form.description}
                   rows="8"
-              style={{ resize: "none" }}
+              style={{ resize: "none", background: "rgba(169, 181, 197, 0.562)" }}
               cols="500"
                   name="description"
                   onChange={(e) => handleChange(e)}

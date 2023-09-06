@@ -48,7 +48,6 @@
 	align-items: center;
 	justify-content: center;
     font-family: 'Avenir', sans-serif; ;
-	color: white;
 }
 
 
@@ -59,7 +58,8 @@
     z-index: 10000;
     top: 35%;
     left: 50%;
-    color: #e6e6e6;
+    color: #dddddd;
+    
     transform: translate(-50%,-50%);
     text-shadow: 2px 2px 2px black;
     font-size: 3em;
@@ -72,7 +72,7 @@
 .cajaCarrusel h1 > span{
     position: relative;
     display: inline-block;
-    color: rgb(4, 202, 209);
+    color: #9d0aca;
     height: 3.5rem;
     font-family: 'Avenir', sans-serif; ;
     vertical-align: bottom;

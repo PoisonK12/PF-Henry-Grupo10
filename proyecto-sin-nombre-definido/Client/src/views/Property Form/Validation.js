@@ -8,7 +8,7 @@ const validation = (form) => {
   else if (form.name && form.name.length > 25)
     errors.name = "El nombre  es muy largo";
 
-  if (form.address && !form.address) errors.address = "Ingrese una direccion";
+  if ( !form.address) errors.address = "Ingrese una direccion";
   else if (form.address && form.address.length < 6)
     errors.address = "El direccion es muy corto";
   else if (form.address && form.address.length > 25)
@@ -20,8 +20,8 @@ const validation = (form) => {
   else if (form.location && form.location == "Seleccione una ciudad")
     errors.location = "Ingrese una ciudad";
 
-  if (form.images && form.images.length === 0) {
-    errors.images = "Debes subir al menos una imagen";
+  if (form.images && form.images.length < 3) {
+    errors.images = "Debes subir 3 imagenes";
   }
 
   if (form.rooms && !form.rooms) {

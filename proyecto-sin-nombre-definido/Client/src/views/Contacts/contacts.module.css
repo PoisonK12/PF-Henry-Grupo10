@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 .cont {
   /* font-family: montserrat, arial, verdana; */
   background-color: rgb(231, 231, 231);
@@ -26,17 +26,18 @@
     position: relative;
   z-index: 500;
   transition: margin-left 0.5s ease-in-out;
-  box-shadow:  0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
+  box-shadow:  0 10px 15px -3px rgba(0,0,0,.5),0 4px 6px -4px rgba(0,0,0,.5 );
 }
 
 .background h1 {
   font-weight: 400;
+  width: 100%;
   letter-spacing: 5px;
-  font:700 60px/1 'Lato', sans-serif;
+  font:700 100px/1 'Pacifico', cursive;
   /* font-family: "Noto Sans", sans-serif; */
   top: 120px;
-  color: whitesmoke;
-  text-shadow: 2px 2px 2px black;
+  color: rgba(36, 113, 201, 0.815);
+  text-shadow: 0px 2px 2px rgb(14, 66, 145);
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
@@ -75,7 +76,8 @@
   left: 0;
   position: absolute;
   transform: translate(0%,-90%);
-  color: black;
+  color:#091f44;
+
   
 }
 
@@ -87,14 +89,21 @@
     transform: translate(-50%, -50%) scaleX(-1) ;
 }
 
+.contImg{
+
+  box-shadow:  0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.2 );
+
+}
+
 .button{
   transition: all 0.5s ease;
-  /* border: 2px solid rgb(66, 164, 221); */
+  background-color:#091f44 !important;
+  border: 2px solid #091f44 !important;
 }
 
 .button:hover{
-  color: #0A58CA;
-  background-color: azure;
+  color: #091f44 !important;
+  background-color: transparent !important;
   
 }
 
@@ -107,13 +116,17 @@
   flex: 2;
 }
 
+.info h2{
+  color:#091f44
+}
+
 .info h2, .info h2 span{
   text-align: justify;
   /* text-align: justify; */
   font:700 70px/1 'Lato', sans-serif;
 }
 .info h2 span{
-  color: #0A58CA;
+  color: #9d0aca;
 }
 
 .parrafo p{
@@ -123,20 +136,23 @@
 }
 
 .parrafo span{
-  color: #0A58CA;
+  color: #9d0aca;
 }
 
 
 .icons{
+  
   position: relative;
   z-index: 20;
+  top:45px;
+  left: 15px;
   display: flex;
   text-align: end;
   flex-direction: column
 }
 
 .icons svg, .icons p{
-  color: #000;
+  color: #ececec;
   font-size: 20px;
   /* text-align: center; */
   margin-right: 10px;

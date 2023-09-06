@@ -1,7 +1,7 @@
 @import url("https://fonts.cdnfonts.com/css/avenir");
 
 .active span {
-  color: rgb(34, 108, 237);
+  color: #9d0aca;
 }
 
 .nav {
@@ -21,7 +21,8 @@
 .nav.fixed {
   transition: all 0.5s ease;
   position: fixed;
-  background-color: rgba(5, 5, 5, 0.308);
+  background-color: #091f44;
+
 }
 
 .nav ul {
@@ -63,7 +64,6 @@
   margin-left: 20px;
   width: 150px;
   height: 150px;
-  mix-blend-mode: multiply;
 }
 
 .nav .menu {
