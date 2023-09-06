@@ -19,6 +19,7 @@ const CardsProperties = () => {
  
   
   const totalProp = Math.ceil(allProperties?.rows?.length / 10);
+  console.log(totalProp);
 
   const scrollToTop = () => {
    window.scrollTo({behavior:"smooth", top:0})

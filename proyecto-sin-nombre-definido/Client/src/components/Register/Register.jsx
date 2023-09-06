@@ -2,10 +2,13 @@ import React , {useState} from "react";
 import style from "./Register.module.css"
 import {getLogin} from "../../redux/actions"
 import {validation }from "./validation.js";
+import {Toast} from "react-bootstrap"
 
 const Register = ({setConditional , conditional }) => {
     
-
+    
+    const [toastBody , setToastBody] = useState({response : ""})
+    const [toast , setToast] = useState(false)
     const [errors , setErrors] = useState( {})
     const [passwordType , setPasswordType ] = useState(false)
     const [passwordType2 , setPasswordType2 ] = useState(false)
@@ -92,7 +95,7 @@ const Register = ({setConditional , conditional }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        getLogin(register , conditional );
+        getLogin(register , conditional , setToastBody);
     };
 
     return (
@@ -232,7 +235,14 @@ const Register = ({setConditional , conditional }) => {
                        
                 </fieldset>
             </form>
-   
+            <div>
+              <Toast show={toast}>
+                 <Toast.Header>
+                <strong className="me-auto">Toast Title</strong>
+               </Toast.Header>
+               <Toast.Body>{toastBody.response}</Toast.Body>
+               </Toast>
+            </div>
     </>
     )
 };

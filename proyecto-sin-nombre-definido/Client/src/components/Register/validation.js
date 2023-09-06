@@ -24,7 +24,7 @@ export const validation = (form) => {
     }
     
     
-    if(form.confirmPassword && form.password !== form.confirmPassword) {
+    if((form.confirmPassword && form.password) && form.password !== form.confirmPassword) {
         errors.confirmPassword = "Las contraseñas no coinciden"
     }
 
