@@ -66,8 +66,16 @@ module.exports = (sequelize) => {
         defaultValue: false,
       },
       averageScore: {
-        type: DataTypes.ARRAY(DataTypes.NUMERIC),
+        type: DataTypes.FLOAT,
+        defaultValue: 0.0,
       },
+      numberOfReviews: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      // averageScore: {
+      //   type: DataTypes.ARRAY(DataTypes.NUMERIC),
+      // },
       favorites: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,

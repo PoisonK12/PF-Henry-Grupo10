@@ -39,7 +39,8 @@ const userSchemePost = z.object({
 
     admin: z.boolean(),
 
-    averageScore: z.array(z.number().positive()),
+    averageScore: z.number().positive(),
+    numberOfReviews: z.number().positive(),
 
     favorites: z.array(z.string()),
 
