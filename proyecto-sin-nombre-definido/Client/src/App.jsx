@@ -17,14 +17,27 @@ import Contatcs from './views/Contacts/Contatcs';
 import LoginRegister from "./views/LoginRegister/LoginRegister"
 import UserPanel from './views/User/UserPanel';
 import Chatbot from './components/Chatbot/Chatbot';
-
-
+import {gapi} from "gapi-script"
+import LoginButton from "./components/LoginGoogle/Login";
+import LogOutButton from './components/LoginGoogle/Logout';
+import { useEffect } from 'react';
 axios.defaults.baseURL = "http://localhost:3001"
+const client_id ="547235349182-eqd60168p1n8550uulbpd31vvm35sprd.apps.googleusercontent.com"
 
 
 function App() {
+    useEffect(()=>{
+      function start(){
+        gapi.auth2.init({
+          client_id: client_id,
+          scope:"profile"
+        })
+      };
+      gapi.load("client:auth2", start);
 
 
+    });
+//
   const [access , setAccess] = useState(false);
   
   const location = useLocation()
@@ -35,7 +48,7 @@ function App() {
      <Routes>
       <Route path='/' element={<><Landing/></>} />
       <Route path='/detail/:id' element={<><Detail/><Footer/><Chatbot/></>} />
-      <Route path='/home' element={<><Home/><Footer/><Chatbot/></>}/>
+      <Route path='/home' element={<><Home/><Footer/><Chatbot/><LoginButton/><LogOutButton/></>}/>
       <Route path='/property' element={<><Property/><Footer/><Chatbot/></>}/>
       <Route path='/contacts' element={<><Contatcs/><Footer/><Chatbot/></>}/>
       <Route path='/property/:location' element={<><Property/><Chatbot/><Footer/></>}/>

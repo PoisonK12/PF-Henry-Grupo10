@@ -58,7 +58,7 @@ const Login = ({setConditional}) => {
 
                 </div>
                 
-                <hr className={style.hr}></hr>
+                <hr className={style.hr}></hr>  
 <div class="column mt-1">
                       <span class="m-2" style={{color : "white", fontSize: "18px"}}>Logueate con
                       </span>
