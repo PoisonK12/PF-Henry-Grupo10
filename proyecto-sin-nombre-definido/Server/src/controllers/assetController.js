@@ -58,24 +58,48 @@ const getAllAssets = async (req) => {
   if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
     size = sizeAsNumber;
   }
+  // promedio    # de votos
+  // [   4.7   ,      5    ]
+  // nuevo voto: 3
+
+  // nuevo promedio = ((4.7 * 5) + 3)/(5+1)
+  // nueva # de voto = 5 +1
 
   let filter = {
-    eliminado: false
+    eliminado: false,
   };
-  if (rentPriceMin) {filter.rentPrice = {...filter.rentPrice, [Op.gte]: rentPriceMin };}
-  if (rentPriceMax) {filter.rentPrice = {...filter.rentPrice, [Op.lte]: rentPriceMax };}
-  if (sellPriceMin) {filter.rentPrice = {...filter.sellPrice, [Op.gte]: sellPriceMin };}
-  if (sellPriceMax) {filter.rentPrice = {...filter.sellPrice, [Op.lte]: sellPriceMax };}
-  if (amenities)    {filter.amenities = {...filter.amenities, [Op.overlap]: amenities};}
-  if (averageScore) {filter.averageScore = {...filter.averageScore, [Op.gte]: averageScore };}
+  if (rentPriceMin) {
+    filter.rentPrice = { ...filter.rentPrice, [Op.gte]: rentPriceMin };
+  }
+  if (rentPriceMax) {
+    filter.rentPrice = { ...filter.rentPrice, [Op.lte]: rentPriceMax };
+  }
+  if (sellPriceMin) {
+    filter.rentPrice = { ...filter.sellPrice, [Op.gte]: sellPriceMin };
+  }
+  if (sellPriceMax) {
+    filter.rentPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
+  }
+  if (amenities) {
+    filter.amenities = { ...filter.amenities, [Op.overlap]: amenities };
+  }
 
-  if (bathrooms) {filter.bathrooms = bathrooms;}
-  if (location) {filter.location = location;}
-  if (onSale) {filter.onSale = onSale;}
-  if (rooms) {filter.rooms = rooms;}
+  if (averageScore) {
+    filter.averageScore = { ...filter.averageScore, [Op.gte]: averageScore };
+  }
 
-
-  
+  if (bathrooms) {
+    filter.bathrooms = bathrooms;
+  }
+  if (location) {
+    filter.location = location;
+  }
+  if (onSale) {
+    filter.onSale = onSale;
+  }
+  if (rooms) {
+    filter.rooms = rooms;
+  }
 
   const assets = await Asset.findAndCountAll({
     where: filter,
@@ -159,7 +183,7 @@ const createAsset = async (
   numberOfReviews,
   coveredArea,
   totalArea,
-  amenities,
+  amenities
 ) => {
   try {
     // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando
@@ -210,8 +234,10 @@ const deleteAssetById = async (id) => {
     },
   });
 
-  if (!asset) {throw new Error("Asset not found");}
-  
+  if (!asset) {
+    throw new Error("Asset not found");
+  }
+
   await asset.softDelete();
 
   return "Asset deleted successfully";

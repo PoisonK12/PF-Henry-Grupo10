@@ -11,7 +11,7 @@ const {
   getAllAmenities,
   getAllButAllAssets,
   getAllAssetsWithAmenities,
-  restoreAssetById
+  restoreAssetById,
 } = require("../controllers/assetController");
 
 const getAllButAllAssetsHandler = async (req, res) => {
@@ -125,7 +125,7 @@ const createAssetHandler = async (req, res) => {
         amenities,
       },
     });
-    console.log(amenities)
+    console.log(amenities);
     const response = await createAsset(
       name,
       description,
@@ -216,5 +216,5 @@ module.exports = {
   getAmenitiesHandler,
   getAllButAllAssetsHandler,
   getAllAssetsWithAmenitiesHandler,
-  restoreAssetByIdHandler
+  restoreAssetByIdHandler,
 };
