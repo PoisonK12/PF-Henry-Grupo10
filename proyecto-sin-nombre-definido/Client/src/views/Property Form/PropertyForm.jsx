@@ -218,18 +218,18 @@ const PropertyForm = () => {
       return setTimeout(() => {
         setModal(false);
         setStep(1);
-      }, 1000);
+      }, 2000);
     }
 
     if (Array.isArray(modalBody.response)) {
       return setTimeout(() => {
         setModal(false);
         setStep(1);
-      }, 1000);
+      }, 2000);
     } else if (typeof modalBody.response === "object") {
       return setTimeout(() => {
         navigate("/home");
-      }, 1500);
+      }, 3500);
     }
   };
 
@@ -309,6 +309,7 @@ const PropertyForm = () => {
                   
                   style={{
                     border: "2px dashed #ccc",
+                    background: "rgba(169, 181, 197, 0.562)",
                     margin: `20px 20px`,
                     textAlign: "center",
                     width: "300px",
@@ -818,7 +819,7 @@ const PropertyForm = () => {
                   className="form-control"
                   value={form.description}
                   rows="8"
-              style={{ resize: "none" }}
+              style={{ resize: "none", background: "rgba(169, 181, 197, 0.562)" }}
               cols="500"
                   name="description"
                   onChange={(e) => handleChange(e)}

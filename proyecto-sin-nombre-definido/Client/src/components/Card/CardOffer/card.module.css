@@ -42,14 +42,15 @@ img{
   z-index: -1;
   content: '';
   display: block;
-  border: 3px solid rgb(34, 108, 237)2;
+  border: 3px solid #091f44;
 }
 .ribbon span {
   position: absolute;
   display: block;
   width: 165px;
+  color: aliceblue;
   padding: 5px 0;
-  background-color: rgb(34, 108, 237);
+  background-color: #091f44;
   box-shadow: 0 5px 10px rgba(0,0,0,.1);
 }
 

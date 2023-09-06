@@ -4,8 +4,8 @@ import style from "./Menu.module.css";
 const Menu = () => {
   return (
     <div className={style.nav}>
-      <nav class="navbar navbar-dark ">
-        <div class="container-fluid ">
+      <nav class={`navbar navbar-dark`}>
+        <div class={`container-fluid `}>
           <button
             className={style.button}
             class="navbar-toggler"
@@ -35,7 +35,7 @@ const Menu = () => {
             </svg>
           </button>
           <div
-            class="offcanvas offcanvas-end text-bg-dark"
+            className={`offcanvas offcanvas-end  ${style.navBar}`}
             tabindex="-1"
             id="offcanvasDarkNavbar"
             aria-labelledby="offcanvasDarkNavbarLabel"
