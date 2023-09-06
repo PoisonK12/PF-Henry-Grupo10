@@ -8,8 +8,9 @@ import ButtonUp from "../../components/ButtonUp/ButtonUp";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import Cards from '../../components/Cards/CardsOffer/CardsOffer';
 import Sale from "../../components/Sale/Sale.jsx";
+import Contacts from "../Contacts/Contatcs";
 
-export const Home = () => {
+export const Home = () => { 
   return (
     <>
       <div className={`${style.containerFluid} ${style.container}`}>
@@ -114,6 +115,9 @@ export const Home = () => {
 </svg>
       <div className={style.sale}>
       <Sale></Sale>
+      </div>
+      <div style={{height: "100%"}}>
+        <Contacts></Contacts>
       </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { Axios } from "axios";
 import {
   GET_ALL_PROPERTIES,
   GET_ASSET_BY_ID,
@@ -8,7 +8,9 @@ import {
   GET_ALL_ALL_PROPERTIES,
   SEARCH_BY_FILTER,
   DELETE_ASSET_BY_ID,
-  GET_LOGIN
+  GET_LOGIN,
+  GET_COUNTRIES,
+  GET_STATES
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -94,8 +96,6 @@ export const createAsset = async (form , setModal,setModalBody ) => {
     }
   } 
 
-
-
 export const getLocation = () => {
   return async (dispatch) => {
     try {
@@ -174,6 +174,31 @@ export const deleteAssetById = (id) => {
     }
   };
 };
+
+export const getCountries = () => {
+  return async (dispatch) => {
+    const {data} = await axios("https://countriesnow.space/api/v0.1/countries/")
+    dispatch({
+      type: GET_COUNTRIES,
+      payload: data
+    })
+  }
+}
+
+export const getStates = (country) => {
+  try {
+    
+   
+      const {data} = axios.post("https://countriesnow.space/api/v0.1/countries/states", country)
+      dispatch({
+        type: GET_STATES,
+        payload: data
+      })
+  } catch (error) {
+   console.log(error) 
+  }
+}
+
 
 
  export const getLogin = async (login , conditional , setToast,setToastBody) => {

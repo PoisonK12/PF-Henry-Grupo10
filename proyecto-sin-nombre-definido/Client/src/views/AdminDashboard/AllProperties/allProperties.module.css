@@ -10,11 +10,7 @@
     align-items: center; /* Alinea los botones verticalmente en el centro */
   }
   
-.container{
-    margin-top: 50px;
-    padding: 15px;
-    width: 100%;
-}
+
 .table-responsive {
     margin: 30px 0;
 }
@@ -242,8 +238,6 @@ position: absolute;
 .background{
     font-family: montserrat, arial, verdana;
     background-color: rgb(76, 131, 228);
-    padding: 20px;
-    padding-top: 100px;
 }
 
 .containerImg img{

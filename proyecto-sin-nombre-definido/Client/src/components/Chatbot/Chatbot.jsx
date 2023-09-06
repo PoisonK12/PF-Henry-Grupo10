@@ -5,12 +5,12 @@ import ChatBot from 'react-simple-chatbot';
 
 const theme = {
   background: '#C9FF8F',
-  headerBgColor: '#04CAD1',
+  headerBgColor: '#9d0aca',
   headerFontSize: '20px',
-  botBubbleColor: '#04CAD1',
+  botBubbleColor: '#9d0aca',
   headerFontColor: 'white',
   botFontColor: 'white',
-  userBubbleColor: '#FF5733',
+  userBubbleColor: '#091f44',
   userFontColor: 'white',
 };
 

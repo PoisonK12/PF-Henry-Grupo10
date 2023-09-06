@@ -18,7 +18,13 @@ const Card = ({
   coveredArea,
   totalArea,
 }) => {
-    const [isOffer, setIsOffer] = useState(offer);
+    // const [isOffer, setIsOffer] = useState(offer);
+  const descCut = () => {
+    if(description.length > 50){
+      return `${description.split("").slice(0,90).join("")}...`
+    }
+    return description
+  }
   return (
 
       <div className={`container`}>
@@ -26,16 +32,17 @@ const Card = ({
           <div className={`col m-4` }>
             <div className={`card ${style.card} rounded`}>
 
-              {isOffer ? <div
+              {offer ? <div
                 className={ `${style.ribbon} ${style.ribbonTopRight}`}
               >
                 <span>oferta</span>
               </div> : ""}
               <div
                 className={`bg-image hover-overlay ripple`}
+                style={{width:"100%", objectFit:"cover", }}
                 data-mdb-ripple-color="light"
               >
-                <img src={images} className="img-fluid border" />
+                <img src={images} style={{height:"261px",objectFit:"cover", width:"100%"}} className="img-fluid border" />
                 <a href="#!">
                   <div
                     className="mask"
@@ -52,10 +59,8 @@ const Card = ({
                     {location}, {country}
                   </h4>
                 </p>
-                <p className="card-text">{description}</p>
-                
-
-                <hr className="my-4" />
+                <p className={`card-text ${style.desc}`}>{descCut()}</p>
+              
                 
                 <p className={`mb-2 ${style.price}`}>Precio ${total}</p>
                 

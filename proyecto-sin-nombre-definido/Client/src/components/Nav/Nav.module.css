@@ -1,8 +1,7 @@
-@import url('https://fonts.cdnfonts.com/css/avenir');
+@import url("https://fonts.cdnfonts.com/css/avenir");
 
 .active span {
-  color: rgb(34, 108, 237);
-  
+  color: #9d0aca;
 }
 
 .nav {
@@ -16,36 +15,35 @@
   align-items: center;
   background-color: transparent;
   transition: all 0.5s ease;
-  font-family: 'Avenir', sans-serif; 
+  font-family: "Avenir", sans-serif;
 }
 
-.nav.fixed{
+.nav.fixed {
   transition: all 0.5s ease;
   position: fixed;
-  background-color: rgba(5, 5, 5, 0.308);
-}
+  background-color: #091f44;
 
+}
 
 .nav ul {
   display: flex;
-  font-family: 'Avenir', sans-serif; 
+  font-family: "Avenir", sans-serif;
 }
-
 
 .nav ul li {
   list-style: none;
-  font-family: 'Avenir', sans-serif; 
+  font-family: "Avenir", sans-serif;
 }
 
 .nav ul li a {
-font-size: 16px ;
-font-family: 'Avenir', sans-serif; 
+  font-size: 16px;
+  font-family: "Avenir", sans-serif;
   display: block;
   font-weight: 500;
-  
+
   text-decoration: none;
   color: white;
-  padding: 1.95rem 1.2rem  ;
+  padding: 1.95rem 1.2rem;
   height: 100%;
   margin: 0 0.5rem;
   /* border-radius: 0.9rem; */
@@ -57,21 +55,18 @@ font-family: 'Avenir', sans-serif;
   padding: 0;
 }
 
-.navHover:not(.active):hover{
+.navHover:not(.active):hover {
   background-color: rgba(31, 28, 28, 0.452);
-
 }
-
 
 /* Estilo para el logotipo */
 .nav img {
   margin-left: 20px;
   width: 150px;
   height: 150px;
-  mix-blend-mode:multiply;
 }
 
-.nav .menu{
+.nav .menu {
   position: absolute;
   top: 0.7rem;
   right: 0.5rem;
@@ -81,10 +76,10 @@ font-family: 'Avenir', sans-serif;
   height: 2rem;
   z-index: 1000;
 }
-.navbarra li{
+.navbarra li {
   padding: 0;
 }
-.nav .menu span{
+.nav .menu span {
   height: 0.4rem;
   width: 100%;
   background-color: #fff;
@@ -92,30 +87,28 @@ font-family: 'Avenir', sans-serif;
 }
 
 @media (max-width: 480px) {
-  .nav .menu{
+  .nav .menu {
     display: flex;
   }
-  .nav{
+  .nav {
     flex-direction: column;
     align-items: start;
   }
-  .nav ul{
+  .nav ul {
     /* display: none; */
     flex-direction: column;
     width: 100%;
     margin-bottom: 0.25rem;
   }
 
-  .nav ul.open{
-    display: flex ;
+  .nav ul.open {
+    display: flex;
   }
-  .nav ul li{
+  .nav ul li {
     width: 100%;
     text-align: center;
   }
-  .nav ul li a{
+  .nav ul li a {
     margin: 0.2rem 0.5rem;
   }
- 
-  
 }
