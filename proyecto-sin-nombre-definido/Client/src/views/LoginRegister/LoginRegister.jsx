@@ -6,15 +6,15 @@ import style from "./LoginRegister.module.css"
 const LoginRegister = () => {
 
     const [conditional , setConditional ] = useState("login");
-
+   
 
     return (
 
         <div className ={` ${style.container}`}>
 
             { conditional === "login" 
-            ? <Login setConditional={setConditional}/> 
-            : <Register setConditional={setConditional}/> 
+            ? <Login setConditional={setConditional} conditional = {conditional} /> 
+            : <Register setConditional={setConditional} conditional = {conditional} /> 
             }
 
         </div>

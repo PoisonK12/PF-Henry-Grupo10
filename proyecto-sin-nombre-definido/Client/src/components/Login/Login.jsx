@@ -1,6 +1,7 @@
 import React , {useState} from "react";
 import style from "./Login.module.css"
-/* import {getLogin} from "../../redux/actions" */
+import {getLogin} from "../../redux/actions";
+import {validation} from "./validation";
 
 const Login = ({setConditional}) => {
 
@@ -8,6 +9,7 @@ const Login = ({setConditional}) => {
         email : "",
         password : ""
     });
+    const [errors , setErrors] = useState({errorsBack : undefined});
 
     const handleChange = (e) => {
           const {name} = e.target;
@@ -17,21 +19,27 @@ const Login = ({setConditional}) => {
             ...login,
               [name] : value
           });
+          const errorDetect = validation({[name] : value})
+
+          setErrors((prevErrors) => ({
+              ...prevErrors,
+              [name]: errorDetect[name]
+            }));
      };
 
 
     const handleConditional = () => {
         setConditional("register")
      };
-/* 
+
      const handleSubmit = async (e) => {
         e.preventDefault();
         await getLogin(login)
-     }; */
+     };
 
     return (
        <>
-            <form  class= "d-flex align-items-center justify-content-center text-center p-5  ">
+            <form  onSubmit={handleSubmit} class="d-flex align-items-center justify-content-center text-center p-5  ">
                 <fieldset className={`border  d-flex flex-column text-center ${style.form}`}>
 
                   <div class={`d-flex justify-content-center align-items-center  ${style.perfile}`}>
@@ -49,17 +57,19 @@ const Login = ({setConditional}) => {
                     
                     <label class="form-label lead" for="InputEmail">Email : </label>
                     <input type="email" class={`form-control ${style.inputs}`} name="email" id="InputEmail" aria-describedby="emailHelp" value={login.email} placeholder="Escriba su email" onChange={(e) => handleChange(e)}/>
+                    {errors.email ? <p style={{color : "red" , fontSize : "3px"}}>{errors.email}</p> : null}
                   </div>
 
                   <div class="form-group col-md-11 mt-3" >
                     <label class="form-label lead" for="InputPassword">Contraseña :</label>
-                    <input type="password" class={`form-control ${style.inputs}`} name="password" id="InputPassword" value={login.password} placeholder="Escriba su contraseña"/>
+                    <input type="password" class={`form-control ${style.inputs}`} name="password" id="InputPassword" value={login.password} onChange={handleChange} placeholder="Escriba su contraseña"/>
+                    {errors.password ? <p style={{color : "red" , fontSize : "3px"}}>{errors.password}</p> : null}
                   </div>
 
                 </div>
                 
                 <hr className={style.hr}></hr>
-<div class="column mt-1">
+                    <div class="column mt-1">
                       <span class="m-2" style={{color : "white", fontSize: "18px"}}>Logueate con
                       </span>
                   <button className = {` btn btn-outline-danger ${style.buttonGoogle}`}>

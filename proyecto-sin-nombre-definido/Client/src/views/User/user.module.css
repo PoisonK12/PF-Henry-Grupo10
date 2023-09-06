@@ -69,3 +69,8 @@
     .containerImg img{
         object-position: center bottom !important;
     }
+    h1{
+        text-align: center;
+        padding-bottom: 15px;
+        font:700 60px/1 'Lato', sans-serif;
+    }
