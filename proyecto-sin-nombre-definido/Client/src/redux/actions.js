@@ -176,13 +176,27 @@ export const deleteAssetById = (id) => {
 };
 
 
-/* const getLogin = async (login) => {
-
-      const {email , password} = login;
+ export const getLogin = async (login , conditional) => {
+  console.log(conditional);
+      const {email , password , confirmPassword , userName , fullName , birthDate , gender , address , nationality , phoneNumber , landLord} = login;
 
   try {
-    const {data} = await 
+
+      if (conditional === "login"){
+         const {data} = await axios.get("/users" , {email , password})
+         if(data) {
+          console.log(data);
+         }
+      }
+
+      if(conditional === "register") {
+          const {data} = await axios.post("/users", {email, password , confirmPassword , userName , fullName,verificationNumber : "56" , birthDate , gender , address , nationality , phoneNumber , landLord } )
+          if(data) {
+            return console.log(data);
+          }    
+          }
+        
   } catch (error) {
-    
+    return console.log(error.response.data);
   }
-} */
+}
