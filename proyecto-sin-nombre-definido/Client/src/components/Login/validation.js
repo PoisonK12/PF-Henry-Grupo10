@@ -6,7 +6,7 @@ export const validation = (form) => {
     }
 
     if(form.password && !form.password) {
-        errors.email = "Tienes que escribir una contraseña"
+        errors.password = "Tienes que escribir una contraseña"
     }
     return errors;
 };

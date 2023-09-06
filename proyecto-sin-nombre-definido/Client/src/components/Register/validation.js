@@ -34,7 +34,7 @@ export const validation = (form) => {
     } else if (form.userName && form.userName.length < 3) {
         errors.userName = "Es demaciado corto"
     }
-    
+
     if(form.fullName && !/[A-Z]/.test(form.fullName)) {
         errors.fullName = " Las iniciales tienen que estar con mayusculas"
     } else if(form.fullName && form.fullName.length > 20) {
@@ -44,7 +44,7 @@ export const validation = (form) => {
     if(form.phoneNumber && !/^[0-9()+\- ]*$/.test(form.phoneNumber)) {
         errors.phoneNumber = "Tiene que tener el prefijo nacional.EJ:(+54)"
     }
-    else if( form.password &&  form.phoneNumber.length > 15) {
+    else if( form.phoneNumber &&  form.phoneNumber.length > 15) {
         errors.phoneNumber = "El número de telefono grande"
     }
 
