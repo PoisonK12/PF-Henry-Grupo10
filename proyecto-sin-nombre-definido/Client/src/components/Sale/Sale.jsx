@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import utils from '../Cards/CardsOffer/utils';
 import Card from '../Card/CardOffer/CardOffer';
 import style from "./Sale.module.css"
 
 const Sale = () => {
     let info = utils;
+ 
+
     return (
 
-        <div className={style.sale}>
+        <div className={`${style.sale}`}>
             <h2>OFERTAS!</h2>
             <div className={style.cont}>
       <div className={style.cardsCont} >

@@ -35,7 +35,7 @@ const Card = ({
                 className={`bg-image hover-overlay ripple`}
                 data-mdb-ripple-color="light"
               >
-                <img src={images} className="img-fluid border" />
+                <img src={images} style={{objectFit:"cover"}} className="img-fluid border" />
                 <a href="#!">
                   <div
                     className="mask"

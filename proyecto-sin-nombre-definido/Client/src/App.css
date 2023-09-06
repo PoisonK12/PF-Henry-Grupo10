@@ -9,4 +9,6 @@
   font-family: 'Avenir', sans-serif; ;
 }
 
-
+label{
+  color: black !important;
+}
