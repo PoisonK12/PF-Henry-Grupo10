@@ -45,7 +45,8 @@ const getAllAssets = async (req) => {
     rentPriceMin,
     sellPriceMax,
     sellPriceMin,
-    averageScore,
+    averageScoreMin,
+    averageScoreMax,
     amenities,
     sortBy,
   } = req.query;
@@ -64,6 +65,8 @@ const getAllAssets = async (req) => {
 
   // nuevo promedio = ((4.7 * 5) + 3)/(5+1)
   // nueva # de voto = 5 +1
+  // console.log(typeof amenities);
+  // console.log(amenities);
 
   let filter = {
     eliminado: false,
@@ -81,11 +84,14 @@ const getAllAssets = async (req) => {
     filter.rentPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
   }
   if (amenities) {
-    filter.amenities = { ...filter.amenities, [Op.overlap]: amenities };
+    filter.amenities = { ...filter.amenities, [Op.contains]: amenities };
   }
 
-  if (averageScore) {
-    filter.averageScore = { ...filter.averageScore, [Op.gte]: averageScore };
+  if (averageScoreMin) {
+    filter.averageScore = { ...filter.averageScore, [Op.gte]: averageScoreMin };
+  }
+  if (averageScoreMax) {
+    filter.averageScore = { ...filter.averageScore, [Op.lte]: averageScoreMax };
   }
 
   if (bathrooms) {
