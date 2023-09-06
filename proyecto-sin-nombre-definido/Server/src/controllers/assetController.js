@@ -306,6 +306,7 @@ const getAllAmenities = async () => {
 
 module.exports = {
   deleteAssetById,
+  softDeleteAssetById,
   restoreAssetById,
   createAsset,
   getAllAssets,
