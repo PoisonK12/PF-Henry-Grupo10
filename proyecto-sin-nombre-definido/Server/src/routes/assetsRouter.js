@@ -22,8 +22,10 @@ assetsRouter.get("/location", getAllLocationsHandler);
 //! Temporal, hay que desarrollar el CRUD completo de amenities
 assetsRouter.get("/amenities", getAmenitiesHandler);
 
+//esta creo que se puede borrar
 assetsRouter.get("/filtroporamenities", getAllAssetsWithAmenitiesHandler);
 
+//esta tal vez podemos combinarla con el all despues
 assetsRouter.get("/admin",getAllButAllAssetsHandler);
 
 assetsRouter.get("/:id", getAssetByIdHandler);

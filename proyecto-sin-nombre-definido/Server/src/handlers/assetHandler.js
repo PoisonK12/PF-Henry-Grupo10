@@ -11,7 +11,6 @@ const {
   getAllLocations,
   getAllAmenities,
   getAllButAllAssets,
-  getAllButAllAssets,
   getAllAssetsWithAmenities,
   restoreAssetById,
 } = require("../controllers/assetController");
