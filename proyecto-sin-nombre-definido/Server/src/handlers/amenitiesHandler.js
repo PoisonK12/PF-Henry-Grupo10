@@ -5,7 +5,7 @@ const {
 
 const getAllAmenitiesHandler = async (req, res) => {
   try {
-    const response = await getAllAmenities(req);
+    const response = await getAllAmenities();
     res.status(200).json(response);
   } catch (error) {
     console.log(error);

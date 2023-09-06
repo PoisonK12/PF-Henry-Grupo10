@@ -4,11 +4,12 @@ const { Amenity, Asset } = require("../db");
 const getAllAmenities = async (req, res) => {
   try {
     const response = await Amenity.findAll({
-      attributes: ["id", "name"],
+      // attributes: ["id", "name"],
     });
-    //
+
     return response;
   } catch (error) {
+    console.log(error)
     console.error(error.message);
   }
 };

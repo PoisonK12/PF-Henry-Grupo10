@@ -125,7 +125,6 @@ const createAssetHandler = async (req, res) => {
         amenities,
       },
     });
-    console.log(amenities);
     const response = await createAsset(
       name,
       description,
@@ -196,7 +195,6 @@ const getAmenitiesHandler = async (req, res) => {
 };
 const getAllAssetsWithAmenitiesHandler = async (req, res) => {
   const { amenitiesss } = req.query;
-  console.log(amenitiesss);
   try {
     const response = await getAllAssetsWithAmenities(amenitiesss);
     res.status(200).json(response);

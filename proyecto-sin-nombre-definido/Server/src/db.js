@@ -5,6 +5,7 @@ const UserModel = require("./models/users");
 const RentModel = require("./models/rents");
 const AssetModel = require("./models/assets");
 const ReviewModel = require("./models/reviews");
+const AmenityModel = require("./models/amenities");
 
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const sequelize = new Sequelize(
@@ -16,6 +17,7 @@ UserModel(sequelize);
 RentModel(sequelize);
 AssetModel(sequelize);
 ReviewModel(sequelize);
+AmenityModel(sequelize);
 
 const { User, Rent, Asset, Review } = sequelize.models;
 
