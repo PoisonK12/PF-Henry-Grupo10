@@ -96,8 +96,6 @@ export const createAsset = async (form , setModal,setModalBody ) => {
     }
   } 
 
-
-
 export const getLocation = () => {
   return async (dispatch) => {
     try {
