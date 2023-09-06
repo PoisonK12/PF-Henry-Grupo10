@@ -41,6 +41,7 @@ const updateUser = async (
   landlord,
   //edicion por sistema
   averageScore,
+  numberOfReviews,
   favorites,
   history
 ) => {

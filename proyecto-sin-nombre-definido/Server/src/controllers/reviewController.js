@@ -1,5 +1,10 @@
 const { Review } = require("../db");
 const { Op, Sequelize } = require("sequelize");
+const {
+  updateUser,
+  getUserByIdController,
+} = require("../controllers/userController");
+const { response } = require("express");
 
 const getReviewByIdController = async (req) => {
   const { id } = req.query;
@@ -46,36 +51,46 @@ const updateReview = async (
   return updateReview;
 };
 
-//!------------------------------------------------------------------------
+//!---------------------------------evaluador-texto--puntos-evaluado---------------------------------
 const reviewUserController = async (userName, comment, score, id) => {
   try {
-  } catch (error) {}
-
+    const response = await getUserByIdController(id);
+    res, startus(200).json(response);
+    console.log(response);
+  } catch (error) {
+    res.status(400).json({ error: message.error });
+  }
+  console.log(response);
+  const { averageScore, numberOfReviews } = response;
   try {
-    if (!userName || !comment || !score) {
-      return res.status(400).json({ error: "Falta informacion obligatoria" });
-    }
-
+    await updateUser(id, averageScore, numberOfReviews);
+    res, startus(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: message.error });
+  }
+  try {
     //! validacion
     //! hash
     // password = hash(password);
 
-    const [createdReview, created] = await Review.findOrCreate({
-      where: { userName },
-      defaults: {
-        comment,
-        score,
-      },
+    const createdReview = await Review.create({
+      userName,
+      comment,
+      score,
     });
-    if (!created) {
-      return res
-        .status(400)
-        .json({ error: "La review de ese usuario ya existe." });
+
+    const findUser = await User.findOne({
+      where: { id: id },
+    });
+
+    if (findUser) {
+      await createdReview.addUser(findUser);
     }
 
-    return res.status(200).json(`Exito al crear la review ${userName}`);
+    res.status(200).json(`Exito al crear la review ${userName}`);
   } catch (error) {
     console.error(error.message);
+    res.status(400).json({ error: "La review de ese usuario ya existe." });
   }
 };
 
