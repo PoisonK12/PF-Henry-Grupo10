@@ -59,20 +59,23 @@ const getAllAssets = async (req) => {
     size = sizeAsNumber;
   }
 
-  let filter = {};
-  console.log(amenities)
+  let filter = {
+    eliminado: false
+  };
   if (rentPriceMin) {filter.rentPrice = {...filter.rentPrice, [Op.gte]: rentPriceMin };}
   if (rentPriceMax) {filter.rentPrice = {...filter.rentPrice, [Op.lte]: rentPriceMax };}
   if (sellPriceMin) {filter.rentPrice = {...filter.sellPrice, [Op.gte]: sellPriceMin };}
   if (sellPriceMax) {filter.rentPrice = {...filter.sellPrice, [Op.lte]: sellPriceMax };}
   if (amenities)    {filter.amenities = {...filter.amenities, [Op.overlap]: amenities};}
-  
+  if (averageScore) {filter.averageScore = {...filter.averageScore, [Op.gte]: averageScore };}
+
   if (bathrooms) {filter.bathrooms = bathrooms;}
-  if (averageScore) {const average = averageScore[0]}
   if (location) {filter.location = location;}
   if (onSale) {filter.onSale = onSale;}
   if (rooms) {filter.rooms = rooms;}
-  if (amenities) {filter.eliminado=false}
+
+
+  
 
   const assets = await Asset.findAndCountAll({
     where: filter,
@@ -108,6 +111,7 @@ const updateAsset = async (
   rooms,
   bathrooms,
   averageScore,
+  numberOfReviews,
   coveredArea,
   amenities
 ) => {
@@ -123,6 +127,7 @@ const updateAsset = async (
     rooms,
     bathrooms,
     averageScore,
+    numberOfReviews,
     coveredArea,
     amenities,
   });
@@ -151,9 +156,10 @@ const createAsset = async (
   rooms,
   bathrooms,
   averageScore,
+  numberOfReviews,
   coveredArea,
   totalArea,
-  amenities
+  amenities,
 ) => {
   try {
     // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando
@@ -175,11 +181,11 @@ const createAsset = async (
       rooms,
       bathrooms,
       averageScore,
+      numberOfReviews,
       coveredArea,
       totalArea,
       amenities,
     });
-
     // for (const findId of amenities) {
     //   const findAmen = await Amenity.findOne({
     //     where: { id: findId },
@@ -191,7 +197,7 @@ const createAsset = async (
 
     return createdAsset;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al registrar la propiedad");
   }
 };

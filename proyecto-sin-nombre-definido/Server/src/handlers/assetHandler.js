@@ -97,6 +97,8 @@ const createAssetHandler = async (req, res) => {
     rentPrice,
     rooms,
     bathrooms,
+    averageScore,
+    numberOfReviews,
     coveredArea,
     totalArea,
     amenities,
@@ -116,11 +118,14 @@ const createAssetHandler = async (req, res) => {
         rentPrice,
         rooms,
         bathrooms,
+        averageScore,
+        numberOfReviews,
         coveredArea,
         totalArea,
         amenities,
       },
     });
+    console.log(amenities)
     const response = await createAsset(
       name,
       description,
@@ -133,6 +138,8 @@ const createAssetHandler = async (req, res) => {
       rentPrice,
       rooms,
       bathrooms,
+      averageScore,
+      numberOfReviews,
       coveredArea,
       totalArea,
       amenities
