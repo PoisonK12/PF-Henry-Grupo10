@@ -70,8 +70,6 @@ const Login = ({setConditional}) => {
                 
                 <hr className={style.hr}></hr>
                     <div class="column mt-1">
-                <hr className={style.hr}></hr>  
-<div class="column mt-1">
                       <span class="m-2" style={{color : "white", fontSize: "18px"}}>Logueate con
                       </span>
                   <button className = {` btn btn-outline-danger ${style.buttonGoogle}`}>
