@@ -9,7 +9,8 @@ const {
   getAmenitiesHandler,
   getAllButAllAssetsHandler,
   getAllAssetsWithAmenitiesHandler,
-  restoreAssetByIdHandler
+  restoreAssetByIdHandler,
+  softDeleteAssetByIdHandler
 } = require("../handlers/assetHandler");
 
 const assetsRouter = Router();
@@ -21,9 +22,11 @@ assetsRouter.get("/location", getAllLocationsHandler);
 //! Temporal, hay que desarrollar el CRUD completo de amenities
 assetsRouter.get("/amenities", getAmenitiesHandler);
 
+//esta creo que se puede borrar
 assetsRouter.get("/filtroporamenities", getAllAssetsWithAmenitiesHandler);
 
-assetsRouter.get("/menosmalquediegodijoquenonosllenemosderutas",getAllButAllAssetsHandler);
+//esta tal vez podemos combinarla con el all despues
+assetsRouter.get("/admin",getAllButAllAssetsHandler);
 
 assetsRouter.get("/:id", getAssetByIdHandler);
 
@@ -31,7 +34,9 @@ assetsRouter.put("/:id", updateAssetHandler);
 
 assetsRouter.post("/create", createAssetHandler);
 
-assetsRouter.delete("/delete/:id", deleteAssetByIdHandler);
+assetsRouter.delete("/:id", deleteAssetByIdHandler);
+
+assetsRouter.delete("/delete/:id", softDeleteAssetByIdHandler);
 
 assetsRouter.get("/restore/:id", restoreAssetByIdHandler);
 

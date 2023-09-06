@@ -232,7 +232,7 @@ const createAsset = async (
   }
 };
 
-const deleteAssetById = async (id) => {
+const softDeleteAssetById = async (id) => {
   //Borrado logico añadido
   const asset = await Asset.findOne({
     where: {
@@ -247,6 +247,22 @@ const deleteAssetById = async (id) => {
   await asset.softDelete();
 
   return "Asset deleted successfully";
+};
+
+const deleteAssetById = async (id) => {
+  const asset = await Asset.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!asset) {
+    throw new Error("You sure this asset exist?");
+  }
+
+  await asset.destroy();
+
+  return "Asset deleted permanently successfully";
 };
 
 const restoreAssetById = async (id) => {
@@ -290,6 +306,7 @@ const getAllAmenities = async () => {
 
 module.exports = {
   deleteAssetById,
+  softDeleteAssetById,
   restoreAssetById,
   createAsset,
   getAllAssets,
