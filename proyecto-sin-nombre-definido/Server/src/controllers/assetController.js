@@ -80,7 +80,7 @@ const getAllAssets = async (req) => {
   if (sellPriceMin !== 1) {
     if (sellPriceMin) {
       filter.sellPrice = { ...filter.sellPrice, [Op.gte]: sellPriceMin };
-    }
+    } 
     if (sellPriceMax) {
       filter.sellPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
     }
