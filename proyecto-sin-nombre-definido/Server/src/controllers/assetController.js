@@ -7,18 +7,20 @@ const amenities = require("../models/amenities");
 //Prototipos de borralo logico
 
 // Método para soft delete
+//(delete) http://localhost:3001/assets/id
 Asset.prototype.softDelete = function () {
   return this.update({ eliminado: true });
 };
 
 // Método para restaurar
+//http://localhost:3001/assets/restore/id
 Asset.prototype.restore = function () {
   return this.update({ eliminado: false });
 };
 
 // Trae todas las propiedades y paginado
 //!------------------------------------------------------------------------
-
+//
 const getAllButAllAssets = async (req, res) => {
   try {
     const response = await Asset.findAll({});
@@ -44,6 +46,7 @@ const getAllAssets = async (req) => {
     sellPriceMax,
     sellPriceMin,
     averageScore,
+    amenities,
     sortBy,
   } = req.query;
 
@@ -62,42 +65,23 @@ const getAllAssets = async (req) => {
   // nuevo promedio = ((4.7 * 5) + 3)/(5+1)
   // nueva # de voto = 5 +1
 
-  let filter = {};
-  console.log(amenities);
-  if (rentPriceMin) {
-    filter.rentPrice = { ...filter.rentPrice, [Op.gte]: rentPriceMin };
-  }
-  if (rentPriceMax) {
-    filter.rentPrice = { ...filter.rentPrice, [Op.lte]: rentPriceMax };
-  }
-  if (sellPriceMin) {
-    filter.rentPrice = { ...filter.sellPrice, [Op.gte]: sellPriceMin };
-  }
-  if (sellPriceMax) {
-    filter.rentPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
-  }
-  if (amenities) {
-    filter.amenities = { ...filter.amenities, [Op.overlap]: amenities };
-  }
+  let filter = {
+    eliminado: false
+  };
+  if (rentPriceMin) {filter.rentPrice = {...filter.rentPrice, [Op.gte]: rentPriceMin };}
+  if (rentPriceMax) {filter.rentPrice = {...filter.rentPrice, [Op.lte]: rentPriceMax };}
+  if (sellPriceMin) {filter.rentPrice = {...filter.sellPrice, [Op.gte]: sellPriceMin };}
+  if (sellPriceMax) {filter.rentPrice = {...filter.sellPrice, [Op.lte]: sellPriceMax };}
+  if (amenities)    {filter.amenities = {...filter.amenities, [Op.overlap]: amenities};}
+  if (averageScore) {filter.averageScore = {...filter.averageScore, [Op.gte]: averageScore };}
 
-  if (bathrooms) {
-    filter.bathrooms = bathrooms;
-  }
-  if (averageScore) {
-    const average = averageScore[0];
-  }
-  if (location) {
-    filter.location = location;
-  }
-  if (onSale) {
-    filter.onSale = onSale;
-  }
-  if (rooms) {
-    filter.rooms = rooms;
-  }
-  if (amenities) {
-    filter.eliminado = false;
-  }
+  if (bathrooms) {filter.bathrooms = bathrooms;}
+  if (location) {filter.location = location;}
+  if (onSale) {filter.onSale = onSale;}
+  if (rooms) {filter.rooms = rooms;}
+
+
+  
 
   const assets = await Asset.findAndCountAll({
     where: filter,
@@ -133,6 +117,7 @@ const updateAsset = async (
   rooms,
   bathrooms,
   averageScore,
+  numberOfReviews,
   coveredArea,
   amenities
 ) => {
@@ -148,6 +133,7 @@ const updateAsset = async (
     rooms,
     bathrooms,
     averageScore,
+    numberOfReviews,
     coveredArea,
     amenities,
   });
@@ -176,9 +162,10 @@ const createAsset = async (
   rooms,
   bathrooms,
   averageScore,
+  numberOfReviews,
   coveredArea,
   totalArea,
-  amenities
+  amenities,
 ) => {
   try {
     // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando
@@ -200,11 +187,11 @@ const createAsset = async (
       rooms,
       bathrooms,
       averageScore,
+      numberOfReviews,
       coveredArea,
       totalArea,
       amenities,
     });
-
     // for (const findId of amenities) {
     //   const findAmen = await Amenity.findOne({
     //     where: { id: findId },
@@ -216,7 +203,7 @@ const createAsset = async (
 
     return createdAsset;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al registrar la propiedad");
   }
 };
@@ -229,9 +216,8 @@ const deleteAssetById = async (id) => {
     },
   });
 
-  if (!asset) {
-    throw new Error("Asset not found");
-  }
+  if (!asset) {throw new Error("Asset not found");}
+  
   await asset.softDelete();
 
   return "Asset deleted successfully";

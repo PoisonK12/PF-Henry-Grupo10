@@ -50,8 +50,12 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
       },
       averageScore: {
-        type: DataTypes.ARRAY(DataTypes.FLOAT),
-        defaultValue: [0, 0],
+        type: DataTypes.FLOAT,
+        defaultValue: 0.0,
+      },
+      numberOfReviews: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
       coveredArea: {
         type: DataTypes.FLOAT,
@@ -69,5 +73,4 @@ module.exports = (sequelize) => {
     },
     { timestamps: false }
   );
-  return Asset;
 };

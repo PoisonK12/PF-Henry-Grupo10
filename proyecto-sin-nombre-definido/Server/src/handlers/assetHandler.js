@@ -11,6 +11,7 @@ const {
   getAllAmenities,
   getAllButAllAssets,
   getAllAssetsWithAmenities,
+  restoreAssetById
 } = require("../controllers/assetController");
 
 const getAllButAllAssetsHandler = async (req, res) => {
@@ -96,6 +97,8 @@ const createAssetHandler = async (req, res) => {
     rentPrice,
     rooms,
     bathrooms,
+    averageScore,
+    numberOfReviews,
     coveredArea,
     totalArea,
     amenities,
@@ -115,11 +118,14 @@ const createAssetHandler = async (req, res) => {
         rentPrice,
         rooms,
         bathrooms,
+        averageScore,
+        numberOfReviews,
         coveredArea,
         totalArea,
         amenities,
       },
     });
+    console.log(amenities)
     const response = await createAsset(
       name,
       description,
@@ -132,6 +138,8 @@ const createAssetHandler = async (req, res) => {
       rentPrice,
       rooms,
       bathrooms,
+      averageScore,
+      numberOfReviews,
       coveredArea,
       totalArea,
       amenities
@@ -150,6 +158,17 @@ const deleteAssetByIdHandler = async (req, res) => {
   try {
     await deleteAssetById(id);
     res.status(200).json(`La propiedad fue eliminada`);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const restoreAssetByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await restoreAssetById(id);
+    res.status(200).json(`La propiedad fue restaurada`);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: error.message });
@@ -197,4 +216,5 @@ module.exports = {
   getAmenitiesHandler,
   getAllButAllAssetsHandler,
   getAllAssetsWithAmenitiesHandler,
+  restoreAssetByIdHandler
 };
