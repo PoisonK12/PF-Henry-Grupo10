@@ -31,7 +31,7 @@ const updateReview = async (
   //edicion por usuario
   comment,
   //edicion por sistema
-  score,
+  score
 ) => {
   const updateReview = await User.findOne({
     where: { userName: userName },
@@ -47,34 +47,30 @@ const updateReview = async (
 };
 
 //!------------------------------------------------------------------------
-const createReviewController = async (
-  userName,
-  comment,
-  score,
-) => {
+const reviewUserController = async (userName, comment, score, id) => {
   try {
-    if (
-      !userName ||
-      !comment ||
-      !score 
+  } catch (error) {}
 
-    ) {
+  try {
+    if (!userName || !comment || !score) {
       return res.status(400).json({ error: "Falta informacion obligatoria" });
     }
 
     //! validacion
     //! hash
-    password = hash(password);
+    // password = hash(password);
 
     const [createdReview, created] = await Review.findOrCreate({
       where: { userName },
       defaults: {
         comment,
         score,
-      }
+      },
     });
     if (!created) {
-      return res.status(400).json({ error: "La review de ese usuario ya existe." });
+      return res
+        .status(400)
+        .json({ error: "La review de ese usuario ya existe." });
     }
 
     return res.status(200).json(`Exito al crear la review ${userName}`);
@@ -100,9 +96,9 @@ const deleteReviewById = async (id) => {
 };
 
 module.exports = {
-    getReviewByIdController,
-    getAllReviewController,
-    deleteReviewById,
-    createReviewController,
-    updateReview,
+  getReviewByIdController,
+  getAllReviewController,
+  deleteReviewById,
+  reviewUserController,
+  updateReview,
 };

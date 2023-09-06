@@ -1,11 +1,10 @@
 const userSchemePost = require("../helpers/reviewValidation.ts");
 
-
 const {
   getReviewByIdController,
   getAllReviewController,
   deleteReviewById,
-  createReviewController,
+  reviewUserController,
   updateReview,
 } = require("../controllers/reviewController.js");
 
@@ -18,30 +17,23 @@ const getReviewByIdHandler = async (req, res) => {
   }
 };
 
-const reviewPostHandler = async (req, res) => {
-  const {
-    score,
-    comment,
-    userName,    
-  } = req.body;
+const reviewUserHandler = async (req, res) => {
+  const { score, comment, userName, id } = req.body;
 
   try {
     const validData = userSchemePost.parse({
       body: {
+        id,
         score,
         comment,
         userName,
       },
     });
-    const review = await createReviewController(
-        score,
-        comment,
-        userName, 
-    );
-    res.status(200).json("Review creado con exito!");
+    const review = await reviewUserController(score, comment, userName, id);
+    res.status(200).json(`Review ${userName} creado con exito!`);
   } catch (error) {
     console.log(error);
-    res.status(404).json("Error en la creacion del review!");
+    res.status(404).json({ error: message.error });
   }
 };
 
@@ -49,7 +41,9 @@ const getReviewHandler = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const review = id ? await getReviewByIdController(id) : getAllReviewController();
+    const review = id
+      ? await getReviewByIdController(id)
+      : getAllReviewController();
     res.status(200).json(review);
   } catch (error) {
     console.log(error);
@@ -95,9 +89,9 @@ const reviewDeleteOrBanHandler = async (req, res) => {
 };
 
 module.exports = {
-    reviewPostHandler,
-    getReviewHandler,
-    updateReviewHandler,
-    reviewDeleteOrBanHandler,
-    getReviewByIdHandler,
+  getReviewHandler,
+  updateReviewHandler,
+  reviewDeleteOrBanHandler,
+  getReviewByIdHandler,
+  reviewUserHandler,
 };
