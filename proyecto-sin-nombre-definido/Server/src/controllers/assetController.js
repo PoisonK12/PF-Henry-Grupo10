@@ -55,6 +55,12 @@ const getAllAssets = async (req) => {
   if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
     size = sizeAsNumber;
   }
+  // promedio    # de votos
+  // [   4.7   ,      5    ]
+  // nuevo voto: 3
+
+  // nuevo promedio = ((4.7 * 5) + 3)/(5+1)
+  // nueva # de voto = 5 +1
 
   let filter = {};
   console.log(amenities);
