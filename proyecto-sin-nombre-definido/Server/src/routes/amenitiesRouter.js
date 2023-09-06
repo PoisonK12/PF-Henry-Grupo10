@@ -11,3 +11,4 @@ amenitiesRouter.get("/", getAllAmenitiesHandler);
 amenitiesRouter.get("/:id", getAmenitiesByIdHandler);
 
 module.exports = amenitiesRouter;
+//
