@@ -9,7 +9,8 @@ const {
   getAmenitiesHandler,
   getAllButAllAssetsHandler,
   getAllAssetsWithAmenitiesHandler,
-  restoreAssetByIdHandler
+  restoreAssetByIdHandler,
+  softDeleteAssetByIdHandler
 } = require("../handlers/assetHandler");
 
 const assetsRouter = Router();
@@ -31,7 +32,9 @@ assetsRouter.put("/:id", updateAssetHandler);
 
 assetsRouter.post("/create", createAssetHandler);
 
-assetsRouter.delete("/delete/:id", deleteAssetByIdHandler);
+assetsRouter.delete("/:id", deleteAssetByIdHandler);
+
+assetsRouter.delete("/delete/:id", softDeleteAssetByIdHandler);
 
 assetsRouter.get("/restore/:id", restoreAssetByIdHandler);
 
