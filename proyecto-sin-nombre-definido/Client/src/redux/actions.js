@@ -176,27 +176,34 @@ export const deleteAssetById = (id) => {
 };
 
 
- export const getLogin = async (login , conditional) => {
-  console.log(conditional);
-      const {email , password , confirmPassword , userName , fullName , birthDate , gender , address , nationality , phoneNumber , landLord} = login;
-
-  try {
-
-      if (conditional === "login"){
+ export const getLogin = async (login , conditional , setToast,setToastBody) => {
+   const {email , password , confirmPassword , userName , fullName , birthDate , gender , address , nationality , phoneNumber , landLord} = login;
+   
+   try {
+     
+     if (conditional === "login"){
          const {data} = await axios.get("/users" , {email , password})
          if(data) {
-          console.log(data);
+          console.log(login);
+          /* setToastBody({response :data}) */
+          setToast(true)
+         return console.log(data);
          }
       }
 
       if(conditional === "register") {
           const {data} = await axios.post("/users", {email, password , confirmPassword , userName , fullName,verificationNumber : "56" , birthDate , gender , address , nationality , phoneNumber , landLord } )
           if(data) {
+            console.log(data);
+           /*  setToastBody({response :data}) */
+            setToast(true)
             return console.log(data);
           }    
           }
         
   } catch (error) {
-    return console.log(error.response.data);
+    setToastBody(error.message)
+    setToast(true)
+    return 
   }
 }

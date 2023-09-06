@@ -2,14 +2,17 @@ import React , {useState} from "react";
 import style from "./Login.module.css"
 import {getLogin} from "../../redux/actions";
 import {validation} from "./validation";
+import {Toast} from "react-bootstrap"
 
-const Login = ({setConditional}) => {
+const Login = ({setConditional , conditional}) => {
 
     const [login , setLogin ] = useState({
         email : "",
         password : ""
     });
     const [errors , setErrors] = useState({errorsBack : undefined});
+    const [toastBody , setToastBody] = useState({response : ""})
+    const [toast , setToast] = useState(false)
 
     const handleChange = (e) => {
           const {name} = e.target;
@@ -26,20 +29,26 @@ const Login = ({setConditional}) => {
               [name]: errorDetect[name]
             }));
      };
-
-
+     console.log(login);
+  
     const handleConditional = () => {
         setConditional("register")
      };
 
      const handleSubmit = async (e) => {
+       console.log(e);
         e.preventDefault();
-        await getLogin(login)
+        setToast(true)
+        setTimeout(() => {
+          setToast(false)
+        }, 2500)
+        /* await getLogin(login , setToast, conditional, setToastBody) */
      };
 
     return (
        <>
-            <form  onSubmit={handleSubmit} class="d-flex align-items-center justify-content-center text-center p-5  ">
+       <div class="d-flex flex-row container">
+            <form  onSubmit={handleSubmit} class="d-flex align-items-center  text-center p-5 ">
                 <fieldset className={`border  d-flex flex-column text-center ${style.form}`}>
 
                   <div class={`d-flex justify-content-center align-items-center  ${style.perfile}`}>
@@ -97,7 +106,21 @@ const Login = ({setConditional}) => {
                 </div>
                   
                 </fieldset>
+                
+              
+              <div class={style.alert} > {toast 
+           
+             ?<div class="alert alert-danger" style={{backgroundColor : "rgba(253, 60, 60, 0.76)"}} role="alert">
+               Algo de informacion como por ejemplo : La contraseña no coincide o su email... 
+            </div>
+              : null}
+            </div>
             </form>
+</div>
+            
+
+
+
         </>
     )
 };
