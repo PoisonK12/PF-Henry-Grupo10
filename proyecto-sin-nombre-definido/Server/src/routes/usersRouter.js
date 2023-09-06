@@ -15,7 +15,7 @@ usersRouter.get("/", getUserHandler);
 
 usersRouter.put("/", updateUserHandler);
 
-usersRouter.post("/", userPostHandler);
+usersRouter.post("/create", userPostHandler);
 
 usersRouter.delete("/:id", userDeleteOrBanHandler);
 

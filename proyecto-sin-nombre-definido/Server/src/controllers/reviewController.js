@@ -57,40 +57,35 @@ const reviewUserController = async (userName, comment, score, id) => {
     const response = await getUserByIdController(id);
     res, startus(200).json(response);
     console.log(response);
-  } catch (error) {
-    res.status(400).json({ error: message.error });
-  }
-  console.log(response);
-  const { averageScore, numberOfReviews } = response;
-  try {
+
+    console.log(response);
+    const { averageScore, numberOfReviews } = response;
+
     await updateUser(id, averageScore, numberOfReviews);
     res, startus(200).json(response);
   } catch (error) {
     res.status(400).json({ error: message.error });
   }
   try {
-    //! validacion
-    //! hash
-    // password = hash(password);
-
-    const createdReview = await Review.create({
-      userName,
-      comment,
-      score,
-    });
-
     const findUser = await User.findOne({
       where: { id: id },
     });
 
     if (findUser) {
+      const createdReview = await Review.create({
+        userName,
+        comment,
+        score,
+      });
+
       await createdReview.addUser(findUser);
+      res.status(200).json(`Exito al crear la review ${userName}`);
     }
 
-    res.status(200).json(`Exito al crear la review ${userName}`);
+    res.status(500).json(`Mala mia`);
   } catch (error) {
     console.error(error.message);
-    res.status(400).json({ error: "La review de ese usuario ya existe." });
+    res.status(400).json({ error: message.error });
   }
 };
 

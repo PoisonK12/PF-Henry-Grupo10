@@ -37,14 +37,12 @@ const userSchemePost = z.object({
 
     landLord: z.boolean(),
 
-    admin: z.boolean(),
+    // averageScore: z.number().positive(),
+    // numberOfReviews: z.number().positive(),
 
-    averageScore: z.number().positive(),
-    numberOfReviews: z.number().positive(),
+    // favorites: z.array(z.string()),
 
-    favorites: z.array(z.string()),
-
-    history: z.array(z.string()),
+    // history: z.array(z.string()),
   }),
 });
 

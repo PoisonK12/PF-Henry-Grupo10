@@ -71,12 +71,13 @@ const updateUser = async (
 
 //!------------------------------------------------------------------------
 const createUserController = async (
+  res,
   userName,
   fullName,
-  profilePic,
   birthDate,
   phoneNumber,
   verificationNumber,
+  profilePic,
   gender,
   address,
   nationality,
@@ -85,25 +86,25 @@ const createUserController = async (
   landlord
 ) => {
   try {
-    if (
-      !userName ||
-      !fullName ||
-      !birthDate ||
-      !phoneNumber ||
-      !gender ||
-      !address ||
-      !nationality ||
-      !email ||
-      !password ||
-      !landlord
-    ) {
-      return res.status(400).json({ error: "Falta informacion obligatoria" });
-    }
+    // if (
+    //   !userName ||
+    //   !fullName ||
+    //   !birthDate ||
+    //   !phoneNumber ||
+    //   !gender ||
+    //   !address ||
+    //   !nationality ||
+    //   !email ||
+    //   !password ||
+    //   !landlord
+    // ) {
+    //   return res.status(400).json({ error: "Falta informacion obligatoria" });
+    // }
 
     //! validacion
     //! hash
-    password = hash(password);
-
+    // password = hash(password);
+    console.log(1);
     const [createdUser, created] = await User.findOrCreate({
       where: { userName },
       defaults: {
@@ -120,13 +121,14 @@ const createUserController = async (
         landlord,
       },
     });
+    console.log(2);
     if (!created) {
-      return res.status(400).json({ error: "El nombre de usuario ya existe." });
+      res.status(400).json({ error: "El nombre de usuario ya existe." });
     }
 
-    return res.status(200).json(`Exito al crear el usuario ${userName}`);
+    res.status(200).json(`Exito al crear el usuario ${userName}`);
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
   }
 };
 

@@ -56,14 +56,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      landLord: {
+      landlord: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-      admin: {
-        type: DataTypes.BOOLEAN,
+      userType: {
+        type: DataTypes.ENUM("Admin", "User", "Premium User"),
         allowNull: false,
-        defaultValue: false,
+        defaultValue: "User",
       },
       averageScore: {
         type: DataTypes.FLOAT,
@@ -73,16 +73,14 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         defaultValue: 0,
       },
-      // averageScore: {
-      //   type: DataTypes.ARRAY(DataTypes.NUMERIC),
-      // },
+
       favorites: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
       },
       history: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false,
+        allowNull: true,
       },
     },
     {

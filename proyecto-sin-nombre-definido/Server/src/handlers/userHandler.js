@@ -1,6 +1,6 @@
 const userSchemePost = require("../helpers/userValidation.ts");
 // const {createUserController} = require("../controllers/createUserController");
-
+const { dataSchemePost } = require("../helpers/userValidation.ts");
 const {
   getUserByIdController,
   getAllUserController,
@@ -35,27 +35,24 @@ const userPostHandler = async (req, res) => {
   } = req.body;
 
   try {
-    const validData = userSchemePost.parse({
-      body: {
-        userName,
-        fullName,
-        birthDate,
-        phoneNumber,
-        verificationNumber,
-        profilePic,
-        gender,
-        address,
-        nationality,
-        email,
-        password,
-        landlord,
-        admin,
-        averageScore,
-        favorites,
-        history,
-      },
-    });
+    // const validData = userSchemePost.parse({
+    //   body: {
+    //     userName,
+    //     fullName,
+    //     birthDate,
+    //     phoneNumber,
+    //     verificationNumber,
+    //     profilePic,
+    //     gender,
+    //     address,
+    //     nationality,
+    //     email,
+    //     password,
+    //     landlord,
+    //   },
+    // });
     const user = await createUserController(
+      res,
       userName,
       fullName,
       profilePic,
@@ -69,10 +66,10 @@ const userPostHandler = async (req, res) => {
       password,
       landlord
     );
-    res.status(200).json("Usuario creado con exito!");
+    res.status(200).json(user);
   } catch (error) {
     console.log(error);
-    res.status(404).json("Error en la creacion del usuario!");
+    res.status(404).json("handel");
   }
 };
 
