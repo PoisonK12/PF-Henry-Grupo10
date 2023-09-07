@@ -52,9 +52,9 @@ function App() {
 
   return (
     <>
-     {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+     {/* { <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <div id="signInDiv"></div>
-    </div> */}
+    </div> } */}
 
       {location.pathname !== "/" && <Nav/>}
       <ScrollToTop></ScrollToTop>
@@ -62,9 +62,9 @@ function App() {
       <Route path='/' element={<><Landing/></>} />
       <Route path='/detail/:id' element={<><Detail/><Footer/><Chatbot/></>} />
       <Route path='/home' element={<><Home/><Footer/><Chatbot/></>}/>
-      <Route path='/property' element={<><Property/><Footer/><Chatbot/></>}/>
+      {/* <Route path='/property' element={<><Property/><Footer/><Chatbot/></>}/> */}
       <Route path='/contacts' element={<><Contatcs/><Footer/><Chatbot/></>}/>
-      <Route path='/property/:location' element={<><Property/><Chatbot/><Footer/></>}/>
+      <Route path='/property' element={<><Property/><Chatbot/><Footer/></>}/>
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
       <Route path='/userPanel' element={<><UserPanel/><Footer/></>}/>
       <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>           

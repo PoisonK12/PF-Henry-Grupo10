@@ -83,7 +83,8 @@ const UserPanel = () => {
                       alignItems: "center",
                       height: "80px",
                     }}
-                    href="/addProperty"
+                    href="#"
+                    onClick={() => setComponenteActual('C')}
 
                   >
                     <div>
