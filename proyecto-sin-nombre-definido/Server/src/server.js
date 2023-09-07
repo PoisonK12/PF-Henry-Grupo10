@@ -1,8 +1,8 @@
+require('dotenv').config()
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
-const sessionSecret = process.env.SESSION_SECRET;
 const router = require('./routes/index');
 
 const server = express();
@@ -12,7 +12,7 @@ server.use(express.json());
 server.use(cors());
 
 server.use(session({
-  secret: sessionSecret,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }));
