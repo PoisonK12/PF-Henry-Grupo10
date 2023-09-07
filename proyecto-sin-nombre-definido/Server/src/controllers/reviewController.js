@@ -53,7 +53,7 @@ const updateReview = async (
 };
 
 //!---------------------------------evaluador-texto--puntos-evaluado---------------------------------
-const reviewUserController = async (userName, score, comment, id, res) => {
+const reviewUserController = async (userName, score, comment, id) => {
   try {
     const response = await getUserByIdController(id);
     let { averageScore, numberOfReviews } = response;
@@ -62,34 +62,30 @@ const reviewUserController = async (userName, score, comment, id, res) => {
     averageScore = suma / (numberOfReviews + 1);
     numberOfReviews = numberOfReviews + 1;
 
-    await updateReviewUser(id, averageScore, numberOfReviews, res);
-    res.status(200).json(response);
+    await updateReviewUser(id, averageScore, numberOfReviews);
+    // return response;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
   try {
-    const findUser = await User.findOne({
-      where: { id: id },
-    });
-    console.log(findUser.dataValue);
+    const findUser = await User.findByPk(id);
 
     if (findUser) {
       const createdReview = await Review.create({
         userName,
-        comment,
         score,
+        comment,
       });
-
+      // console.log(90000000000000000000);
+      // console.log(findUser);
       await createdReview.addUser(findUser);
-      res
-        .status(200)
-        .json(`Exito al crear la review de ${findUser.userName}, ${userName}`);
+      return `Exito al crear la review de ${findUser.userName}, ${userName}`;
     }
 
     res.status(500).json(`Mala mia`);
   } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ error: message.error });
+    console.log(error);
+    throw error;
   }
 };
 

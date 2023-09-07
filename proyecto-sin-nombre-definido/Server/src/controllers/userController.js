@@ -87,7 +87,7 @@ const updateUser = async ({
     throw error;
   }
 };
-const updateReviewUser = async (id, averageScore, numberOfReviews, res) => {
+const updateReviewUser = async (id, averageScore, numberOfReviews) => {
   console.log(id + "11");
   console.log(averageScore + "22");
   console.log(numberOfReviews + "33");
@@ -101,9 +101,9 @@ const updateReviewUser = async (id, averageScore, numberOfReviews, res) => {
       numberOfReviews,
     });
 
-    res.status(200).json(updateReviewUser);
+    return updateReviewUser;
   } catch (error) {
-    res.status(500).json({ error: message.error });
+    throw error;
   }
 };
 
@@ -212,5 +212,5 @@ module.exports = {
   updateUser,
   updateReviewUser,
   restoreUserById,
-  softDeleteUserById
+  softDeleteUserById,
 };
