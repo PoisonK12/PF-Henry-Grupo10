@@ -51,9 +51,9 @@ function App() {
 
   return (
     <>
-     {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+     {/* { <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <div id="signInDiv"></div>
-    </div> */}
+    </div> } */}
 
       {location.pathname !== "/" && <Nav/>}
      <Routes>

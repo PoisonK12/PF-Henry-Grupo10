@@ -14,14 +14,10 @@ export const Footer = () => {
               <div className="row">
                 <div className="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                   <h6 className="text-uppercase mb-4 font-weight-bold">
-                    Work in progress
+                    Great Travel
                   </h6>
                   <p>
-                  Encuentra tu hogar lejos de casa a través de nuestra plataforma 
-                  de alquiler de destinos. Ya sea que estés buscando una escapada 
-                  tranquila en la playa, una aventura en la montaña o una experiencia 
-                  urbana emocionante, estamos aquí para ayudarte a encontrar el lugar 
-                  perfecto para tu próxima estadía.
+                  Nos apasiona brindarte experiencias de hospedaje excepcionales. Nuestra misión es conectar a viajeros con anfitriones de todo el mundo, creando recuerdos inolvidables en cada estadía.
                   </p>
                 </div>
 
@@ -29,7 +25,7 @@ export const Footer = () => {
 
                 <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
                   <h6 className="text-uppercase mb-4 font-weight-bold">
-                    Created By
+                    Nuestro equipo
                   </h6>
                   <p>
                     <a className="text-white">Justina Mihura</a>

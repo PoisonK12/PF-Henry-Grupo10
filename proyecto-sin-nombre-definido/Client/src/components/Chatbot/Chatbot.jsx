@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import ChatBot from 'react-simple-chatbot';
+import avatar from "../../assets/images/avatar.jpg"
 
 const theme = {
   background: '#C9FF8F',
@@ -15,7 +16,7 @@ const theme = {
 };
 
 const config = {
-  botAvatar: 'img.png',
+  botAvatar: avatar,
   floating: true,
 };
 
