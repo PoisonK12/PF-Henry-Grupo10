@@ -67,8 +67,9 @@ const PropertyForm = () => {
     totalArea: 0,
     reviews: "asdasdasd",
     nearby: "asd",
+    averageScore : 1,
     nearbyScore: 1,
-    amenities: [1, 2, 3],
+    amenities: [1, 2, 3, 4, 5, 6],
   });
 
   console.log(form);
@@ -312,7 +313,7 @@ const PropertyForm = () => {
   };
   
   
-
+console.log(conditionalCreate);
 
   const MultiForm = (e) => {
     if (step === 1) {
@@ -930,7 +931,7 @@ const PropertyForm = () => {
                   images={modalBody.response.images[0]}
                   id={modalBody.response.id}
                 ></Card>
-                : "tU ASSETS HA SIDO CREADO CON ÉXITO "
+                : <p>"TU ASSETS HA SIDO CREADO CON ÉXITO "</p>
               }
             </Modal.Body>
             <Modal.Footer class="d-flex flex-row justify-content-center align-items-center">

@@ -24,8 +24,10 @@ const validation = (form) => {
     errors.location = "Ingrese una ciudad";
 
     
-  if (form.images && form.images.length < 3) {
-    errors.images = "Debes subir 3 imagenes";
+  if (form.images && form.images.length < 1) {
+    errors.images = "Debes subir  al menos 1 imagenes";
+  } else if (form.images && form.images.length > 3) {
+    errors.images = "No puedes subir mas de 3 imagenes"
   }
 
 
