@@ -77,6 +77,12 @@ GET -> http://localhost:3001/amenities
 
 Crud USER
 
+Lista completa de usuarios
+GET -> http://localhost:3001/users
+
+Get user por id (chequear)
+GET -> http://localhost:3001/users/:id
+
 Creacion de usuario
 POST -> http://localhost:3001/users/create
 Informacion enviada por body
@@ -96,14 +102,42 @@ userName,
 
 El user type en la practica no es un campo que utilicemos en el front, ahora lo enviamos por post para armar nuestras cuentas de admin pero en el caso de que una plataforma real tenga que crear este tipo de cuentas creo que se edita a mano por los dev en la BBDD o en un caso muy profesional se deberia hacer con una interfase dedicada.
 
+Edicion de usuario
+PUT -> http://localhost:3001/users/
+Como referencia
+    userName(unique)          string
+Para edicion por voluntad de usuario
+    fullName                  string
+    profilePic                text
+    phoneNumber               string
+    verificationNumber				string
+    gender										string ENUM("Male", "Female", "agender", "No binary") 
+    address										string
+    nationality								string ENUM("Argentina", "Mexico", "Colombia", "Venezuela")
+    email(unique)             string
+    password									string
+    landlord									boolean
+Edicion por sistema
+    userType									string ENUM("Admin", "User", "Premium User")
+    averageScore              float
+    numberOfReviews           integer
+    favorites                 array(string) uuid de asset favoritos
+    history                   array(string) uuid de rent completadas
 
-GET -> http://localhost:3001/
+Eliminar usuario (destroy)
+DELETE -> http://localhost:3001/users/:id
 
 
+Login
+POST -> http://localhost:3001/login
+email                         string
+password                      string original y se hashea en el recorrido para comparar
+
+Logout
+GET -> http://localhost:3001/logout
 
 
-
-Template de post para BBDD local(3)
+Template de post para BBDD asset
 
 {
 	"name": "Departamento de Pepita",
@@ -126,5 +160,30 @@ Template de post para BBDD local(3)
 	"coveredArea":87.6,
 	"totalArea":300,
 	
-	"amenities":[1,5,6,7]
+	"amenities":[1,3,5,6,7]
+}
+Template de post para BBDD user
+
+{
+
+    "userName": "MessiAdmin",
+    "fullName": "Lionel Messi gato",
+
+    "profilePic": "https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt9210c8d5e9b04af3/615f75d1f0cc0276fbb26d71/d27b847732f6968d3ec83e569617ab16ae0f7af9.jpg?auto=webp&format=pjpg&width=3840&quality=60",
+
+    "birthDate": "2023-09-06",
+    "phoneNumber": "11 0303 4560",
+		"verificationNumber": "11 0404 5670",
+
+
+    "gender": "Male",
+    "address":"Calle Falsa 123",
+
+    "nationality":"Argentina",
+    "email": "messi@yahoo.com",
+
+    "password":"administrador",
+    "landlord": false,
+    "userType": "Admin"
+
 }

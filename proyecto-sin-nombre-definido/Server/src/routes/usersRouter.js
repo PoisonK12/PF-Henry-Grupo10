@@ -15,16 +15,16 @@ const usersRouter = Router();
 
 // usersRouter.get("/",isAdmin, getUserHandler);
 
-usersRouter.delete("/:id", userDeleteOrBanHandler);
 
 usersRouter.get("/", getUserHandler);
 
-//Rutas generales de
-usersRouter.put("/", updateUserHandler);
+usersRouter.get("/:id", getUserByIdHandler);
 
 usersRouter.post("/create", userPostHandler);
 
-usersRouter.get("/:id", getUserByIdHandler);
+usersRouter.put("/", updateUserHandler);
+
+usersRouter.delete("/:id", userDeleteOrBanHandler);
 
 
 module.exports = usersRouter;

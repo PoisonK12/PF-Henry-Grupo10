@@ -1,14 +1,14 @@
 const { User } = require("../db");
 const { Op, Sequelize } = require("sequelize");
 
-const getUserByIdController = async (req) => {
-  const { id } = req.query;
+const getUserByIdController = async (id) => {
   try {
+    console.log(id)
     const response = await User.findOne({ where: { id: id } });
-
     return response;
   } catch (error) {
-    console.error(error.message);
+    console.log(error)
+    throw error
   }
 };
 //!------------------------------------------------------------------------
@@ -21,13 +21,14 @@ const getAllUserController = async () => {
     }
     return response;
   } catch (error) {
-    console.error(error.message);
+    console.log(error)
+    throw error
   }
 };
 
 //!------------------------------------------------------------------------
 const updateUser = async (
-  userName,
+  {userName,
   //edicion por usuario
   fullName,
   profilePic,
@@ -43,35 +44,43 @@ const updateUser = async (
   averageScore,
   numberOfReviews,
   favorites,
-  history
-) => {
-  const updateUser = await User.findOne({
-    where: { userName: userName },
-  });
-  await updateUser.update({
-    //edicion por usuario
-    fullName,
-    profilePic,
-    phoneNumber,
-    verificationNumber,
-    gender,
-    address,
-    nationality,
-    email,
-    password,
-    landlord,
-    //edicion por sistema
-    averageScore,
-    favorites,
-    history,
-  });
+  history}
+) => { 
+  try {
 
-  return updateUser;
+      const updateUser = await User.findOne({
+      where: { userName: userName },
+    });
+
+    await updateUser.update({
+      //edicion por usuario
+      fullName,
+      profilePic,
+      phoneNumber,
+      verificationNumber,
+      gender,
+      address,
+      nationality,
+      email,
+      password,
+      landlord,
+      //edicion por sistema
+      averageScore,
+      numberOfReviews,
+      favorites,
+      history,
+    });
+  
+    return updateUser;
+} catch (error) {
+  console.log(error)
+  throw error
+}
 };
 
 //!------------------------------------------------------------------------
 const createUserController = async (
-  userName,
+  {userName,
   fullName,
   birthDate,
   phoneNumber,
@@ -82,7 +91,7 @@ const createUserController = async (
   nationality,
   email,
   password,
-  landlord,
+  landlord,}
 ) => {
   try {
         
@@ -116,7 +125,7 @@ const createUserController = async (
 };
 
 const deleteUserById = async (id) => {
-  //TODO agregar borrado logico
+  try {
   const user = await User.findOne({
     where: {
       id: id,
@@ -129,6 +138,10 @@ const deleteUserById = async (id) => {
   await user.destroy();
 
   return "Usuario eliminado con exito";
+} catch (error) {
+  console.log(error)
+  throw error
+}
 };
 
 module.exports = {

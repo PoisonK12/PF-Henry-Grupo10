@@ -10,10 +10,12 @@ const {
 } = require("../controllers/userController");
 
 const getUserByIdHandler = async (req, res) => {
+  const { id } = req.params
   try {
-    const response = await getUserByIdController(req);
+    const response = await getUserByIdController(id);
     res.status(200).json(response);
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: message.error });
   }
 };
@@ -103,13 +105,18 @@ const updateUserHandler = async (req, res) => {
     password,
     landlord,
     //edicion por sistema
+    userType,
     averageScore,
+    numberOfReviews,
     favorites,
     history,
   } = req.body;
 
   try {
-    await updateUser(
+
+    const passwordHash = await encrypt(password)
+    
+    await updateUser({
       userName,
       //edicion por usuario
       fullName,
@@ -120,17 +127,21 @@ const updateUserHandler = async (req, res) => {
       address,
       nationality,
       email,
-      password,
+      password: passwordHash,
       landlord,
       //edicion por sistema
+      userType,
       averageScore,
+      numberOfReviews,
       favorites,
-      history
+      history}
     );
     res.status(200).json("Usuario editado con exito!");
   } catch (error) {
     console.log(error);
-    res.status(404).json("Error editando el usuario!");
+    
+    res.status(404).json({error : error.message});
+    // res.status(404).json("Error editando el usuario!");
   }
 };
 
