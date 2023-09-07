@@ -19,10 +19,8 @@ const Detail = () => {
   const sugs = propertiesSug.rows?.filter((el) => el.id !== assetDetail.id);
   console.log("Detalle", assetDetail);
 
-  const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getAssetById(id));
     dispatch(SearchByLocation(assetDetail.location));
   }, []);
   console.log("Soliii", sugs);
@@ -273,50 +271,6 @@ const Detail = () => {
             </div>
           </div>
         </div>
-        {/* <div className={`${style.propertyDetails}`}> */}
-        {/* 
-            <div className={`col-8 ${style.propertyAmenities}`}>
-              <Calendar />
-            </div>
-          </div>
-          <div className={`${style.reseña}`}>
-            <div className={`col-4 ${style.propertyInfo}`}>
-              <h1 className={style.headingStyle}>
-                Reseña de Playa Serena Oasis
-              </h1>
-              <p className={style.paragraph}>{assetDetail.reviews}</p>
-            </div>
-            <div className={`col-4 ${style.propertyInfo}`}>
-              <h1 className={style.headingStyle}>
-                Reseña de Cabaña Molino Rojo
-              </h1>
-              <p>
-                "Perderse en la naturaleza nunca había sido tan encantador. La
-                Cabaña Bosque Encantado nos brindó la escapada perfecta del
-                ajetreo y el bullicio de la ciudad. Cada mañana nos
-                despertábamos con el canto de los pájaros y una taza de café en
-                la terraza. El interior de la cabaña estaba decorado con un
-                estilo rústico pero moderno, y nos sentimos como en casa desde
-                el primer momento. Definitivamente, recomiendo esta joya
-                escondida a todos los amantes de la naturaleza." - Carlos M.
-              </p>
-            </div>
-            <div className={`col-4 ${style.propertyInfo}`}>
-              <h1 className={style.headingStyle}>
-                Reseña de Loft Urbano Vibrante
-              </h1>
-              <p>
-                "Mi viaje de negocios se convirtió en una experiencia
-                emocionante gracias a este loft. Ubicado en el corazón de la
-                ciudad, tenía fácil acceso a todas las comodidades y lugares de
-                interés. La decoración era elegante y moderna, y me encantó la
-                vista panorámica desde el balcón. El anfitrión fue
-                extremadamente atento, y la comunicación fue fluida desde el
-                momento de la reserva hasta el check-out. Sin duda, volveré a
-                reservar este lugar en mi próximo viaje." - Sofia R.
-              </p>
-            </div>
-          </div> */}
       </div>
     ) : (
       <NotFoundPage></NotFoundPage>
