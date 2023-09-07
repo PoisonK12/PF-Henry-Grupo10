@@ -1,21 +1,30 @@
 const { Router } = require("express");
+const { isAdmin } = require('../helpers/authMiddleware')
+const {
+  userPostHandler,
+  getUserHandler,
+  getUserByIdHandler,
+  updateUserHandler,
+  userDeleteOrBanHandler,
+} = require("../handlers/userHandler");
 
 const usersRouter = Router();
 
-usersRouter.get("/:id", (req, res) => {
-  res.status(200).send("Estoy trayendo una cuenta");
-});
+//Solo con privilegios de administrador
+// usersRouter.delete("/:id",isAdmin,  userDeleteOrBanHandler);
 
-usersRouter.put("/", (req, res) => {
-  res.status(200).send("Estoy modificando un usuario");
-});
+// usersRouter.get("/",isAdmin, getUserHandler);
 
-usersRouter.post("/", (req, res) => {
-  res.status(200).send("Estoy creando una cuenta nueva");
-});
 
-usersRouter.delete("/:id", (req, res) => {
-  res.status(200).send("Estoy eliminando una cuenta");
-});
+usersRouter.get("/", getUserHandler);
+
+usersRouter.get("/:id", getUserByIdHandler);
+
+usersRouter.post("/create", userPostHandler);
+
+usersRouter.put("/", updateUserHandler);
+
+usersRouter.delete("/:id", userDeleteOrBanHandler);
+
 
 module.exports = usersRouter;
