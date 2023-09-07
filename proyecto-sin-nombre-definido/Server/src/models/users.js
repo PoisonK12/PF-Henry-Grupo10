@@ -61,9 +61,9 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       userType: {
-        type: DataTypes.ENUM("admin", "user", "premium"),
-        allowNull: false,
-        defaultValue: "user",
+        type: DataTypes.ENUM("Admin", "User", "Premium"),
+        allowNull: true,
+        defaultValue: "User",
       },
       averageScore: {
         type: DataTypes.FLOAT,

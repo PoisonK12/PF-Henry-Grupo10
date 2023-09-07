@@ -71,7 +71,6 @@ const updateUser = async (
 
 //!------------------------------------------------------------------------
 const createUserController = async (
-  res,
   userName,
   fullName,
   birthDate,
@@ -83,28 +82,10 @@ const createUserController = async (
   nationality,
   email,
   password,
-  landlord
+  landlord,
 ) => {
   try {
-    // if (
-    //   !userName ||
-    //   !fullName ||
-    //   !birthDate ||
-    //   !phoneNumber ||
-    //   !gender ||
-    //   !address ||
-    //   !nationality ||
-    //   !email ||
-    //   !password ||
-    //   !landlord
-    // ) {
-    //   return res.status(400).json({ error: "Falta informacion obligatoria" });
-    // }
-
-    //! validacion
-    //! hash
-    // password = hash(password);
-    console.log(1);
+        
     const [createdUser, created] = await User.findOrCreate({
       where: { userName },
       defaults: {
@@ -121,14 +102,16 @@ const createUserController = async (
         landlord,
       },
     });
-    console.log(2);
-    if (!created) {
-      res.status(400).json({ error: "El nombre de usuario ya existe." });
+
+     if (!created) {
+      // El nombre de usuario ya existe, debes manejarlo adecuadamente
+      return `El nombre de usuario ${userName} ya existe.`;
     }
 
-    res.status(200).json(`Exito al crear el usuario ${userName}`);
+    return `Exito al crear el usuario ${userName}`;
   } catch (error) {
     console.error(error);
+    throw error
   }
 };
 

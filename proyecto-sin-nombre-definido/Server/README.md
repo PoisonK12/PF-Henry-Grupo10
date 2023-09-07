@@ -1,7 +1,7 @@
 CRUD Asset
 
 Get all asset & count con filtrados
-Get ->http://localhost:3001/assets?
+GET ->http://localhost:3001/assets?
 &size=10
 &page=1
 &location=Ciudad%20de%20Buenos%20Aires      (el %20 representa el espacio, no se si hay que armarlo manualmente en la query)
@@ -21,7 +21,7 @@ Borrado logico (pausar/primer paso de borrar publicacion)
 Delete -> http://localhost:3001/assets/delete/:id
 
 Restaurar
-Get -> http://localhost:3001/assets/restore/:id
+GET -> http://localhost:3001/assets/restore/:id
 
 Borrado definitivo (boton adicional segundo paso borrado)
 Delete -> http://localhost:3001/assets/:id
@@ -30,7 +30,7 @@ Get asset by ID
 http://localhost:3001/assets/:uuid
 
 Post asset
-Post -> http://localhost:3001/assets/create
+POST -> http://localhost:3001/assets/create
 name          string
 description   text
 address       string
@@ -46,8 +46,8 @@ coveredArea   float
 totalArea     float
 amenities     array(number)
 
-Put asset
-http://localhost:3001/assets/
+Editar asset
+PUT -> http://localhost:3001/assets/
 name          string
 description   text
 images        array(string)
@@ -61,21 +61,45 @@ totalArea     float
 amenities     array(number)
 
 Get all but all (trae todas las publicaciones en BBDD aunque tengan un borrado logico)
-Get -> http://localhost:3001/assets/admin
+GET -> http://localhost:3001/assets/admin
 
 
 Get location
-http://localhost:3001/assets/location
+GET -> http://localhost:3001/assets/location
 Informacion disponible para lista desplegable de un primer pre-filtro por ubicacion.
 
 Get amenities (devuelve un array de objetos con id y name)
-http://localhost:3001/amenities
+GET -> http://localhost:3001/amenities
 
 
 
 
 
 Crud USER
+
+Creacion de usuario
+POST -> http://localhost:3001/users/create
+Informacion enviada por body
+userName,
+    fullName										string
+    profilePic									text
+    birthDate										string? "YYYY-MM-DD"
+    phoneNumber									string
+    verificationNumber					string
+    gender											string ENUM("Male", "Female", "agender", "No binary")
+    address											string
+    nationality									string ENUM("Argentina", "Mexico", "Colombia", "Venezuela")
+    email												string
+    password										string
+    landlord										boolean
+    userType										string ENUM("Admin", "User", "Premium User") default "User"
+
+El user type en la practica no es un campo que utilicemos en el front, ahora lo enviamos por post para armar nuestras cuentas de admin pero en el caso de que una plataforma real tenga que crear este tipo de cuentas creo que se edita a mano por los dev en la BBDD o en un caso muy profesional se deberia hacer con una interfase dedicada.
+
+
+GET -> http://localhost:3001/
+
+
 
 
 

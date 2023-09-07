@@ -21,7 +21,7 @@ const registerCtrl = async (req, res) => {
 const loginCtrl = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ where: {email:email} });
 
     if (!user) {
       return res.status(401).json({ success: false, msg: 'Correo electrónico no válido' });
@@ -40,7 +40,5 @@ const loginCtrl = async (req, res) => {
     res.status(500).json({ success: false, error: 'Error en el servidor' });
   }
 };
-
-
 
 module.exports = { registerCtrl, loginCtrl }
