@@ -67,7 +67,7 @@ module.exports = (sequelize) => {
       },
       averageScore: {
         type: DataTypes.FLOAT,
-        defaultValue: 0.0,
+        defaultValue: 0.0
       },
       numberOfReviews: {
         type: DataTypes.INTEGER,
