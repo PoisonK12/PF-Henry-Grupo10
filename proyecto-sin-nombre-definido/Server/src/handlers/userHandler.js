@@ -7,6 +7,8 @@ const {
   deleteUserById,
   createUserController,
   updateUser,
+  softDeleteUserById, 
+  restoreUserById
 } = require("../controllers/userController");
 
 const getUserByIdHandler = async (req, res) => {
@@ -158,10 +160,34 @@ const userDeleteOrBanHandler = async (req, res) => {
   }
 };
 
+const softDeleteUserByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await softDeleteUserById(id);
+    res.status(200).json(`La propiedad fue eliminada`);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const restoreUserByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await restoreUserById(id);
+    res.status(200).json(`La propiedad fue restaurada`);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   userPostHandler,
   getUserHandler,
   updateUserHandler,
   userDeleteOrBanHandler,
   getUserByIdHandler,
+  softDeleteUserByIdHandler,
+  restoreUserByIdHandler
 };

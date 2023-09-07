@@ -1,6 +1,18 @@
 const { User } = require("../db");
 const { Op, Sequelize } = require("sequelize");
 
+// Método para soft delete
+//(delete) http://localhost:3001/users/id
+User.prototype.softDelete = function () {
+  return this.update({ eliminado: true });
+};
+
+// Método para restaurar
+//http://localhost:3001/users/restore/id
+User.prototype.restore = function () {
+  return this.update({ eliminado: false });
+};
+//!-----------------------------------------------------------------------
 const getUserByIdController = async (id) => {
   try {
     const response = await User.findOne({ where: { id: id } });
@@ -140,6 +152,23 @@ const createUserController = async ({
   }
 };
 
+const softDeleteUserById = async (id) => {
+  //Borrado logico añadido
+  const user = await User.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  await user.softDelete();
+
+  return "User deleted successfully";
+};
+
 const deleteUserById = async (id) => {
   try {
     const user = await User.findOne({
@@ -153,11 +182,26 @@ const deleteUserById = async (id) => {
     }
     await user.destroy();
 
-    return "Usuario eliminado con exito";
+    return "Usuario eliminado (permanentemente) con exito";
   } catch (error) {
     console.log(error);
     throw error;
   }
+};
+
+const restoreUserById = async (id) => {
+  const user = await User.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+  await user.restore();
+
+  return "User restored successfully";
 };
 
 module.exports = {
@@ -167,4 +211,6 @@ module.exports = {
   createUserController,
   updateUser,
   updateReviewUser,
+  restoreUserById,
+  softDeleteUserById
 };
