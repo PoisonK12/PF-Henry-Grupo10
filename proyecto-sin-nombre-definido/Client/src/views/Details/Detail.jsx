@@ -26,7 +26,7 @@ const Detail = () => {
     setImageUrl(e.target.style["background-image"]);
   };
 
-  const renderDetail = assetDetail ?(
+  const renderDetail = assetDetail && assetDetail.name ?(
     <div className={style.container}>
     <div className={`  ${style.container}`}>
       <div className={style.wrapper}>
@@ -45,7 +45,7 @@ const Detail = () => {
               <div
                 className={style.thumbnailImage}
                 style={{
-                  backgroundImage: `url(${assetDetail.images?.[0]})`,
+                  backgroundImage: `url(${assetDetail.images[0]})`,
                 }}
                 onClick={handlerImage}
               ></div>
@@ -59,7 +59,7 @@ const Detail = () => {
               <div
                 className={style.thumbnailImage}
                 style={{
-                  backgroundImage: `url(${assetDetail.images?.[1]})`,
+                  backgroundImage: `url(${assetDetail.images[1]})`,
                 }}
                 onClick={handlerImage}
               ></div>
@@ -72,7 +72,7 @@ const Detail = () => {
               <div
                 className={style.thumbnailImage}
                 style={{
-                  backgroundImage: `url(${assetDetail.images?.[2]})`,
+                  backgroundImage: `url(${assetDetail.images[2]})`,
                 }}
                 onClick={handlerImage}
               ></div>
@@ -84,7 +84,7 @@ const Detail = () => {
             style={{
               backgroundImage: imageUrl
                 ? imageUrl
-                : `url(${assetDetail.images?.[0]})`,
+                : `url(${assetDetail.images[0]})`,
             }}
           ></main>
         </div>

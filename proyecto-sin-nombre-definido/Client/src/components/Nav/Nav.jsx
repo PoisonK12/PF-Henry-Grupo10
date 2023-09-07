@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import style from "./Nav.module.css";
 import Menu from "./Menu/Menu";
 
 export const Nav = () => {
+  const location = useLocation()
+
   const [fixed, setFixed] = useState(false);
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -20,7 +22,7 @@ export const Nav = () => {
   }, []);
 
   return (
-    <nav className={`${style.nav} ${fixed ? style.fixed : ""}`}>
+    <nav className={`${style.nav} ${fixed && location.pathname !== "/addProperty" ? style.fixed : location.pathname == "/addProperty" ? style.back : ""}`}>
       <Link to="/" className={style.logo}>
         <img src={logo}></img>
       </Link>

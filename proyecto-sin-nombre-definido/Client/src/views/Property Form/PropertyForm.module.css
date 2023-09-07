@@ -10,9 +10,9 @@ body {
  .container {
     width: 100vw;
     display: flex;
-    height: 120vh;
+    height: 130vh;
     margin: auto;
- 
+    padding-top: 50px;
     background: linear-gradient(45deg, rgba(29,88,148,1) 7%, rgba(186,38,224,1) 100%);
  
 

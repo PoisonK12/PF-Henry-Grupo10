@@ -34,7 +34,6 @@
 }
 
 .error h1 {
-  font-family: "Rubik", sans-serif;
 
   position: absolute;
   left: 50%;
@@ -43,16 +42,19 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   font-size: 252px;
-  font-weight: 900;
+  /* font-weight: 900; */
   margin: 0;
   margin-left: 0px;
   color: #262626;
   text-transform: uppercase;
   letter-spacing: -40px;
   margin-left: -20px;
+  margin-top: 20px;
 }
 
 .error span {
+  font-family:'Rubik';
+
   text-shadow: -8px 0 0 #fff;
 }
 
@@ -64,4 +66,13 @@
   color: #000;
   margin-top: 0;
   margin-bottom: 25px;
+}
+
+.button{
+  border: none;
+  padding: 10px 20px ;
+  /* background-color: #262626; */
+  color: blueviolet;
+  border: 2px blueviolet solid;
+  border-radius: 10px;
 }

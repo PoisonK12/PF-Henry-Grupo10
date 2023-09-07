@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./404.module.css";
+import { NavLink } from "react-router-dom";
 
 const NotFoundPage = () => {
   return (
@@ -16,8 +17,12 @@ const NotFoundPage = () => {
         <h2>
           we are sorry, but the page you requested was not found
         </h2>
+      <NavLink to="/home">
+      <button className={style.button}>HOME</button>
+      </NavLink>
       </div>
     </div>
+
   );
 };
 
