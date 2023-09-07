@@ -907,7 +907,7 @@ const AllProperties = () => {
                     <button
                       type="submit"
                       className="btn btn-primary"
-                      data-bs-target="#exampleModalToggle7"
+                      data-bs-target="#exampleModalToggle9"
                       data-bs-toggle="modal"
                     >
                       Enviar

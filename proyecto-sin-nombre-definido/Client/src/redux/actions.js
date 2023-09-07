@@ -10,6 +10,7 @@ import {
   DELETE_ASSET_BY_ID,
   GET_LOGIN,
   GET_COUNTRIES,
+  DELETE_USER_BY_ID,
   GET_ALL_USERS,
   GET_STATES
 } from "./types";
@@ -199,6 +200,21 @@ export const deleteAssetById = (id) => {
     }
   };
 };
+
+export const deleteUserById = (id) => {
+  return async (dispatch) =>{
+    try {
+      await axios.delete(`/users/${id}`)
+      dispatch({
+        type: DELETE_USER_BY_ID,
+        payload:id
+      })
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 
 export const getCountries = () => {
   return async (dispatch) => {
