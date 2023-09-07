@@ -1,6 +1,10 @@
 const { Review, User, Asset } = require("../db");
 const { Op, Sequelize } = require("sequelize");
-const { getAssetById, updateAsset } = require("../controllers/assetController");
+const {
+  getAssetById,
+  updateAsset,
+  updateReviewAsset,
+} = require("../controllers/assetController");
 const {
   updateReviewUser,
   getUserByIdController,
@@ -76,12 +80,13 @@ const reviewUserController = async (userName, score, comment, id) => {
         score,
         comment,
       });
-
-      await findUser.addReview(createdReview);
+      // console.log(90000000000000000000);
+      // console.log(findUser);
+      await createdUser.addReview(findUser);
       return `Exito al crear la review de ${findUser.userName}, ${userName}`;
     }
 
-    // res.status(500).json(`Mala mia`);
+    res.status(500).json(`Mala mia`);
   } catch (error) {
     console.log(error);
     throw error;
@@ -92,24 +97,22 @@ const reviewUserController = async (userName, score, comment, id) => {
 const reviewAssetController = async (userName, comment, score, id) => {
   try {
     const response = await getAssetById(id);
+
     let { averageScore, numberOfReviews } = response;
 
     const suma = averageScore * numberOfReviews + score;
     averageScore = suma / (numberOfReviews + 1);
     numberOfReviews = numberOfReviews + 1;
 
-    //! editar
-    await updateAsset({
-      id:id, 
-      averageScore:averageScore, 
-      numberOfReviews:numberOfReviews
-    });
-
+    await updateReviewAsset(id, averageScore, numberOfReviews);
+    return response;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
   try {
-    const findAsset = await Asset.findByPk(id);
+    const findAsset = await Asset.findOne({
+      where: { id: id },
+    });
 
     if (findAsset) {
       const createdReview = await Review.create({
@@ -118,14 +121,13 @@ const reviewAssetController = async (userName, comment, score, id) => {
         score,
       });
 
-      await findAsset.addReview(createdReview);
-      return `Exito al crear la review de ${findAsset.userName}, ${userName}`;
+      await createdReview.addAsset(findAsset);
+      return `Exito al crear la review de ${findAsset.name}, ${userName}`;
     }
 
-    // res.status(500).json(`Mala mia`);
+    return `Mala mia`;
   } catch (error) {
     console.log(error);
-    throw error;
   }
 };
 

@@ -80,7 +80,7 @@ const getAllAssets = async (req) => {
   if (sellPriceMin !== 1) {
     if (sellPriceMin) {
       filter.sellPrice = { ...filter.sellPrice, [Op.gte]: sellPriceMin };
-    } 
+    }
     if (sellPriceMax) {
       filter.sellPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
     }
@@ -131,9 +131,26 @@ const getAssetById = async (id) => {
   return asset;
 };
 
+const updateReviewAsset = async (id, averageScore, numberOfReviews) => {
+  try {
+    const updateReviewAsset = await User.findOne({
+      where: { id: id },
+    });
+    console.log(updateReviewAsset);
+    await updateReviewAsset.update({
+      averageScore,
+      numberOfReviews,
+    });
+
+    return updateReviewAsset;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //!------------------------------------------------------------------------
-const updateAsset = async (
- { id:id ,
+const updateAsset = async ({
+  id: id,
   name,
   description,
   images,
@@ -142,13 +159,11 @@ const updateAsset = async (
   rentPrice,
   rooms,
   bathrooms,
-  averageScore : averageScore,
-  numberOfReviews:numberOfReviews,
+  averageScore: averageScore,
+  numberOfReviews: numberOfReviews,
   coveredArea,
-  amenities}
-
-
-) => {
+  amenities,
+}) => {
   const updateAsset = await Asset.findOne({ where: { id: id } });
 
   await updateAsset.update({
@@ -228,7 +243,7 @@ const createAsset = async (
     return createdAsset;
   } catch (error) {
     console.log(error);
-    throw error
+    throw error;
   }
 };
 
@@ -315,4 +330,5 @@ module.exports = {
   getAllLocations,
   getAllAmenities,
   getAllButAllAssets,
+  updateReviewAsset,
 };

@@ -88,9 +88,6 @@ const updateUser = async ({
   }
 };
 const updateReviewUser = async (id, averageScore, numberOfReviews) => {
-  console.log(id + "11");
-  console.log(averageScore + "22");
-  console.log(numberOfReviews + "33");
   try {
     const updateReviewUser = await User.findOne({
       where: { id: id },
