@@ -10,7 +10,8 @@ import {
   DELETE_ASSET_BY_ID,
   GET_LOGIN,
   GET_COUNTRIES,
-  GET_STATES
+  GET_STATES,
+  GET_AMENITIES
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -56,6 +57,20 @@ export const getAssetById = (id) => {
     }
   };
 };
+
+export const getAmenities = () =>{
+  return async (dispatch) =>{
+    try {
+      const {data} = await axios("/amenities")
+      return dispatch({
+        type: GET_AMENITIES,
+        payload: data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 export const SearchByLocation = (query, page) => {
   return async (dispatch) => {
