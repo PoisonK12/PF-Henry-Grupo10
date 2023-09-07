@@ -98,7 +98,6 @@ const AllProperties = () => {
     fileEdit.append("cloud_name", "dkdounmsa")
     const {data} = await axios.post(`https://api.cloudinary.com/v1_1/dkdounmsa/image/upload`, fileEdit)
     setForm({...form, images: [...form.images, data.secure_url]})
-
   };
   // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
