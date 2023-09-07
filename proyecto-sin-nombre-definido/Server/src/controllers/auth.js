@@ -26,6 +26,7 @@ const loginCtrl = async (req, res) => {
     if (!user) {
       return res.status(401).json({ success: false, msg: 'Correo electrónico no válido' });
     }
+
     const isPasswordValid = await compare(password, user.password);
 
     if (isPasswordValid) {
@@ -35,7 +36,8 @@ const loginCtrl = async (req, res) => {
       res.status(401).json({ success: false, msg: 'Contraseña incorrecta' });
     }
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    console.error('Error en el controlador de inicio de sesión:', error);
+    res.status(500).json({ success: false, error: 'Error en el servidor' });
   }
 };
 
