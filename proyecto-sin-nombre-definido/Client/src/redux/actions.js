@@ -10,6 +10,7 @@ import {
   DELETE_ASSET_BY_ID,
   GET_LOGIN,
   GET_COUNTRIES,
+  GET_ALL_USERS,
   GET_STATES
 } from "./types";
 
@@ -42,6 +43,20 @@ export const getAllReallyProperties = () => {
     }
   };
 };
+
+export const getAllUsers = () => {
+  return async (dispatch) =>{
+    try {
+      const {data} = await axios('/users');
+      dispatch({
+        type: GET_ALL_USERS,
+        payload: data
+      })
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 
 export const getAssetById = (id) => {
   return async (dispatch) => {

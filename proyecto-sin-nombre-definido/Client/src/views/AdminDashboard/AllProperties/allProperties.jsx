@@ -14,6 +14,7 @@ import axios from "axios";
 const AllProperties = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);
+  console.log('sisis', allProperties);
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
