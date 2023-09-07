@@ -22,7 +22,7 @@ export const Nav = () => {
   }, []);
 
   return (
-    <nav className={`${style.nav} ${fixed && location.pathname !== "/addProperty" ? style.fixed : location.pathname == "/addProperty" ? style.back : ""}`}>
+    <nav className={`${style.nav} ${fixed && location.pathname !== "/addProperty" ? style.fixed : location.pathname == "/addProperty" || /^\/detail\/[\w-]+$/.test(location.pathname)? style.back : ""}`}>
       <Link to="/" className={style.logo}>
         <img src={logo}></img>
       </Link>

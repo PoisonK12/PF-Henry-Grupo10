@@ -12,6 +12,22 @@
     background-color: rgb(219, 46, 69);
     border-color : rgb(219, 46, 69);
 }
+.divDrop {
+    background : rgba(232, 232, 232, 0.987)
+
+}
+.formmer{
+    height: 50%;
+    width: 100%;
+   margin-bottom : 30px ;
+   background-color: rgb(230, 233, 237);     
+}
+
+
+.click{
+    color:blue;
+    cursor: pointer;
+}
 
 
 .form {

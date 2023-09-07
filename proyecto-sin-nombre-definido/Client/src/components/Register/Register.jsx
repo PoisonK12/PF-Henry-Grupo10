@@ -3,6 +3,7 @@ import style from "./Register.module.css"
 import {getLogin} from "../../redux/actions"
 import {validation }from "./validation.js";
 import {Toast} from "react-bootstrap"
+import axios from "axios";
 
 const Register = ({setConditional , conditional }) => {
     
@@ -12,14 +13,17 @@ const Register = ({setConditional , conditional }) => {
     const [errors , setErrors] = useState( {})
     const [passwordType , setPasswordType ] = useState(false)
     const [passwordType2 , setPasswordType2 ] = useState(false)
+
     const [register , setRegister ] = useState({
 
+        profilePic : "",
         userName : "",
         fullName : "",
         phoneNumber : "",
+        verificationNumber : "true",
         gender : "" , 
         address : "",
-        landLord : false ,
+        landlord : false ,
         nationality : "",
         birthDate : "",
         email : "",
@@ -36,6 +40,14 @@ const Register = ({setConditional , conditional }) => {
         
         const {name} = e.target;
         const {value} = e.target;
+       const {type} = e.target
+        
+       
+        if(type === "select-one" && name === "landlord") {
+            const boolean = Boolean(value)
+            setRegister({...register , landlord : boolean})
+            return
+        };
 
         setRegister({
           ...register,
@@ -91,29 +103,127 @@ const Register = ({setConditional , conditional }) => {
 
     const handleConditional= () => {
         setConditional("login")
+    };
+
+//?----------------------------- Picture handlers -------------------------------------------
+
+const handleDrop = (event) => {
+
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    handleFile(file);
+
+  };
+  
+  // Función para manejar el archivo seleccionado
+  const handleFile = async (file) => {
+    console.log(file);
+
+    if(!file.type.includes('image')) {
+      setErrors({...errors, profilePic: "Solo puedes subir imagenes" });
+      return;
+    } else {
+
+      setErrors({...errors , profilePic : ""});
+      const imageURL = URL.createObjectURL( new Blob([file]));
+      setRegister({...register , profilePic : imageURL});
+
+      const fileData = new FormData();
+      fileData.append("file", file);
+      fileData.append("upload_preset", "Imagenes");
+      fileData.append("cloud_name", "dkdounmsa");
+       const { data } = await axios.post(
+       `https://api.cloudinary.com/v1_1/dkdounmsa/image/upload`,
+         fileData
+       );
+    
+    setRegister({ ...register, profilePic: data.secure_url });
+       }
     }
+
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        getLogin(register , conditional , setToastBody);
+        getLogin(register , conditional , setToastBody , setToast);
     };
 
     return (
     <>
     
             <form className={`d-flex align-items-center justify-content-center `} onSubmit={handleSubmit}>
-                <fieldset className={`border  d-flex flex-column text-center ${style.form}`} >
+                <fieldset className={`border justify-content-center align-items-center d-flex flex-column text-center ${style.form}`} >
                    
-                    <div className={`${style.perfile}`}> 
-                    <div className={style.svg}>
-                        <svg xmlns="http://www.w3.org/2000/svg"  width="160" height="160" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                    </svg>
-                    </div>
-                        
-                  </div>
-                    
+            <div className={`d-flex flex-row justify-content-center align-items-center ${style.formmer}`}>
+              
+                <input
+                  type="file"
+                  id="imageInput"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={(e) => handleFile(e.target.files[0])}
+                />
+
+                <div
+                  className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
+                  
+                  style={{
+                    border: "2px dashed #ccc",
+                    background: "rgba(169, 181, 197, 0.562)",
+                    margin: `20px 20px`,
+                    textAlign: "center",
+                    width: "300px",
+                    height: "250px",
+                  }}
+                  onDragEnter={(e) => e.preventDefault()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={handleDrop}
+                >
+                  {register.profilePic 
+                  ? <img
+                  
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    maxHeight: "250px",
+                    objectFit : "cover"
+                  }}
+                  src={register.profilePic}
+                  alt={`Image ${register.profilePic}`}
+                />
+                   : 
+                 
+                    <div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="50"
+                        height="50"
+                        fill="currentColor"
+                        class="bi bi-card-image"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                        <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z" />
+                      </svg>
+                      <br></br>
+                      Arrastra o haga click{" "}
+                      <span
+                        className={style.click}
+                        onClick={() =>
+                          document.getElementById("imageInput").click()
+                        }
+                      >
+                        {" "}
+                        aquí
+                      </span>
+                      !
+                    </div>  
+                    }
+                </div>
+                
+              </div>
+                  
 
                     
                   <div class="d-flex flex-row justify-content-center align-items-center ">
@@ -158,7 +268,7 @@ const Register = ({setConditional , conditional }) => {
                             <div class="m-3 col-md-5">
                                 <label class="form-label" htmlFor="gender">Género : </label>
 
-                                <select name="gender"  class={`form-select ${style.select}`} aria-label="Default select" onChange={handleChange}>
+                                <select name="gender"  class={`form-select ${style.select}`}  onChange={handleChange}>
                                     <option selected>--Seleccionar un género--</option>
                                     <option value="Male">Hombre</option>
                                     <option value="Female">Mujer</option>
@@ -180,19 +290,19 @@ const Register = ({setConditional , conditional }) => {
                             
                             <div class="m-3 col-md-5">
                                 <label class="form-label" htmlFor="nationality">Nacionalidad : </label>
-                                <select name="nationalty"  class={`form-select ${style.select}`}  onChange={handleChange}>
-                                <option > --Selecciona una opción--</option>
-                                <option value="true">Argentina</option>
+                                <select name="nationality"  class={`form-select ${style.select}`}  onChange={handleChange}>
+                                <option  value = ""> --Selecciona una opción--</option>
+                                <option value="Argentina">Argentina</option>
                                 <option value="Venezuela">Venezuela</option>
-                                <option value="Columbia">Columbia</option>
+                                <option value="Colombia">Columbia</option>
                                 <option value="Mexico">Mexico</option>
                                </select>
                             </div>
                            
                             <div class="m-3 col-md-5">
-                                <label class="form-label" htmlFor="landLord"> Usuario o Propietario : </label>
-                               <select name="landLord"  class={`form-select ${style.select}`}  onChange={handleChange}>
-                                <option > --Selecciona una opción--</option>
+                                <label class="form-label" htmlFor="landlord"> Usuario o Propietario : </label>
+                               <select name="landlord"  class={`form-select ${style.select}`}  onChange={handleChange}>
+                                <option value =  ""> --Selecciona una opción--</option>
                                 <option value="true">Si</option>
                                 <option value="false">No</option>
                                </select>
@@ -236,11 +346,11 @@ const Register = ({setConditional , conditional }) => {
                 </fieldset>
             </form>
             <div>
-              <Toast show={toast}>
-                 <Toast.Header>
+              <Toast  show={toast}>
+                 <Toast.Header class="text-success">
                 <strong className="me-auto">Toast Title</strong>
                </Toast.Header>
-               <Toast.Body>{toastBody.response}</Toast.Body>
+               <Toast.Body >{toastBody.response}</Toast.Body>
                </Toast>
             </div>
     </>

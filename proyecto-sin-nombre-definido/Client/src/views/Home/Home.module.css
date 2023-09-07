@@ -12,18 +12,20 @@
 .cajaCarrusel {
     /* padding: 10px; */
     grid-area: cabecera;
-    background-color: rgba(173, 216, 230, 0.144);
+    /* background-color: rgba(173, 216, 230, 0.144); */
     /* Establece un tamaño fijo para .cajaCarrusel */
     width: 100%; /* O el ancho que desees */
     height: 700px; /* O la altura que desees */
     /* Configura el desplazamiento vertical */
-    overflow-y: auto; /* Esto permite el desplazamiento vertical cuando sea necesario */
+    
     /* Añade otros estilos según sea necesario */
 }
 .cajaCarrusel img {
     width: 100%;
-  height: auto; /* Esto permite que la altura se ajuste automáticamente para mantener la proporción original de la imagen */
+  height: 100vh; /* Esto permite que la altura se ajuste automáticamente para mantener la proporción original de la imagen */
   margin: 0;
+
+  max-height: 100vh;
   border-radius: 0 !important;
   /* No establezcas la altura fija para la imagen, deja que se ajuste automáticamente */
 }
@@ -121,9 +123,9 @@
 .svg {
     position: absolute;
     /* z-index: 2; */
-    bottom: -41px;
-    width: 100%;
-    left: 0;
+    bottom: -50px;
+    width: 100vw;
+    /* left: -1000; */
     color: black;
   }
 
