@@ -21,10 +21,6 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
       },
       birthDate: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
-      verificationNumber: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -32,8 +28,12 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING, // Cambiado: NUMBER a STRING si incluye caracteres no numéricos
         allowNull: false,
       },
+      verificationNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       gender: {
-        type: DataTypes.ENUM("Male", "Female", "Undefined", "No apply"),
+        type: DataTypes.ENUM("Male", "Female", "agender", "No binary"),
         allowNull: false,
       },
       address: {
@@ -56,21 +56,31 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      review: {
-        type: DataTypes.JSON, // Cambiado de ARRAY(DataTypes.STRING) a JSON
-        defaultValue: {},
-      },
-      landLord: {
+      landlord: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
+      userType: {
+        type: DataTypes.ENUM("Admin", "User", "Premium"),
+        allowNull: true,
+        defaultValue: "User",
+      },
+      averageScore: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0.0,
+      },
+      numberOfReviews: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+
       favorites: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
       },
       history: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false,
+        allowNull: true,
       },
     },
     {

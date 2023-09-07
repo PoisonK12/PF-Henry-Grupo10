@@ -1,5 +1,5 @@
-const server = require('./src/server')
-const { sequelize } = require('./src/db')
+const server = require("./src/server");
+const { sequelize } = require("./src/db");
 
 const port = process.env.PORT || 3001;
 

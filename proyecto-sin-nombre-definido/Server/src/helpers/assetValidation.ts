@@ -1,23 +1,23 @@
-const { z } = require('zod')
+const { z } = require("zod");
 
 const dataSchemePost = z.object({
   body: z.object({
     name: z.string({
-      message: "String data is required(name)"
+      message: "String data is required(name)",
     }),
     description: z.string({
-      message: "String data is required(description)"
-    },),
+      message: "String data is required(description)",
+    }),
     address: z.string({
-      message: "String data is required(address)"
+      message: "String data is required(address)",
     }),
     location: z.string({
-      message: "String data is required(location)"
+      message: "String data is required(location)",
     }),
     country: z.string({
-      message: "String data is required(country)"
+      message: "String data is required(country)",
     }),
-    
+
     images: z
       .array(z.string().url({ message: "Invalid URL format" }))
       .min(1, {
@@ -34,24 +34,28 @@ const dataSchemePost = z.object({
     rentPrice: z.number().positive().int(),
 
     rooms: z.number().gte(1, {
-      message: "At least a room is required"
+      message: "At least a room is required",
     }),
     bathrooms: z.number().gte(1, {
-      message: "At least a room is required"
+      message: "At least a room is required",
     }),
+    averageScore: z.number().positive(),
     coveredArea: z.number().positive(),
-
     totalArea: z.number().positive(),
-    
-    // amenities: z.array(z.num()).min(5, {
-    //   message: "Should have at least 5 amenities selected"
-    // }),
-  })
-})
+    // coordenates: z.array(z.number()),
 
-const dataSchemePut = ""
+    amenities: z
+      .array(z.number())
+      .min(5, {
+        message: "Should have at least 5 amenities selected",
+      })
+      .max(30, { message: "Can't have more than 30 amenities" }),
+  }),
+});
+
+const dataSchemePut = "";
 
 module.exports = {
   dataSchemePost,
-  dataSchemePut
-}
+  dataSchemePut,
+};

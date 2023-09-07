@@ -5,7 +5,7 @@ const {
 
 const getAllAmenitiesHandler = async (req, res) => {
   try {
-    const response = await getAllAmenities(req);
+    const response = await getAllAmenities();
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
@@ -14,9 +14,9 @@ const getAllAmenitiesHandler = async (req, res) => {
 };
 const getAmenitiesByIdHandler = async (req, res) => {
   const { id } = req.params;
-  const { dato } = req.query;
+  const { location } = req.query;
   try {
-    const response = await getAmenitiesById(id, dato);
+    const response = await getAmenitiesById(id, location);
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
