@@ -74,13 +74,13 @@ export const SearchByLocation = (query, page) => {
   };
 };
 
-export const createAsset = async (form , setModal,setModalBody, navigate, setStep ,setConditionalCreate) => {
+export const createAsset = async (form , setModal,setModalBody, navigate, setStep ,setConditionalCreate  ) => {
 
     try {                         
      const {data} = await axios.post("/assets/create" , form);
      if(data) {
         console.log(data);
-         setModalBody({response: data ,message : "true"})
+         /* setModalBody({response: data ,message : "true"}) */
          setConditionalCreate(true)
          setTimeout(() => {
            setModal(false) 
@@ -211,33 +211,33 @@ export const getStates = (country) => {
 
 
 
- export const getLogin = async (login , conditional , setToast,setToastBody) => {
-   const {email , password , confirmPassword , userName , fullName , birthDate , gender , address , nationality , phoneNumber , landLord} = login;
+ export const getLogin = async (login , conditional ,setToastBody, setToast) => {
+   const {email , password  , userName , fullName , birthDate , gender , address , nationality , phoneNumber ,verificationNumber, landlord} = login;
    
    try {
      
      if (conditional === "login"){
          const {data} = await axios.get("/users" , {email , password})
          if(data) {
-         
-          /* setToastBody({response :data}) */
+         /* const storage = localStorage.setItem("log", JSON.stringify(email, password)) */
+          setToastBody({response :data})
           setToast(true)
          return ;
          }
       }
 
       if(conditional === "register") {
-          const {data} = await axios.post("/users", {email, password , confirmPassword , userName , fullName,verificationNumber : "56" , birthDate , gender , address , nationality , phoneNumber , landLord } )
+          const {data} = await axios.post("/users/create", {email, password  , userName , fullName, verificationNumber  , birthDate , gender , address , nationality  ,phoneNumber , landlord } )
           if(data) {
             console.log(data);
-           /*  setToastBody({response :data}) */
+            setToastBody({response :data})
             setToast(true)
             return console.log(data);
           }    
           }
         
   } catch (error) {
-    setToastBody(error.message)
+    setToastBody({response : error.message})
     setToast(true)
     return 
   }
