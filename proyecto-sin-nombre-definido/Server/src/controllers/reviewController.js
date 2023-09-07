@@ -67,37 +67,31 @@ const reviewUserController = async (userName, score, comment, id) => {
     numberOfReviews = numberOfReviews + 1;
 
     await updateReviewUser(id, averageScore, numberOfReviews);
-    // return response;
   } catch (error) {
     console.log(error);
   }
   try {
     const findUser = await User.findByPk(id);
-
     if (findUser) {
       const createdReview = await Review.create({
         userName,
-        score,
         comment,
+        score,
       });
-      // console.log(90000000000000000000);
-      // console.log(findUser);
-      await createdUser.addReview(findUser);
+
+      await findUser.addReview(createdReview);
       return `Exito al crear la review de ${findUser.userName}, ${userName}`;
     }
-
     res.status(500).json(`Mala mia`);
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
-
 //!---------------------------------evaluador-texto--puntos-evaluada---------------------------------
-const reviewAssetController = async (userName, comment, score, id) => {
+const reviewAssetController = async (userName, score, comment, id) => {
   try {
     const response = await getAssetById(id);
-
     let { averageScore, numberOfReviews } = response;
 
     const suma = averageScore * numberOfReviews + score;
@@ -105,23 +99,27 @@ const reviewAssetController = async (userName, comment, score, id) => {
     numberOfReviews = numberOfReviews + 1;
 
     await updateReviewAsset(id, averageScore, numberOfReviews);
-    return response;
   } catch (error) {
     console.log(error);
   }
   try {
-    const findAsset = await Asset.findOne({
-      where: { id: id },
-    });
+    console.log(111111111111111111);
+    // try {
+    const findAsset = await Asset.findByPk(id);
 
+    console.log(userName);
+    console.log(comment);
+    console.log(score);
+    console.log(333333333333333);
     if (findAsset) {
       const createdReview = await Review.create({
         userName,
-        comment,
         score,
+        comment,
       });
 
-      await createdReview.addAsset(findAsset);
+      console.log(444444444444444444);
+      await findAsset.addReview(createdReview);
       return `Exito al crear la review de ${findAsset.name}, ${userName}`;
     }
 

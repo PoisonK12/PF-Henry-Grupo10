@@ -1,4 +1,4 @@
-const { Asset, Amenity } = require("../db");
+const { Asset, Amenity, User } = require("../db");
 const { Op, Sequelize } = require("sequelize");
 const { filterLocation } = require("../helpers/filterLocation");
 const amenities = require("../models/amenities");
@@ -133,10 +133,9 @@ const getAssetById = async (id) => {
 
 const updateReviewAsset = async (id, averageScore, numberOfReviews) => {
   try {
-    const updateReviewAsset = await User.findOne({
+    const updateReviewAsset = await Asset.findOne({
       where: { id: id },
     });
-    console.log(updateReviewAsset);
     await updateReviewAsset.update({
       averageScore,
       numberOfReviews,
