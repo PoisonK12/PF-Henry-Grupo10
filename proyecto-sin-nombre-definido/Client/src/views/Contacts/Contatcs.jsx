@@ -22,7 +22,7 @@ const Contacts = () => {
       </div>
       <div className={style.cont}>
         <form className={`${style["row-cols-1"]} ${style["custom-container"]} ${style['formulario-entrada']} ${visible ?  style['formulario-visible'] : ""}`}>
-          <h2 className={style.title}>Contacts</h2>
+          <h2 className={style.title}>Contact</h2>
           <div className="mb-3 w-90 ">
             <label htmlFor="name" className="form-label ">
               Name
@@ -36,7 +36,7 @@ const Contacts = () => {
           </div>
           <div className="mb-3 w-90">
             <label htmlFor="lastName" className="form-label">
-              LastName
+              Last name
             </label>
             <input
               type="text"
@@ -47,7 +47,7 @@ const Contacts = () => {
           </div>
           <div className="mb-3 w-90">
             <label htmlFor="phone" className="form-label">
-              Phone
+              Phone number
             </label>
             <input
               type="tel"

@@ -121,7 +121,7 @@
 }
 
 .info h2, .info h2 span{
-  text-align: justify;
+
   /* text-align: justify; */
   font:700 70px/1 'Lato', sans-serif;
 }

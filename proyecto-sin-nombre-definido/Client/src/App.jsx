@@ -20,6 +20,7 @@ import Chatbot from './components/Chatbot/Chatbot';
 import { useEffect } from 'react';
 axios.defaults.baseURL = "http://localhost:3001"
 import jwt_decode from "jwt-decode"
+import ScrollToTop from './Helpers';
 
 
 
@@ -56,6 +57,7 @@ function App() {
     </div> */}
 
       {location.pathname !== "/" && <Nav/>}
+      <ScrollToTop></ScrollToTop>
      <Routes>
       <Route path='/' element={<><Landing/></>} />
       <Route path='/detail/:id' element={<><Detail/><Footer/><Chatbot/></>} />
