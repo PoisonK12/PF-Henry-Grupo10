@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
       },
       birthDate: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       phoneNumber: {
@@ -61,8 +61,8 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       userType: {
-        type: DataTypes.ENUM("Admin", "User", "Premium User"),
-        allowNull: false,
+        type: DataTypes.ENUM("Admin", "User", "Premium"),
+        allowNull: true,
         defaultValue: "User",
       },
       averageScore: {

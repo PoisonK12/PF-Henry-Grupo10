@@ -1,5 +1,5 @@
 const userSchemePost = require("../helpers/userValidation.ts");
-// const {createUserController} = require("../controllers/createUserController");
+const { encrypt } = require('../handlers/handleBcrypt.js');
 const { dataSchemePost } = require("../helpers/userValidation.ts");
 const {
   getUserByIdController,
@@ -32,9 +32,11 @@ const userPostHandler = async (req, res) => {
     email,
     password,
     landlord,
+    userType
   } = req.body;
 
   try {
+    
     // const validData = userSchemePost.parse({
     //   body: {
     //     userName,
@@ -51,9 +53,11 @@ const userPostHandler = async (req, res) => {
     //     landlord,
     //   },
     // });
+
+    const passwordHash = await encrypt(password)
+    
     const user = await createUserController(
-      res,
-      userName,
+      {userName,
       fullName,
       profilePic,
       birthDate,
@@ -63,21 +67,20 @@ const userPostHandler = async (req, res) => {
       address,
       nationality,
       email,
-      password,
-      landlord
-    );
+      password: passwordHash,
+      landlord,
+      userType
+    });
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
-    res.status(404).json("handel");
+    res.status(404).json({error: error.message});
   }
 };
 
 const getUserHandler = async (req, res) => {
-  const { id } = req.params;
-
   try {
-    const user = id ? await getUserByIdController(id) : getAllUserController();
+    const user = await getAllUserController();
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
