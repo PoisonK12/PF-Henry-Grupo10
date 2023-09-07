@@ -5,6 +5,7 @@ const {
   updateReviewHandler,
   reviewDeleteOrBanHandler,
   reviewUserHandler,
+  reviewAssetHandler,
 } = require("../handlers/reviewHandler");
 
 const reviewsRouter = Router();
@@ -15,8 +16,9 @@ reviewsRouter.get("/", getReviewHandler);
 
 reviewsRouter.put("/", updateReviewHandler);
 
-// reviewsRouter.post("/assets", reviewAssetsHandler);
-reviewsRouter.post("/users", reviewUserHandler);
+reviewsRouter.put("/assets", reviewAssetHandler);
+
+reviewsRouter.put("/users", reviewUserHandler);
 
 reviewsRouter.delete("/:id", reviewDeleteOrBanHandler);
 

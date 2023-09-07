@@ -3,12 +3,11 @@ const { Op, Sequelize } = require("sequelize");
 
 const getUserByIdController = async (id) => {
   try {
-    console.log(id)
     const response = await User.findOne({ where: { id: id } });
     return response;
   } catch (error) {
-    console.log(error)
-    throw error
+    console.log(error);
+    throw error;
   }
 };
 //!------------------------------------------------------------------------
@@ -21,14 +20,14 @@ const getAllUserController = async () => {
     }
     return response;
   } catch (error) {
-    console.log(error)
-    throw error
+    console.log(error);
+    throw error;
   }
 };
 
 //!------------------------------------------------------------------------
-const updateUser = async (
-  {userName,
+const updateUser = async ({
+  userName,
   //edicion por usuario
   fullName,
   profilePic,
@@ -44,14 +43,13 @@ const updateUser = async (
   averageScore,
   numberOfReviews,
   favorites,
-  history}
-) => { 
+  history,
+}) => {
   try {
-
-      const updateUser = await User.findOne({
+    const updateUser = await User.findOne({
       where: { userName: userName },
     });
-
+    console.log(userName);
     await updateUser.update({
       //edicion por usuario
       fullName,
@@ -70,17 +68,36 @@ const updateUser = async (
       favorites,
       history,
     });
-  
+
     return updateUser;
-} catch (error) {
-  console.log(error)
-  throw error
-}
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+const updateReviewUser = async (id, averageScore, numberOfReviews, res) => {
+  console.log(id + "11");
+  console.log(averageScore + "22");
+  console.log(numberOfReviews + "33");
+  try {
+    const updateReviewUser = await User.findOne({
+      where: { id: id },
+    });
+    console.log(updateReviewUser);
+    await updateReviewUser.update({
+      averageScore,
+      numberOfReviews,
+    });
+
+    res.status(200).json(updateReviewUser);
+  } catch (error) {
+    res.status(500).json({ error: message.error });
+  }
 };
 
 //!------------------------------------------------------------------------
-const createUserController = async (
-  {userName,
+const createUserController = async ({
+  userName,
   fullName,
   birthDate,
   phoneNumber,
@@ -91,10 +108,9 @@ const createUserController = async (
   nationality,
   email,
   password,
-  landlord,}
-) => {
+  landlord,
+}) => {
   try {
-        
     const [createdUser, created] = await User.findOrCreate({
       where: { userName },
       defaults: {
@@ -112,7 +128,7 @@ const createUserController = async (
       },
     });
 
-     if (!created) {
+    if (!created) {
       // El nombre de usuario ya existe, debes manejarlo adecuadamente
       return `El nombre de usuario ${userName} ya existe.`;
     }
@@ -120,28 +136,28 @@ const createUserController = async (
     return `Exito al crear el usuario ${userName}`;
   } catch (error) {
     console.error(error);
-    throw error
+    throw error;
   }
 };
 
 const deleteUserById = async (id) => {
   try {
-  const user = await User.findOne({
-    where: {
-      id: id,
-    },
-  });
+    const user = await User.findOne({
+      where: {
+        id: id,
+      },
+    });
 
-  if (!user) {
-    throw new Error("Usuario no encontrado");
+    if (!user) {
+      throw new Error("Usuario no encontrado");
+    }
+    await user.destroy();
+
+    return "Usuario eliminado con exito";
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
-  await user.destroy();
-
-  return "Usuario eliminado con exito";
-} catch (error) {
-  console.log(error)
-  throw error
-}
 };
 
 module.exports = {
@@ -150,4 +166,5 @@ module.exports = {
   deleteUserById,
   createUserController,
   updateUser,
+  updateReviewUser,
 };
