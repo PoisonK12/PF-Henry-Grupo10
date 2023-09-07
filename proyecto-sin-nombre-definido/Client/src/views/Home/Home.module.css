@@ -115,13 +115,13 @@
 }
 
 .containerFluid{
-    overflow: hidden;
+    /* overflow: hidden; */
     background: #e7e7e7;
 }
 .svg {
     position: absolute;
     /* z-index: 2; */
-    bottom: -87px;
+    bottom: -41px;
     width: 100%;
     left: 0;
     color: black;

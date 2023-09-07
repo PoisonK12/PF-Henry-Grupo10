@@ -91,7 +91,7 @@ const Contacts = () => {
         </form>
         <div className={style.info}>
           <h2>
-            Contactanos!{" "}   
+            Contacta nuestro <span>equipo profesional para encontrar la casa de tus sueños</span>!{" "}   
           </h2>
           <div className={style.parrafo}>
             <p>

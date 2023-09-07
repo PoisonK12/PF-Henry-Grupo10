@@ -282,18 +282,18 @@ const PropertyForm = () => {
     );
 
     const noProvince = data.data.states.map((ele) => {
-      if (
-        ele.name.includes("Province") ||
-        ele.name.includes("Department") ||
-        ele.name.includes("Governorate") ||
-        ele.name.includes("Region") ||
-        ele.name.includes("District")
-      ) {
-        return ele.name
-          .split(" ")
-          .shift()
+      const keywordsToRemove = ["Province", "Department", "Governorate", "Region", "District"];
+    let modifiedName = ele.name;
+
+    // Verificar si el nombre del estado contiene alguna palabra clave y eliminarla
+    for (const keyword of keywordsToRemove) {
+      if (ele.name.includes(keyword)) {
+        modifiedName = modifiedName.replace(keyword, '').trim();
+        break; // Solo eliminamos la primera coincidencia
       }
-      return ele.name;
+    }
+
+    return modifiedName;
     });
 
     if(name == "country"){
@@ -423,7 +423,7 @@ const PropertyForm = () => {
                 <div className="d-flex space-between">
                   <div className=" text-center m-2">
                     <label htmlFor="inputName" className="form-label ">
-                      Nombre de la propiedad
+                      Propiedad
                     </label>
                     <input
                       type="text"
