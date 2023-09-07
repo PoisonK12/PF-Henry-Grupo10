@@ -31,7 +31,7 @@ export const getAllReallyProperties = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios(
-        "/assets/menosmalquediegodijoquenonosllenemosderutas"
+        "/assets/admin"
       );
       return dispatch({
         type: GET_ALL_ALL_PROPERTIES,

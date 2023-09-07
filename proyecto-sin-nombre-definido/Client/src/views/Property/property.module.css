@@ -1,7 +1,7 @@
 .container{
-    padding-top: 35px;
+    padding-block: 35px;
     background-color: rgb(34, 108, 237);
-    padding:20px;
+    padding-inline:60px;
 }
 
 .cardBody{

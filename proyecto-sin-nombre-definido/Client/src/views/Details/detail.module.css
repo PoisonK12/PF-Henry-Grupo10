@@ -1,15 +1,41 @@
 /* detail.module.css */
 
 .wrapper {
-  
   margin: 0 auto;
-  width: 80%;
+  width: 100%;
+  height: 70%;
   text-align: center;
 }
 
 .imageGallery {
   margin: 0 auto;
   display: table;
+}
+
+.propertyInfo .icons {
+  position: absolute;
+  right: 30px;
+  top: 15px;
+  display: flex;
+}
+
+.icons div{
+  border: 2px solid blueviolet;
+  border-radius: 50%;
+  margin-right: 5px;
+  padding-inline: 8px;
+  padding-block: 7px;
+  transition: background-color 0.3s ease;
+}
+.icons svg{
+  transition: color 0.3s ease;
+  color: blueviolet;
+}
+.icons div:hover{
+  background-color: blueviolet;
+}
+.icons div:hover svg{
+  color: #cccccc;
 }
 
 .primary,
@@ -19,45 +45,50 @@
 
 .thumbnails {
   width: 300px;
-
 }
 
 .primary {
-  width: 600px;
-  height: 400px;
+  width: 700px;
+  /* padding: 200px; */
+  /* height: 30px !important; */
   background-color: #cccccc;
   background-size: cover;
   background-position: center bottom;
-  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.8);
+  /* box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.8); */
   background-repeat: no-repeat;
-  border-radius: 15px;
+  /* border-radius: 15px; */
   margin-bottom: 15px;
 }
 
-.thumbnail:hover .thumbnailImage, .selected .thumbnailImage {
-  border: 4px solid red;
+.thumbnail:hover .thumbnailImage,
+.selected .thumbnailImage {
+  /* border: 4px solid red; */
+  transform: scale(1.1);
 }
 
 .thumbnailImage {
-  width: 300px;
-  height: 120px;
+  width: 350px;
+  height: 150px;
   margin: auto;
-  margin-top: 15px;
   margin-right: 55px;
-  margin-bottom: 15px;
   background-size: cover;
-  background-position: center center;
+  margin-bottom: 20px;
+  background-position: center bottom;
   background-repeat: no-repeat;
   border: 4px solid transparent;
-  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.8);
-  border-radius: 15px;
+  transition: transform 0.5s ease;
+  /* box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.8); */
+  /* border-radius: 15px; */
+}
+.lastChild {
+  margin-bottom: 0;
 }
 
-.container{
+.container {
   margin: 0 !important;
   width: 100vw !important;
   padding-top: 50px;
-  background-color: #eae0d5;
+  background-color: #ebebeb;
 }
 .row {
   display: flex;
@@ -67,7 +98,6 @@
   border-radius: 5px;
   padding: 20px;
 }
-
 
 /* Estilos para las reseñas */
 .reviewCol {
@@ -97,7 +127,7 @@
   border-radius: 5px;
   width: 100%;
 }
-.reseña{
+.reseña {
   justify-content: center;
   display: flex;
   flex-wrap: nowrap;
@@ -110,14 +140,20 @@
 /* Estilos para la información de la propiedad */
 .propertyInfo {
   background-color: #fff;
+  position: relative;
   padding: 20px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+    0 4px 6px -4px rgba(0, 0, 0, 0.2);
+
   border: 1px solid #e0e0e0;
   border-radius: 5px;
+  width: 75% !important;
 }
 
 .propertyInfo h1 {
+  text-align: left !important;
   font-size: 24px;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 }
 
 .propertyInfo p {
@@ -143,10 +179,18 @@
 .amenitiesList {
   list-style-type: none;
   padding: 0;
+  display: flex;
+  width: 100%;
+  color: #091f44;
+}
+
+.amenitiesItem img {
+  margin-bottom: 7px;
 }
 
 .amenitiesItem {
   font-size: 16px;
+  margin-right: 25px;
   margin-bottom: 10px;
 }
 
@@ -154,6 +198,3 @@
   font-weight: bold;
   margin-right: 5px;
 }
-
-
-

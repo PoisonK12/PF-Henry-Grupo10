@@ -34,7 +34,7 @@ const CardProperties = (props) => {
               </p>
             <p className={`card-text`}>Precio ${props?.rentPrice}</p>
               <div className="d-flex justify-content-end">
-                <Link to={`/detail/${props.id}`}>
+                <Link to={`/detail/${props.id}`} target="_blank">
                   <button className="btn btn-primary">Ver Detalles</button>
                 </Link>
               </div>

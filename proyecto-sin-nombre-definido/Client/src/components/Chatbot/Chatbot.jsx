@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import ChatBot from 'react-simple-chatbot';
 import { searchByFilter } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import avatar from "../../assets/images/avatar.jpg"
 
@@ -26,6 +26,7 @@ const config = {
 function Chatbot() {
   const { location } = useParams(); // Obtén el parámetro 'location' de la URL
   const navigate = useNavigate(); // Obtiene la función de navegación
+  const props = useSelector(state => state.properties)
   const [userName, setUserName] = useState({
     location:'',
     rooms: 0,
@@ -119,8 +120,13 @@ function Chatbot() {
 
   const handleCitySelection = () => {
     // Realiza redirección a la página de propiedades con el parámetro 'location'
-    navigate(`/property?location=${userName.location}&rentPriceMax=${userName.rentPriceMax}&rentPriceMin=${userName.rentPriceMin}`);
     dispatch(searchByFilter(userName))
+    if(!props.length){
+      return
+    }else{
+      navigate(`/property?location=${userName.location}&rentPriceMax=${userName.rentPriceMax}&rentPriceMin=${userName.rentPriceMin}`);
+
+    }
   };
 
   return (
