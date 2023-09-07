@@ -22,9 +22,11 @@ const reviewAssetHandler = async (req, res) => {
   const { score, comment, userName, id } = req.body;
 
   try {
+
     const response = await reviewAssetController(userName, score, comment, id);
     res.status(200).json(response);
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 };

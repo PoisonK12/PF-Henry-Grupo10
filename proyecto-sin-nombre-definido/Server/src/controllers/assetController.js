@@ -133,7 +133,7 @@ const getAssetById = async (id) => {
 
 //!------------------------------------------------------------------------
 const updateAsset = async (
-  id,
+ { id:id ,
   name,
   description,
   images,
@@ -142,10 +142,12 @@ const updateAsset = async (
   rentPrice,
   rooms,
   bathrooms,
-  averageScore,
-  numberOfReviews,
+  averageScore : averageScore,
+  numberOfReviews:numberOfReviews,
   coveredArea,
-  amenities
+  amenities}
+
+
 ) => {
   const updateAsset = await Asset.findOne({ where: { id: id } });
 
