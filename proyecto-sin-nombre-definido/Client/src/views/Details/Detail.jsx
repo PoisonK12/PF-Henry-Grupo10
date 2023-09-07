@@ -93,7 +93,9 @@ const Detail = () => {
           </div>
           <div className={`${style.propertyDetails}`}>
             <div className={` ${style.propertyInfo}`}>
-              <h2 style={{fontWeight:"bold", color:"#091f44"}}>{assetDetail.rentPrice} USD</h2>
+              <h2 style={{ fontWeight: "bold", color: "#091f44" }}>
+                {assetDetail.rentPrice} USD
+              </h2>
               <h1 className={style.heading}> {assetDetail.name}</h1>
               <p className={style.paragraph}>
                 <strong>Dirección:</strong> {assetDetail.address},{" "}
@@ -147,24 +149,78 @@ const Detail = () => {
                     <img src={allSize} width={"20"}></img>
                     <span> Total Area:</span> {assetDetail.totalArea}
                   </li>
-                  
                 </ul>
               </div>
             </div>
+            <div className={style.info}>
+              <div style={{ display: "flex" }}>
+                <div className={style.description}>
+                  <h2>Descripcion:</h2>
+                  <p>{assetDetail.description}</p>
+                </div>
+                <div className={style.googleMap}>
+                  <iframe
+                    title="Google Map"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15908.325523601628!2d-74.18270045!3d4.5794067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1693329189613!5m2!1ses-419!2sco"
+                    width="100%"
+                    height="300"
+                    style={{ border: "0" }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+              </div>
+              <div className={style.reseñas}>
+                <h2>Lee las reseñas de los demas huespedes!</h2>
+                <div className={style.reseña}>
+                  <div className={style.contReseña}>
+                    <h1>Reseña de Valentina Delucchi</h1>
+                    <p>
+                      Perderse en la naturaleza nunca había sido tan encantador.
+                      La Cabaña Bosque Encantado nos brindó la escapada perfecta
+                      del ajetreo y el bullicio de la ciudad. Cada mañana nos
+                      despertábamos con el canto de los pájaros y una taza de
+                      café en la terraza. El interior de la cabaña estaba
+                      decorado con un estilo rústico pero moderno, y nos
+                      sentimos como en casa desde el primer momento.
+                      Definitivamente, recomiendo esta joya escondida a todos
+                      los amantes de la naturaleza.
+                    </p>
+                  </div>
+                  <div className={style.contReseña}>
+                    <h1>Reseña de Sol Ramos</h1>
+                    <p>
+                      Perderse en la naturaleza nunca había sido tan encantador.
+                      La Cabaña Bosque Encantado nos brindó la escapada perfecta
+                      del ajetreo y el bullicio de la ciudad. Cada mañana nos
+                      despertábamos con el canto de los pájaros y una taza de
+                      café en la terraza. El interior de la cabaña estaba
+                      decorado con un estilo rústico pero moderno, y nos
+                      sentimos como en casa desde el primer momento.
+                      Definitivamente, recomiendo esta joya escondida a todos
+                      los amantes de la naturaleza.
+                    </p>
+                  </div>
+                  <div className={style.contReseña}>
+                    <h1>Reseña de Juan Esteban</h1>
+                    <p>
+                      Realmente un gran hotel ubicado muy cerca de las
+                      principales atracciones y ahorra mucho tiempo tratando de
+                      encontrar transporte para hacer turismo. El personal del
+                      hotel fue amable, el ascensor también funciona
+                      completamente y ayudó a los miembro
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={style.security}>
+              
+            </div>
           </div>
           {/* <div className={`${style.propertyDetails}`}> */}
-          {/* <div className={`col-4 ${style.propertyInfo}`}>
-              <iframe
-                title="Google Map"
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15908.325523601628!2d-74.18270045!3d4.5794067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1693329189613!5m2!1ses-419!2sco"
-                width="100%"
-                height="300"
-                style={{ border: "0" }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
+          {/* 
             <div className={`col-8 ${style.propertyAmenities}`}>
               <Calendar />
             </div>

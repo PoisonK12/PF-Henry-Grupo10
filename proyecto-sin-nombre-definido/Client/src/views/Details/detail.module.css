@@ -19,7 +19,7 @@
   display: flex;
 }
 
-.icons div{
+.icons div {
   border: 2px solid blueviolet;
   border-radius: 50%;
   margin-right: 5px;
@@ -27,14 +27,14 @@
   padding-block: 7px;
   transition: background-color 0.3s ease;
 }
-.icons svg{
+.icons svg {
   transition: color 0.3s ease;
   color: blueviolet;
 }
-.icons div:hover{
+.icons div:hover {
   background-color: blueviolet;
 }
-.icons div:hover svg{
+.icons div:hover svg {
   color: #cccccc;
 }
 
@@ -119,20 +119,22 @@
 
 /* Estilos para el contenedor principal */
 .propertyDetails {
-  justify-content: center;
   display: flex;
   flex-wrap: nowrap;
   background-color: transparent;
   padding: 20px;
   border-radius: 5px;
   width: 100%;
-}
-.reseña {
+  flex-direction: column;
   justify-content: center;
+}
+.reseñas {
+  justify-content: left;
+  margin-top: 20px;
   display: flex;
+  flex-direction: column;
   flex-wrap: nowrap;
   background-color: transparent;
-  padding: 20px;
   border-radius: 5px;
   width: 100%;
 }
@@ -142,6 +144,8 @@
   background-color: #fff;
   position: relative;
   padding: 20px;
+  margin: 0 auto;
+  margin-bottom: 30px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
     0 4px 6px -4px rgba(0, 0, 0, 0.2);
 
@@ -197,4 +201,56 @@
 .amenitiesItem span {
   font-weight: bold;
   margin-right: 5px;
+}
+
+.info {
+  background-color: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+    0 4px 6px -4px rgba(0, 0, 0, 0.2);
+
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  width: 75%;
+  margin: 0 auto;
+  padding: 20px;
+  /* display: flex; */
+}
+
+.info h2 {
+  font-size: 24px;
+  color: #091f44;
+  font-weight: bold;
+}
+
+.info .description {
+  flex: 2;
+}
+.description p {
+  text-align: justify;
+
+  line-height: 25px;
+}
+
+.googleMap {
+  margin: 20px;
+  flex: 1;
+}
+
+.reseña {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.contReseña {
+  border: 3px solid rgb(216, 215, 217);
+  margin-top: 30px;
+  width: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, .5);
+  padding: 20px;
+}
+.contReseña h1 {
+  font-size: 28px;
+  color: #9d0aca;
 }
