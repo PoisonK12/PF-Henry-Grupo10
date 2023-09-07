@@ -3,6 +3,7 @@ import style from "./Login.module.css"
 import {getLogin} from "../../redux/actions";
 import {validation} from "./validation";
 import {Toast} from "react-bootstrap"
+import GoogleLoginButton from "../GoogleAuth/LoginButton/"
 
 const Login = ({setConditional , conditional}) => {
 
@@ -81,6 +82,7 @@ const Login = ({setConditional , conditional}) => {
                     <div class="column mt-1">
                       <span class="m-2" style={{color : "white", fontSize: "18px"}}>Logueate con
                       </span>
+                      <GoogleLoginButton />
                   <button className = {` btn btn-outline-danger ${style.buttonGoogle}`}>
                      Google  
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"  fill="currentColor" class={`bi bi-google ${style.icon} m-1`} viewBox="0 0 18 18" style={{color : "red"}}>

@@ -5,6 +5,7 @@ import ChatBot from 'react-simple-chatbot';
 import { searchByFilter } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 
+import avatar from "../../assets/images/avatar.jpg"
 
 const theme = {
   background: '#C9FF8F',
@@ -18,7 +19,7 @@ const theme = {
 };
 
 const config = {
-  botAvatar: 'img.png',
+  botAvatar: avatar,
   floating: true,
 };
 

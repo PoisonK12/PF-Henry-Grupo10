@@ -20,6 +20,7 @@ import Chatbot from './components/Chatbot/Chatbot';
 import { useEffect } from 'react';
 axios.defaults.baseURL = "http://localhost:3001"
 import jwt_decode from "jwt-decode"
+import ScrollToTop from './Helpers';
 
 
 
@@ -51,11 +52,12 @@ function App() {
 
   return (
     <>
-     {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+     {/* { <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <div id="signInDiv"></div>
-    </div> */}
+    </div> } */}
 
       {location.pathname !== "/" && <Nav/>}
+      <ScrollToTop></ScrollToTop>
      <Routes>
       <Route path='/' element={<><Landing/></>} />
       <Route path='/detail/:id' element={<><Detail/><Footer/><Chatbot/></>} />

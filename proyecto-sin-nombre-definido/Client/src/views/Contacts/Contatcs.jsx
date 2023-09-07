@@ -22,10 +22,10 @@ const Contacts = () => {
       </div>
       <div className={style.cont}>
         <form className={`${style["row-cols-1"]} ${style["custom-container"]} ${style['formulario-entrada']} ${visible ?  style['formulario-visible'] : ""}`}>
-          <h2 className={style.title}>Contacts</h2>
+          <h2 className={style.title}>Contact</h2>
           <div className="mb-3 w-90 ">
             <label htmlFor="name" className="form-label ">
-              Name
+              Nombre
             </label>
             <input
               type="text"
@@ -36,7 +36,7 @@ const Contacts = () => {
           </div>
           <div className="mb-3 w-90">
             <label htmlFor="lastName" className="form-label">
-              LastName
+              Apellido
             </label>
             <input
               type="text"
@@ -47,7 +47,7 @@ const Contacts = () => {
           </div>
           <div className="mb-3 w-90">
             <label htmlFor="phone" className="form-label">
-              Phone
+              Teléfono
             </label>
             <input
               type="tel"
@@ -58,25 +58,25 @@ const Contacts = () => {
           </div>
           <div className="mb-3 w-90">
             <label htmlFor="email" className="form-label">
-              Email address
+              Email
             </label>
             <input
               type="email"
               className="form-control"
               id="email"
-              placeholder="name@example.com"
+              placeholder="name@ejemplo.com"
             />
           </div>
           <div className="mb-3 w-90">
             <label htmlFor="message" className="form-label">
-              Message
+              Mensaje
             </label>
             <textarea
               className="form-control"
               style={{ resize: "none" }}
               id="message"
               name="message"
-              placeholder="Enter your message here"
+              placeholder="Esciba su mensaje aquí"
               rows="3"
             ></textarea>
           </div>
@@ -91,16 +91,11 @@ const Contacts = () => {
         </form>
         <div className={style.info}>
           <h2>
-            Contacta nuestro equipo de{" "}
-            <span>soporte para encontrar tu hogar ideal</span>!
+            Contacta nuestro <span>equipo profesional para encontrar la casa de tus sueños</span>!{" "}   
           </h2>
           <div className={style.parrafo}>
             <p>
-              En <span>GreatTravel</span>, estamos comprometidos a ayudarte a
-              encontrar la <span>propiedad perfecta</span> que se adapte a tus
-              necesidades y sueños. Ya sea que estés buscando comprar, vender o
-              invertir en bienes raíces, nuestro equipo de expertos está listo
-              para brindarte un <span>servicio excepcional</span>.
+              En <span>GreatTravel</span>, estamos aquí para ayudarte en cada paso de tu aventura de hospedaje! Ya sea que tengas preguntas sobre una propiedad, necesites asistencia con tu reserva o simplemente quieras saber más sobre nosotros, no dudes en ponerte en contacto..
             </p>
           </div>
           <div className={style.icons}>
