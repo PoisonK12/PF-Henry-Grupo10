@@ -41,17 +41,17 @@ body {
 }
 
 .fieldset {
-    margin-top : 100px ;
+  
     /* margin-bottom : 150px; */
     background-color: rgb(230, 233, 237);
-    
+
     height: 490px;
     width: 818px;
     /* border-radius: 10px; */
 
     /*stacking fieldsets above each other*/
     position: relative;
-    padding : 0px !important;
+    padding : 50px !important;
     color: black;
   box-shadow:  0 10px 15px -3px rgba(0,0,0,.5),0 4px 6px -4px rgba(0,0,0,.5);
 
@@ -109,7 +109,8 @@ body {
 .buttonFor2{
     position: relative;
     bottom: 50px;
-    right: 200px;
+    right: 160px;
+    
 }
 
 
@@ -161,7 +162,8 @@ body {
 .gridForm{
     display: flex;
     grid-template-columns: repeat(2,1fr);
-    justify-content: space-around; 
+    justify-content: space-between; 
+    
 }
 
 .formulario-entrada.formulario-visible{
