@@ -74,19 +74,29 @@ export const SearchByLocation = (query, page) => {
   };
 };
 
-export const createAsset = async (form , setModal,setModalBody ) => {
+export const createAsset = async (form , setModal,setModalBody, navigate, setStep ,setConditionalCreate) => {
 
     try {                         
      const {data} = await axios.post("/assets/create" , form);
      if(data) {
-         setModalBody({response: data})
-         setModal(true);
-         console.log(data);
+        console.log(data);
+         setModalBody({response: data ,message : "true"})
+         setConditionalCreate(true)
+         setTimeout(() => {
+           setModal(false) 
+           navigate("/home")
+           return 
+         }, 1000)
+         return
      }
     } catch (error) {
       
       if( error.response.data.error.includes("propiedad")) {
-        setModalBody({ response :  error.response.data.error});
+        setModalBody(error.response.data.error);
+        setTimeout(() => {
+          setModal(false)
+          setStep(1)
+        }, 1500)
         return
       } 
         setModalBody({ response :  JSON.parse(error.response.data.error)});
@@ -209,10 +219,10 @@ export const getStates = (country) => {
      if (conditional === "login"){
          const {data} = await axios.get("/users" , {email , password})
          if(data) {
-          console.log(login);
+         
           /* setToastBody({response :data}) */
           setToast(true)
-         return console.log(data);
+         return ;
          }
       }
 

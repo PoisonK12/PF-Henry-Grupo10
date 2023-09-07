@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import style from "./PropertyForm.module.css";
 import { useNavigate } from "react-router";
-import { Carousel, Modal } from "react-bootstrap";
+import { Carousel, Modal , Button } from "react-bootstrap";
 import { createAsset, getCountries, getStates } from "../../redux/actions";
 import Card from "../../components/Card/CardOffer/CardOffer";
 import validation from "./Validation";
@@ -10,9 +10,10 @@ import fondo from "../../assets/images/Exteriores/Image2.jpg";
 import { useDispatch, useSelector } from "react-redux";
 
 const PropertyForm = () => {
-  const ref = useRef(null);
+
+  
   const [modal, setModal] = useState(false);
-  const [modalBody, setModalBody] = useState({ response: [] });
+  const [modalBody, setModalBody] = useState({ response: [], message : "" });
   const [price, setPrice] = useState(false);
   const [step, setStep] = useState(1);
   const [showCities, setShowCities] = useState(true);
@@ -20,6 +21,8 @@ const PropertyForm = () => {
   const dispatch = useDispatch();
   const allCountries = useSelector((state) => state.countries.data);
   const [states, setStates] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [conditionalCreate , setConditionalCreate ] = useState(false)
 
   const [errors, setErrors] = useState({
     name: "",
@@ -102,26 +105,55 @@ const PropertyForm = () => {
     setErrors({ ...errors, images: undefined });
   }
 
+  
   // Función para manejar el archivo seleccionado
   const handleFile = async (file) => {
     console.log(file);
-    const fileData = new FormData();
-    fileData.append("file", file);
-    fileData.append("upload_preset", "Imagenes");
-    fileData.append("cloud_name", "dkdounmsa");
-    const { data } = await axios.post(
-      `https://api.cloudinary.com/v1_1/dkdounmsa/image/upload`,
-      fileData
-    );
-    setForm({ ...form, images: [...form.images, data.secure_url] });
-  };
 
-  const handleDelete = (index, number) => {
-    setForm({ ...form, images: form.images.filter((ele) => ele !== index) });
-    if (ref.current || ref.current === 0) {
-      ref.current.carousel(number);
+    if(!file.type.includes('image')) {
+      setErrors({...errors, images: "Solo puedes subir imagenes" });
+      return;
+    } else {
+
+      setErrors({...errors , images : ""});
+      const imageURL = URL.createObjectURL( new Blob([file]));
+      setForm({...form , images : [... form.images , imageURL]});
+
+      const fileData = new FormData();
+      fileData.append("file", file);
+      fileData.append("upload_preset", "Imagenes");
+      fileData.append("cloud_name", "dkdounmsa");
+       const { data } = await axios.post(
+       `https://api.cloudinary.com/v1_1/dkdounmsa/image/upload`,
+         fileData
+       );
+    console.log(data);
+    setForm({ ...form, images: [...form.images, data.secure_url] });
+    setSelectedIndex(form.images.length)
+    console.log(form.images);
+  };
+  }
+
+  console.log(form.images);
+
+
+  const handleDelete = (index) => {
+    event.preventDefault()
+    const updatedImages = form.images.filter((ele, i) => i !== index);
+    console.log(form.images);
+    setForm({...form , images : updatedImages});
+
+    if (selectedIndex === form.images.length - 1) {
+      setSelectedIndex(selectedIndex - 1);
     }
   };
+
+  const handleSelect = (selectedIndex) => {
+    setSelectedIndex(selectedIndex);
+  };
+
+
+
 
   const handleStep = (e) => {
 
@@ -203,37 +235,35 @@ const PropertyForm = () => {
     setForm({ ...form, [name]: value });
   };
 
+//!------------------------handleForm----------------------------------
+
   const handleForm = async (e) => {
     e.preventDefault();
+    setModalBody({response : form})
+    setModal(true)
+  
+  };
+
+  const handleCreate = async (e) => {
+      e.preventDefault()
     await createAsset(
       form,
       setModal,
       setModalBody,
-      setErrors,
-      errors,
-      navigate
-    );
+      navigate,
+      setStep, 
+      setConditionalCreate      
+    )
+  
+  }
 
-    if (typeof modalBody.response === "string") {
-      return setTimeout(() => {
-        setModal(false);
-        setStep(1);
-      }, 2000);
-    }
+  const handleEdit = (e) => {
+      e.preventDefault()
+      setModal(false)
+      setStep(1)
+  }
 
-    if (Array.isArray(modalBody.response)) {
-      return setTimeout(() => {
-        setModal(false);
-        setStep(1);
-      }, 2000);
-    } else if (typeof modalBody.response === "object") {
-      return setTimeout(() => {
-        navigate("/home");
-      }, 3500);
-    }
-  };
-
-  console.log({ modal: modal, modalbody: modalBody.response });
+  console.log({ modal: modal, modalbody: modalBody });
 
   useEffect(() => {}, [step]);
   useEffect(() => {
@@ -280,15 +310,23 @@ const PropertyForm = () => {
 
     console.log(noProvince);
   };
+  
+  
+
 
   const MultiForm = (e) => {
     if (step === 1) {
       return (
+      <div class="justify-content-center align-items-center d-flex flex-column text-center ">
+      <div>
+        <h3 className=" display-6 m-4 p-3"> Agrega una nueva propiedad </h3>
+        </div>
+      
         <form
           className={`d-flex flex-row align-items-center justify-content-center text-center`}
         >
           <fieldset className={`p-5 d-flex flex-column ${style.fieldset} `}>
-            <h3 className="m-3 display-6"> Agrega una nueva propiedad </h3>
+            
             <div
               className={`d-flex flex-row justify-content-center align-items-center ${style.formmer}`}
             >
@@ -321,15 +359,16 @@ const PropertyForm = () => {
                 >
                   
                   {form.images.length > 0 ? (
-                    <Carousel
-                      ref={ref}
+                    <Carousel 
+                    activeIndex={selectedIndex}
+                    onSelect={handleSelect}
                       style={{
                         width: "100%",
                         height: "100%",
                         maxHeight: "250px",
                       }}
                     >
-                      {form?.images?.map((imageUrl, index) => (
+                      {form.images?.map((imageUrl, index) => (
                         <Carousel.Item key={index}>
                           <img
                             className={style.carouselImage}
@@ -343,7 +382,7 @@ const PropertyForm = () => {
                           />
                           <button
                             className={`${style.buton}`}
-                            onClick={() => handleDelete(imageUrl, 0)}
+                            onClick={() => handleDelete(index)}
                           >
                             X
                           </button>
@@ -489,37 +528,35 @@ const PropertyForm = () => {
             </div>
           </fieldset>
         </form>
+        </div>
       );
     } else if (step === 2) {
       return (
-        <form className="d-flex flex-row align-items-center justify-content-center text-center">
-          <fieldset className={`p-5 d-flex flex-column ${style.fieldset} `}>
-            <h2 className="mb-3 mt-3 ">Agrega sus características </h2>
-            <div className={style.gridForm}>
+        <div class="justify-content-center align-items-center d-flex flex-column text-center ">
+            <h2 className=" display-6 m-4">Agrega sus características </h2>
+        <form className=" d-flex flex-row align-items-center justify-content-center text-center">
+          <fieldset className={`p-1 d-flex flex-column ${style.fieldset} `}>
+            <div className={`${style.gridForm}`}>
               <div className={`${style.inputForm}`}>
-                <div className="">
-                  <label htmlFor="inputState" className="form-label">
-                    Tipo de propiedad
+              <div className="">
+                  <label htmlFor="inputCoveredArea" className="form-label">
+                    Mt² totales{" "}
                   </label>
-
-                  <select
-                    id="inputState"
+                  <input
+                    type="number"
+                    name="totalArea"
+                    min="0"
+                    value={form.totalArea}
+                    className="form-control"
                     onChange={(e) => handleChange(e)}
-                    value={form.type}
-                    name="type"
-                    className="form-select"
-                  >
-                    <option>Elije uno...</option>
-                    <option name="type" value="Departamento">
-                      Departamento
-                    </option>
-                    <option name="type" value="Casa">
-                      Casa
-                    </option>
-                    <option name="type" value="Hotel">
-                      Hotel
-                    </option>
-                  </select>
+                    id="inputCoveredArea"
+                    required
+                  />
+                  <div>
+                    {errors.totalArea ? (
+                      <p style={{ color: "red" }}>{errors.totalArea}</p>
+                    ) : null}
+                  </div>
                 </div>
 
                 <div className="">
@@ -584,26 +621,25 @@ const PropertyForm = () => {
                   </div>
                 </div>
 
-                <div className="">
-                  <label htmlFor="inputCoveredArea" className="form-label">
-                    Mt² totales{" "}
+                
+                <div className={`d-block`}>
+                  <label htmlFor="inputPriceS" className="input-label">
+                    {" "}
+                    Precio de Venta{" "}
                   </label>
                   <input
                     type="number"
-                    name="totalArea"
+                    id="inputPriceS"
+                    value={form.sellPrice}
                     min="0"
-                    value={form.totalArea}
-                    className="form-control"
-                    onChange={(e) => handleChange(e)}
-                    id="inputCoveredArea"
-                    required
-                  />
-                  <div>
-                    {errors.totalArea ? (
-                      <p style={{ color: "red" }}>{errors.totalArea}</p>
-                    ) : null}
-                  </div>
+                    name="sellPrice"
+                    className=" form-control"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  ></input>
                 </div>
+
                 <div className="">
                   <label htmlFor="inputPriceR" className="input-label">
                     Precio de Renta
@@ -625,23 +661,7 @@ const PropertyForm = () => {
                     ) : null}
                   </div>
                 </div>
-                <div className={`${price ? "d-block" : "d-none"}`}>
-                  <label htmlFor="inputPriceS" className="input-label">
-                    {" "}
-                    Precio de Venta{" "}
-                  </label>
-                  <input
-                    type="number"
-                    id="inputPriceS"
-                    value={form.sellPrice}
-                    min="0"
-                    name="sellPrice"
-                    className=" form-control"
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                  ></input>
-                </div>
+             
               </div>
               <fieldset className={`border p-3  ${style.fieldset2}`}>
                 <label className="form-label">Esta a la venta?</label>
@@ -799,6 +819,8 @@ const PropertyForm = () => {
             <div className="column m-3"></div>
           </fieldset>
         </form>
+        </div>
+
       );
     } else if (step === 3) {
       return (
@@ -864,35 +886,25 @@ const PropertyForm = () => {
 
   return (
     <>
-      {modal && Array.isArray(modalBody.response) ? (
+      { modal && typeof modalBody === "string" ? (
         <div className={style.container2}>
           <br></br>
           <br></br>
 
           <Modal show={modal} centered>
-            <Modal.Header className="d-flex justify-content-center ">
+            <Modal.Header className="d-flex justify-content-center " closeButton>
               <Modal.Title className="text-success text-danger">
                 {" "}
                 Algo salió mal ❌{" "}
               </Modal.Title>
             </Modal.Header>
-            <Modal.Body className="w-auto">Intenta de nuevo !</Modal.Body>
-            <Modal.Footer></Modal.Footer>
-          </Modal>
-        </div>
-      ) : modal && typeof modalBody.response === "string" ? (
-        <div className={style.container2}>
-          <br></br>
-          <br></br>
-
-          <Modal show={modal} centered>
-            <Modal.Header className="d-flex justify-content-center ">
-              <Modal.Title className="text-success text-danger">
-                {" "}
-                Algo salió mal ❌{" "}
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="w-auto">Esa propiedad ya existe</Modal.Body>
+            <Modal.Body className="w-auto">
+              <div class="d-flex flex-column justify-content-center align-items-center">
+                <h5>Esa propiedad ya existe</h5>
+                <h6>Intentalo de nuevo!</h6> 
+                <p>Elige otro  nombre</p>
+              </div>
+              </Modal.Body>
             <Modal.Footer></Modal.Footer>
           </Modal>
         </div>
@@ -901,15 +913,15 @@ const PropertyForm = () => {
           <br></br>
           <br></br>
 
-          <Modal show={modal} centered>
+          <Modal  show={modal} centered>
             <Modal.Header className="d-flex justify-content-center ">
               <Modal.Title className="text-success">
-                Creado con éxito ✅{" "}
+                {conditionalCreate === false ? "Un paso mas ✅" : "Creado con éxito ✅"}
               </Modal.Title>
             </Modal.Header>
             <Modal.Body className="w-auto">
-              {
-                <Card
+              {conditionalCreate === false 
+              ? <Card
                   name={modalBody.response.name}
                   description={modalBody.response.description}
                   address={modalBody.response.address}
@@ -918,9 +930,26 @@ const PropertyForm = () => {
                   images={modalBody.response.images[0]}
                   id={modalBody.response.id}
                 ></Card>
+                : "tU ASSETS HA SIDO CREADO CON ÉXITO "
               }
             </Modal.Body>
-            <Modal.Footer></Modal.Footer>
+            <Modal.Footer class="d-flex flex-row justify-content-center align-items-center">
+              <div class="m-3 row justify-content-center">
+            <div class="col-md-6">
+            <Button  onClick={handleCreate}>
+            Crear
+          </Button>
+            </div>
+          
+          <div class="col-md-6">
+             <Button  onClick={handleEdit}>
+            Editar
+          </Button>
+          </div>
+         
+                
+              </div>
+            </Modal.Footer>
           </Modal>
         </div>
       ) : (
