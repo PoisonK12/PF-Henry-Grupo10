@@ -78,7 +78,7 @@ const reviewUserController = async (userName, score, comment, id) => {
       });
       // console.log(90000000000000000000);
       // console.log(findUser);
-      await createdReview.addUser(findUser);
+      await findUser.addReview(createdReview);
       return `Exito al crear la review de ${findUser.userName}, ${userName}`;
     }
 

@@ -1,4 +1,4 @@
-const userSchemePost = require("../helpers/reviewValidation.ts");
+const {userSchemePost} = require("../helpers/reviewValidation.ts");
 
 const {
   getReviewByIdController,
@@ -14,7 +14,7 @@ const getReviewByIdHandler = async (req, res) => {
     const response = await getReviewByIdController(req);
     res.status(200).json(response);
   } catch (error) {
-    res.status(400).json({ error: message.error });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -22,33 +22,28 @@ const reviewAssetHandler = async (req, res) => {
   const { score, comment, userName, id } = req.body;
 
   try {
-    const response = await reviewAssetController(score, comment, userName, id);
+    const response = await reviewAssetController(userName, score, comment, id);
     res.status(200).json(response);
   } catch (error) {
-    res.status(400).json({ error: message.error });
+    res.status(400).json({ error: error.message });
   }
 };
 
+//!    Funcional
 const reviewUserHandler = async (req, res) => {
   const { userName, score, comment, id } = req.body;
-  // console.log(score);
-  // console.log(score);
-  // console.log(score);
-  // console.log(score);
   try {
-    // const validData = userSchemePost.parse({
-    //   body: {
+    // const validData = userSchemePost.parse(
     //     id,
     //     score,
     //     comment,
     //     userName,
-    //   },
-    // });
+    // );
     const review = await reviewUserController(userName, score, comment, id);
     res.status(200).json(`Review ${userName} creado con exito!`);
   } catch (error) {
     console.log(error);
-    res.status(404).json({ error: message.error });
+    res.status(404).json({ error: error.message });
   }
 };
 

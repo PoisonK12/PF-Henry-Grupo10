@@ -187,8 +187,6 @@ const createAsset = async (
   rentPrice,
   rooms,
   bathrooms,
-  averageScore,
-  numberOfReviews,
   coveredArea,
   totalArea,
   amenities
@@ -212,8 +210,6 @@ const createAsset = async (
       rentPrice,
       rooms,
       bathrooms,
-      averageScore,
-      numberOfReviews,
       coveredArea,
       totalArea,
       amenities,
@@ -229,8 +225,8 @@ const createAsset = async (
 
     return createdAsset;
   } catch (error) {
-    // console.log(error);
-    throw new Error("Error al registrar la propiedad");
+    console.log(error);
+    throw error
   }
 };
 
