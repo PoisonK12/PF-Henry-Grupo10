@@ -23,15 +23,15 @@ module.exports = (sequelize) => {
       },
       location: {
         type: DataTypes.STRING,
-        allowNull:false,
+        allowNull: false,
       },
       country: {
-        type :DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       images: {
         type: DataTypes.ARRAY(DataTypes.TEXT),
-        allowNull: false
+        allowNull: false,
       },
       onSale: {
         type: DataTypes.BOOLEAN,
@@ -44,26 +44,32 @@ module.exports = (sequelize) => {
       },
       rooms: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       bathrooms: {
         type: DataTypes.INTEGER,
       },
-      reviews: {
-        type: DataTypes.JSON
+      averageScore: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0.0,
       },
-      nearby: {
-        type: DataTypes.JSON
-      },
-      nearbyScore: {
-        type: DataTypes.INTEGER
+      numberOfReviews: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
       coveredArea: {
-        type: DataTypes.FLOAT
+        type: DataTypes.FLOAT,
       },
       totalArea: {
-        type: DataTypes.FLOAT
-      }
+        type: DataTypes.FLOAT,
+      },
+      amenities: {
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
+      },
+      eliminado: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     { timestamps: false }
   );

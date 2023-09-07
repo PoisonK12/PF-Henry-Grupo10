@@ -1,6 +1,5 @@
-const validation = (form) => {
-//   console.log(form);
-  let errors = {};
+const assetValidation = (form) => {
+    let errors = {};
 
   if (!form.name) errors.name = "Ingrese un nombre ";
   else if (form.name && form.name.length < 6)
@@ -67,4 +66,6 @@ const validation = (form) => {
   }
   return errors;
 };
-export default validation;
+
+
+export default assetValidation;

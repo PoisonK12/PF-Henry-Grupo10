@@ -1,7 +1,9 @@
 const { type } = require("os");
-const { dataSchemePost } = require("../helpers/validation.ts");
+
+const { dataSchemePost } = require("../helpers/assetValidation.ts");
 const {
   deleteAssetById,
+  softDeleteAssetById,
   createAsset,
   getAllAssets,
   getAssetById,
@@ -9,6 +11,8 @@ const {
   getAllLocations,
   getAllAmenities,
   getAllButAllAssets,
+  getAllAssetsWithAmenities,
+  restoreAssetById,
 } = require("../controllers/assetController");
 
 const getAllButAllAssetsHandler = async (req, res) => {
@@ -52,6 +56,7 @@ const updateAssetHandler = async (req, res) => {
     rentPrice,
     rooms,
     bathrooms,
+    averageScore,
     coveredArea,
     amenities,
   } = req.body;
@@ -67,6 +72,7 @@ const updateAssetHandler = async (req, res) => {
       rentPrice,
       rooms,
       bathrooms,
+      averageScore,
       coveredArea,
       amenities
     );
@@ -92,10 +98,11 @@ const createAssetHandler = async (req, res) => {
     rentPrice,
     rooms,
     bathrooms,
+    averageScore,
+    numberOfReviews,
     coveredArea,
     totalArea,
     amenities,
-    userid,
   } = req.body;
 
   try {
@@ -112,6 +119,8 @@ const createAssetHandler = async (req, res) => {
         rentPrice,
         rooms,
         bathrooms,
+        averageScore,
+        numberOfReviews,
         coveredArea,
         totalArea,
         amenities,
@@ -129,10 +138,11 @@ const createAssetHandler = async (req, res) => {
       rentPrice,
       rooms,
       bathrooms,
+      averageScore,
+      numberOfReviews,
       coveredArea,
       totalArea,
-      amenities,
-      userid
+      amenities
     );
 
     res.status(201).json(response);
@@ -143,11 +153,33 @@ const createAssetHandler = async (req, res) => {
 
 //!------------------------------------------------------------------------
 
+const softDeleteAssetByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await softDeleteAssetById(id);
+    res.status(200).json(`La propiedad fue eliminada`);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const deleteAssetByIdHandler = async (req, res) => {
   const { id } = req.params;
   try {
     await deleteAssetById(id);
-    res.status(200).json(`La propiedad fue eliminada`);
+    res.status(200).json(`La propiedad fue eliminada definitivamente`);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const restoreAssetByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await restoreAssetById(id);
+    res.status(200).json(`La propiedad fue restaurada`);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: error.message });
@@ -173,9 +205,20 @@ const getAmenitiesHandler = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
+const getAllAssetsWithAmenitiesHandler = async (req, res) => {
+  const { amenitiesss } = req.query;
+  try {
+    const response = await getAllAssetsWithAmenities(amenitiesss);
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: error.message });
+  }
+};
 
 module.exports = {
   deleteAssetByIdHandler,
+  softDeleteAssetByIdHandler,
   getAllAssetsHandler,
   createAssetHandler,
   getAssetByIdHandler,
@@ -183,4 +226,6 @@ module.exports = {
   getAllLocationsHandler,
   getAmenitiesHandler,
   getAllButAllAssetsHandler,
+  getAllAssetsWithAmenitiesHandler,
+  restoreAssetByIdHandler,
 };
