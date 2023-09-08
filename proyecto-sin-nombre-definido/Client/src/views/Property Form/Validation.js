@@ -13,7 +13,7 @@ const validation = (form) => {
     errors.address = "La direccion es muy corta";
   else if (form.address && form.address.length > 25)
     errors.address = "La direccion es muy larga";
-  else if(form.address && !/^[A-Za-z\s]+\d+$/.test(form.address)){
+  else if(form.address && !/^[\w\sñÑáéíóúÁÉÍÓÚ]*\d+[\w\sñÑáéíóúÁÉÍÓÚ]*$/.test(form.address)){
     errors.address = "Tiene que tener el número de calle"
   }
 
@@ -66,6 +66,8 @@ const validation = (form) => {
 
   if (form.description && !form.description) {
     errors.description = "Ingrese una descripcion";
+  }else if(form.description.length < 10){
+    errors.description = "Es muy corta"
   }
   return errors;
 };
