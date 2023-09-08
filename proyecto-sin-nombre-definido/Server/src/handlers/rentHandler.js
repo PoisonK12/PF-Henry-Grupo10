@@ -10,7 +10,7 @@ const {
 
 const createRentHandler = async (req, res) => {
   const {
-    onSale,
+    onSale, 
     user,
     asset,
     checkIn,
