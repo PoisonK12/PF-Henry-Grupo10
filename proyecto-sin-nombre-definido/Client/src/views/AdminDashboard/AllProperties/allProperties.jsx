@@ -14,6 +14,7 @@ import axios from "axios";
 const AllProperties = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);
+  console.log('sisis', allProperties);
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
@@ -906,7 +907,7 @@ const AllProperties = () => {
                     <button
                       type="submit"
                       className="btn btn-primary"
-                      data-bs-target="#exampleModalToggle7"
+                      data-bs-target="#exampleModalToggle9"
                       data-bs-toggle="modal"
                     >
                       Enviar

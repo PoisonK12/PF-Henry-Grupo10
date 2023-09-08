@@ -1,4 +1,4 @@
-import { GET_ALL_PROPERTIES, GET_ASSET_BY_ID, GET_LOCATIONS, SEARCH_BY_LOCATION, PUT_PROPERTY, GET_ALL_ALL_PROPERTIES, SEARCH_BY_FILTER, GET_COUNTRIES, GET_STATES, GET_AMENITIES} from "./types"
+import { GET_ALL_PROPERTIES, GET_ASSET_BY_ID,GET_ALL_USERS, DELETE_USER_BY_ID, GET_LOCATIONS, SEARCH_BY_LOCATION, PUT_PROPERTY, GET_ALL_ALL_PROPERTIES, SEARCH_BY_FILTER, GET_COUNTRIES, GET_STATES, GET_AMENITIES} from "./types"
 
 const initialState = {
     properties: [],
@@ -19,6 +19,12 @@ const rootReducer = (state = initialState, action) => {
 
         case GET_ALL_ALL_PROPERTIES:
             return {...state, propertiesCopy: action.payload}
+            
+        case GET_ALL_USERS:
+            return {...state, users: action.payload}
+        
+        case DELETE_USER_BY_ID:
+            return {...state, users: action.payload}
 
         case SEARCH_BY_LOCATION:
             return {...state, properties: action.payload}
