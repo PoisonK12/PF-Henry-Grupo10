@@ -7,7 +7,7 @@ const tokenSign = async (user) => {
     role: user.role
   },
   process.env.JWT_SECRET,
-  { expiresIn: '1h' });
+  { expiresIn: '1m' });
 };
 
 module.exports = { tokenSign };

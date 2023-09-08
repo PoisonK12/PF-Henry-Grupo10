@@ -24,6 +24,7 @@ const config = {
 };
 
 function Chatbot() {
+  const { location } = useParams(); // Obtén el parámetro 'location' de la URL
   const navigate = useNavigate(); // Obtiene la función de navegación
   const props = useSelector(state => state.properties)
   const [userName, setUserName] = useState({
@@ -75,7 +76,7 @@ function Chatbot() {
     },
     {
       id: '4',
-      message: ' ¿Valor maximo?',
+      message: ' ¿Valor maximo que esta dispuesto a pagar?',
       trigger: '5',
 
     },
@@ -94,7 +95,7 @@ function Chatbot() {
     },
     {
       id: '6',
-      message: 'Valor {previousValue}, ¿Valor minimo?',
+      message: 'Valor {previousValue}, ¿valor minimo que esta dispuesto a pagar?',
       trigger: '7',
     },
     {

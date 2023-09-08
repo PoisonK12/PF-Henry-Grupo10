@@ -21,16 +21,16 @@ AmenityModel(sequelize);
 
 const { User, Rent, Asset, Review } = sequelize.models;
 
-User.belongsToMany(Asset, { through: "userAssets"});
+User.belongsToMany(Asset, { through: "userAssets" });
 Asset.belongsTo(User, { through: "userAssets" });
 
 User.belongsToMany(Rent, { through: "userRents" });
 Rent.belongsTo(User, { through: "userRents" });
 
-Asset.belongsToMany(Review, { through: "assetReview"});
+Asset.belongsToMany(Review, { through: "assetReview" });
 Review.belongsTo(Asset, { through: "assetReview" });
 
-User.belongsToMany(Review, { through: "userReview"});
+User.belongsToMany(Review, { through: "userReview" });
 Review.belongsTo(User, { through: "userReview" });
 
 module.exports = {
