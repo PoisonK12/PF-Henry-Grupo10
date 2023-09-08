@@ -7,7 +7,7 @@ const reviewsRouter = require("./reviewsRouter");
 const logOutRouter = require('./logOut')
 const rentsRouter = require("./rentsRouters");
 const router = Router();
-const googleLoginRouter = require('./googleLogin')
+const googleLoginRouter = require('./googleLogin') 
 
 router.use('/googleAuth', googleLoginRouter)
 router.use("/login", authRouter);
