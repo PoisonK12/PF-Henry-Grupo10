@@ -21,6 +21,7 @@ const PropertyForm = () => {
   const [states, setStates] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [conditionalCreate, setConditionalCreate] = useState(false);
+  
 
   const [errors, setErrors] = useState({
     name: "",
@@ -45,7 +46,6 @@ const PropertyForm = () => {
 
   console.log(errors);
   const navigate = useNavigate();
-
   const [form, setForm] = useState({
     name: "",
     images: [],
@@ -59,8 +59,6 @@ const PropertyForm = () => {
     rooms: 0,
     bathrooms: 0,
     description: "",
-    parking: false,
-    terrace: false,
     coveredArea: 0,
     totalArea: 0,
     reviews: "asdasdasd",
@@ -797,8 +795,12 @@ const PropertyForm = () => {
     <>
       {modal && typeof modalBody === "string" ? (
         <div className={style.container2}>
-          <br></br>
-          <br></br>
+          <img
+            src={fondo}
+            className={`${style.imageForm} ${style["formulario-entrada"]} ${
+              visible ? style["formulario-visible"] : ""
+            }`}
+          ></img>
 
           <Modal show={modal} centered>
             <Modal.Header
@@ -822,10 +824,9 @@ const PropertyForm = () => {
         </div>
       ) : modal && typeof modalBody.response === "object" ? (
         <div className={style.container2}>
-          <br></br>
-          <br></br>
+        
 
-          <Modal show={modal} centered>
+          <Modal show={modal} centered style={{}}>
             <Modal.Header className="d-flex justify-content-center ">
               <Modal.Title className="text-success">
                 {conditionalCreate === false
@@ -843,6 +844,8 @@ const PropertyForm = () => {
                   country={modalBody.response.country}
                   images={modalBody.response.images[0]}
                   id={modalBody.response.id}
+                  total={modalBody.response.rentPrice}
+
                 ></Card>
               ) : (
                 <p>"TU ASSETS HA SIDO CREADO CON ÉXITO "</p>

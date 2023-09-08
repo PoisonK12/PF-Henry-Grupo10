@@ -66,7 +66,7 @@ const validation = (form) => {
 
   if (form.description && !form.description) {
     errors.description = "Ingrese una descripcion";
-  }else if(form.description.length < 10){
+  }else if(form.description && form.description.length < 10){
     errors.description = "Es muy corta"
   }
   return errors;
