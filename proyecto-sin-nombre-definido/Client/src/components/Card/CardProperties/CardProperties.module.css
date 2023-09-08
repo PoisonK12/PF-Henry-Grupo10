@@ -1,0 +1,13 @@
+.price{
+    /* position: ;
+    bottom: 20px;
+    right: 20px;
+    text-align: end !important;
+    justify-content: right !important; */
+    display: flex;
+  }
+
+  .centeredContent{
+    box-shadow: 0 2px 10px black;
+  }
+  

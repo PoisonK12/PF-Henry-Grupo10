@@ -1,0 +1,139 @@
+.buttonGoogle {
+    background-color : rgba(255, 255, 255, 0.801);
+    padding: 4px;
+    border-color:  rgb(219, 46, 69);
+    color : rgb(219, 46, 69);
+    border-radius: 5px;
+    box-shadow :2px 2px 2px rgba(0, 0, 0, 0.815);
+}
+.buttonGoogle:hover {
+   
+    color: white;
+    background-color: rgb(219, 46, 69);
+    border-color : rgb(219, 46, 69);
+}
+.divDrop {
+    background : rgba(232, 232, 232, 0.987)
+
+}
+.formmer{
+    height: 50%;
+    width: 100%;
+   margin-bottom : 30px ;
+   background-color: rgb(230, 233, 237);     
+}
+
+
+.click{
+    color:blue;
+    cursor: pointer;
+}
+
+
+.form {
+    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.103);
+    /* rgba(245, 245, 245, 0.589) */
+    box-shadow: 4px  4px rgba(255, 255, 255, 0.534);
+    border-radius: 10px ;
+    margin: 100px;
+    width : 45%
+
+}
+
+.form legend {
+    color:  rgb(32, 30, 30);
+}
+.form legend:hover {
+    color : rgb(219, 46, 69)
+} 
+
+.hr {
+   
+   border-width: 3px;
+   color: rgba(255, 255, 255, 0.747);
+}
+
+.perfile {
+  
+    background-color: blanchedalmond;
+    padding : 30px;
+    height: 120%;
+    box-shadow: 4px 4px rgba(255, 255, 255, 0.678);
+    border-radius: 10px 10px 0 0;
+}
+
+.buttonGoogle:hover .icon {
+        color: white !important;
+}
+
+.form div div span {
+    color: white;
+    
+    
+}
+
+.inputs {
+    background-color: rgba(255, 235, 205, 0.233) !important;
+    border : 10px 5px 5px 5px;
+   
+}
+.inputs::placeholder , label {
+     color : white
+}
+
+.inputs:hover {
+    border-color:rgb(224, 78, 98) !important;
+    border-width: 2px !important;
+}
+
+.inputs:focus {
+    background-color: rgba(255, 255, 255, 0.144) !important;
+}
+
+
+.iconPassword {
+    position: absolute;
+    right: 52.3%;
+    top : 74.66%;
+    background-color: transparent;
+    border : none
+}
+
+.icon{
+    background-color: transparent;
+}
+.iconPassword2 {
+    position: absolute;
+    right: 30.6%;
+    top : 74.66%;
+    background-color: transparent;
+    border : none
+}
+
+.select {
+    background-color: rgba(255, 235, 205, 0.233) !important;
+    border : 10px 5px 5px 5px;
+    color: white;
+   
+}
+
+.select:hover {
+    border-color:rgb(224, 78, 98) !important;
+    border-width: 2px !important;
+}
+
+.select:focus {
+    background-color: rgba(255, 255, 255, 0.144) !important;
+}
+
+.select option {
+    background-color: rgba(255, 255, 255, 0.596);
+    color: #222222;
+}
+  
+  
+  .select option:hover {
+    background-color: #ff8686;
+    color: rgba(255, 255, 255, 0.144) !important;
+  }

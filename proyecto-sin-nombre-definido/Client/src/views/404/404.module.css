@@ -1,11 +1,78 @@
-.background
-{
-background-image: url("../404/404.jpg");
-background-repeat: no-repeat;
-background-size: cover;
-width: 100%;
-position: absolute;
-height: 100%;
-margin: 0;
-padding: 0;
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;900&display=swap");
+
+.background {
+  position: relative;
+  height: 100vh;
+}
+.notFound {
+  font-family: "Rubik", sans-serif;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 520px;
+  width: 100%;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.error {
+  position: relative;
+  height: 240px;
+}
+
+.error h3 {
+  font-family: cabin, sans-serif;
+  position: relative;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #262626;
+  margin: 0;
+  letter-spacing: 3px;
+  padding-left: 6px;
+}
+
+.error h1 {
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 252px;
+  /* font-weight: 900; */
+  margin: 0;
+  margin-left: 0px;
+  color: #262626;
+  text-transform: uppercase;
+  letter-spacing: -40px;
+  margin-left: -20px;
+  margin-top: 20px;
+}
+
+.error span {
+  font-family:'Rubik';
+
+  text-shadow: -8px 0 0 #fff;
+}
+
+.notFound h2 {
+  font-family: cabin, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+.button{
+  border: none;
+  padding: 10px 20px ;
+  /* background-color: #262626; */
+  color: blueviolet;
+  border: 2px blueviolet solid;
+  border-radius: 10px;
 }

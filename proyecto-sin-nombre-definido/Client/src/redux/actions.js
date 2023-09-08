@@ -1,45 +1,290 @@
-import axios from "axios";
-import { GET_ALL_PROPERTIES, GET_ASSET_BY_ID } from "./types";
-
+import axios, { Axios } from "axios";
+import {
+  GET_ALL_PROPERTIES,
+  GET_ASSET_BY_ID,
+  GET_LOCATIONS,
+  SEARCH_BY_LOCATION,
+  PUT_PROPERTY,
+  GET_ALL_ALL_PROPERTIES,
+  SEARCH_BY_FILTER,
+  DELETE_ASSET_BY_ID,
+  GET_LOGIN,
+  GET_COUNTRIES,
+  GET_AMENITIES,
+  DELETE_USER_BY_ID,
+  GET_ALL_USERS,
+  GET_STATES
+} from "./types";
 
 export const getAllProperties = (page) => {
-    return async(dispatch) => {
-        try {
-            const {data} = await axios(`/assets?size=10&page=${page}`)
-            return dispatch({
-                type: GET_ALL_PROPERTIES,
-                payload: data
-            })
-        } catch (error) {
-            console.log(error);   
-        }
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`/assets?size=10&page=${page}`);
+      return dispatch({
+        type: GET_ALL_PROPERTIES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
     }
+  };
+};
+
+export const getAllReallyProperties = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(
+        "/assets/admin"
+      );
+      return dispatch({
+        type: GET_ALL_ALL_PROPERTIES,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const getAllUsers = () => {
+  return async (dispatch) =>{
+    try {
+      const {data} = await axios('/users');
+      dispatch({
+        type: GET_ALL_USERS,
+        payload: data
+      })
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 export const getAssetById = (id) => {
-    return async(dispatch) => {
-        try {
-            const {data} = await axios("/assets/" + id)
-            return dispatch({
-                type:GET_ASSET_BY_ID,
-                payload: data
-            })
-        } catch (error) {
-            console.log(error);   
-        }
+  return async (dispatch) => {
+    try {
+      const { data } = await axios("/assets/" + id);
+      return dispatch({
+        type: GET_ASSET_BY_ID,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
     }
+  };
+};
+
+export const getAmenities = () =>{
+  return async (dispatch) =>{
+    try {
+      const {data} = await axios("/amenities")
+      return dispatch({
+        type: GET_AMENITIES,
+        payload: data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
+export const SearchByLocation = (query, page) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(
+        `/assets?size=10&page=${page}&location=${query}`
+      );
+      console.log(data);
+      return dispatch({
+        type: SEARCH_BY_LOCATION,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 
-export const createAsset = async (form) => {
+export const createAsset = async (form , setModal,setModalBody, navigate, setStep ,setConditionalCreate  ) => {
 
     try {                         
      const {data} = await axios.post("/assets/create" , form);
      if(data) {
-        alert(data)
-       return
+        console.log(data);
+         /* setModalBody({response: data ,message : "true"}) */
+         setConditionalCreate(true)
+         setTimeout(() => {
+           setModal(false) 
+           navigate("/home")
+           return 
+         }, 1000)
+         return
      }
     } catch (error) {
-     return console.log(error.response);
+      
+      if( error.response.data.error.includes("propiedad")) {
+        setModalBody(error.response.data.error);
+        setTimeout(() => {
+          setModal(false)
+          setStep(1)
+        }, 1500)
+        return
+      } 
+        setModalBody({ response :  JSON.parse(error.response.data.error)});
+      
+      setModal(true)
+     return console.log(error);
     }
- };
+  } 
+
+export const getLocation = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios("/assets/location");
+      console.log(data);
+      return dispatch({
+        type: GET_LOCATIONS,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const putProperty = (id, form) => {
+  console.log(id, form);
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`/assets/${id}`, form);
+      return dispatch({
+        type: PUT_PROPERTY,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const searchByFilter = ({
+  location,
+  rooms,
+  bathrooms,
+  onSale,
+  rentPriceMax,
+  rentPriceMin,
+  sellPriceMax,
+  sellPriceMin,
+}) => {
+  return async(dispatch) => {
+    try {
+      if(rooms == 0) rooms = ""
+      if(bathrooms == 0) bathrooms = ""
+      if(onSale == false) onSale = ""
+      if(rentPriceMax == 0) rentPriceMax = ""
+      if(rentPriceMin == 0) rentPriceMin = ""
+      if(sellPriceMax == 0) sellPriceMax = ""
+      if(sellPriceMin == 0) sellPriceMin = ""
+      const {data} = await axios(`/assets?size=10&page=1&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}`)
+      console.log(data)
+      return dispatch({
+        type: SEARCH_BY_FILTER,
+        payload: data
+      })
+    } catch (error) {
+      
+    }
+  }
+}
+
+// Acción para eliminar una propiedad por su ID
+export const deleteAssetById = (id) => {
+  return async (dispatch) => {
+    try {
+      // Realiza la solicitud de eliminación al servidor
+      await axios.delete(`/assets/delete/${id}`);
+
+      // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
+      dispatch({
+        type: DELETE_ASSET_BY_ID,
+        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const deleteUserById = (id) => {
+  return async (dispatch) =>{
+    try {
+      await axios.delete(`/users/${id}`)
+      dispatch({
+        type: DELETE_USER_BY_ID,
+        payload:id
+      })
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
+export const getCountries = () => {
+  return async (dispatch) => {
+    const {data} = await axios("https://countriesnow.space/api/v0.1/countries/")
+    dispatch({
+      type: GET_COUNTRIES,
+      payload: data
+    })
+  }
+}
+
+export const getStates = (country) => {
+  try {
+    
+   
+      const {data} = axios.post("https://countriesnow.space/api/v0.1/countries/states", country)
+      dispatch({
+        type: GET_STATES,
+        payload: data
+      })
+  } catch (error) {
+   console.log(error) 
+  }
+}
+
+
+
+ export const getLogin = async (login , conditional ,setToastBody, setToast) => {
+   const {email , password  , userName , fullName , birthDate , gender , address , nationality , phoneNumber ,verificationNumber, landlord} = login;
+   
+   try {
+     
+     if (conditional === "login"){
+         const {data} = await axios.get("/users" , {email , password})
+         if(data) {
+         /* const storage = localStorage.setItem("log", JSON.stringify(email, password)) */
+          setToastBody({response :data})
+          setToast(true)
+         return ;
+         }
+      }
+
+      if(conditional === "register") {
+          const {data} = await axios.post("/users/create", {email, password  , userName , fullName, verificationNumber  , birthDate , gender , address , nationality  ,phoneNumber , landlord } )
+          if(data) {
+            console.log(data);
+            setToastBody({response :data})
+            setToast(true)
+            return console.log(data);
+          }    
+          }
+        
+  } catch (error) {
+    setToastBody({response : error.message})
+    setToast(true)
+    return 
+  }
+}
