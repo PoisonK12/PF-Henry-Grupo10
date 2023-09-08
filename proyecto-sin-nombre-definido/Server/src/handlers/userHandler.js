@@ -1,5 +1,5 @@
 const userSchemePost = require("../helpers/userValidation.ts");
-const { encrypt } = require('../handlers/handleBcrypt.js');
+const { encrypt } = require("../handlers/handleBcrypt.js");
 const { dataSchemePost } = require("../helpers/userValidation.ts");
 const {
   getUserByIdController,
@@ -7,15 +7,17 @@ const {
   deleteUserById,
   createUserController,
   updateUser,
+  softDeleteUserById,
+  restoreUserById,
 } = require("../controllers/userController");
 
 const getUserByIdHandler = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
   try {
     const response = await getUserByIdController(id);
     res.status(200).json(response);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).json({ error: message.error });
   }
 };
@@ -34,11 +36,10 @@ const userPostHandler = async (req, res) => {
     email,
     password,
     landlord,
-    userType
+    userType,
   } = req.body;
 
   try {
-    
     // const validData = userSchemePost.parse({
     //   body: {
     //     userName,
@@ -56,10 +57,10 @@ const userPostHandler = async (req, res) => {
     //   },
     // });
 
-    const passwordHash = await encrypt(password)
-    
-    const user = await createUserController(
-      {userName,
+    const passwordHash = await encrypt(password);
+
+    const user = await createUserController({
+      userName,
       fullName,
       profilePic,
       birthDate,
@@ -71,18 +72,18 @@ const userPostHandler = async (req, res) => {
       email,
       password: passwordHash,
       landlord,
-      userType
+      userType,
     });
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
-    res.status(404).json({error: error.message});
+    res.status(404).json({ error: error.message });
   }
 };
 
 const getUserHandler = async (req, res) => {
   try {
-    const user = await getAllUserController();
+    const user = await getAllUserController(req);
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
@@ -113,9 +114,8 @@ const updateUserHandler = async (req, res) => {
   } = req.body;
 
   try {
+    const passwordHash = await encrypt(password);
 
-    const passwordHash = await encrypt(password)
-    
     await updateUser({
       userName,
       //edicion por usuario
@@ -134,13 +134,13 @@ const updateUserHandler = async (req, res) => {
       averageScore,
       numberOfReviews,
       favorites,
-      history}
-    );
+      history,
+    });
     res.status(200).json("Usuario editado con exito!");
   } catch (error) {
     console.log(error);
-    
-    res.status(404).json({error : error.message});
+
+    res.status(404).json({ error: error.message });
     // res.status(404).json("Error editando el usuario!");
   }
 };
@@ -158,10 +158,34 @@ const userDeleteOrBanHandler = async (req, res) => {
   }
 };
 
+const softDeleteUserByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await softDeleteUserById(id);
+    res.status(200).json(`La propiedad fue eliminada`);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const restoreUserByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await restoreUserById(id);
+    res.status(200).json(`La propiedad fue restaurada`);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   userPostHandler,
   getUserHandler,
   updateUserHandler,
   userDeleteOrBanHandler,
   getUserByIdHandler,
+  softDeleteUserByIdHandler,
+  restoreUserByIdHandler,
 };
