@@ -5,8 +5,9 @@ import style from "./Nav.module.css";
 import Menu from "./Menu/Menu";
 
 export const Nav = () => {
-  const location = useLocation()
-
+  const location = useLocation();
+  const token = localStorage.getItem("token");
+  console.log(token);
   const [fixed, setFixed] = useState(false);
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -22,7 +23,16 @@ export const Nav = () => {
   }, []);
 
   return (
-    <nav className={`${style.nav} ${fixed && location.pathname !== "/addProperty" ? style.fixed : location.pathname == "/addProperty" || /^\/detail\/[\w-]+$/.test(location.pathname)? style.back : ""}`}>
+    <nav
+      className={`${style.nav} ${
+        fixed && location.pathname !== "/addProperty"
+          ? style.fixed
+          : location.pathname == "/addProperty" ||
+            /^\/detail\/[\w-]+$/.test(location.pathname)
+          ? style.back
+          : ""
+      }`}
+    >
       <Link to="/" className={style.logo}>
         <img src={logo}></img>
       </Link>
@@ -49,15 +59,14 @@ export const Nav = () => {
           </NavLink>
         </li>
         <li>
-        <NavLink
-            to='/addProperty'
+          <NavLink
+            to="/addProperty"
             className={({ isActive }) => (isActive ? style.active : "")}
           >
             <span>Propiedades</span>
           </NavLink>
         </li>
         <li>
-         
           <NavLink
             to="/contacts"
             className={({ isActive }) =>
@@ -79,8 +88,17 @@ export const Nav = () => {
           </NavLink>
         </li>
       </ul>
-      <div >
-        <Menu />
+      <div>
+        {token ? (
+          <>
+            <Menu />{" "}
+          </>
+        ) : (
+          <>
+            <button> Login</button>
+            <button> Register</button>
+          </>
+        )}
       </div>
     </nav>
   );

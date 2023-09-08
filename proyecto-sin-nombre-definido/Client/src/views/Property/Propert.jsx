@@ -143,7 +143,7 @@ const Property = () => {
                   type="range"
                   name="rentPriceMin"
                   min={0}
-                  max={500}
+                  max={filter.rentPriceMax == 0 ? 300 : filter.rentPriceMax}
                   step={20}
                   onInput={(e) => handleChange(e)}
                   value={filter.rentPriceMin}

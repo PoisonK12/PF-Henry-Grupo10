@@ -25,38 +25,15 @@ import {ScrollToTop} from './Helpers';
 
 
 function App() {
-  function handleCallbackResponse(response){
-    console.log("Encoded JWT ID token: " + response.credential);
-    var userObj = jwt_decode(response.credential)
-    console.log(userObj);
-
-  }
-    useEffect(()=>{
-      /*global google*/
-      window.google.accounts.id.initialize({
-        client_id: "547235349182-eqd60168p1n8550uulbpd31vvm35sprd.apps.googleusercontent.com",
-        callback: handleCallbackResponse
-
-      });
-      google.accounts.id.renderButton(
-        document.getElementById("signInDiv"),
-        {theme:"outline", size:"large"}
-      );
-
-
-    },[]);
-  
-  const [access , setAccess] = useState(false);
   
   const location = useLocation()
 
+
   return (
     <>
-     {/* { <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <div id="signInDiv"></div>
-    </div> } */}
+    
 
-      {location.pathname !== "/" && <Nav/>}
+      {location.pathname !== "/" && <Nav />}
       <ScrollToTop></ScrollToTop>
      <Routes>
       <Route path='/' element={<><Landing/></>} />

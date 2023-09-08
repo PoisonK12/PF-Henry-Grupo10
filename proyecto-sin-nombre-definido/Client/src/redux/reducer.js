@@ -8,7 +8,8 @@ const initialState = {
     users: [],
     detail: {},
     countries: [],
-    cities: []
+    cities: [],
+    access : false
 }
 
 const rootReducer = (state = initialState, action) => {
