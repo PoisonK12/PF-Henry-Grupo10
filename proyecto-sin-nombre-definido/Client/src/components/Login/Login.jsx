@@ -1,8 +1,9 @@
 import React , {useState} from "react";
+import {useNavigate} from "react-router"
 import style from "./Login.module.css"
 import {getLogin} from "../../redux/actions";
 import {validation} from "./validation";
-import {Toast} from "react-bootstrap"
+import {Modal, ToastBody} from "react-bootstrap"
 import GoogleLoginButton from "../GoogleAuth/LoginButton/"
 
 const Login = ({setConditional , conditional}) => {
@@ -12,8 +13,9 @@ const Login = ({setConditional , conditional}) => {
         password : ""
     });
     const [errors , setErrors] = useState({errorsBack : undefined});
-    const [toastBody , setToastBody] = useState({response : ""})
+    const [toastBody , setToastBody] = useState({success : false , data : {}})
     const [toast , setToast] = useState(false)
+    const navigate = useNavigate("/home")
 
     const handleChange = (e) => {
           const {name} = e.target;
@@ -43,12 +45,14 @@ const Login = ({setConditional , conditional}) => {
         setTimeout(() => {
           setToast(false)
         }, 2500)
-        /* await getLogin(login , setToast, conditional, setToastBody) */
+        await getLogin(login , setToast, conditional, setToastBody , navigate ,setErrors)
      };
+
+     console.log(toastBody);
 
     return (
        <>
-       <div class="d-flex flex-row container">
+       <div class="d-flex flex-column justify-content-center align-items-center container">
             <form  onSubmit={handleSubmit} class="d-flex align-items-center  text-center p-5 ">
                 <fieldset className={`border  d-flex flex-column text-center ${style.form}`}>
 
@@ -110,12 +114,54 @@ const Login = ({setConditional , conditional}) => {
                 </fieldset>
                 
               
-              <div class={style.alert} > {toast 
-           
-             ?<div class="alert alert-danger" style={{backgroundColor : "rgba(253, 60, 60, 0.76)"}} role="alert">
-               Algo de informacion como por ejemplo : La contraseña no coincide o su email... 
+              <div class={style.alert} > 
+
+              {
+              toast && toastBody.success === true ?
+              
+              
+            <div class="justify-self-center align-self-center">
+            <Modal show={toast} >
+             <Modal.Header >
+               <Modal.Title>Logueado con exito✅</Modal.Title>
+             </Modal.Header>
+             <Modal.Body>
+              <div>
+                <h3>Bienvenido</h3>
+               <div>
+                <img src={toastBody.data.profilePic} alt="foto de perfil"></img>
+               </div>
+                <h6>{toastBody.data.userName}</h6>
+               </div>
+             </Modal.Body>
+             <Modal.Footer>
+              <p> Redirigiendote....</p>
+             </Modal.Footer>
+           </Modal>
             </div>
-              : null}
+         
+
+             : toast && toastBody.success === false ? 
+
+             <div class="justify-self-center align-self-center">
+             <Modal show={toast} >
+              <Modal.Header >
+                <Modal.Title>Ocurrio un error🚨</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+               <div>
+                  <p> Intentalo de nuevo</p>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+      
+              </Modal.Footer>
+            </Modal>
+             </div>
+
+             : null 
+             }
+            
             </div>
             </form>
 </div>
@@ -128,3 +174,18 @@ const Login = ({setConditional , conditional}) => {
 };
 
 export default Login;
+
+
+{/* <div class="alert alert-success" style={{backgroundColor : "rgba(81, 187, 99, 0.863)"}} role="alert">
+                {toastBody && 
+                <div>
+                  <h2 style={{color : "green"}}>Bienvenido!</h2>
+                  {/* <div>
+                    <img src={toastBody.data.profilePic} alt="foto de perfil"></img>
+                  </div> 
+                  <div>
+                    <h6>{toastBody.data.userName}</h6>
+                    <p>Reirigiendote...</p>
+                  </div>
+                </div>
+               </div> */}

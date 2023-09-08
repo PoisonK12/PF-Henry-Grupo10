@@ -1,14 +1,23 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { getAssetById } from './redux/actions';
 
-function ScrollToTop() {
+
+
+export function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
+  
   return null;
 }
 
-export default ScrollToTop;
+// export function FlashDetail(id) {
+// const dispatch = useDispatch()
+//   dispatch(getAssetById(id))  
+// }
+
+// export default ScrollToTop;

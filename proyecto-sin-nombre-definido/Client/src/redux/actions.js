@@ -10,6 +10,7 @@ import {
   DELETE_ASSET_BY_ID,
   GET_LOGIN,
   GET_COUNTRIES,
+  GET_AMENITIES,
   DELETE_USER_BY_ID,
   GET_ALL_USERS,
   GET_STATES
@@ -73,6 +74,20 @@ export const getAssetById = (id) => {
   };
 };
 
+export const getAmenities = () =>{
+  return async (dispatch) =>{
+    try {
+      const {data} = await axios("/amenities")
+      return dispatch({
+        type: GET_AMENITIES,
+        payload: data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 export const SearchByLocation = (query, page) => {
   return async (dispatch) => {
     try {
@@ -96,13 +111,14 @@ export const createAsset = async (form , setModal,setModalBody, navigate, setSte
      const {data} = await axios.post("/assets/create" , form);
      if(data) {
         console.log(data);
-         /* setModalBody({response: data ,message : "true"}) */
+         setModalBody({response: data ,message : "true"})
          setConditionalCreate(true)
          setTimeout(() => {
            setModal(false) 
-           navigate("/home")
-           return 
+           navigate("/home") 
          }, 1000)
+
+
          return
      }
     } catch (error) {
@@ -242,34 +258,61 @@ export const getStates = (country) => {
 
 
 
- export const getLogin = async (login , conditional ,setToastBody, setToast) => {
+ export const getLogin = async (login  , setToast, conditional,setToastBody, navigate , setErrors) => {
+
    const {email , password  , userName , fullName , birthDate , gender , address , nationality , phoneNumber ,verificationNumber, landlord} = login;
    
-   try {
+  
      
-     if (conditional === "login"){
-         const {data} = await axios.get("/users" , {email , password})
-         if(data) {
-         /* const storage = localStorage.setItem("log", JSON.stringify(email, password)) */
-          setToastBody({response :data})
+  if (conditional === "login"){
+      try { 
+        
+          const {data} = await axios.post("/login" , {email , password})
+           setToastBody({success :data.success, data : data})
           setToast(true)
-         return ;
-         }
+          localStorage.setItem("log", JSON.stringify(data))
+           setTimeout(() => {
+             setToast(false)
+             navigate("/home")
+            }, 1000 )
+             return
+         
+    
+      } catch(error) {
+        console.log(error);
+        setToastBody({success : error.response.data.success})
+        setErrors({errorBack :  error.response.data.msg})
+        setToast(true)
+        setTimeout(() => {
+            setToast(false)
+        }, 1000);
       }
+    }
 
-      if(conditional === "register") {
-          const {data} = await axios.post("/users/create", {email, password  , userName , fullName, verificationNumber  , birthDate , gender , address , nationality  ,phoneNumber , landlord } )
+
+  if(conditional === "register") {
+        try {
+        const {data} = await axios.post("/users/create", {email, password  , userName , fullName, verificationNumber  , birthDate , gender , address , nationality  ,phoneNumber , landlord } )
+        console.log(data);
           if(data) {
             console.log(data);
             setToastBody({response :data})
             setToast(true)
-            return console.log(data);
-          }    
-          }
-        
-  } catch (error) {
+            setTimeout(() => {
+              setToast(false)
+              navigate("/home")
+            }, 1500 )
+            return
+          }   
+          } catch (error) {
     setToastBody({response : error.message})
     setToast(true)
+    setTimeout(()=> {
+      setToast(false)
+    }, 1500)
     return 
+      
+    }
   }
+
 }

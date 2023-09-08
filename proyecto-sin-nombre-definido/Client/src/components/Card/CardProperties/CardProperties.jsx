@@ -2,6 +2,7 @@ import React from "react";
 import style from "./CardProperties.module.css";
 import { Link } from "react-router-dom";
 
+
 const CardProperties = (props) => {
   const descripCut = () => {
     if (props.description.length > 220) {
@@ -35,7 +36,7 @@ const CardProperties = (props) => {
             <p className={`card-text`}>Precio ${props?.rentPrice}</p>
               <div className="d-flex justify-content-end">
                 <Link to={`/detail/${props.id}`} target="_blank">
-                  <button className="btn btn-primary">Ver Detalles</button>
+                  <button  className="btn btn-primary">Ver Detalles</button>
                 </Link>
               </div>
             </div>
