@@ -1,0 +1,30 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
+  }
+
+
+   .container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(./pxfuel.jpg);
+  filter: blur(2px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+.buttonGoogle {
+    background-color : white;
+    border: thick;
+    border-radius: 20px;
+    box-shadow :rgba(0, 0, 0, 0.815);
+}

@@ -12,16 +12,23 @@
 .cajaCarrusel {
     /* padding: 10px; */
     grid-area: cabecera;
-    background-color: rgba(173, 216, 230, 0.144);
+    /* background-color: rgba(173, 216, 230, 0.144); */
+    /* Establece un tamaño fijo para .cajaCarrusel */
+    width: 100%; /* O el ancho que desees */
+    height: 700px; /* O la altura que desees */
+    /* Configura el desplazamiento vertical */
+    
+    /* Añade otros estilos según sea necesario */
 }
 .cajaCarrusel img {
-    width: 100vw;
-    margin: 0;
-    border-radius: 0 !important;
-    /* background-size: contain; */
-    height: 100vh;
-}
+    width: 100%;
+  height: 100vh; /* Esto permite que la altura se ajuste automáticamente para mantener la proporción original de la imagen */
+  margin: 0;
 
+  max-height: 100vh;
+  border-radius: 0 !important;
+  /* No establezcas la altura fija para la imagen, deja que se ajuste automáticamente */
+}
 .card{
     padding: 10px;
     width: 100%;
@@ -42,13 +49,16 @@
     z-index: 99;
 }
 
+
 .containerText{
+    
     display: flex;
 	align-items: center;
 	justify-content: center;
     font-family: 'Avenir', sans-serif; ;
-	color: white;
 }
+
+
 
 .cajaCarrusel h1{
     font-family: 'Geologica', sans-serif;
@@ -56,19 +66,21 @@
     z-index: 10000;
     top: 35%;
     left: 50%;
-    color: #e6e6e6;
+    color: #dddddd;
+    
     transform: translate(-50%,-50%);
     text-shadow: 2px 2px 2px black;
     font-size: 3em;
     /* font-weight: 400; */
     text-align: center;
-    font-family: 'Avenir', sans-serif; ;
+    font-family: 'Avenir', sans-serif;
+
 }
 
 .cajaCarrusel h1 > span{
     position: relative;
     display: inline-block;
-    color: #5ccff2;
+    color: #9d0aca;
     height: 3.5rem;
     font-family: 'Avenir', sans-serif; ;
     vertical-align: bottom;
@@ -79,6 +91,7 @@
     animation: animateWords 5s infinite ease;
     font-family: 'Avenir', sans-serif; 
 }
+
 
 @keyframes animateWords {
     
@@ -104,5 +117,19 @@
 }
 
 .containerFluid{
-    background: linear-gradient(to bottom right, rgb(56, 82, 94),rgb(66, 107, 114), rgba(175, 194, 199, 0.753), rgb(231, 219, 108));
+    /* overflow: hidden; */
+    background: #e7e7e7;
 }
+.svg {
+    position: absolute;
+    /* z-index: 2; */
+    bottom: -50px;
+    width: 100vw;
+    /* left: -1000; */
+    color: black;
+  }
+
+  .sale{
+    position: relative;
+    z-index: 6;
+  }

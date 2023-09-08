@@ -1,0 +1,13 @@
+.cardsCont {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.container{
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.63);
+    transition: transform 0.2s;
+}
+.container:hover {
+    transform: translateY(-5px);
+}
