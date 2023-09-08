@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 
 
+
 const AllProperties = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);

@@ -7,6 +7,6 @@ const authRouter = Router()
 authRouter.post('/', loginCtrl)
 
 //Permite registrar una cuenta nueva
-// authRouter.post('/register', registerCtrl)
+authRouter.post('/register', registerCtrl)
 
 module.exports = authRouter

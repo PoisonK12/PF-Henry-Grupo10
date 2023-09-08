@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo.png";
 import style from "./Nav.module.css";
 import Menu from "./Menu/Menu";
 
-export const Nav = () => {
+export const Nav = ({access , setAccess}) => {
   const location = useLocation()
 
   const [fixed, setFixed] = useState(false);
@@ -40,6 +40,7 @@ export const Nav = () => {
           </NavLink>
         </li>
         <li>
+         
           <NavLink
             to="/checkIn"
             className={({ isActive }) => (isActive ? style.active : "")}
@@ -80,7 +81,15 @@ export const Nav = () => {
         </li>
       </ul>
       <div >
+        {!access ?
         <Menu />
+       : <NavLink to="/checkIn" 
+       className={({ isActive }) =>
+              isActive ? style.active : style.navHover
+            }>
+        <li>Acceder</li>
+        </NavLink> 
+      }
       </div>
     </nav>
   );

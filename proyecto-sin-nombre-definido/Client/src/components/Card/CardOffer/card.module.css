@@ -1,7 +1,7 @@
 .cardContainer{
   background-color: rgba(0, 0, 0, 0.1);
-  max-height: 249px;
-  height: 249px;
+  /* max-height: 249px; */
+  height: auto;
   
   width: 100%;
 }

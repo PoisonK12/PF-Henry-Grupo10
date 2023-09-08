@@ -1,6 +1,18 @@
 const { User } = require("../db");
 const { Op, Sequelize } = require("sequelize");
 
+// Método para soft delete
+//(delete) http://localhost:3001/users/id
+User.prototype.softDelete = function () {
+  return this.update({ hide: true });
+};
+
+// Método para restaurar
+//http://localhost:3001/users/restore/id
+User.prototype.restore = function () {
+  return this.update({ hide: false });
+};
+//!-----------------------------------------------------------------------
 const getUserByIdController = async (id) => {
   try {
     const response = await User.findOne({ where: { id: id } });
@@ -11,9 +23,32 @@ const getUserByIdController = async (id) => {
   }
 };
 //!------------------------------------------------------------------------
-const getAllUserController = async () => {
+const getAllUserController = async (req) => {
   try {
-    const response = await User.findAll();
+    const { query } = req;
+
+    const sortMap = {
+      userNameAsc: ["userName", "ASC"],
+      userNameDesc: ["userName", "DESC"],
+      averageScoreAsc: ["averageScore", "ASC"],
+      averageScoreDesc: ["averageScore", "DESC"],
+    };
+
+    const order = [];
+    for (const param in query) {
+      if (sortMap[param] && query[param] === "si") {
+        order.push(sortMap[param]);
+      }
+    }
+
+    if (order.length === 0) {
+      throw new Error(
+        "No se proporcionaron parámetros de ordenamiento válidos."
+      );
+    }
+    const response = await User.findAll({
+      order,
+    });
 
     if (response.length === 0) {
       throw new Error("No hay usuarios registrados!");
@@ -75,10 +110,7 @@ const updateUser = async ({
     throw error;
   }
 };
-const updateReviewUser = async (id, averageScore, numberOfReviews, res) => {
-  console.log(id + "11");
-  console.log(averageScore + "22");
-  console.log(numberOfReviews + "33");
+const updateReviewUser = async (id, averageScore, numberOfReviews) => {
   try {
     const updateReviewUser = await User.findOne({
       where: { id: id },
@@ -89,9 +121,9 @@ const updateReviewUser = async (id, averageScore, numberOfReviews, res) => {
       numberOfReviews,
     });
 
-    res.status(200).json(updateReviewUser);
+    return updateReviewUser;
   } catch (error) {
-    res.status(500).json({ error: message.error });
+    throw error;
   }
 };
 
@@ -140,6 +172,23 @@ const createUserController = async ({
   }
 };
 
+const softDeleteUserById = async (id) => {
+  //Borrado logico añadido
+  const user = await User.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  await user.softDelete();
+
+  return "User deleted successfully";
+};
+
 const deleteUserById = async (id) => {
   try {
     const user = await User.findOne({
@@ -153,11 +202,26 @@ const deleteUserById = async (id) => {
     }
     await user.destroy();
 
-    return "Usuario eliminado con exito";
+    return "Usuario eliminado (permanentemente) con exito";
   } catch (error) {
     console.log(error);
     throw error;
   }
+};
+
+const restoreUserById = async (id) => {
+  const user = await User.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+  await user.restore();
+
+  return "User restored successfully";
 };
 
 module.exports = {
@@ -167,4 +231,6 @@ module.exports = {
   createUserController,
   updateUser,
   updateReviewUser,
+  restoreUserById,
+  softDeleteUserById,
 };
