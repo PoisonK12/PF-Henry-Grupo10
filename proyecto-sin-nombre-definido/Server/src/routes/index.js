@@ -5,8 +5,10 @@ const amenitiesRouter = require("./amenitiesRouter");
 const authRouter = require("./auth");
 const reviewsRouter = require("./reviewsRouter");
 const logOutRouter = require('./logOut')
+const googleLoginRouter = require('./googleLogin')
 const router = Router();
 
+router.use('/googleAuth', googleLoginRouter)
 router.use("/login", authRouter);
 router.use('/logout', logOutRouter)
 router.use("/users", usersRouter);

@@ -6,6 +6,8 @@ const {
   getUserByIdHandler,
   updateUserHandler,
   userDeleteOrBanHandler,
+  restoreUserByIdHandler,
+  softDeleteUserByIdHandler
 } = require("../handlers/userHandler");
 
 const usersRouter = Router();
@@ -25,6 +27,10 @@ usersRouter.post("/create", userPostHandler);
 usersRouter.put("/", updateUserHandler);
 
 usersRouter.delete("/:id", userDeleteOrBanHandler);
+
+usersRouter.delete("/delete/:id", softDeleteUserByIdHandler);
+
+usersRouter.get("/restore/:id", restoreUserByIdHandler);
 
 
 module.exports = usersRouter;

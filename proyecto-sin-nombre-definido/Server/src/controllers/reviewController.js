@@ -1,6 +1,10 @@
-const { Review, User } = require("../db");
+const { Review, User, Asset } = require("../db");
 const { Op, Sequelize } = require("sequelize");
-const { getAssetById, updateAsset } = require("../controllers/assetController");
+const {
+  getAssetById,
+  updateAsset,
+  updateReviewAsset,
+} = require("../controllers/assetController");
 const {
   updateReviewUser,
   getUserByIdController,
@@ -53,7 +57,7 @@ const updateReview = async (
 };
 
 //!---------------------------------evaluador-texto--puntos-evaluado---------------------------------
-const reviewUserController = async (userName, score, comment, id, res) => {
+const reviewUserController = async (userName, score, comment, id) => {
   try {
     const response = await getUserByIdController(id);
     let { averageScore, numberOfReviews } = response;
@@ -62,17 +66,12 @@ const reviewUserController = async (userName, score, comment, id, res) => {
     averageScore = suma / (numberOfReviews + 1);
     numberOfReviews = numberOfReviews + 1;
 
-    await updateReviewUser(id, averageScore, numberOfReviews, res);
-    res.status(200).json(response);
+    await updateReviewUser(id, averageScore, numberOfReviews);
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
   try {
-    const findUser = await User.findOne({
-      where: { id: id },
-    });
-    console.log(findUser.dataValue);
-
+    const findUser = await User.findByPk(id);
     if (findUser) {
       const createdReview = await Review.create({
         userName,
@@ -80,56 +79,53 @@ const reviewUserController = async (userName, score, comment, id, res) => {
         score,
       });
 
-      await createdReview.addUser(findUser);
-      res
-        .status(200)
-        .json(`Exito al crear la review de ${findUser.userName}, ${userName}`);
+      await findUser.addReview(createdReview);
+      return `Exito al crear la review de ${findUser.userName}, ${userName}`;
     }
-
     res.status(500).json(`Mala mia`);
   } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ error: message.error });
+    console.log(error);
+    throw error;
   }
 };
-
 //!---------------------------------evaluador-texto--puntos-evaluada---------------------------------
-const reviewAssetController = async (userName, comment, score, id) => {
+const reviewAssetController = async (userName, score, comment, id) => {
   try {
     const response = await getAssetById(id);
-    res.status(200).json(response);
-    console.log(response);
+    let { averageScore, numberOfReviews } = response;
 
-    console.log(response);
-    const { averageScore, numberOfReviews } = response;
+    const suma = averageScore * numberOfReviews + score;
+    averageScore = suma / (numberOfReviews + 1);
+    numberOfReviews = numberOfReviews + 1;
 
-    await updateAsset(id, averageScore, numberOfReviews);
-    res.status(200).json(response);
+    await updateReviewAsset(id, averageScore, numberOfReviews);
   } catch (error) {
-    res.status(400).json({ error: message.error });
+    console.log(error);
   }
   try {
-    const findAsset = await Asset.findOne({
-      where: { id: id },
-    });
+    console.log(111111111111111111);
+    // try {
+    const findAsset = await Asset.findByPk(id);
 
+    console.log(userName);
+    console.log(comment);
+    console.log(score);
+    console.log(333333333333333);
     if (findAsset) {
       const createdReview = await Review.create({
         userName,
-        comment,
         score,
+        comment,
       });
 
-      await createdReview.addAsset(findAsset);
-      res
-        .status(200)
-        .json(`Exito al crear la review de ${findAsset.name}, ${userName}`);
+      console.log(444444444444444444);
+      await findAsset.addReview(createdReview);
+      return `Exito al crear la review de ${findAsset.name}, ${userName}`;
     }
 
-    res.status(500).json(`Mala mia`);
+    return `Mala mia`;
   } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ error: message.error });
+    console.log(error);
   }
 };
 

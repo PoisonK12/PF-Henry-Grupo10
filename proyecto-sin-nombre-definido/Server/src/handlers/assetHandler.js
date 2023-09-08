@@ -45,6 +45,7 @@ const getAssetByIdHandler = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
+
 const updateAssetHandler = async (req, res) => {
   const { id } = req.params;
   const {
@@ -56,12 +57,25 @@ const updateAssetHandler = async (req, res) => {
     rentPrice,
     rooms,
     bathrooms,
-    averageScore,
     coveredArea,
     amenities,
   } = req.body;
-
+  
   try {
+
+  // const validData = dataSchemePost.parse({
+  //   body: {
+  //   name,
+  //   description,
+  //   images,
+  //   onSale,
+  //   sellPrice,
+  //   rentPrice,
+  //   rooms,
+  //   bathrooms,
+  //   amenities,
+  //   },
+  // });
     await updateAsset(
       id,
       name,
@@ -72,7 +86,6 @@ const updateAssetHandler = async (req, res) => {
       rentPrice,
       rooms,
       bathrooms,
-      averageScore,
       coveredArea,
       amenities
     );
@@ -98,34 +111,30 @@ const createAssetHandler = async (req, res) => {
     rentPrice,
     rooms,
     bathrooms,
-    averageScore,
-    numberOfReviews,
     coveredArea,
     totalArea,
     amenities,
   } = req.body;
 
   try {
-    const validData = dataSchemePost.parse({
-      body: {
-        name,
-        description,
-        address,
-        location,
-        country,
-        images,
-        onSale,
-        sellPrice,
-        rentPrice,
-        rooms,
-        bathrooms,
-        averageScore,
-        numberOfReviews,
-        coveredArea,
-        totalArea,
-        amenities,
-      },
-    });
+    // const validData = dataSchemePost.parse({
+    //   body: {
+    //     name,
+    //     description,
+    //     address,
+    //     location,
+    //     country,
+    //     images,
+    //     onSale,
+    //     sellPrice,
+    //     rentPrice,
+    //     rooms,
+    //     bathrooms,
+    //     coveredArea,
+    //     totalArea,
+    //     amenities,
+    //   },
+    // });
     const response = await createAsset(
       name,
       description,
@@ -138,8 +147,6 @@ const createAssetHandler = async (req, res) => {
       rentPrice,
       rooms,
       bathrooms,
-      averageScore,
-      numberOfReviews,
       coveredArea,
       totalArea,
       amenities
@@ -147,6 +154,7 @@ const createAssetHandler = async (req, res) => {
 
     res.status(201).json(response);
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 };
@@ -205,6 +213,7 @@ const getAmenitiesHandler = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
+
 const getAllAssetsWithAmenitiesHandler = async (req, res) => {
   const { amenitiesss } = req.query;
   try {
