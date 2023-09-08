@@ -20,7 +20,7 @@ import Chatbot from './components/Chatbot/Chatbot';
 import { useEffect } from 'react';
 axios.defaults.baseURL = "http://localhost:3001"
 import jwt_decode from "jwt-decode"
-import ScrollToTop from './Helpers';
+import {ScrollToTop} from './Helpers';
 
 
 

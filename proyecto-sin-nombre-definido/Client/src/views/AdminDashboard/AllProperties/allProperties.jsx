@@ -11,9 +11,11 @@ import {
 import axios from "axios";
 
 
+
 const AllProperties = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.propertiesCopy);
+  console.log('sisis', allProperties);
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
@@ -97,7 +99,6 @@ const AllProperties = () => {
     fileEdit.append("cloud_name", "dkdounmsa")
     const {data} = await axios.post(`https://api.cloudinary.com/v1_1/dkdounmsa/image/upload`, fileEdit)
     setForm({...form, images: [...form.images, data.secure_url]})
-
   };
   // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
@@ -906,7 +907,7 @@ const AllProperties = () => {
                     <button
                       type="submit"
                       className="btn btn-primary"
-                      data-bs-target="#exampleModalToggle7"
+                      data-bs-target="#exampleModalToggle9"
                       data-bs-toggle="modal"
                     >
                       Enviar

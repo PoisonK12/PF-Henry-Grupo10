@@ -10,8 +10,10 @@ import {
   DELETE_ASSET_BY_ID,
   GET_LOGIN,
   GET_COUNTRIES,
-  GET_STATES,
-  ACCESS
+  GET_AMENITIES,
+  DELETE_USER_BY_ID,
+  GET_ALL_USERS,
+  GET_STATES
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -32,7 +34,7 @@ export const getAllReallyProperties = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios(
-        "/assets/menosmalquediegodijoquenonosllenemosderutas"
+        "/assets/admin"
       );
       return dispatch({
         type: GET_ALL_ALL_PROPERTIES,
@@ -43,6 +45,20 @@ export const getAllReallyProperties = () => {
     }
   };
 };
+
+export const getAllUsers = () => {
+  return async (dispatch) =>{
+    try {
+      const {data} = await axios('/users');
+      dispatch({
+        type: GET_ALL_USERS,
+        payload: data
+      })
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 
 export const getAssetById = (id) => {
   return async (dispatch) => {
@@ -57,6 +73,20 @@ export const getAssetById = (id) => {
     }
   };
 };
+
+export const getAmenities = () =>{
+  return async (dispatch) =>{
+    try {
+      const {data} = await axios("/amenities")
+      return dispatch({
+        type: GET_AMENITIES,
+        payload: data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 export const SearchByLocation = (query, page) => {
   return async (dispatch) => {
@@ -186,6 +216,21 @@ export const deleteAssetById = (id) => {
     }
   };
 };
+
+export const deleteUserById = (id) => {
+  return async (dispatch) =>{
+    try {
+      await axios.delete(`/users/${id}`)
+      dispatch({
+        type: DELETE_USER_BY_ID,
+        payload:id
+      })
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 
 export const getCountries = () => {
   return async (dispatch) => {
