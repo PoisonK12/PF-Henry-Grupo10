@@ -1,50 +1,56 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useParams } from "react-router-dom";
 import CardProperties from "../../Card/CardProperties/CardProperties";
-import { getAllProperties } from "../../../redux/actions";
+import { SearchByLocation, getLocation } from "../../../redux/actions";
+import NotFoundPage from "../../../views/404/404";
+import style from "./CardsProperties.module.css"
 
 
 const CardsProperties = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  
+ 
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.properties);
   const listContainerRef = useRef(null);
+  const {location} = useParams()
 
-  useEffect(() => {
-    dispatch(getAllProperties(currentPage + 1));
-    console.log(allProperties.count);
-  }, [currentPage, dispatch]);
-
-
+ 
   
-  const totalProp = Math.ceil(allProperties.count / 10);
+  const totalProp = Math.ceil(allProperties?.rows?.length / 10);
+  console.log(totalProp);
 
   const scrollToTop = () => {
    window.scrollTo({behavior:"smooth", top:0})
   };
 
 
-
   const nextHandler = () => {
-    setCurrentPage((prevPage) => {
-        scrollToTop();
-        return Math.min(prevPage + 1, totalProp - 1)});
-
+    scrollToTop();
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalProp - 1));
   };
 
   const prevHandler = () => {
-    setCurrentPage((prevPage) => {
-        scrollToTop();
-        return Math.max(prevPage - 1, 0)});
-
+    scrollToTop();
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
+  useEffect(() => {
+    dispatch(SearchByLocation(location ,currentPage + 1));
+    console.log(allProperties.count);
+  }, [currentPage, dispatch, location]);
+
+  useEffect(() =>{
+  }, [allProperties])
+  console.log(allProperties)
   return (
     <>
-    <div ref={listContainerRef}> 
-      {allProperties.rows?.map((ele) => (
-        <CardProperties
+    {!allProperties.length ? (
+      <>
+    <div className={style.background} ref={listContainerRef}> 
+      {allProperties.rows?.map((ele) => {
+       return <CardProperties
           key={ele.id}
           id={ele.id}
           name={ele.name}
@@ -53,13 +59,17 @@ const CardsProperties = () => {
           location={ele.location}
           country={ele.country}
           images={ele.images}
+          rentPrice={ele.rentPrice}
         />
-      ))}
+      })}
       </div>    
-      <div>
-        <button onClick={prevHandler}>PREV</button>
-        <button onClick={nextHandler}>NEXT</button>
+      <div className={style.buttonContainer}>
+        <button onClick={prevHandler} className={style.button}>PREV</button>
+        <p>Pagina {currentPage + 1} de {totalProp}</p>
+        <button onClick={nextHandler} className={style.button}>NEXT</button>
       </div>
+      </>
+    ) : <NotFoundPage/> }
     </>
   );
 };
