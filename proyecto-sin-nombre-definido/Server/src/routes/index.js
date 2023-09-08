@@ -5,6 +5,7 @@ const amenitiesRouter = require("./amenitiesRouter");
 const authRouter = require("./auth");
 const reviewsRouter = require("./reviewsRouter");
 const logOutRouter = require('./logOut')
+const rentsRouter = require("./rentsRouters");
 const router = Router();
 
 router.use("/login", authRouter);
@@ -13,5 +14,6 @@ router.use("/users", usersRouter);
 router.use("/assets", assetsRouter);
 router.use("/amenities", amenitiesRouter);
 router.use("/reviews", reviewsRouter);
+router.use("/rents", rentsRouter);
 
 module.exports = router;
