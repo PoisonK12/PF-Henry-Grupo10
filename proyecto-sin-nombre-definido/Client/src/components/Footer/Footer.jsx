@@ -83,7 +83,7 @@ export const Footer = () => {
                   </p>
                 </div>
 
-                <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 ">
                   <a
                     className={`btn btn-primary btn-floating m-1 ${style.borderNone}`}
                     style={{ backgroundColor: "#3b5998" }}

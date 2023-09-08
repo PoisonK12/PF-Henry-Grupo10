@@ -57,7 +57,7 @@ const AllUser = () => {
           </tr>
         </thead>
         <tbody>
-          {allUsers.length && allUsers?.map((ele, index) => (
+          {allUsers?.length && allUsers?.map((ele, index) => (
             <tr key={ele.id} >
               <th scope="row" disabled={disabledRows.includes(ele.id)} style={{ backgroundColor: rowBackgrounds[ele.id] || 'white' }}>{index}</th>
               <td disabled={disabledRows.includes(ele.id)} style={{ backgroundColor: rowBackgrounds[ele.id] || 'white' }}><img src={ele.profilePic} alt="" style={{ width: "35px", height: "35px", borderRadius: "100%" }} /></td>

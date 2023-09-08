@@ -22,6 +22,9 @@ const PropertyForm = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [conditionalCreate, setConditionalCreate] = useState(false);
   
+  const token = localStorage.getItem("token")
+  
+
 
   const [errors, setErrors] = useState({
     name: "",
@@ -46,6 +49,9 @@ const PropertyForm = () => {
 
   console.log(errors);
   const navigate = useNavigate();
+  useEffect(() => {
+    !token ? navigate("/home") : "";
+  }, [])
   const [form, setForm] = useState({
     name: "",
     images: [],
