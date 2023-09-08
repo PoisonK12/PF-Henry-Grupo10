@@ -15,6 +15,7 @@ function GoogleLoginButton() {
   // Función para manejar la respuesta de la autenticación de Google.
   function handleCallbackResponse(response) {
     console.log('Encoded JWT ID token: ' + response.credential);
+    
     // Decodifica el token JWT para obtener la información del usuario.
     var userObj = jwt_decode(response.credential);
     console.log(userObj);

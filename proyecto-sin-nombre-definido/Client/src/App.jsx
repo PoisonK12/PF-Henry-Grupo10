@@ -25,6 +25,9 @@ import ScrollToTop from './Helpers';
 
 
 function App() {
+  const [access , setAccess] = useState(false);
+  
+  const location = useLocation()
   function handleCallbackResponse(response){
     console.log("Encoded JWT ID token: " + response.credential);
     var userObj = jwt_decode(response.credential)
@@ -46,9 +49,10 @@ function App() {
 
     },[]);
   
-  const [access , setAccess] = useState(false);
-  
-  const location = useLocation()
+
+    useEffect(() => {
+
+    }, [access])
 
   return (
     <>
@@ -56,7 +60,7 @@ function App() {
       <div id="signInDiv"></div>
     </div> } */}
 
-      {location.pathname !== "/" && <Nav/>}
+      {location.pathname !== "/" && <Nav access = {access} setAccess={setAccess}/>}
       <ScrollToTop></ScrollToTop>
      <Routes>
       <Route path='/' element={<><Landing/></>} />

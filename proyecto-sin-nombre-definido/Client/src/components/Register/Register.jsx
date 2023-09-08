@@ -10,7 +10,22 @@ const Register = ({setConditional , conditional }) => {
     
     const [toastBody , setToastBody] = useState({response : ""})
     const [toast , setToast] = useState(false)
-    const [errors , setErrors] = useState( {})
+    const [errors , setErrors] = useState( {
+
+        profilePic : "",
+        userName : "",
+        fullName : "",
+        phoneNumber : "",
+        verificationNumber : "",
+        gender : "" , 
+        address : "",
+        landlord : false ,
+        nationality : "",
+        birthDate : "",
+        email : "",
+        password : "",
+        confirmPassword : "",
+    })
     const [passwordType , setPasswordType ] = useState(false)
     const [passwordType2 , setPasswordType2 ] = useState(false)
 
@@ -20,7 +35,7 @@ const Register = ({setConditional , conditional }) => {
         userName : "",
         fullName : "",
         phoneNumber : "",
-        verificationNumber : "true",
+        verificationNumber : "",
         gender : "" , 
         address : "",
         landlord : false ,
@@ -42,6 +57,10 @@ const Register = ({setConditional , conditional }) => {
         const {value} = e.target;
        const {type} = e.target
         
+       if(name === "phoneNumber") {
+        setRegister({...register , [name] : value, verificationNumber : value})
+        return
+       }
        
         if(type === "select-one" && name === "landlord") {
             const boolean = Boolean(value)
@@ -105,7 +124,7 @@ const Register = ({setConditional , conditional }) => {
         setConditional("login")
     };
 
-//?----------------------------- Picture handlers -------------------------------------------
+//?------------------------------------------------- Picture handlers -------------------------------------------------------------------------------
 
 const handleDrop = (event) => {
 
@@ -139,15 +158,23 @@ const handleDrop = (event) => {
     
     setRegister({ ...register, profilePic: data.secure_url });
        }
-    }
+    };
 
-
+//?-------------------------------------------------Submit Handlers------------------------------------------------------------------------------------
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrors(validation({...register}))
+
+        if(errors) {
+            return
+        }
         getLogin(register , conditional , setToastBody , setToast);
     };
+
+
+//?-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     return (
     <>
@@ -163,6 +190,7 @@ const handleDrop = (event) => {
                   accept="image/*"
                   style={{ display: "none" }}
                   onChange={(e) => handleFile(e.target.files[0])}
+                  
                 />
 
                 <div
@@ -221,7 +249,8 @@ const handleDrop = (event) => {
                     </div>  
                     }
                 </div>
-                
+                {errors.profilePic ? <p style={{color : "red" , fontSize : "15px"}}>{errors.profilePic}</p> : null}
+
               </div>
                   
 
@@ -275,6 +304,7 @@ const handleDrop = (event) => {
                                     <option value="Undefined">Indefinido</option>
                                     <option value="No apply">No aplicar</option>
                                 </select>
+                                {errors.gender ? <p style={{color : "red" , fontSize : "15px"}}>{errors.gender}</p> : null}
                             </div>
                             <div class="m-3 col-md-5">
                                 <label class="form-label">Direccion :</label>
@@ -297,6 +327,7 @@ const handleDrop = (event) => {
                                 <option value="Colombia">Columbia</option>
                                 <option value="Mexico">Mexico</option>
                                </select>
+                               {errors.nationality ? <p style={{color : "red" , fontSize : "15px"}}>{errors.nationality}</p> : null}
                             </div>
                            
                             <div class="m-3 col-md-5">
@@ -306,12 +337,15 @@ const handleDrop = (event) => {
                                 <option value="true">Si</option>
                                 <option value="false">No</option>
                                </select>
+                               {errors.landlord ? <p style={{color : "red" , fontSize : "15px"}}>{errors.landlord}</p> : null}
                             </div>
                         </div>
                         <div class="d-flex flex-row justify-content-center align-items-center ">
                             <div class="m-3 col-md-5">
                                 <label class="form-label" htmlFor="email">Email :</label>
                                 <input type="email" name="email" value={register.email} class={`form-control ${style.inputs}`}  onChange={handleChange} placeholder="Correo electrónico" />
+                                {errors.email ? <p style={{color : "red" , fontSize : "15px"}}>{errors.email}</p> : null}
+
                             </div>
                             
                            
@@ -324,11 +358,15 @@ const handleDrop = (event) => {
                                 <label class="form-label" htmlFor="password">Contraseña</label>
                                 <input type={passwordType ? "text" : "password"} value={register.password} name="password" class={`form-control ${style.inputs}`} onChange={handleChange} placeholder="Contraseña" />
                                 <button class={style.iconPassword} id="hide1"  onClick={(e) => handleHide(e)}>{passwordType ? iconVisible : iconInvisible}</button>
+                                {errors.password ? <p style={{color : "red" , fontSize : "15px"}}>{errors.password}</p> : null}
+
                             </div>
                             <div class="m-3 col-md-5">
                                 <label class="form-label" htmlFor="confirmPassword">Confirmar Contraseña</label>
                                 <input type={passwordType2 ? "text" : "password"} name="confirmPassword" value={register.confirmPassword} class={`form-control ${style.inputs}`} onChange={handleChange} placeholder="Confirmar contraseña" />
                                 <button class={style.iconPassword2} id="hide2" onClick={(e) => handleHide(e)}>{passwordType2 ? iconVisible2 : iconInvisible2}</button>
+                                {errors.confirmPassword ? <p style={{color : "red" , fontSize : "15px"}}>{errors.confirmPassword}</p> : null}
+
                             </div>
 
                         </div>
@@ -347,10 +385,12 @@ const handleDrop = (event) => {
             </form>
             <div>
               <Toast  show={toast}>
-                 <Toast.Header class="text-success">
-                <strong className="me-auto">Toast Title</strong>
-               </Toast.Header>
-               <Toast.Body >{toastBody.response}</Toast.Body>
+               <Toast.Body >{
+               <div className>
+                   <p > Creado con éxito. Redirigiendote...</p>
+               </div>
+               }
+               </Toast.Body>
                </Toast>
             </div>
     </>
