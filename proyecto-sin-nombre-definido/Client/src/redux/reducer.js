@@ -18,8 +18,8 @@ const rootReducer = (state = initialState, action) => {
         //     return {...state, properties: action.payload}
 
         case GET_ALL_ALL_PROPERTIES:
-            return {...state, propertiesCopy: action.payload}
-            
+            return {...state, propertiesCopy: action.payload , properties: action.payload}
+        
         case GET_ALL_USERS:
             return {...state, users: action.payload}
         
