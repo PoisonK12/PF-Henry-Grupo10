@@ -1,20 +1,40 @@
-
-.imageContainer {
-  position: relative;
+@import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Anton&family=Bangers&display=swap&family=Dancing+Script&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Victor+Mono:wght@300&display=swap%27');
+.select{
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
 }
-
-.centeredCaption {
-
+.select img{
+  width: 0px;
+  flex-grow: 1;
+  object-fit: cover;
+  opacity: .4;
+  transition: 0.4s ease;
+}
+.select img:hover{
+  cursor: pointer;
+  width: 300px;
+  opacity: 1;
+  filter: contrast(120%);   
+  box-shadow: 10px 20px 20px 15px black;
+}
+.textOverlay {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
   text-align: center;
-  color: bisque;
+  color: rgb(255, 255, 255); /* Color de texto */
+  padding: 20px; /* Espacio alrededor del texto */
+  z-index: 10;
 }
-
-/* Agrega una nueva clase para el subtítulo */
-.subtitle {
-  font-size: 6em; /* Ajusta el tamaño de fuente según tus preferencias */
+.text{
+  font-family: 'ADLaM Display', cursive;
+  font-size: 75px;
+}
+.parra{
+  font-family: 'Dancing Script', cursive;
+  font-size: 25px;
 }

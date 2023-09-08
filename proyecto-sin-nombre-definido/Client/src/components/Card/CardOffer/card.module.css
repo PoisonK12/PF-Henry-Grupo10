@@ -1,14 +1,25 @@
 .cardContainer{
-    background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
+  /* max-height: 249px; */
+  height: auto;
+  
+  width: 100%;
 }
 .card{
     width: 100%;
     display: flex;
+    transition: transform 0.5s ease;
     justify-content: center;
     align-items: center;
     /* background-color: c; */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); 
+    box-shadow:  0 10px 15px -3px rgba(0,0,0,.2),0 4px 6px -4px rgba(0,0,0,.5);
+ 
 }
+
+.card:hover{
+  transform: scale(1.1);
+}
+
 
 img{
     border-top-left-radius: 5px; /* Cambia el valor según tus preferencias */
@@ -31,14 +42,15 @@ img{
   z-index: -1;
   content: '';
   display: block;
-  border: 3px solid #ff261e;
+  border: 3px solid #091f44;
 }
 .ribbon span {
   position: absolute;
   display: block;
   width: 165px;
+  color: aliceblue;
   padding: 5px 0;
-  background-color: #ff261e;
+  background-color: #091f44;
   box-shadow: 0 5px 10px rgba(0,0,0,.1);
 }
 
@@ -68,3 +80,20 @@ img{
     transform: rotate(45deg);
   }
   
+  .cardContainer h3{
+    font-weight: bold;
+    justify-content: left !important;
+    margin: 0;
+  }
+
+  .cardLocation h4{
+    font-size: 12px;
+  }
+
+  .price{
+    /* position: absolute; */
+    bottom: 20px;
+    right: 20px;
+    text-align: end !important;
+    justify-content: right !important;
+  }
