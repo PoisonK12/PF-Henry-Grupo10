@@ -24,7 +24,6 @@ const config = {
 };
 
 function Chatbot() {
-  const { location } = useParams(); // Obtén el parámetro 'location' de la URL
   const navigate = useNavigate(); // Obtiene la función de navegación
   const props = useSelector(state => state.properties)
   const [userName, setUserName] = useState({

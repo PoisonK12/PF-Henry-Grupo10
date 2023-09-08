@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./CardProperties.module.css";
 import { Link } from "react-router-dom";
-import { flashDetail } from "../../../Helpers";
+
 
 const CardProperties = (props) => {
   const descripCut = () => {
@@ -36,7 +36,7 @@ const CardProperties = (props) => {
             <p className={`card-text`}>Precio ${props?.rentPrice}</p>
               <div className="d-flex justify-content-end">
                 <Link to={`/detail/${props.id}`} target="_blank">
-                  <button onClick={() => flashDetail(props.id)} className="btn btn-primary">Ver Detalles</button>
+                  <button  className="btn btn-primary">Ver Detalles</button>
                 </Link>
               </div>
             </div>

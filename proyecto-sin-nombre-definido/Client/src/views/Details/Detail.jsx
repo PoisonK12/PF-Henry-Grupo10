@@ -12,6 +12,7 @@ import Calendar from "./Calendar";
 import Card from "../../components/Card/CardOffer/CardOffer";
 
 const Detail = () => {
+  const {id} = useParams()
   const dispatch = useDispatch();
   const assetDetail = useSelector((state) => state.detail);
   const [imageUrl, setImageUrl] = useState(null);
@@ -21,6 +22,7 @@ const Detail = () => {
 
 
   useEffect(() => {
+    dispatch(getAssetById(id)) 
     dispatch(SearchByLocation(assetDetail.location));
   }, []);
   console.log("Soliii", sugs);
@@ -141,11 +143,11 @@ const Detail = () => {
                 </li>
                 <li className={style.amenitiesItem}>
                   <img src={ruler} width={"20"}></img>
-                  <span> Tamaño propiedad:</span> {assetDetail.coveredArea} mt2
+                  <span> Tamaño propiedad:</span> {assetDetail.coveredArea}mt2
                 </li>
                 <li className={style.amenitiesItem}>
                   <img src={allSize} width={"20"}></img>
-                  <span> Total Area:</span> {assetDetail.totalArea}
+                  <span> Total Area:</span> {assetDetail.totalArea}mt2
                 </li>
               </ul>
             </div>
@@ -211,10 +213,10 @@ const Detail = () => {
               </div>
             </div>
 
-            {propertiesSug.count == 0 ?<div className={style.sugs}>
+            {propertiesSug.count <= 0 ?"":<div className={style.sugs}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h4>
-                  Hemos encontrado <span>{propertiesSug.count -1}</span>{" "}
+                  Hemos encontrado <span>{propertiesSug.count - 1}</span>{" "}
                   coincidencias de localidad
                 </h4>
                 <Link to={`/property?location=${assetDetail.location}`}>
@@ -236,7 +238,7 @@ const Detail = () => {
                   );
                 })}
               </div>
-            </div> :""}
+            </div> }
             
             <div className={style.security}>
               <h3 style={{fontSize:"10px" }}>
