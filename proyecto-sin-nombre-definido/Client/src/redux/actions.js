@@ -270,7 +270,7 @@ export const getStates = (country) => {
           const {data} = await axios.post("/login" , {email , password})
            setToastBody({success :data.success, data : data})
           setToast(true)
-          localStorage.setItem("log", JSON.stringify(data))
+          localStorage.setItem("log", JSON.stringify(data.token))
            setTimeout(() => {
              setToast(false)
              navigate("/home")
