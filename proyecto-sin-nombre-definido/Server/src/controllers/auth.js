@@ -1,22 +1,7 @@
-const { encrypt, compare } = require('../handlers/handleBcrypt');
+const { compare } = require('../handlers/handleBcrypt');
 const { tokenSign } = require('../helpers/generateToken')
 const { User } = require('../db');
 
-const registerCtrl = async (req, res) => {
-  try {
-    const { email, password, name } = req.body;
-    const passwordHash = await encrypt(password);
-    const registerUser = await User.create({
-      email,
-      name,
-      password: passwordHash,
-    });
-
-    res.send({ data: registerUser });
-  } catch (error) {
-    res.status(500).json({ error: error.message }); 
-  }
-};
 
 const loginCtrl = async (req, res) => {
   try {
@@ -41,4 +26,4 @@ const loginCtrl = async (req, res) => {
   }
 };
 
-module.exports = { registerCtrl, loginCtrl }
+module.exports = { loginCtrl }
