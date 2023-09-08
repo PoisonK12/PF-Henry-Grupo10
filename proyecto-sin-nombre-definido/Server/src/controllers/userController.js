@@ -23,9 +23,32 @@ const getUserByIdController = async (id) => {
   }
 };
 //!------------------------------------------------------------------------
-const getAllUserController = async () => {
+const getAllUserController = async (req) => {
   try {
-    const response = await User.findAll();
+    const { query } = req;
+
+    const sortMap = {
+      userNameAsc: ["userName", "ASC"],
+      userNameDesc: ["userName", "DESC"],
+      averageScoreAsc: ["averageScore", "ASC"],
+      averageScoreDesc: ["averageScore", "DESC"],
+    };
+
+    const order = [];
+    for (const param in query) {
+      if (sortMap[param] && query[param] === "si") {
+        order.push(sortMap[param]);
+      }
+    }
+
+    if (order.length === 0) {
+      throw new Error(
+        "No se proporcionaron parámetros de ordenamiento válidos."
+      );
+    }
+    const response = await User.findAll({
+      order,
+    });
 
     if (response.length === 0) {
       throw new Error("No hay usuarios registrados!");
