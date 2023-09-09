@@ -88,6 +88,7 @@ const AllUser = () => {
           ))}
         </tbody>
       </table>
+      
     </div>
   );
 };

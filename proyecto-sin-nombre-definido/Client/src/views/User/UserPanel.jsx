@@ -5,6 +5,8 @@ import style from "./user.module.css";
 import { Link } from "react-router-dom";
 import Favorites from "./Favorite/Favorites";
 import Reviews from "./Reviews/Reviews";
+import Widget from "../AdminDashboard/AllProperties/Balance/Balance";
+import User from "../AdminDashboard/Profile/Profile";
 
 const UserPanel = () => {
     const [componenteActual, setComponenteActual] = useState('A');
@@ -41,14 +43,13 @@ const UserPanel = () => {
               <li class="nav-item">
                     <a
                       class="nav-link"
-                      data-bs-target="#exampleModalToggle4"
-                      data-bs-toggle="modal"
+                      onClick={() => setComponenteActual('D')}
                       style={{
                         display: "flex",
                         alignItems: "center",
                         height: "80px",
                       }}
-                      href="/userPanel"
+                      href="#"
                     >
                       <div>
                       
@@ -151,10 +152,18 @@ const UserPanel = () => {
        {componenteActual === 'A' ?  
         <div className="col-md-9">
       <h1>My Properties Created</h1>
+      <div>
+            <div className={style.widgets}>
+              <Widget type="user" />
+              <Widget type="order" />
+              <Widget type="earning" />
+              <Widget type="balance" />
+            </div>
+          </div>
         <div>
         {allProperties?.map((props, index) => (
           <div className={`${style.centeredContent}`} key={props.id}>
-            <div className={`card mb-3 ${style.maxWidth}`}>
+            <div className={`card mb-3 p-2 ${style.maxWidth}`}>
               <div className="row g-0">
                 <div className="col-md-4">
                   <div
@@ -382,9 +391,13 @@ const UserPanel = () => {
         <div className="col-md-9">
           <Favorites/>
         </div>
-        : <div className="col-md-9">
+        :  componenteActual === 'C' ? 
+        <div className="col-md-9">
           <Reviews/>
         </div>
+        : <div className="col-md-9">
+        <User/>
+      </div>
         }
       </div>
     </div>

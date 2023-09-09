@@ -241,7 +241,7 @@ position: absolute;
 
 .background{
     font-family: montserrat, arial, verdana;
-    background: linear-gradient(to bottom, rgb(80, 80, 80), #161616);
+    background: linear-gradient(to bottom, rgb(0, 0, 0), #ffffff);
     padding: 20px;
     padding-top: 100px;
 }
