@@ -267,10 +267,10 @@ export const getStates = (country) => {
   if (conditional === "login"){
       try { 
         
-          const {data} = await axios.post("/login" , {email , password})
+        const {data} = await axios.post("/login" , {email , password})
+          localStorage.setItem("log", JSON.stringify(data.token))
            setToastBody({success :data.success, data : data})
           setToast(true)
-          localStorage.setItem("log", JSON.stringify(data.token))
            setTimeout(() => {
              setToast(false)
              navigate("/home")
@@ -286,6 +286,7 @@ export const getStates = (country) => {
         setTimeout(() => {
             setToast(false)
         }, 1000);
+        return
       }
     }
 
@@ -294,7 +295,8 @@ export const getStates = (country) => {
         try {
         const {data} = await axios.post("/users/create", {email, password  , userName , fullName, verificationNumber  , birthDate , gender , address , nationality  ,phoneNumber , landlord } )
         console.log(data);
-          if(data) {
+          
+            localStorage.setItem("log", JSON.stringify(data.token))
             console.log(data);
             setToastBody({response :data})
             setToast(true)
@@ -303,7 +305,6 @@ export const getStates = (country) => {
               navigate("/home")
             }, 1500 )
             return
-          }   
           } catch (error) {
     setToastBody({response : error.message})
     setToast(true)
