@@ -73,6 +73,7 @@
 .inputs {
     background-color: transparent;
     border : 0 0 2px 0;
+    border: 2px solid transparent
    
 }
 .inputs::placeholder , label {
