@@ -357,7 +357,7 @@ const Login = ({ setConditional, conditional }) => {
                 </div>
 
                 <hr className={style.hr}></hr>
-
+                      <p style={{color:"blue", cursor:"pointer"}} onClick={handleSwitch}>LOGIN</p>
                 <div class="d-flex flex-row align-items-center justify-content-center">
                   {/* <div class="col-xs-6 m-3">
                     <button

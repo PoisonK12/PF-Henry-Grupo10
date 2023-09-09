@@ -29,7 +29,7 @@ export const Nav = () => {
         fixed && location.pathname !== "/addProperty"
           ? style.fixed
           : location.pathname == "/addProperty" ||
-            /^\/detail\/[\w-]+$/.test(location.pathname)
+            /^\/detail\/[\w-]+$/.test(location.pathname) ||  location.pathname == "/property"
           ? style.back
           : ""
       }`}

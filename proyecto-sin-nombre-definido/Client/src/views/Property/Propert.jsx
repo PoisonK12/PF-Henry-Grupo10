@@ -91,7 +91,7 @@ const Property = () => {
             style={{ paddingLeft: "40px" }}
           >
             <div className={`card-body ${style.cardBody} `}>
-              <div>
+              <div className={style.filterInput}>
                 <label className={`form-label ${style.label}`}>
                   {" "}
                   Localidad
@@ -112,7 +112,7 @@ const Property = () => {
                   ;
                 </select>
               </div>
-              <div>
+              <div className={style.filterInput}>
                 <label
                   htmlFor="inputName"
                   className={`form-label ${style.label}`}
@@ -131,9 +131,9 @@ const Property = () => {
                   id="inputName"
                   placeholder="Nombre de tu propiedad"
                 />
-                <p>${filter.rentPriceMax}</p>
+                <p style={{marginBottom:"0"}}>${filter.rentPriceMax}</p>
               </div>
-              <div>
+              <div className={style.filterInput}>
                 <label
                   htmlFor="inputName"
                   className={`form-label ${style.label}`}
@@ -152,9 +152,9 @@ const Property = () => {
                   id="inputName"
                   placeholder="Nombre de tu propiedad"
                 />
-                <p>${filter.rentPriceMin}</p>
+                <p style={{marginBottom:"0"}}>${filter.rentPriceMin}</p>
               </div>
-              <div>
+              <div className={style.filterInput}>
                 <label
                   htmlFor="inputName"
                   className={`form-label ${style.label}`}
@@ -175,7 +175,7 @@ const Property = () => {
                 />
               </div>
 
-              <div>
+              <div  className={style.filterInput}>
                 <label
                   htmlFor="inputName"
                   className={`form-label ${style.label}`}
@@ -196,7 +196,7 @@ const Property = () => {
                 />
               </div>
 
-              <div>
+              <div  className={style.filterInput}>
                 <h4>Renta</h4>
                 <div className={style.checkboxContainer}>
                   <div className={style.yes}>
@@ -245,7 +245,7 @@ const Property = () => {
               </div>
               {onSale ? (
                 <>
-                  <div>
+                  <div className={style.filterInput}>
                     <label
                       htmlFor="inputName"
                       className={`form-label ${style.label}`}
@@ -264,9 +264,9 @@ const Property = () => {
                       id="inputName"
                       placeholder="Nombre de tu propiedad"
                     />
-                    <p>${filter.sellPriceMax}</p>
+                    <p style={{marginBottom:"0"}}>${filter.sellPriceMax}</p>
                   </div>
-                  <div>
+                  <div className={style.filterInput}>
                     <label
                       htmlFor="inputName"
                       className={`form-label ${style.label}`}
@@ -285,7 +285,7 @@ const Property = () => {
                       id="inputName"
                       placeholder="Nombre de tu propiedad"
                     />
-                    <p>${filter.sellPriceMin}</p>
+                    <p style={{marginBottom:"0"}}>${filter.sellPriceMin}</p>
                   </div>
                 </>
               ) : (
