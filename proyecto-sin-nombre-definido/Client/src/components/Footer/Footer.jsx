@@ -23,44 +23,6 @@ export const Footer = () => {
 
                 <hr className="w-100 clearfix d-md-none" />
 
-                <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                  <h6 className="text-uppercase mb-4 font-weight-bold">
-                    Nuestro equipo
-                  </h6>
-                  <p>
-                    <a className="text-white">Justina Mihura</a>
-                  </p>
-                  <p>
-                    <a className="text-white">Brian Andrais</a>
-                  </p>
-                  <p>
-                    <a className="text-white">Julian Luque</a>
-                  </p>
-                  <p>
-                    <a className="text-white">Sebastian Campos</a>
-                  </p>
-                </div>
-
-                <hr className="w-100 clearfix d-md-none" />
-
-                <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                  <h6 className="text-uppercase mb-4 font-weight-bold">
-                    ⭐⭐⭐⭐⭐
-                  </h6>
-                  <p>
-                    <a className="text-white">Oscar Sierra</a>
-                  </p>
-                  <p>
-                    <a className="text-white">Armando Urbina</a>
-                  </p>
-                  <p>
-                    <a className="text-white">Pablo Andrada</a>
-                  </p>
-                  <p>
-                    <a className="text-white">German Guenov</a>
-                  </p>
-                </div>
-
                 <hr className="w-100 clearfix d-md-none" />
 
                 <hr className="w-100 clearfix d-md-none" />
@@ -83,7 +45,7 @@ export const Footer = () => {
                   </p>
                 </div>
 
-                <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 ">
+                <div className="col-md-3 col-lg-2 col-xl-2 mt-3" style={{}}>
                   <a
                     className={`btn btn-primary btn-floating m-1 ${style.borderNone}`}
                     style={{ backgroundColor: "#3b5998" }}
