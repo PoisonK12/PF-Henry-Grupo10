@@ -2,6 +2,11 @@ import { Link } from "react-router-dom";
 import style from "./Menu.module.css";
 
 const Menu = () => {
+
+  const logOut = () => {
+    localStorage.removeItem("log")
+  }
+
   return (
     <div className={style.nav}>
       <nav class={`navbar navbar-dark`}>
@@ -108,11 +113,11 @@ const Menu = () => {
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" style={{
+                  <a class="nav-link" href="/checkIn" style={{
                       display: "flex",
                       alignItems: "center",
                       height: "80px",
-                    }}>
+                    }} onClick={logOut}>
                     <div>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

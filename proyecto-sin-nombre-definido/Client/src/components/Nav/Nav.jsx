@@ -3,11 +3,13 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import style from "./Nav.module.css";
 import Menu from "./Menu/Menu";
+import jwtDecode from "jwt-decode";
 
-export const Nav = ({access , setAccess}) => {
+export const Nav = () => {
   const location = useLocation()
 
   const [fixed, setFixed] = useState(false);
+  const [access , setAccess] = useState(false)
   const handleScroll = () => {
     if (window.scrollY > 50) {
       setFixed(true);
@@ -16,10 +18,19 @@ export const Nav = ({access , setAccess}) => {
     }
   };
 
+
+ const log = localStorage.getItem("log")
+  
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [])
+
+  const logOut = () => {
+    localStorage.removeItem("log")
+    setAccess(false)
+  };
 
   return (
     <nav className={`${style.nav} ${fixed && location.pathname !== "/addProperty" ? style.fixed : location.pathname == "/addProperty" || /^\/detail\/[\w-]+$/.test(location.pathname)? style.back : ""}`}>
@@ -39,16 +50,7 @@ export const Nav = ({access , setAccess}) => {
             <span>Home </span>
           </NavLink>
         </li>
-        <li>
-         
-          <NavLink
-            to="/checkIn"
-            className={({ isActive }) => (isActive ? style.active : "")}
-          >
-            {" "}
-            <span> 👩‍💻 Acceder </span>
-          </NavLink>
-        </li>
+        
         <li>
         <NavLink
             to='/addProperty'
@@ -81,15 +83,21 @@ export const Nav = ({access , setAccess}) => {
         </li>
       </ul>
       <div >
-        {!access ?
-        <Menu />
-       : <NavLink to="/checkIn" 
-       className={({ isActive }) =>
-              isActive ? style.active : style.navHover
-            }>
-        <li>Acceder</li>
-        </NavLink> 
-      }
+        {log ? (
+          <Menu />
+        )
+       : (<li>
+         
+          <NavLink
+            to="/checkIn"
+            className={({ isActive }) => (isActive ? style.active : "")}
+          >
+            {" "}
+            <span> 👩‍💻 Acceder </span>
+          </NavLink>
+        </li>)
+}
+        
       </div>
     </nav>
   );

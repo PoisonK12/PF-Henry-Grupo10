@@ -24,15 +24,8 @@ const config = {
 };
 
 function Chatbot() {
-<<<<<<< HEAD
-  const { location } = useParams();
-  const navigate = useNavigate();
-  const props = useSelector(state => state.properties);
-  console.log(props);
-=======
   const navigate = useNavigate(); // Obtiene la función de navegación
   const props = useSelector(state => state.properties)
->>>>>>> bccdda49ac964f47a238cd272ad05296acb487c8
   const [userName, setUserName] = useState({
     location: '',
     rooms: 0,
