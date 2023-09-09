@@ -49,7 +49,7 @@ export const getAllReallyProperties = () => {
 export const getAllUsers = () => {
   return async (dispatch) =>{
     try {
-      const {data} = await axios('/users');
+      const {data} = await axios('/users?userNameAsc=si');
       dispatch({
         type: GET_ALL_USERS,
         payload: data

@@ -9,13 +9,14 @@ function GoogleLoginButton() {
   function handleSignOut(event) {
     // Borra el usuario y muestra nuevamente el botón de inicio de sesión.
     setUser({});
+    localStorage.removeItem("token")
     document.getElementById("signInDiv").hidden = false;
   }
 
   // Función para manejar la respuesta de la autenticación de Google.
   function handleCallbackResponse(response) {
-    console.log('Encoded JWT ID token: ' + response.credential);
-    
+    // console.log('Encoded JWT ID token: ' + response.credential);
+    localStorage.setItem("token", response.credential)
     // Decodifica el token JWT para obtener la información del usuario.
     var userObj = jwt_decode(response.credential);
     console.log(userObj);
@@ -23,6 +24,7 @@ function GoogleLoginButton() {
     setUser(userObj);
     // Oculta el botón de inicio de sesión.
     document.getElementById("signInDiv").hidden = true;
+    // window.location.reload()
     // ---------------------------------------------------------------------------//
     // ---------------------------------------------------------------------------//    
     //Puedes agregar aquí cualquier lógica adicional que desees realizar después de la autenticación.//

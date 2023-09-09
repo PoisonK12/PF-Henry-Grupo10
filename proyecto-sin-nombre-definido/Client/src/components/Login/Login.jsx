@@ -12,6 +12,7 @@ const Login = ({setConditional , conditional}) => {
         email : "",
         password : ""
     });
+    
     const [errors , setErrors] = useState({errorsBack : undefined});
     const [toastBody , setToastBody] = useState({success : false , data : {}})
     const [toast , setToast] = useState(false)

@@ -6,6 +6,7 @@ import Menu from "./Menu/Menu";
 import jwtDecode from "jwt-decode";
 
 export const Nav = () => {
+
   const location = useLocation()
 
   const [fixed, setFixed] = useState(false);
@@ -27,13 +28,19 @@ export const Nav = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [])
 
-  const logOut = () => {
-    localStorage.removeItem("log")
-    setAccess(false)
-  };
+ 
 
   return (
-    <nav className={`${style.nav} ${fixed && location.pathname !== "/addProperty" ? style.fixed : location.pathname == "/addProperty" || /^\/detail\/[\w-]+$/.test(location.pathname)? style.back : ""}`}>
+    <nav
+      className={`${style.nav} ${
+        fixed && location.pathname !== "/addProperty"
+          ? style.fixed
+          : location.pathname == "/addProperty" ||
+            /^\/detail\/[\w-]+$/.test(location.pathname)
+          ? style.back
+          : ""
+      }`}
+    >
       <Link to="/" className={style.logo}>
         <img src={logo}></img>
       </Link>
@@ -52,15 +59,14 @@ export const Nav = () => {
         </li>
         
         <li>
-        <NavLink
-            to='/addProperty'
+          <NavLink
+            to="/addProperty"
             className={({ isActive }) => (isActive ? style.active : "")}
           >
             <span>Propiedades</span>
           </NavLink>
         </li>
         <li>
-         
           <NavLink
             to="/contacts"
             className={({ isActive }) =>

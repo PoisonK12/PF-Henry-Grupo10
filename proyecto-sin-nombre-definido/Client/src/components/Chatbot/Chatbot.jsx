@@ -24,10 +24,11 @@ const config = {
 };
 
 function Chatbot() {
+  const { location } = useParams(); // Obtén el parámetro 'location' de la URL
   const navigate = useNavigate(); // Obtiene la función de navegación
   const props = useSelector(state => state.properties)
   const [userName, setUserName] = useState({
-    location: '',
+    location:'',
     rooms: 0,
     bathrooms: 0,
     onSale: false,
@@ -36,6 +37,7 @@ function Chatbot() {
     sellPriceMax: 0,
     sellPriceMin: 0,
   });
+  console.log(userName);
   const dispatch = useDispatch();
 
   const steps = [
@@ -56,39 +58,58 @@ function Chatbot() {
     },
     {
       id: '3',
-      message: 'Aquí tienes algunas opciones de propiedades en diferentes ciudades:',
-      trigger: 'showOptions',
+      message: 'Hola {previousValue}, ¿En qué ciudad te gustaría hospedarte?',
+      trigger: 'destination',
     },
     {
-      id: 'showOptions',
-      options: [
-        ...props.map(property => ({
-          value: property.location,
-          label: property.location,
-          trigger: '4', // El próximo paso cuando se seleccione una opción
-        })),
-      ],
-     
+      id: 'destination',
+      user: true,
+      trigger: '4',
+      validator: (location) => {
+        if (!location || location.trim() === '') {
+          return 'Por favor, ingresa un nombre válido.';
+        }
+        setUserName({...userName,location:location});
+        console.log(userName);
+        return true;
+      },
     },
     {
       id: '4',
-      message: '¿Valor máximo?',
+      message: ' ¿Valor maximo que esta dispuesto a pagar?',
       trigger: '5',
+
     },
     {
       id: '5',
       user: true,
       trigger: '6',
+      validator: (rentPriceMax) => {
+        if (!rentPriceMax || rentPriceMax.trim() === '') {
+          return 'Por favor, ingresa un precio válido.';
+        }
+        setUserName((e)=>({...e,rentPriceMax:rentPriceMax}));
+        console.log(userName);
+        return true;
+      },
     },
     {
       id: '6',
-      message: 'Valor {previousValue}, ¿Valor mínimo?',
+      message: 'Valor {previousValue}, ¿valor minimo que esta dispuesto a pagar?',
       trigger: '7',
     },
     {
       id: '7',
       user: true,
       trigger: '8',
+      validator: (rentPriceMin) => {
+        if (!rentPriceMin || rentPriceMin.trim() === '') {
+          return 'Por favor, ingresa un precio válido.';
+        }
+        setUserName((e)=>({...e,rentPriceMin:rentPriceMin}));
+        console.log(userName);
+        return true;
+      },
     },
     {
       id: '8',
@@ -98,11 +119,13 @@ function Chatbot() {
   ];
 
   const handleCitySelection = () => {
-    dispatch(searchByFilter(userName));
-    if (!props.length) {
-      return;
-    } else {
+    // Realiza redirección a la página de propiedades con el parámetro 'location'
+    dispatch(searchByFilter(userName))
+    if(!props.length){
+      return
+    }else{
       navigate(`/property?location=${userName.location}&rentPriceMax=${userName.rentPriceMax}&rentPriceMin=${userName.rentPriceMin}`);
+
     }
   };
 
@@ -112,10 +135,10 @@ function Chatbot() {
         headerTitle="Travel Bot"
         steps={steps}
         {...config}
-        handleEnd={handleCitySelection}
+        handleEnd={handleCitySelection} // Llama a la función de redirección al finalizar el chat
       />
     </ThemeProvider>
   );
-}
+};
 
 export default Chatbot;
