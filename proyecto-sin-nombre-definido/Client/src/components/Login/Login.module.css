@@ -25,14 +25,11 @@
     border-radius: 10px ;
     border: none;
     margin: 60px;
-    width: 40%;
-    margin-left: auto;
-    float: right;
+    width: 60%;
 
 }
 
 .img{
-    width: calc(385px - 50px * 2);
     border-radius: none !important;
     border-top-right-radius: none !important;
     border-top-left-radius: none !important;
@@ -102,15 +99,5 @@
     color:aliceblue;
 }
 .button:hover{
-    background-color: #06142d;
-}
-
-.overlay{
-    width:100%;
-    height: 616px;
-
-    /* height:100%; */
-    position: absolute;
-    z-index: 20;
-    clip: rect(0, 385px, 100%, 0);
+    background-color: #091f44;
 }
