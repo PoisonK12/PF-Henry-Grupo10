@@ -268,6 +268,7 @@ export const getStates = (country) => {
       try { 
         
           const {data} = await axios.post("/login" , {email , password})
+          console.log(data)
            setToastBody({success :data.success, data : data})
           setToast(true)
           localStorage.setItem("log", JSON.stringify(data.token))

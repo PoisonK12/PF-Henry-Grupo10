@@ -16,13 +16,29 @@
 
 .form {
     background-color: transparent;
-    background-color: rgba(255, 255, 255, 0.055);
+  box-shadow:  0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.2 );
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.801);
     /* rgba(245, 245, 245, 0.589) */
-    box-shadow: 4px  4px rgba(255, 255, 255, 0.534);
+    /* box-shadow: 4px  4px rgba(255, 255, 255, 0.534); */
     border-radius: 10px ;
+    border: none;
     margin: 60px;
-    width: 90%;
+    width: 40%;
+    margin-left: auto;
+    float: right;
 
+}
+
+.img{
+    width: calc(385px - 50px * 2);
+    border-radius: none !important;
+    border-top-right-radius: none !important;
+    border-top-left-radius: none !important;
+  box-shadow:  14px 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.2 );
+
+    /* box-shadow: -3px -3px 20px black; */
 }
 .form legend {
     color:  white;
@@ -32,13 +48,14 @@
 }
 
 .hr {
-   
-   border-width: 3px;
-   color: rgba(255, 255, 255, 0.747);
+   border-bottom: 2px;
+   width: 80%;
+   /* border-width: 3px; */
+   color: rgba(79, 79, 79, 0.33);
 }
 
 .perfile {
-    border-radius: 10px 10px 0 0;
+    /* border-radius: 10px 10px 0 0; */
     box-sizing: border-box;
     background-color: blanchedalmond;
     padding : 20px;
@@ -51,7 +68,7 @@
 }
 
 .form div div span {
-    color: white;
+    color: black;
     
     
 }
@@ -62,7 +79,7 @@
    
 }
 .inputs::placeholder , label {
-     color : white
+     /* color : white */
 }
 
 .inputs:hover {
@@ -71,10 +88,29 @@
 }
 
 .inputs::placeholder :hover {
-    color : blanchedalmond
+    /* color : blanchedalmond */
 }
 
 
 .inputs:focus {
     background-color:rgba(255, 255, 255, 0.096) !important;
+}
+
+.button{
+    background: #091f44;
+    border-radius: 20px;
+    color:aliceblue;
+}
+.button:hover{
+    background-color: #06142d;
+}
+
+.overlay{
+    width:100%;
+    height: 616px;
+
+    /* height:100%; */
+    position: absolute;
+    z-index: 20;
+    clip: rect(0, 385px, 100%, 0);
 }
