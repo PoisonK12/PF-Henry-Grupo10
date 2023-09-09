@@ -1,15 +1,16 @@
 import React , {useState} from "react";
-import style from "./Register.module.css"
+import style from "../Login/apa.module.css"
 import {getLogin} from "../../redux/actions"
 import {validation }from "./validation.js";
 import {Toast} from "react-bootstrap"
 import axios from "axios";
-
-const Register = ({setConditional , conditional }) => {
+import {register} from "../../redux/actions"
+const Register = ( {handleSwitch , conditional}) => {
     
     
     const [toastBody , setToastBody] = useState({response : ""})
-    const [toast , setToast] = useState(false)
+    const [toast , setToast] = useState(false);
+    const  [ step , setStep] = useState(1);
     const [errors , setErrors] = useState( {
 
         profilePic : "",
@@ -47,7 +48,17 @@ const Register = ({setConditional , conditional }) => {
 
     });
 
-
+    const handleStep = (e) => {
+        e.preventDefault();
+       
+        if(e.target.value === "previous") {
+            setStep(step - 1)
+            return
+        } else  if(e.target.value === "continue") {
+            setStep(step + 1)
+        return
+        }
+    };
 
     console.log(register);
 
@@ -79,7 +90,7 @@ const Register = ({setConditional , conditional }) => {
             [name]: errorDetect[name]
           }));
     };
-    console.log(errors);
+    
     const  handleHide = (e) => {
         const icon = e.target.id
         
@@ -98,7 +109,9 @@ const Register = ({setConditional , conditional }) => {
                 setPasswordType2(true)
             }
         }
-    }
+    };
+
+    console.log(toastBody);
 
     const iconVisible = <svg  onClick={handleHide} xmlns="http://www.w3.org/2000/svg" id="hide1" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
@@ -120,9 +133,7 @@ const Register = ({setConditional , conditional }) => {
 <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" onClick={handleHide}/>
          </svg>
 
-    const handleConditional= () => {
-        setConditional("login")
-    };
+
 
 //?------------------------------------------------- Picture handlers -------------------------------------------------------------------------------
 
@@ -166,235 +177,352 @@ const handleDrop = (event) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors(validation({...register}))
-
         if(errors) {
             return
-        }
+        };
+
         getLogin(register , conditional , setToastBody , setToast);
     };
 
 
 //?-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    return (
+   const RegisterForm = () => {
+        if(step === 1) {
+         return (
+   
     <>
-    
-            <form className={`d-flex align-items-center justify-content-center `} onSubmit={handleSubmit}>
-                <fieldset className={`border justify-content-center align-items-center d-flex flex-column text-center ${style.form}`} >
-                   
-            <div className={`d-flex flex-row justify-content-center align-items-center ${style.formmer}`}>
-              
-                <input
-                  type="file"
-                  id="imageInput"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  onChange={(e) => handleFile(e.target.files[0])}
-                  
-                />
+            <form >
+                <fieldset className={`border  d-flex flex-column text-center ${style.form2}`}>
+                <h2
+                    style={{
+                      marginTop: "25px",
+                      letterSpacing: "6px",
+                      color: "#091f44",
 
-                <div
-                  className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
-                  
-                  style={{
-                    border: "2px dashed #ccc",
-                    background: "rgba(169, 181, 197, 0.562)",
-                    margin: `20px 20px`,
-                    textAlign: "center",
-                    width: "300px",
-                    height: "250px",
-                  }}
-                  onDragEnter={(e) => e.preventDefault()}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={handleDrop}
-                >
-                  {register.profilePic 
-                  ? <img
-                  
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    maxHeight: "250px",
-                    objectFit : "cover"
-                  }}
-                  src={register.profilePic}
-                  alt={`Image ${register.profilePic}`}
-                />
-                   : 
-                 
-                    <div>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="50"
-                        height="50"
-                        fill="currentColor"
-                        class="bi bi-card-image"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                        <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z" />
-                      </svg>
-                      <br></br>
-                      Arrastra o haga click{" "}
-                      <span
-                        className={style.click}
-                        onClick={() =>
-                          document.getElementById("imageInput").click()
-                        }
-                      >
-                        {" "}
-                        aquí
-                      </span>
-                      !
-                    </div>  
-                    }
-                </div>
-                {errors.profilePic ? <p style={{color : "red" , fontSize : "15px"}}>{errors.profilePic}</p> : null}
-
-              </div>
-                  
-
-                    
-                  <div class="d-flex flex-row justify-content-center align-items-center ">
-
-                            
-                    <div class="m-3 col-md-5">
-                         <label class="form-label" htmlFor="userName">Nombre de usuario :</label>
-                        <input  type="text" name="userName" class={`form-control ${style.inputs}`} value={register.userName} onChange={handleChange} placeholder="Nombre de usuario" />
-                        {errors.userName ? <p style={{color : "red" , fontSize : "15px"}}>{errors.userName}</p> : null}
-                    </div>
-                    <div class="m-3 col-md-5">
-                        <label class="form-label" htmlFor="fullName">Nombre Completo : </label>
-                         <input type="text" name="fullName" class={`form-control ${style.inputs}`} value={register.fullName} onChange={handleChange}  placeholder="Nombre complleto" />
-                         {errors.fullName ? <p style={{color : "red" , fontSize : "15px"}}>{errors.fullName}</p> : null}
-                        </div>
-
-                    </div>
-
-
-
-                        <div class="d-flex flex-row justify-content-center align-items-center ">
-
-                            
-                            <div class="m-3 col-md-5">
-                                <label class="form-label" htmlFor="birthDate"> Fecha de nacimiento:</label>
-                                <input type="date" max="2023-12-31" value={register.birthDate} name="birthDate" class={`form-control ${style.inputs}`}  onChange={handleChange} />
-                                {errors.birthDate ? <p style={{color : "red" , fontSize : "15px"}}>{errors.birthDate}</p> : null}
-                            </div>
-                            <div class="m-3 col-md-5">
-                                <label class="form-label" htmlFor="phoneNumber">Número de teléfono  :</label>
-                                <input  type="tel" name="phoneNumber" value={register.phoneNumber} class={`form-control ${style.inputs}`} onChange={handleChange}  placeholder="Número de teléfono" />
-                                {errors.phoneNumber ? <p style={{color : "red" , fontSize : "15px"}}>{errors.phoneNumber}</p> : null}
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="d-flex flex-row justify-content-center align-items-center ">
-
-                            
-                            <div class="m-3 col-md-5">
-                                <label class="form-label" htmlFor="gender">Género : </label>
-
-                                <select name="gender"  class={`form-select ${style.select}`}  onChange={handleChange}>
-                                    <option selected>--Seleccionar un género--</option>
-                                    <option value="Male">Hombre</option>
-                                    <option value="Female">Mujer</option>
-                                    <option value="Undefined">Indefinido</option>
-                                    <option value="No apply">No aplicar</option>
-                                </select>
-                                {errors.gender ? <p style={{color : "red" , fontSize : "15px"}}>{errors.gender}</p> : null}
-                            </div>
-                            <div class="m-3 col-md-5">
-                                <label class="form-label">Direccion :</label>
-                                <input type="text" name="address" value={register.address} class={`form-control ${style.inputs}`}  onChange={handleChange} placeholder="Dirección" />
-                                {errors.address ? <p style={{color : "red" , fontSize : "15px"}}>{errors.address}</p> : null}
-
-                                
-                            </div>
-
-                        </div>
-                        <div class="d-flex flex-row justify-content-center align-items-center ">
-
-                            
-                            <div class="m-3 col-md-5">
-                                <label class="form-label" htmlFor="nationality">Nacionalidad : </label>
-                                <select name="nationality"  class={`form-select ${style.select}`}  onChange={handleChange}>
-                                <option  value = ""> --Selecciona una opción--</option>
-                                <option value="Argentina">Argentina</option>
-                                <option value="Venezuela">Venezuela</option>
-                                <option value="Colombia">Columbia</option>
-                                <option value="Mexico">Mexico</option>
-                               </select>
-                               {errors.nationality ? <p style={{color : "red" , fontSize : "15px"}}>{errors.nationality}</p> : null}
-                            </div>
-                           
-                            <div class="m-3 col-md-5">
-                                <label class="form-label" htmlFor="landlord"> Usuario o Propietario : </label>
-                               <select name="landlord"  class={`form-select ${style.select}`}  onChange={handleChange}>
-                                <option value =  ""> --Selecciona una opción--</option>
-                                <option value="true">Si</option>
-                                <option value="false">No</option>
-                               </select>
-                               {errors.landlord ? <p style={{color : "red" , fontSize : "15px"}}>{errors.landlord}</p> : null}
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row justify-content-center align-items-center ">
-                            <div class="m-3 col-md-5">
-                                <label class="form-label" htmlFor="email">Email :</label>
+                    }}
+                  >
+                    REGISTER
+                  </h2>
+            
+                                       
+                <div className={`d-flex flex-row align-items-center justify-content-center ${style.gridForm}`} style={{ width: "90%" }}>
+                            <div class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"email" }}>
+                                <label class="form-label lead" htmlFor="email"> Email :</label>
                                 <input type="email" name="email" value={register.email} class={`form-control ${style.inputs}`}  onChange={handleChange} placeholder="Correo electrónico" />
                                 {errors.email ? <p style={{color : "red" , fontSize : "15px"}}>{errors.email}</p> : null}
-
                             </div>
-                            
-                           
-                           
-
-                        </div>
-
-                        <div class="d-flex flex-row justify-content-center align-items-center ">
-                            <div class="m-3 col-md-5">
-                                <label class="form-label" htmlFor="password">Contraseña</label>
+                         </div>
+                        <div className={`d-flex flex-row align-items-center justify-content-center ${style.gridForm}`} style={{ width: "90%" }}>
+                            <div class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"password" }}>
+                                <label  class="form-label lead" htmlFor="password">Contraseña : </label>
                                 <input type={passwordType ? "text" : "password"} value={register.password} name="password" class={`form-control ${style.inputs}`} onChange={handleChange} placeholder="Contraseña" />
                                 <button class={style.iconPassword} id="hide1"  onClick={(e) => handleHide(e)}>{passwordType ? iconVisible : iconInvisible}</button>
                                 {errors.password ? <p style={{color : "red" , fontSize : "15px"}}>{errors.password}</p> : null}
-
+                           
                             </div>
-                            <div class="m-3 col-md-5">
-                                <label class="form-label" htmlFor="confirmPassword">Confirmar Contraseña</label>
+                            
+                            <div class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"confirmPassword" }}>
+                                <label class="form-label lead"  htmlFor="confirmPassword">Confirmar Contraseña  :</label>
                                 <input type={passwordType2 ? "text" : "password"} name="confirmPassword" value={register.confirmPassword} class={`form-control ${style.inputs}`} onChange={handleChange} placeholder="Confirmar contraseña" />
                                 <button class={style.iconPassword2} id="hide2" onClick={(e) => handleHide(e)}>{passwordType2 ? iconVisible2 : iconInvisible2}</button>
                                 {errors.confirmPassword ? <p style={{color : "red" , fontSize : "15px"}}>{errors.confirmPassword}</p> : null}
 
                             </div>
 
-                        </div>
-                        <hr className={style.hr} ></hr>
-                         <div class="row-md-11 mb-4">
-                            <span style={{color : "white", fontSize: "18px"}}> Ya estas registrado? 👉🏼</span>
-                            <button  class="btn btn-danger " onClick={handleConditional}> Loguéate </button>
+                </div>
+                <div className={`d-flex flex-row align-items-center justify-content-center ${style.gridForm}`} style={{ width: "90%" }}>
 
+                <div class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"email" }}>
+                    <label class="form-label lead" htmlFor="fullName"> Nombre Completo : </label>
+                    <input type="text" name="fullName" class={`form-control ${style.inputs}`} value={register.fullName} onChange={handleChange} placeholder="Nombre complleto" />
+                    {errors.fullName ? <p style={{ color: "red", fontSize: "15px" }}>{errors.fullName}</p> : null}
+                </div> 
+                 <div class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"email" }}>
+                     <label class="form-label lead" htmlFor="userName">Nombre de usuario :</label>
+                     <input  type="text" name="userName" class={`form-control ${style.inputs}`} value={register.userName} onChange={handleChange} placeholder="Nombre de usuario" />
+                    {errors.userName ? <p style={{color : "red" , fontSize : "15px"}}>{errors.userName}</p> : null}
+                 </div>
+
+            </div>
+
+         <br></br>
+                    <div  class="d-flex flex-row align-items-center justify-content-center">
+                         <div class="col-xs-6 m-3">
+                         <button
+                            style={{
+                             width: "100%",
+                             paddingInline: "100px",
+                             paddingBlock: "10px",
+                             }   }
+                             type="button"
+                             value = "continue"
+                            className={style.button}
+                            onClick={(e) => handleStep(e)}
+                                 >
+                                {" "}
+                            Continuar
+                            </button>
+                        <hr className={style.hr}></hr>
+                            <p > Ya estas registrado? 👉🏼
+                            <span onClick={handleSwitch} style={{ cursor: "pointer", color: "blueviolet" }}> Loguéate </span></p>
                         </div>
-                        <div class="col-md-11 m-2 mb-4">
-                            <span style={{color : "white", fontSize: "18px"}}>Si estas listo presionalo 👉🏼</span>
-                            <button type="submit" aria-describedby="login" className="btn btn-primary" > Registrarse </button>
-                        </div>
-                       
+                </div>
                 </fieldset>
             </form>
-            <div>
-              <Toast  show={toast}>
-               <Toast.Body >{
-               <div className>
-                   <p > Creado con éxito. Redirigiendote...</p>
-               </div>
-               }
-               </Toast.Body>
-               </Toast>
-            </div>
+           
     </>
-    )
+    )} 
+    else if(step === 2) {
+        return ( 
+        <>
+         <form  >
+                <fieldset className={`border  d-flex flex-column text-center ${style.form2}`} >
+                <div >
+              
+              <input
+                type="file"
+                id="imageInput"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e) => handleFile(e.target.files[0])}
+                
+              />
+
+              <div
+                className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
+                
+                style={{
+                  border: "2px dashed #ccc",
+                  background: "rgba(169, 181, 197, 0.562)",
+                  margin: `20px 20px`,
+                  textAlign: "center",
+                  width: "300px",
+                  height: "200px",
+                  borderRadius : "100px"
+                }}
+                onDragEnter={(e) => e.preventDefault()}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleDrop}
+              >
+                {register.profilePic 
+                ? <img
+                
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  maxHeight: "250px",
+                  objectFit : "cover"
+                }}
+                src={register.profilePic}
+                alt={`Image ${register.profilePic}`}
+              />
+                 : 
+               
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50"
+                      height="50"
+                      fill="currentColor"
+                      class="bi bi-card-image"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                      <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z" />
+                    </svg>
+                    <br></br>
+                    Arrastra o haga click{" "}
+                    <span
+                      className={style.click}
+                      onClick={() =>
+                        document.getElementById("imageInput").click()
+                      }
+                    >
+                      {" "}
+                      aquí
+                    </span>
+                    !
+                  </div>  
+                  }
+              </div>
+              {errors.profilePic ? <p style={{color : "red" , fontSize : "15px"}}>{errors.profilePic}</p> : null}
+
+            </div>
+                
+        <div className={`d-flex flex-row align-items-center justify-content-center ${style.gridForm}`} style={{ width: "80%" }}>
+
+                <div  class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"fullName" }}>
+                    <label class="form-label lead" htmlFor="fullName">Nombre Completo : </label>
+                    <input type="text" name="fullName" class={`form-control ${style.inputs}`} value={register.fullName} onChange={handleChange} placeholder="Nombre complleto" />
+                    {errors.fullName ? <p style={{ color: "red", fontSize: "15px" }}>{errors.fullName}</p> : null}
+                </div> 
+                 <div  class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"userName" }}>
+                     <label class="form-label lead" htmlFor="userName">Nombre de usuario :</label>
+                     <input  type="text" name="userName" class={`form-control ${style.inputs}`} value={register.userName} onChange={handleChange} placeholder="Nombre de usuario" />
+                    {errors.userName ? <p style={{color : "red" , fontSize : "15px"}}>{errors.userName}</p> : null}
+                 </div>
+
+            </div>
+            <div className={`d-flex flex-row align-items-center justify-content-center ${style.gridForm}`} style={{ width: "80%" }}>
+
+
+                    <div class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"birthDate" }}>
+                        <label class="form-label lead" htmlFor="birthDate"> Fecha de nacimiento:</label>
+                        <input type="date" max="2023-12-31" value={register.birthDate} name="birthDate" class={`form-control ${style.inputs}`} onChange={handleChange} />
+                        {errors.birthDate ? <p style={{ color: "red", fontSize: "15px" }}>{errors.birthDate}</p> : null}
+                    </div>
+                    <div class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"phoneNumber" }}>
+                        <label class="form-label lead" htmlFor="phoneNumber">Número de teléfono  :</label>
+                        <input type="tel" name="phoneNumber" value={register.phoneNumber} class={`form-control ${style.inputs}`} onChange={handleChange} placeholder="Número de teléfono" />
+                        {errors.phoneNumber ? <p style={{ color: "red", fontSize: "15px" }}>{errors.phoneNumber}</p> : null}
+                    </div>
+
+                </div>
+               <hr className ={style.hr}></hr>
+                <div class="d-flex flex-row align-items-center justify-content-center">
+                    
+                        <div class="col-xs-6 m-3">
+                            <button  style={{
+                             width: "100%",
+                             paddingInline: "40px",
+                             paddingBlock: "10px",
+                             marginBottom : "20px"
+                             }} className={style.button} type="button" onClick={(e) => handleStep(e)} value="previous">Atrás</button>
+                        </div>
+                    
+                        <div class="col-xs-6 m-3">
+                        <button style={{
+                             width: "100%",
+                             paddingInline: "35px",
+                             paddingBlock: "10px",
+                             marginBottom : "20px"
+                             }} className={style.button} type="button" value="continue" onClick={(e) => handleStep(e)}>Continuar</button>
+                        </div>
+                </div>
+            </fieldset>
+        </form> 
+        
+        
+    </>
+)}
+
+    else if(step === 3) {
+        return ( 
+        <>
+            <form onSubmit={handleSubmit}>
+                <fieldset className={`border  d-flex flex-column text-center ${style.form2}`}>
+
+                <h2
+                    style={{
+                      marginTop: "15px",
+                      letterSpacing: "6px",
+                      color: "#091f44",
+                    }}
+                  >
+                    ULTIMOS PASOS
+                  </h2>
+            
+                  
+                 <br></br>
+                     <div className={`d-flex flex-row align-items-center justify-content-center ${style.gridForm}`} style={{ width: "80%" }}>
+
+
+                    <div  class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"gender" }}>
+                        <label class="form-label lead" htmlFor="gender">Género : </label>
+
+                        <select name="gender" class={`form-select ${style.select}`} onChange={handleChange}>
+                            <option selected>--Seleccionar un género--</option>
+                            <option value="Male">Hombre</option>
+                            <option value="Female">Mujer</option>
+                            <option value="Undefined">Indefinido</option>
+                            <option value="No apply">No aplicar</option>
+                        </select>
+                        {errors.gender ? <p style={{ color: "red", fontSize: "15px" }}>{errors.gender}</p> : null}
+                    </div>
+                    <div  class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"address" }}>
+                        <label class="form-label lead">Direccion :</label>
+                        <input type="text" name="address" value={register.address} class={`form-control ${style.inputs}`} onChange={handleChange} placeholder="Dirección" />
+                        {errors.address ? <p style={{ color: "red", fontSize: "15px" }}>{errors.address}</p> : null}
+
+
+                    </div>
+
+                </div>
+                <div className={`d-flex flex-row align-items-center justify-content-center mt-5 ${style.gridForm}`} style={{ width: "80%" }}>
+
+
+                    <div  class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"nationality" }}>
+                        <label class="form-label lead" htmlFor="nationality">Nacionalidad : </label>
+                        <select name="nationality" class={`form-select ${style.select}`} onChange={handleChange}>
+                            <option value=""> --Selecciona una opción--</option>
+                            <option value="Argentina">Argentina</option>
+                            <option value="Venezuela">Venezuela</option>
+                            <option value="Colombia">Columbia</option>
+                            <option value="Mexico">Mexico</option>
+                        </select>
+                        {errors.nationality ? <p style={{ color: "red", fontSize: "15px" }}>{errors.nationality}</p> : null}
+                    </div>
+
+                    <div  class="mt-3" style={{ textAlign: "left", width: "100%", gridArea:"landlord" }}>
+                        <label class="form-label lead" htmlFor="landlord"> Tipo de cliente: </label>
+                        <select name="landlord" class={`form-select ${style.select}`} onChange={handleChange}>
+                            <option value="false"> --Selecciona una opción--</option>
+                            <option value="true">Propietario</option>
+                            <option value="false">Usuario</option>
+                        </select>
+                        {errors.landlord ? <p style={{ color: "red", fontSize: "15px" }}>{errors.landlord}</p> : null}
+                    </div>
+                </div>
+                <hr className ={`${style.hr}`}></hr>
+                <div class="d-flex flex-row align-items-center justify-content-center mt-3">
+                    
+                        <div class="col-xs-6 m-3">
+                            <button  style={{
+                             width: "100%",
+                             paddingInline: "40px",
+                             paddingBlock: "10px",
+                             marginBottom : "20px"
+                             }} 
+                             className={style.button} type="button" onClick={(e) => handleStep(e)} value="previous">Atrás</button>
+                        </div>
+                    
+                        <div class="col-xs-6 m-3">
+                        <button style={{
+                             width: "100%",
+                             paddingInline: "35px",
+                             paddingBlock: "10px",
+                             marginBottom : "20px"
+                             }} 
+                            className={style.button} type="submit"  > Enviar</button>
+                        </div>
+                </div>
+                </fieldset>
+            </form>
+            
+            <div>
+            <Toast  show={toast}>
+            <Toast.Body >{
+            <div className>
+                <p> Creado con éxito. Redirigiendote...</p>
+            </div>
+            }
+            </Toast.Body>
+            </Toast>
+        </div>
+        </>
+        )
+   };
+};
+
+
+
+   return (
+    <>
+    {RegisterForm()}
+    </>
+   )
+    
 };
 
 export default Register;

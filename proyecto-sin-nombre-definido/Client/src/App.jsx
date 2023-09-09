@@ -33,7 +33,7 @@ function App() {
     <>
     
 
-      {!isCheckInOrHomePage && <Nav />}
+      {(location.pathname !== "/" && location.pathname !== "/checkIn") && <Nav />}
       <ScrollToTop></ScrollToTop>
      <Routes>
       <Route path='/' element={<><Landing/></>} />
