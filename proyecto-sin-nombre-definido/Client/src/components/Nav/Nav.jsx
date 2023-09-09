@@ -6,7 +6,7 @@ import Menu from "./Menu/Menu";
 
 export const Nav = () => {
   const location = useLocation();
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("log");
   console.log(token);
   const [fixed, setFixed] = useState(false);
   const handleScroll = () => {
@@ -19,6 +19,7 @@ export const Nav = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    // localStorage.removeItem("log")
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -90,7 +91,7 @@ export const Nav = () => {
       </ul>
       <div>
         {token ? (
-          <>
+          <> 
             <Menu />{" "}
           </>
         ) : (

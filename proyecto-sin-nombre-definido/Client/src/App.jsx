@@ -33,7 +33,7 @@ function App() {
     <>
     
 
-      {location.pathname !== "/" && <Nav />}
+      {/* {location.pathname !== "/" && <Nav />} */}
       <ScrollToTop></ScrollToTop>
      <Routes>
       <Route path='/' element={<><Landing/></>} />
