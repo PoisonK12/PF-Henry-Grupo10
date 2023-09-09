@@ -258,7 +258,7 @@ export const getStates = (country) => {
 
 
 
- export const getLogin = async (login  , setToast, conditional,setToastBody, navigate , setErrors) => {
+ export const getLogin = async (login  , conditional, setToastBody, setToast, navigate , setErrors) => {
 
    const {email , password  , userName , fullName , birthDate , gender , address , nationality , phoneNumber ,verificationNumber, landlord} = login;
    
@@ -290,20 +290,22 @@ export const getStates = (country) => {
       }
     }
 
-
+//?-------- crear una variable para cada formulario asi se diferencian ------------------------
   if(conditional === "register") {
+
         try {
-        const {data} = await axios.post("/users/create", {email, password  , userName , fullName, verificationNumber  , birthDate , gender , address , nationality  ,phoneNumber , landlord } )
+
+        const {data} = await axios.post("/users/create", {email, password  , userName , fullName, verificationNumber  , birthDate , gender , address , nationality  ,phoneNumber , landlord , userType : "User"} )
         console.log(data);
           if(data) {
             console.log(data);
             setToastBody({response :data})
             setToast(true)
-            setTimeout(() => {
+           /*  setTimeout(() => {
               setToast(false)
               navigate("/home")
             }, 1500 )
-            return
+            return */
           }   
           } catch (error) {
     setToastBody({response : error.message})

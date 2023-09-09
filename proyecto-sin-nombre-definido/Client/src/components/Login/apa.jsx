@@ -6,12 +6,24 @@ import { validation } from "./validation";
 import { Modal, ToastBody } from "react-bootstrap";
 import fondo from "../../assets/images/Exteriores/imageLogin.avif";
 import GoogleLoginButton from "../GoogleAuth/LoginButton/";
+import Register from "../Register/Register";
 
 const Login = ({ setConditional, conditional }) => {
+  
   const [loginSlide, setLoginSlide] = useState(false);
+
   const handleSwitch = () => {
     setLoginSlide(!loginSlide)
+    if(conditional === "login") {
+      setConditional("register")
+    } else {
+      setConditional("login")
+    }
+
   }
+
+  console.log(conditional);
+
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -39,9 +51,6 @@ const Login = ({ setConditional, conditional }) => {
   };
   console.log(login);
 
-  const handleConditional = () => {
-    setConditional("register");
-  };
 
   const handleSubmit = async (e) => {
     console.log(e);
@@ -183,7 +192,8 @@ const Login = ({ setConditional, conditional }) => {
                     {" "}
                     Acceder
                   </button>
-                    {loginSlide ? <p>register</p> : <p>login</p>}
+                  <br></br>
+                    <br></br>
                   <p>
                     Sin cuenta?{" "}
                     <span
@@ -244,7 +254,8 @@ const Login = ({ setConditional, conditional }) => {
             </div>
           </form>
           <div className={style.leftForm}>
-            <form>
+            {<Register  handleSwitch = {handleSwitch}/>}
+           {/*  <form>
               <fieldset
                 className={`border  d-flex flex-column text-center ${style.form2}`}
               >
@@ -358,8 +369,9 @@ const Login = ({ setConditional, conditional }) => {
 
                 <hr className={style.hr}></hr>
 
+
                 <div class="d-flex flex-row align-items-center justify-content-center">
-                  {/* <div class="col-xs-6 m-3">
+                  <div class="col-xs-6 m-3">
                     <button
                       style={{
                         width: "100%",
@@ -390,10 +402,10 @@ const Login = ({ setConditional, conditional }) => {
                       <GoogleLoginButton />
                     
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </fieldset>
-            </form>
+            </form> */}
           </div>
         </div>
       </div>

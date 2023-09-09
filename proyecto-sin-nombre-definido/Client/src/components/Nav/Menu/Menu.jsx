@@ -1,13 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import style from "./Menu.module.css";
 
 const Menu = () => {
   const navigate = useNavigate()
+  const location = useLocation();
 
   const logOut = () =>{
     localStorage.removeItem("log")
-    navigate("/home")
-    // window.location.reload()
+    if(location.pathname === "/home") {
+      return
+    } else {
+      navigate("/home")
+      return
+    }
   }
 
 
@@ -116,8 +121,8 @@ const Menu = () => {
                     </div>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" onClick={() => logOut()} style={{
+                <li class="nav-item" >
+                  <a class="nav-link" onClick={logOut}  href="#" style={{
                       display: "flex",
                       alignItems: "center",
                       height: "80px",

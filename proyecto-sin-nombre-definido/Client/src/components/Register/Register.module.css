@@ -48,6 +48,16 @@
     color : rgb(219, 46, 69)
 } 
 
+.button {
+    border-color: rgba(137, 43, 226, 0);
+    border-radius: 15px;
+    padding : 7px 40px;
+    color: #f7f7f7;
+    background-color: rgb(35, 90, 163);
+    transition: background-color 0.3s ease;
+
+}
+
 .hr {
    
    border-width: 3px;

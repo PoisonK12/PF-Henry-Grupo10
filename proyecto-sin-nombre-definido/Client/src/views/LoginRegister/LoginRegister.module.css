@@ -1,28 +1,186 @@
-.container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
-  }
-
-
-   .container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  filter: blur(2px);
-  background-size: cover;
-  background-repeat: no-repeat;
-  z-index: -1;
+.buttonGoogle {
+  background-color: rgba(255, 255, 255, 0.801);
+  padding: 4px;
+  border-color: rgb(219, 46, 69);
+  color: rgba(81, 187, 99, 0.863);
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.815);
+}
+.buttonGoogle:hover {
+  color: white;
+  background-color: rgb(219, 46, 69);
+  border-color: rgb(219, 46, 69);
 }
 
-.buttonGoogle {
-    background-color : white;
-    border: thick;
-    border-radius: 20px;
-    box-shadow :rgba(0, 0, 0, 0.815);
+.form {
+  background-color: transparent;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.801);
+  /* rgba(245, 245, 245, 0.589) */
+  /* box-shadow: 4px  4px rgba(255, 255, 255, 0.534); */
+  border-radius: 10px;
+  border: none;
+  margin: 30px;
+  width: 44%;
+  /* margin-left: auto; */
+  float: left;
+}
+.form2 {
+  background-color: transparent;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.801);
+  /* rgba(245, 245, 245, 0.589) */
+  /* box-shadow: 4px  4px rgba(255, 255, 255, 0.534); */
+  border-radius: 10px;
+  border: none;
+  margin: 30px;
+  width: 44%;
+  height: 550px;
+  /* margin-left: auto; */
+  float: right;
+}
+
+.img {
+  width: calc(385px - 50px * 2);
+  border-radius: none !important;
+  border-top-right-radius: none !important;
+  border-top-left-radius: none !important;
+  box-shadow: 14px 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  background: transparent !important;
+  color: transparent !important;
+  /* box-shadow: -3px -3px 20px black; */
+}
+.form legend {
+  color: white;
+}
+.form legend:hover {
+  color: rgb(219, 46, 69);
+}
+
+.hr {
+  border-bottom: 2px;
+  width: 80%;
+  /* border-width: 3px; */
+  color: rgba(79, 79, 79, 0.33);
+}
+
+.perfile {
+  /* border-radius: 10px 10px 0 0; */
+  box-sizing: border-box;
+  background-color: blanchedalmond;
+  padding: 20px;
+  height: 120%;
+  box-shadow: 4px 4px rgba(255, 255, 255, 0.678);
+}
+
+.buttonGoogle:hover .icon {
+  color: white !important;
+}
+
+.form div div span {
+  color: black;
+}
+
+.inputs {
+  background-color: transparent;
+  border: 0 0 2px 0;
+}
+.inputs::placeholder,
+label {
+  /* color : white */
+}
+
+.inputs:hover {
+  border-color: rgb(224, 78, 98) !important;
+  border-width: 2px !important;
+}
+
+.inputs::placeholder :hover {
+  /* color : blanchedalmond */
+}
+
+.inputs:focus {
+  background-color: rgba(255, 255, 255, 0.096) !important;
+}
+
+.button {
+  background: #091f44;
+  border-radius: 20px;
+  color: aliceblue;
+}
+.button:hover {
+  background-color: #06142d;
+}
+
+.overlay {
+  width: 40.2%;
+  height: 616px;
+    
+  /* height:100%; */
+  position: absolute;
+  z-index: 200;
+  /* clip: rect(0, 385px, 616px, 0); */
+}
+
+.overlay.login, .overlay.register{
+    /*  Width is 385px - padding  */
+    
+    /* width: calc(385px - var(--padding) * 2); */
+    /* height: 100vh; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    float: right;
+    /* width: 100%; */
+  }
+
+  .overlay.login{
+    /* border: #06142d 20px solid;
+    float: right; */
+}
+  .overlay.register{
+/* margin-right: auto; */
+    /* float: left; */
+  }
+  
+
+  .overlay.login,
+.overlay.register {
+  transition: transform 0.3s ease; /* Agrega una transición de 0.3 segundos al cambio de transformación */
+}
+
+/* Establecer la transformación según la clase activa */
+.overlay.login {
+  transform: translateX(0); /* Inicialmente, la vista de inicio de sesión está en su lugar */
+}
+
+.overlay.register {
+  transform: translateX(100%); /* Inicialmente, la vista de registro está desplazada a la derecha */
+}
+
+/* Cuando se active la vista de registro */
+.overlay.register.active {
+  transform: translateX(0); /* Desplazar la vista de registro a la izquierda */
+}
+
+.gridForm{
+    display:grid; 
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr 1fr 1fr;
+    gap:0% 8%;
+    grid-template-areas: 
+    "name userName"
+    "correo correo"
+    "contraseña contraseña"
+    "verificar verificar"
+    ;
 }
