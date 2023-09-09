@@ -27,7 +27,7 @@ import {ScrollToTop} from './Helpers';
 function App() {
   
   const location = useLocation()
-
+  const isCheckInOrHomePage = location.pathname === "/" || location.pathname === "/checkIn";
 
   return (
     <>

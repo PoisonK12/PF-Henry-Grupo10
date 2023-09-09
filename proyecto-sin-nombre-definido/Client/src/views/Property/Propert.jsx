@@ -2,18 +2,20 @@ import style from "./property.module.css";
 
 import CardsProperties from "../../components/Cards/CardsProperties/CardsProperties";
 import { useEffect, useState } from "react";
+import Slider from "rc-slider";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getLocation, searchByFilter } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import "rc-slider/assets/index.css";
 
 const Property = () => {
   const allProp = useSelector((state) => state.properties);
   const [visible, setVisible] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const locationValue = searchParams.get('location')
-  const rentPriceMaxValue = searchParams.get('rentPriceMax')
-  const rentPriceMinValue = searchParams.get('rentPriceMin')
+  const locationValue = searchParams.get("location");
+  const rentPriceMaxValue = searchParams.get("rentPriceMax");
+  const rentPriceMinValue = searchParams.get("rentPriceMin");
   console.log(locationValue);
   // const { location } = useParams();
   const history = useNavigate();
@@ -28,15 +30,19 @@ const Property = () => {
     rentPriceMin: rentPriceMinValue ? rentPriceMinValue : 0,
     sellPriceMax: 0,
     sellPriceMin: 0,
+    order: "rentPriceAsc",
+    page: 0,
   });
+  const [values, setValues] = useState([0, 1000]);
+  const [valuesSell, setValuesSell] = useState([0, 1000]);
   const [onSale, setOnSale] = useState(false);
   useEffect(() => {
-    dispatch(searchByFilter(filter))
-  },[])
+    dispatch(searchByFilter(filter));
+  }, []);
+
   const allLocation = useSelector((state) => state.location);
   const [locations, setLocations] = useState(allLocation.locations);
-  
-  
+
   useEffect(() => {
     if (allLocation.locations) {
       setLocations(allLocation.locations);
@@ -46,17 +52,23 @@ const Property = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log(filter);
-    if (e.target.type === "range") {
-      setFilter({ ...filter, [name]: Number(value) });
-      console.log(filter);
-      return;
-    }
     if (name == "location") {
       history(`/property?location=${value}`);
       window.location.reload();
     } else {
       setFilter({ ...filter, [name]: value });
     }
+  };
+
+  const handleChangeRangeRent = (newValues) => {
+    setValues(newValues);
+    setFilter({ ...filter, rentPriceMin: values[0], rentPriceMax: values[1] });
+  };
+
+  const handleChangeRangeSell = (newValues) => {
+    setValuesSell(newValues);
+    setFilter({ ...filter, sellPriceMin: valuesSell[0], sellPriceMax: valuesSell[1] });
+
   };
 
   const handleCheckbox = (e) => {
@@ -89,7 +101,7 @@ const Property = () => {
             style={{ paddingLeft: "40px" }}
           >
             <div className={`card-body ${style.cardBody} `}>
-              <div>
+              <div className={style.filterInput}>
                 <label className={`form-label ${style.label}`}>
                   {" "}
                   Localidad
@@ -110,49 +122,33 @@ const Property = () => {
                   ;
                 </select>
               </div>
-              <div>
+              <div className={style.filterInput}>
                 <label
                   htmlFor="inputName"
                   className={`form-label ${style.label}`}
                 >
-                  Precio de renta maximo
+                  Precio de renta
                 </label>
-                <input
-                  className={style.range}
-                  type="range"
-                  name="rentPriceMax"
+                <Slider
+                  range
                   min={0}
-                  max={500}
                   step={20}
-                  onInput={(e) => handleChange(e)}
-                  value={filter.rentPriceMax}
-                  id="inputName"
-                  placeholder="Nombre de tu propiedad"
-                />
-                <p>${filter.rentPriceMax}</p>
-              </div>
-              <div>
-                <label
-                  htmlFor="inputName"
-                  className={`form-label ${style.label}`}
+                  max={1000}
+                  value={values}
+                  onChange={handleChangeRangeRent}
+                ></Slider>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
                 >
-                  Precio de renta minimo
-                </label>
-                <input
-                  className={style.range}
-                  type="range"
-                  name="rentPriceMin"
-                  min={0}
-                  max={filter.rentPriceMax == 0 ? 300 : filter.rentPriceMax}
-                  step={20}
-                  onInput={(e) => handleChange(e)}
-                  value={filter.rentPriceMin}
-                  id="inputName"
-                  placeholder="Nombre de tu propiedad"
-                />
-                <p>${filter.rentPriceMin}</p>
+                  <p>{filter.rentPriceMin}</p>
+                  <p>{filter.rentPriceMax}</p>
+                </div>
               </div>
-              <div>
+              <div className={style.filterInput}>
                 <label
                   htmlFor="inputName"
                   className={`form-label ${style.label}`}
@@ -173,7 +169,7 @@ const Property = () => {
                 />
               </div>
 
-              <div>
+              <div className={style.filterInput}>
                 <label
                   htmlFor="inputName"
                   className={`form-label ${style.label}`}
@@ -194,7 +190,7 @@ const Property = () => {
                 />
               </div>
 
-              <div>
+              <div className={style.filterInput}>
                 <h4>Renta</h4>
                 <div className={style.checkboxContainer}>
                   <div className={style.yes}>
@@ -243,47 +239,32 @@ const Property = () => {
               </div>
               {onSale ? (
                 <>
-                  <div>
+                  <div className={style.filterInput}>
                     <label
                       htmlFor="inputName"
                       className={`form-label ${style.label}`}
                     >
-                      Precio de venta maximo
+                      Precio de venta
                     </label>
-                    <input
-                      className={style.range}
-                      type="range"
-                      name="sellPriceMax"
+                    <Slider
+                      range
                       min={0}
-                      max={500}
-                      step={20}
-                      onInput={(e) => handleChange(e)}
-                      value={filter.sellPriceMax}
-                      id="inputName"
-                      placeholder="Nombre de tu propiedad"
-                    />
-                    <p>${filter.sellPriceMax}</p>
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="inputName"
-                      className={`form-label ${style.label}`}
+                  step={20}
+
+                      max={1000}
+                      value={valuesSell}
+                      onChange={handleChangeRangeSell}
+                    ></Slider>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
                     >
-                      Precio de renta minimo
-                    </label>
-                    <input
-                      className={style.range}
-                      type="range"
-                      name="sellPriceMin"
-                      min={0}
-                      max={500}
-                      step={20}
-                      onInput={(e) => handleChange(e)}
-                      value={filter.sellPriceMin}
-                      id="inputName"
-                      placeholder="Nombre de tu propiedad"
-                    />
-                    <p>${filter.sellPriceMin}</p>
+                      <p>{filter.sellPriceMin}</p>
+                      <p>{filter.sellPriceMax}</p>
+                    </div>
                   </div>
                 </>
               ) : (
@@ -296,7 +277,10 @@ const Property = () => {
           </div>
         </div>
         <div className="col-md-9">
-          <CardsProperties></CardsProperties>
+          <CardsProperties
+            setFilter={setFilter}
+            filter={filter}
+          ></CardsProperties>
         </div>
       </div>
     </div>

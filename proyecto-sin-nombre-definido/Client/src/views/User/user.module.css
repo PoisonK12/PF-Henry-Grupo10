@@ -74,3 +74,9 @@
         padding-bottom: 15px;
         font:700 60px/1 'Lato', sans-serif;
     }
+    .widgets,
+    .charts {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }

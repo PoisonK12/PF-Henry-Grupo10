@@ -5,6 +5,7 @@ import { useDispatch} from "react-redux";
 import { getAllReallyProperties} from "../../redux/actions";
 import AllUser from "./AllUsers/allUser";
 import AllProperties from "./AllProperties/allProperties";
+import User from "./Profile/Profile";
 
 
 const AdminDashboard = () => {
@@ -20,7 +21,7 @@ const AdminDashboard = () => {
     <div className={style.background}>
       
       <div className="row" style={{ marginTop: "3rem", width: "100%"}}>
-        <div className="col-md-3">
+        <div className="col-md-3 p">
           <div
               className={`card ${style.fixedCard}`}
               style={{ position: "sticky", top: "5rem", marginBottom: "1rem" }}
@@ -38,14 +39,13 @@ const AdminDashboard = () => {
                 <li class="nav-item">
                       <a
                         class="nav-link"
-                        data-bs-target="#exampleModalToggle7"
-                        data-bs-toggle="modal"
+                        onClick={() => setComponenteActual('A')}
                         style={{
                           display: "flex",
                           alignItems: "center",
                           height: "80px",
                         }}
-                        href="/userPanel"
+                        href="#"
                       >
                         <div>
                         
@@ -58,7 +58,7 @@ const AdminDashboard = () => {
                       </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onClick={() => setComponenteActual('A')}  style={{
+                    <a class="nav-link" href="#" onClick={() => setComponenteActual('B')}  style={{
                         display: "flex",
                         alignItems: "center",
                         height: "80px",
@@ -73,7 +73,7 @@ const AdminDashboard = () => {
                     </a>
                   </li>
                 <li class="nav-item">
-                    <a class="nav-link" onClick={() => setComponenteActual('B')} href="#"   style={{
+                    <a class="nav-link" onClick={() => setComponenteActual('C')} href="#"   style={{
                         display: "flex",
                         alignItems: "center",
                         height: "80px",
@@ -93,96 +93,20 @@ const AdminDashboard = () => {
         </div>
         {componenteActual === "A"?
         <div className="col-md-9">
+          <User/>
+        </div>
+         : componenteActual === "B"?
+        <div className="col-md-9">
           <AllProperties/>
         </div>
-        :
+        : 
         <div className="col-md-9">
           <AllUser/>
         </div>
         }
       </div>
   
-      <div class="modal fade" id="exampleModalToggle7" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Editar Perfil</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                  <div class="col-6">
-                    <div
-                      id="drag-drop-area"
-                      style={{
-                        border: "2px dashed #ccc",
-                        textAlign: "center",
-                        paddingTop: "93px",
-                        cursor: "pointer",
-                        marginTop:"10px",
-                        marginBottom:"10px",
-                        borderRadius: "100%",
-                        height: "100%"
-                      }}
-                      // onDragOver={(e) => e.preventDefault()}
-                      // onDrop={(e) => handleFile(e.dataTransfer.files[0])}
-                    >
-                      Arrastra y suelta una imagen aquí o
-                      <label htmlFor="fileInput" style={{ color: "blue", cursor: "pointer", justifyContent: "center" }}>
-                        selecciona un archivo
-                      </label>
-                      <input
-                        type="file"
-                        id="fileInput"
-                        accept="image/*"
-                        style={{ display: "none" }}
-                        // onChange={(e) => handleFile(e.target.files[0])}
-                      />
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div className="mb-2">
-                      <label htmlFor="nombre" className="form-label" style={{color: "black"}}>
-                        Nombre
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="nombre"
-                        placeholder="Nombre"
-                      />
-                    </div>
-                    <div className="mb-2">
-                      <label htmlFor="correo" className="form-label" style={{color: "black"}}>
-                        Correo
-                      </label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="correo"
-                        placeholder="Correo electrónico"
-                      />
-                    </div>
-                    <div className="mb-2">
-                      <label htmlFor="contrasena" className="form-label" style={{color: "black"}}>
-                        Contraseña
-                      </label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        id="contrasena"
-                        placeholder="Contraseña"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <div class="modal-footer justify-content-center">
-              <button class="btn btn-primary">Actualizar</button>
-            </div>
-          </div>
-        </div>
-      </div>
+
     </div>
   );
 };
