@@ -28,6 +28,8 @@ const Property = () => {
     rentPriceMin: rentPriceMinValue ? rentPriceMinValue : 0,
     sellPriceMax: 0,
     sellPriceMin: 0,
+    order: "rentPriceAsc",
+    page: 0
   });
   const [onSale, setOnSale] = useState(false);
   useEffect(() => {
@@ -296,7 +298,7 @@ const Property = () => {
           </div>
         </div>
         <div className="col-md-9">
-          <CardsProperties></CardsProperties>
+          <CardsProperties setFilter={setFilter} filter={filter}></CardsProperties>
         </div>
       </div>
     </div>

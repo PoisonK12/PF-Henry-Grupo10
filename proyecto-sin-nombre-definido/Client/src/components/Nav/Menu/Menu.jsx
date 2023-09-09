@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "./Menu.module.css";
 
 const Menu = () => {
+  const navigate = useNavigate()
+
+  const logOut = () =>{
+    localStorage.removeItem("log")
+    navigate("/home")
+    // window.location.reload()
+  }
+
+
   return (
     <div className={style.nav}>
       <nav class={`navbar navbar-dark`}>
@@ -108,7 +117,7 @@ const Menu = () => {
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" style={{
+                  <a class="nav-link" onClick={() => logOut()} style={{
                       display: "flex",
                       alignItems: "center",
                       height: "80px",

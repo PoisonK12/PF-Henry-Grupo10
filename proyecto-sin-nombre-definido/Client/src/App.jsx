@@ -27,13 +27,13 @@ import {ScrollToTop} from './Helpers';
 function App() {
   
   const location = useLocation()
-
+  const isCheckInOrHomePage = location.pathname === "/" || location.pathname === "/checkIn";
 
   return (
     <>
     
 
-      {location.pathname !== "/" && <Nav />}
+      {!isCheckInOrHomePage && <Nav />}
       <ScrollToTop></ScrollToTop>
      <Routes>
       <Route path='/' element={<><Landing/></>} />

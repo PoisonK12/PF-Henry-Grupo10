@@ -21,10 +21,7 @@
 }
 
 
-img{
-    border-top-left-radius: 5px; /* Cambia el valor según tus preferencias */
-    border-top-right-radius: 5px;
-}
+
 
 .ribbon{
     font: 700 16px/1 'Lato', sans-serif;

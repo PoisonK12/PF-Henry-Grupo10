@@ -40,6 +40,7 @@ function GoogleLoginButton() {
     window.google.accounts.id.initialize({
       client_id: '547235349182-eqd60168p1n8550uulbpd31vvm35sprd.apps.googleusercontent.com',
       callback: handleCallbackResponse,
+
     });
     // Renderiza el botón de inicio de sesión de Google en el elemento con id "signInDiv".
     google.accounts.id.renderButton(document.getElementById('signInDiv'), {
@@ -69,11 +70,7 @@ function GoogleLoginButton() {
       */}
       {user && (
         <div>
-          {/* Muestra la imagen de perfil del usuario */}
-          <img src={user.picture} alt="User Avatar"></img>
-  
-          {/* Muestra el nombre del usuario */}
-          <h3>{user.name}</h3>
+
         </div>
       )}
     </div>

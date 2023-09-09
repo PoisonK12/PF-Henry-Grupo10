@@ -177,9 +177,11 @@ export const searchByFilter = ({
   rentPriceMin,
   sellPriceMax,
   sellPriceMin,
-}) => {
+  order,
+}, page) => {
   return async(dispatch) => {
     try {
+      if(order == "") order = "rentPriceAsc"
       if(rooms == 0) rooms = ""
       if(bathrooms == 0) bathrooms = ""
       if(onSale == false) onSale = ""
@@ -187,7 +189,7 @@ export const searchByFilter = ({
       if(rentPriceMin == 0) rentPriceMin = ""
       if(sellPriceMax == 0) sellPriceMax = ""
       if(sellPriceMin == 0) sellPriceMin = ""
-      const {data} = await axios(`/assets?size=10&page=1&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}`)
+      const {data} = await axios(`/assets?size=10&page=${page}&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}&${order}=yes`)
       console.log(data)
       return dispatch({
         type: SEARCH_BY_FILTER,
@@ -268,6 +270,7 @@ export const getStates = (country) => {
       try { 
         
           const {data} = await axios.post("/login" , {email , password})
+          console.log(data)
            setToastBody({success :data.success, data : data})
           setToast(true)
           localStorage.setItem("log", JSON.stringify(data.token))
