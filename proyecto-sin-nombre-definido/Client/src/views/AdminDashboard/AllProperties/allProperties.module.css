@@ -9,7 +9,6 @@
     justify-content: space-between; /* Distribuye los botones horizontalmente */
     align-items: center; /* Alinea los botones verticalmente en el centro */
   }
-  
 
 .table-responsive {
     margin: 30px 0;
@@ -237,10 +236,16 @@ position: absolute;
 
 .background{
     font-family: montserrat, arial, verdana;
-    background-color: rgb(76, 131, 228);
+    background-color: transparent;
 }
 
 .containerImg img{
     object-position: center bottom !important;
 
 }
+.widgets,
+    .charts {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }

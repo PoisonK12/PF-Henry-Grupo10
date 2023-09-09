@@ -9,6 +9,7 @@ import {
   putProperty,
 } from "../../../redux/actions";
 import axios from "axios";
+import Widget from "./Balance/Balance";
 
 
 
@@ -154,9 +155,17 @@ const AllProperties = () => {
   return (
     <div className={style.background}>
           <div>
+            <div className={style.widgets}>
+              <Widget type="user" />
+              <Widget type="order" />
+              <Widget type="earning" />
+              <Widget type="balance" />
+            </div>
+          </div>
+          <div>
             {allProperties?.map((props, index) => (
               <div className={`${style.centeredContent}`} key={props.id}>
-                <div className={`card mb-3 ${style.maxWidth}`}>
+                <div className={`card mb-3 p-2 ${style.maxWidth}`}>
                   <div className="row g-0">
                     <div className="col-md-4">
                       <div
