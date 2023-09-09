@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^3.1.2",
     "nodemailer": "^6.9.5",
+    "rc-slider": "^10.2.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-datepicker": "^4.16.0",
