@@ -139,6 +139,26 @@ const getAllAssets = async (req) => {
   }
 };
 
+// Trae todas las propiedades de un usuario especifico
+
+const getAssetsByUserId = async (userId) => {
+  // Buscar todas las filas en la tabla userAssets que tienen el userId proporcionado
+  const userAssets = await userAssets.findAll({
+    where: { userId: userId },
+  });
+
+  // Extraer los IDs de las propiedades desde las filas encontradas
+  const assetIds = userAssets.map((userAsset) => userAsset.assetId);
+
+  // Buscar las propiedades correspondientes a los IDs obtenidos
+  const assets = await Asset.findAll({
+    where: { id: assetIds },
+  });
+
+  return assets;
+};
+
+
 // Trae una propiedad especificada por el id
 const getAssetById = async (id) => {
   try {
@@ -355,4 +375,5 @@ module.exports = {
   getAllAmenities,
   getAllButAllAssets,
   updateReviewAsset,
+  getAssetsByUserId
 };
