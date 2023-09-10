@@ -1,7 +1,6 @@
-const { Asset, Amenity, User } = require("../db");
+const { Asset, Amenity, User, userAssets } = require("../db");
 const { Op, Sequelize } = require("sequelize");
 const { filterLocation } = require("../helpers/filterLocation");
-const amenities = require("../models/amenities");
 
 //Prototipos de borralo logico
 
@@ -141,15 +140,15 @@ const getAllAssets = async (req) => {
 
 // Trae todas las propiedades de un usuario especifico
 
-const getAssetsByUserId = async (userId) => {
+const getAssetsByUserId = async (id) => {
   // Buscar todas las filas en la tabla userAssets que tienen el userId proporcionado
-  const userAssets = await userAssets.findAll({
-    where: { userId: userId },
+  const userAss = await userAssets.findAll({
+    where: { UserId: id },
   });
 
   // Extraer los IDs de las propiedades desde las filas encontradas
-  const assetIds = userAssets.map((userAsset) => userAsset.assetId);
-
+  const assetIds = userAss.map((a) => a.AssetId);
+  console.log(assetIds);
   // Buscar las propiedades correspondientes a los IDs obtenidos
   const assets = await Asset.findAll({
     where: { id: assetIds },
@@ -157,7 +156,6 @@ const getAssetsByUserId = async (userId) => {
 
   return assets;
 };
-
 
 // Trae una propiedad especificada por el id
 const getAssetById = async (id) => {
@@ -223,6 +221,7 @@ const updateAsset = async (
 };
 
 const createAsset = async (
+  userName,
   name,
   description,
   address,
@@ -245,6 +244,7 @@ const createAsset = async (
       throw new Error("La Asset ya existe");
     }
     const createdAsset = await Asset.create({
+      userName,
       name,
       description,
       address,
@@ -260,14 +260,13 @@ const createAsset = async (
       totalArea,
       amenities,
     });
-    // for (const findId of amenities) {
-    //   const findAmen = await Amenity.findOne({
-    //     where: { id: findId },
-    //   });
-    //   if (findAmen) {
-    //     await createdAsset.addAmenity(findAmen);
-    //   }
-    // }
+
+    const findOwner = await User.findOne({
+      where: { userName: userName },
+    });
+    if (findOwner) {
+      await findOwner.addAsset(createdAsset);
+    }
 
     return createdAsset;
   } catch (error) {
@@ -375,5 +374,5 @@ module.exports = {
   getAllAmenities,
   getAllButAllAssets,
   updateReviewAsset,
-  getAssetsByUserId
+  getAssetsByUserId,
 };

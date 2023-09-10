@@ -12,8 +12,19 @@ const {
   getAllAmenities,
   getAllButAllAssets,
   getAllAssetsWithAmenities,
+  getAssetsByUserId,
   restoreAssetById,
 } = require("../controllers/assetController");
+
+const getAssetsFromUserHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await getAssetsByUserId(id);
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 const getAllButAllAssetsHandler = async (req, res) => {
   try {
@@ -60,22 +71,21 @@ const updateAssetHandler = async (req, res) => {
     coveredArea,
     amenities,
   } = req.body;
-  
-  try {
 
-  // const validData = dataSchemePost.parse({
-  //   body: {
-  //   name,
-  //   description,
-  //   images,
-  //   onSale,
-  //   sellPrice,
-  //   rentPrice,
-  //   rooms,
-  //   bathrooms,
-  //   amenities,
-  //   },
-  // });
+  try {
+    // const validData = dataSchemePost.parse({
+    //   body: {
+    //   name,
+    //   description,
+    //   images,
+    //   onSale,
+    //   sellPrice,
+    //   rentPrice,
+    //   rooms,
+    //   bathrooms,
+    //   amenities,
+    //   },
+    // });
     await updateAsset(
       id,
       name,
@@ -100,6 +110,7 @@ const updateAssetHandler = async (req, res) => {
 
 const createAssetHandler = async (req, res) => {
   const {
+    userName,
     name,
     description,
     address,
@@ -136,6 +147,7 @@ const createAssetHandler = async (req, res) => {
     //   },
     // });
     const response = await createAsset(
+      userName,
       name,
       description,
       address,
@@ -154,7 +166,7 @@ const createAssetHandler = async (req, res) => {
 
     res.status(201).json(response);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };
@@ -237,4 +249,5 @@ module.exports = {
   getAllButAllAssetsHandler,
   getAllAssetsWithAmenitiesHandler,
   restoreAssetByIdHandler,
+  getAssetsFromUserHandler,
 };
