@@ -142,21 +142,31 @@ const getAllAssets = async (req) => {
 
 const getAssetsByUserId = async (id) => {
   // Buscar todas las filas en la tabla userAssets que tienen el userId proporcionado
+<<<<<<< HEAD
   const userAss = await userAssets.findAll({
     where: { UserId: id },
+=======
+  const userAssets = await sequelize.models.userAssets.findAll({
+    where: { userId: userId },
+>>>>>>> e769f5f6547672e069df8b8f67d14ce620fb47d7
   });
 
   // Extraer los IDs de las propiedades desde las filas encontradas
   const assetIds = userAss.map((a) => a.AssetId);
   console.log(assetIds);
   // Buscar las propiedades correspondientes a los IDs obtenidos
-  const assets = await Asset.findAll({
+  const assets = await sequelize.models.Asset.findAll({
     where: { id: assetIds },
   });
 
   return assets;
 };
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> e769f5f6547672e069df8b8f67d14ce620fb47d7
 // Trae una propiedad especificada por el id
 const getAssetById = async (id) => {
   try {
