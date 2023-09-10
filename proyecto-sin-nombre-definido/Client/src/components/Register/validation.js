@@ -26,8 +26,6 @@ export const validation = (form) => {
         errors.password = "Al menos un número"
     } else if( form.password &&  !/[A-Z]/.test(form.password)) {
         errors.password = "Al menos una mayúscula"
-    } else if( form.password && !/^(?=(?:.*\d){1})(?=(?:.*[@$?¡\-_]){1})/.test(form.password)) {
-        errors.password = "Al menos un carácter especial"
     }
     
     if(!form.confirmPassword) {

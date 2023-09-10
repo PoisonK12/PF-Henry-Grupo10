@@ -7,6 +7,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getLocation, searchByFilter } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import "rc-slider/assets/index.css";
+import Loader from "../../components/Loader/Loader";
 
 const Property = () => {
   const allProp = useSelector((state) => state.properties);
@@ -31,13 +32,20 @@ const Property = () => {
     sellPriceMax: 0,
     sellPriceMin: 0,
     order: "rentPriceAsc",
-    page: 0,
+    page: 1,
   });
   const [values, setValues] = useState([0, 1000]);
   const [valuesSell, setValuesSell] = useState([0, 1000]);
   const [onSale, setOnSale] = useState(false);
+  const [loader, setLoader] = useState(true)
   useEffect(() => {
-    dispatch(searchByFilter(filter));
+    const fetchData = () => {
+      dispatch(searchByFilter(filter));
+      setTimeout(() => {
+        setLoader(false)
+      },2000)
+    }
+    fetchData()
   }, []);
 
   const allLocation = useSelector((state) => state.location);
@@ -277,10 +285,15 @@ const Property = () => {
           </div>
         </div>
         <div className="col-md-9">
+          {loader ?
+            <Loader></Loader>
+          :
           <CardsProperties
             setFilter={setFilter}
             filter={filter}
           ></CardsProperties>
+          
+          }
         </div>
       </div>
     </div>

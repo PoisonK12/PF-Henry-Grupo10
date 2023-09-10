@@ -95,15 +95,18 @@ import landing2 from "../../assets/images/Landing.jpeg.webp"
 import landing3 from "../../assets/images/landing3.jpg";
 import landing4 from "../../assets/images/landing4.webp";
 import landing5 from "../../assets/images/landing5.avif";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 
 const Landing = () => {
+  const navigate = useNavigate()
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [animationActive, setAnimationActive] = useState(false);
 
   useEffect(() => {
     const redirectTimeout = setTimeout(() => {
-      window.location.href = "/home"; // Redireccionar después de 3 segundos
+      navigate("/home"); // Redireccionar después de 3 segundos
     }, 4500);
 
     return () => {
@@ -112,19 +115,22 @@ const Landing = () => {
   }, []);
 
   return(
-    <div>
-      <section className={style.select}>
-        <div className={style.textOverlay}>
-          <h1 className={style.text}>Welcome to</h1>
-          <p className={style.parra}> Experience the allure of modern hospitality at our premier rentals. Wake up to stunning views and luxurious comfort, making your stay truly unforgettable.</p>
-        </div>
-        <img className={style.ima} name='S02' src={landing2} alt="" />
-        <img name='S04' src={landing4} alt="" />
-        <img name='S01' src={landind1} alt="" />
-        <img className={style.ima} name='S05' src={landing5} alt="" />
-        <img className={style.ima} name='S03' src={landing3} alt="" />
-      </section>
-    </div>
+    // <div>
+    //   <section className={style.select}>
+    //     <div className={style.textOverlay}>
+    //       <h1 className={style.text}>Welcome to</h1>
+    //       <p className={style.parra}> Experience the allure of modern hospitality at our premier rentals. Wake up to stunning views and luxurious comfort, making your stay truly unforgettable.</p>
+    //     </div>
+    //     <img className={style.ima} name='S02' src={landing2} alt="" />
+    //     <img name='S04' src={landing4} alt="" />
+    //     <img name='S01' src={landind1} alt="" />
+    //     <img className={style.ima} name='S05' src={landing5} alt="" />
+    //     <img className={style.ima} name='S03' src={landing3} alt="" />
+    //   </section>
+    // </div>
+    <>
+      <Loader></Loader>
+    </>
   )
 
 }

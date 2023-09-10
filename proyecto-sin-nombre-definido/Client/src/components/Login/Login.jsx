@@ -48,9 +48,9 @@ const Login = ({ handleSwitch, conditional }) => {
     }, 2500);
     await getLogin(
       login,
-      setToast,
       conditional,
       setToastBody,
+      setToast,
       navigate,
       setErrors
     );

@@ -22,18 +22,28 @@ import Login from "./components/Login/apa"
 axios.defaults.baseURL = "http://localhost:3001"
 import jwt_decode from "jwt-decode"
 import {ScrollToTop} from './Helpers';
+import Loader from './components/Loader/Loader';
 
 
 
 function App() {
   
   const location = useLocation()
-  const isCheckInOrHomePage = location.pathname === "/" || location.pathname === "/checkIn";
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const loader = setTimeout(() => {
+      setLoading(false)
+    }, 2000)
+    return () => clearTimeout(loader)
+  }, [])
+
+
 
   return (
     <>
     
-
+    {loading && <Loader></Loader>} {/*? lOADER */}
       {(location.pathname !== "/" && location.pathname !== "/checkIn") && <Nav />}
       <ScrollToTop></ScrollToTop>
      <Routes>
@@ -46,8 +56,8 @@ function App() {
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
       <Route path='/userPanel' element={<><UserPanel/><Footer/></>}/>
       <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>           
-      <Route path="/checkIn" element={<><Login/><Footer/></>}></Route>
-      <Route path="/demo" element={<><LoginRegister/><Footer/></>}></Route>
+      <Route path="/checkIn" element={<><LoginRegister/><Footer/></>}></Route>
+      <Route path="/demo" element={<><Loader/><Footer/></>}></Route>
       <Route path="*" element={<><NotFound/><Footer/></>}/>
      </Routes>
       

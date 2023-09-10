@@ -4,7 +4,7 @@ import { getLogin } from "../../redux/actions";
 import { validation } from "./validation.js";
 import { Toast } from "react-bootstrap";
 import axios from "axios";
-const Register = ({ handleSwitch, conditional }) => {
+const Register = ({handleSwitch,  conditional }) => {
   const [toastBody, setToastBody] = useState({ response: "" });
   const [toast, setToast] = useState(false);
   const [step, setStep] = useState(1);
@@ -215,14 +215,15 @@ const Register = ({ handleSwitch, conditional }) => {
 
   //?-------------------------------------------------Submit Handlers------------------------------------------------------------------------------------
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors(validation({ ...register }));
-    if (errors) {
-      return;
-    }
+    console.log("condicional" , conditional)
+    // setErrors(validation({ ...register }));
+    // if (errors) {
+    //   return;
+    // }
 
-    getLogin(register, conditional, setToastBody, setToast);
+    await  getLogin(register, conditional, setToastBody, setToast);
   };
 
   //?-----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -433,8 +434,9 @@ const Register = ({ handleSwitch, conditional }) => {
                     {" "}
                     Ya estas registrado? 👉🏼
                     <span
-                      onClick={handleSwitch}
                       style={{ cursor: "pointer", color: "blueviolet" }}
+                      onClick={handleSwitch}
+
                     >
                       {" "}
                       Loguéate{" "}
@@ -677,7 +679,7 @@ const Register = ({ handleSwitch, conditional }) => {
     } else if (step === 3) {
       return (
         <>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(e) => handleSubmit(e)}>
             <fieldset
               className={`border  d-flex flex-column text-center ${style.form2}`}
             >
@@ -831,6 +833,8 @@ const Register = ({ handleSwitch, conditional }) => {
 
                 <div class="col-xs-6 m-3">
                   <button
+                    type="submit"
+
                     style={{
                       width: "100%",
                       paddingInline: "35px",
@@ -838,7 +842,7 @@ const Register = ({ handleSwitch, conditional }) => {
                       marginBottom: "20px",
                     }}
                     className={style.button}
-                    type="submit"
+                    
                   >
                     {" "}
                     Enviar
