@@ -211,7 +211,7 @@ export const deleteAssetById = (id) => {
   return async (dispatch) => {
     try {
       // Realiza la solicitud de eliminación al servidor
-      await axios.delete(`/assets/delete/${id}`);
+      await axios.delete(`/assets/${id}`);
 
       // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
       dispatch({
@@ -267,11 +267,11 @@ export const getStates = (country) => {
 
 export const getLogin = async (
   login,
-  conditional,
   setToastBody,
   setToast,
   navigate,
-  setErrors
+  setErrors,
+  typeForm
 ) => {
   const {
     email,
@@ -288,7 +288,8 @@ export const getLogin = async (
     profilePic,
   } = login;
 
-  if (conditional === "login") {
+console.log(typeForm);
+  if (typeForm === "login") {
     try {
       const { data } = await axios.post("/login", { email, password });
       console.log(data);
@@ -312,7 +313,7 @@ export const getLogin = async (
   }
 
   //?-------- crear una variable para cada formulario asi se diferencian ------------------------
-  if (conditional === "register") {
+  if (typeForm === "register") {
     try {
       const { data } = await axios.post("/users/create", {
         email,
@@ -329,16 +330,17 @@ export const getLogin = async (
         landlord,
         userType: "User",
       });
-      console.log(data);
+      
       if (data) {
-        console.log(data);
+        
+        localStorage.setItem("log", JSON.stringify({email : data.email , id : data.id}));
         setToastBody({ response: data });
         setToast(true);
-        /*  setTimeout(() => {
+       /*   setTimeout(() => {
               setToast(false)
               navigate("/home")
-            }, 1500 )
-            return */
+            }, 1500 ) */
+            return
       }
     } catch (error) {
       console.log(error);
@@ -346,7 +348,7 @@ export const getLogin = async (
       setToast(true);
       setTimeout(() => {
         setToast(false);
-      }, 1500);
+      }, 1000);
       return;
     }
   }

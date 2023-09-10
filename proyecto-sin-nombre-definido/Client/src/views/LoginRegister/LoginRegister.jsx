@@ -10,12 +10,6 @@ const LoginRegister = () => {
 
   const handleSwitch = () => {
     setLoginSlide(!loginSlide);
-    console.log("Switch")
-    if (conditional === "login") {
-      setConditional("register");
-    } else {
-      setConditional("login");
-    }
   };
 
   return (
@@ -63,8 +57,8 @@ const LoginRegister = () => {
           }}
         >
           
-          <Login handleSwitch={handleSwitch} conditional={conditional} />
-          <Register handleSwitch={handleSwitch} conditional={conditional} />
+          <Login handleSwitch={handleSwitch} conditional={conditional} setConditional={setConditional} />
+          <Register handleSwitch={handleSwitch} conditional={conditional} setConditional={setConditional}/>
         </div>
         
       </div>

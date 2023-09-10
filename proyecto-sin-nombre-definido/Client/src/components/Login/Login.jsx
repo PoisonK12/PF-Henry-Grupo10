@@ -9,8 +9,10 @@ import GoogleLoginButton from "../GoogleAuth/LoginButton/";
 import Register from "../Register/Register";
 
 
-const Login = ({ handleSwitch, conditional }) => {
+const Login = ({ handleSwitch}) => {
 
+
+  const typeForm = "login";
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -48,11 +50,11 @@ const Login = ({ handleSwitch, conditional }) => {
     }, 2500);
     await getLogin(
       login,
-      conditional,
       setToastBody,
       setToast,
       navigate,
-      setErrors
+      setErrors,
+      typeForm 
     );
   };
 
@@ -140,7 +142,7 @@ const Login = ({ handleSwitch, conditional }) => {
                   <p>
                     Sin cuenta?{" "}
                     <span
-                     onClick={handleSwitch}
+                      onClick={handleSwitch}
                       style={{ cursor: "pointer", color: "blueviolet" }}
                     >
                       Registrate
