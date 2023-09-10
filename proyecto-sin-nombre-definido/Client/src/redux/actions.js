@@ -310,6 +310,7 @@ export const getStates = (country) => {
             return */
           }   
           } catch (error) {
+            console.log(error)
     setToastBody({response : error.message})
     setToast(true)
     setTimeout(()=> {

@@ -122,49 +122,53 @@ label {
 .overlay {
   width: 40.2%;
   height: 616px;
-    
+
   /* height:100%; */
   position: absolute;
   z-index: 200;
   /* clip: rect(0, 385px, 616px, 0); */
 }
 
-.overlay.login, .overlay.register{
-    /*  Width is 385px - padding  */
-    
-    /* width: calc(385px - var(--padding) * 2); */
-    /* height: 100vh; */
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    float: right;
-    /* width: 100%; */
-  }
+.overlay.login,
+.overlay.register {
+  /*  Width is 385px - padding  */
 
-  .overlay.login{
-    /* border: #06142d 20px solid;
+  /* width: calc(385px - var(--padding) * 2); */
+  /* height: 100vh; */
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  float: right;
+  /* width: 100%; */
+}
+
+.overlay.login {
+  /* border: #06142d 20px solid;
     float: right; */
 }
-  .overlay.register{
-/* margin-right: auto; */
-    /* float: left; */
-  }
-  
+.overlay.register {
+  /* margin-right: auto; */
+  /* float: left; */
+}
 
-  .overlay.login,
+.overlay.login,
 .overlay.register {
   transition: transform 0.3s ease; /* Agrega una transición de 0.3 segundos al cambio de transformación */
 }
 
 /* Establecer la transformación según la clase activa */
 .overlay.login {
-  transform: translateX(0); /* Inicialmente, la vista de inicio de sesión está en su lugar */
+  transform: translateX(
+    0
+  ); /* Inicialmente, la vista de inicio de sesión está en su lugar */
 }
 
 .overlay.register {
-  transform: translateX(100%); /* Inicialmente, la vista de registro está desplazada a la derecha */
+  transform: translateX(
+    100%
+  ); /* Inicialmente, la vista de registro está desplazada a la derecha */
 }
 
 /* Cuando se active la vista de registro */
@@ -172,15 +176,26 @@ label {
   transform: translateX(0); /* Desplazar la vista de registro a la izquierda */
 }
 
-.gridForm{
-    display:grid; 
-    grid-template-columns:1fr 1fr;
-    grid-template-rows:1fr 1fr 1fr 1fr;
-    gap:0% 8%;
-    grid-template-areas: 
+.gridForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 0% 8%;
+  grid-template-areas:
     "name userName"
     "correo correo"
     "contraseña contraseña"
-    "verificar verificar"
-    ;
+    "verificar verificar";
+}
+
+.gridForm p {
+  font-size: 13px !important;
+  margin-bottom: 0 !important;
+}
+.iconPassword {
+  position: absolute;
+  border: none;
+  right: 10px;
+  top: 45px;
+  background: none;
 }

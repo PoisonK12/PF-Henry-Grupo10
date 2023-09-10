@@ -18,6 +18,7 @@ import LoginRegister from "./views/LoginRegister/LoginRegister"
 import UserPanel from './views/User/UserPanel';
 import Chatbot from './components/Chatbot/Chatbot';
 import { useEffect } from 'react';
+import Login from "./components/Login/apa"
 axios.defaults.baseURL = "http://localhost:3001"
 import jwt_decode from "jwt-decode"
 import {ScrollToTop} from './Helpers';
@@ -45,7 +46,8 @@ function App() {
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
       <Route path='/userPanel' element={<><UserPanel/><Footer/></>}/>
       <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>           
-      <Route path="/checkIn" element={<><LoginRegister/><Footer/></>}></Route>
+      <Route path="/checkIn" element={<><Login/><Footer/></>}></Route>
+      <Route path="/demo" element={<><LoginRegister/><Footer/></>}></Route>
       <Route path="*" element={<><NotFound/><Footer/></>}/>
      </Routes>
       

@@ -6,7 +6,7 @@ import { validation } from "./validation";
 import { Modal, ToastBody } from "react-bootstrap";
 import fondo from "../../assets/images/Exteriores/imageLogin.avif";
 import GoogleLoginButton from "../GoogleAuth/LoginButton/";
-import Register from "../Register/Register";
+import Register from "../Register/Register.jsx";
 
 const Login = ({ setConditional, conditional }) => {
   
@@ -254,7 +254,7 @@ const Login = ({ setConditional, conditional }) => {
             </div>
           </form>
           <div className={style.leftForm}>
-            {<Register  handleSwitch = {handleSwitch}/>}
+            <Register/>
            {/*  <form>
               <fieldset
                 className={`border  d-flex flex-column text-center ${style.form2}`}

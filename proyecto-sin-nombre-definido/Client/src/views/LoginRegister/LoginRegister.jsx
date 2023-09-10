@@ -1,26 +1,24 @@
-import React, {useState} from "react";
-import Login from "../../components/Login/apa.jsx"
+import React, { useState } from "react";
+import Login from "../../components/Login/Login.jsx";
 import Register from "../../components/Register/Register";
-import style from "./LoginRegister.module.css"
+import style from "./LoginRegister.module.css";
+import fondo from "../../assets/images/Exteriores/imageLogin.avif";
 
 const LoginRegister = () => {
-
-    const [conditional , setConditional ] = useState("login");
-    const [loginSlide, setLoginSlide] = useState(false);
+  const [conditional, setConditional] = useState("login");
+  const [loginSlide, setLoginSlide] = useState(false);
 
   const handleSwitch = () => {
-    setLoginSlide(!loginSlide)
-    if(conditional === "login") {
-      setConditional("register")
+    setLoginSlide(!loginSlide);
+    if (conditional === "login") {
+      setConditional("register");
     } else {
-      setConditional("login")
+      setConditional("login");
     }
+  };
 
-  }
-
-    return (
-
-        <>
+  return (
+    <>
       <div
         style={{
           background:
@@ -35,7 +33,11 @@ const LoginRegister = () => {
           margin: "auto",
         }}
       >
-        <div className={`${style.overlay} ${loginSlide ? style.login : style.register}`}>
+        <div
+          className={`${style.overlay} ${
+            loginSlide ? style.login : style.register
+          }`}
+        >
           <img
             src={fondo}
             style={{
@@ -50,6 +52,7 @@ const LoginRegister = () => {
             className={style.img}
           ></img>
         </div>
+        
         <div
           style={{
             background: "rgba(255, 255, 255, 0.701)",
@@ -57,15 +60,15 @@ const LoginRegister = () => {
             height:"616px",
             margin: "0 auto",
           }}
-        ></div>
-        <Login handleSwitch = {handleSwitch} /> 
-        <div className={style.leftForm}>
-        <Register handleSwitch = {handleSwitch} />
+        >
+          
+          <Login handleSwitch={handleSwitch} />
+          <Register handleSwitch={handleSwitch} />
         </div>
-    </div>
+        
+      </div>
     </>
-    )
-
-}
+  );
+};
 
 export default LoginRegister;
