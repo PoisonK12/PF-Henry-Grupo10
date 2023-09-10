@@ -817,14 +817,33 @@ const Register = ({handleSwitch}) => {
                     <Modal.Body>
                       <div>
                         <h3>Bienvenido</h3>
-                       <div>
+                       <div
+                  className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
+                  style={{
+                    border: "10px  #ccc",
+                    background: "rgba(169, 181, 197, 0.562)",
+                    margin: `15px 15px`,
+                    textAlign: "center",
+                    width: "200px",
+                    height: "200px",
+                    borderRadius: "100px",
+                  }}>
                         
-                          <img
-                            src={toastBody.response.data.profilePic}
-                            alt="foto de perfil"
-                          ></img>
+                        <img
+                      style={{
+                        borderRadius : "100px",
+                        width: "200px",
+                        height: "200px",
+                        maxHeight: "200px",
+                        objectFit: "cover",
+                      }}
+                      src={toastBody.response.data.profilePic}
+                      alt="foto de perfil"
+                     
+                    />
+                       
                         </div>
-                        <h6>{toastBody.response.data.userName}</h6>
+                        <h4>{toastBody.response.data.userName}</h4>
                       </div>
                     </Modal.Body>
                     <Modal.Footer>
