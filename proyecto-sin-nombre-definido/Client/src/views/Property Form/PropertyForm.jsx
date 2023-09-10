@@ -49,9 +49,7 @@ const PropertyForm = () => {
 
   console.log(errors);
   const navigate = useNavigate();
-  useEffect(() => {
-    !token ? navigate("/home") : "";
-  }, [])
+  
   const [form, setForm] = useState({
     name: "",
     images: [],

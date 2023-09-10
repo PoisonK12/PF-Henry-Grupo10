@@ -107,7 +107,7 @@ const Landing = () => {
   useEffect(() => {
     const redirectTimeout = setTimeout(() => {
       navigate("/home"); // Redireccionar después de 3 segundos
-    }, 4500);
+    }, 2000);
 
     return () => {
       clearTimeout(redirectTimeout);

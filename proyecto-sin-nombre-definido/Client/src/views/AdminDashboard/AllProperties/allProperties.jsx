@@ -140,14 +140,12 @@ const AllProperties = () => {
   };
   useEffect(() => {
     dispatch(getAllReallyProperties());
-  }, []);
+  }, [allProperties]);
 
   useEffect(() => {
     // Lógica para detectar eliminaciones
     const deletedItems = previousProperties.filter(item => !allProperties.includes(item));
     // Hacer algo con los elementos eliminados si es necesario
-    console.log('Elementos eliminados:', deletedItems);
-    
     // Actualizar el estado anterior con el estado actual
     setPreviousProperties(allProperties);
   }, [allProperties]);

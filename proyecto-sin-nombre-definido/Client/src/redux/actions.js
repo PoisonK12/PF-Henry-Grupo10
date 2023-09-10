@@ -211,7 +211,7 @@ export const deleteAssetById = (id) => {
   return async (dispatch) => {
     try {
       // Realiza la solicitud de eliminación al servidor
-      await axios.delete(`/assets/delete/${id}`);
+      await axios.delete(`/assets/${id}`);
 
       // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
       dispatch({
