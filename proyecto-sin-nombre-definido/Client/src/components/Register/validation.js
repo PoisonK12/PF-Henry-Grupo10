@@ -51,9 +51,9 @@ export const validation = (form) => {
     if(!form.phoneNumber) {
         errors.phoneNumber = "Ingresa tu número de teléfono"
     } else if(form.phoneNumber && !/^[0-9()+\- ]*$/.test(form.phoneNumber)) {
-        errors.phoneNumber = "Necesario el prefijo nacional.EJ:(+54)"
+        errors.phoneNumber = "Necesario el prefijo nacional. EJ:(+54)"
     } else if( form.phoneNumber &&  form.phoneNumber.length > 15) {
-        errors.phoneNumber = "El número de telefono grande"
+        errors.phoneNumber = "El número de telefono es muy largo"
     }
 
     if(!form.birthDate) {

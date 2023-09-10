@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import style from "../Login/apa.module.css";
 import { getLogin } from "../../redux/actions";
 import { validation } from "./validation.js";
-import { Toast } from "react-bootstrap";
+import { Modal} from "react-bootstrap";
 import axios from "axios";
-const Register = ({handleSwitch,  conditional }) => {
+import { useNavigate } from "react-router-dom";
+
+const Register = ({handleSwitch}) => {
+
   const [toastBody, setToastBody] = useState({ response: "" });
   const [toast, setToast] = useState(false);
   const [step, setStep] = useState(1);
+  const navigate = useNavigate()
+  const typeForm = "register";
   const [errors, setErrors] = useState({
     profilePic: "",
     userName: "",
@@ -54,7 +59,6 @@ const Register = ({handleSwitch,  conditional }) => {
     }
   };
 
-  console.log(register);
 
   const handleChange = (e) => {
     const { name } = e.target;
@@ -77,6 +81,7 @@ const Register = ({handleSwitch,  conditional }) => {
       [name]: value,
     });
     const errorDetect = validation({ [name]: value });
+  
 
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -217,13 +222,15 @@ const Register = ({handleSwitch,  conditional }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("condicional" , conditional)
-    // setErrors(validation({ ...register }));
-    // if (errors) {
-    //   return;
-    // }
+    
+     setErrors(validation({ ...register }));
+     if (Object.keys(errors).length > 0) {
+        console.log(errors);
+       return;
+     } else {
+         await  getLogin(register,  setToastBody, setToast, navigate, setErrors, typeForm);
+     }
 
-    await  getLogin(register, conditional, setToastBody, setToast);
   };
 
   //?-----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -318,7 +325,11 @@ const Register = ({handleSwitch,  conditional }) => {
                     </p>
                   ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                 </div>
-
+                </div>
+                <div
+                className={`d-flex flex-row align-items-center justify-content-center ${style.gridForm}`}
+                style={{ width: "90%" }}
+              >
                 <div
                   class="mt-3"
                   style={{
@@ -348,71 +359,16 @@ const Register = ({handleSwitch,  conditional }) => {
                   >
                     {passwordType2 ? iconVisible2 : iconInvisible2}
                   </button>
-                  {errors.password ? (
+                  {errors.confirmPassword ? (
                     <p style={{ color: "red", fontSize: "15px", visibility:"visible", margin:"none" }}>
-                      {errors.password}
+                      {errors.confirmPassword}
                     </p>
                   ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                 </div>
               </div>
-              <div
-                className={`d-flex flex-row align-items-center justify-content-center ${style.gridForm}`}
-                style={{ width: "90%" }}
-              >
-                <div
-                  class="mt-3"
-                  style={{
-                    textAlign: "left",
-                    width: "100%",
-                    gridArea: "email",
-                  }}
-                >
-                  <label class="form-label lead" htmlFor="fullName">
-                    {" "}
-                    Nombre Completo :{" "}
-                  </label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    class={`form-control ${style.inputs}`}
-                    value={register.fullName}
-                    onChange={handleChange}
-                    placeholder="Nombre complleto"
-                  />
-                   {errors.fullName ? (
-                    <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
-                      {errors.fullName}
-                    </p>
-                  ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
-                </div>
-                <div
-                  class="mt-3"
-                  style={{
-                    textAlign: "left",
-                    width: "100%",
-                    gridArea: "email",
-                  }}
-                >
-                  <label class="form-label lead" htmlFor="userName">
-                    Nombre de usuario :
-                  </label>
-                  <input
-                    type="text"
-                    name="userName"
-                    class={`form-control ${style.inputs}`}
-                    value={register.userName}
-                    onChange={handleChange}
-                    placeholder="Nombre de usuario"
-                  />
-                  {errors.userName ? (
-                    <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
-                      {errors.userName}
-                    </p>
-                  ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
-                </div>
-              </div>
+             
 
-              <br></br>
+             
               <div class="d-flex flex-row align-items-center justify-content-center">
                 <div class="col-xs-6 m-3">
                   <button
@@ -436,7 +392,6 @@ const Register = ({handleSwitch,  conditional }) => {
                     <span
                       style={{ cursor: "pointer", color: "blueviolet" }}
                       onClick={handleSwitch}
-
                     >
                       {" "}
                       Loguéate{" "}
@@ -467,11 +422,11 @@ const Register = ({handleSwitch,  conditional }) => {
                 <div
                   className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
                   style={{
-                    border: "2px dashed #ccc",
+                    border: "10px  #ccc",
                     background: "rgba(169, 181, 197, 0.562)",
-                    margin: `20px 20px`,
+                    margin: `15px 15px`,
                     textAlign: "center",
-                    width: "300px",
+                    width: "200px",
                     height: "200px",
                     borderRadius: "100px",
                   }}
@@ -482,9 +437,10 @@ const Register = ({handleSwitch,  conditional }) => {
                   {register.profilePic ? (
                     <img
                       style={{
-                        width: "100%",
-                        height: "100%",
-                        maxHeight: "250px",
+                        borderRadius : "100px",
+                        width: "200px",
+                        height: "200px",
+                        maxHeight: "200px",
                         objectFit: "cover",
                       }}
                       src={register.profilePic}
@@ -574,10 +530,10 @@ const Register = ({handleSwitch,  conditional }) => {
                     placeholder="Nombre de usuario"
                   />
                   {errors.userName ? (
-                    <p style={{ color: "red", fontSize: "15px" }}>
-                      {errors.userName}
-                    </p>
-                  ) : null}
+                    <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                    {errors.userName}
+                  </p>
+                ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                 </div>
               </div>
               <div
@@ -605,10 +561,10 @@ const Register = ({handleSwitch,  conditional }) => {
                     onChange={handleChange}
                   />
                   {errors.birthDate ? (
-                    <p style={{ color: "red", fontSize: "15px" }}>
-                      {errors.birthDate}
-                    </p>
-                  ) : null}
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.birthDate}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                 </div>
                 <div
                   class="mt-3"
@@ -630,10 +586,10 @@ const Register = ({handleSwitch,  conditional }) => {
                     placeholder="Número de teléfono"
                   />
                   {errors.phoneNumber ? (
-                    <p style={{ color: "red", fontSize: "15px" }}>
-                      {errors.phoneNumber}
-                    </p>
-                  ) : null}
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.phoneNumber}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                 </div>
               </div>
               <hr className={style.hr}></hr>
@@ -722,10 +678,10 @@ const Register = ({handleSwitch,  conditional }) => {
                     <option value="No apply">No aplicar</option>
                   </select>
                   {errors.gender ? (
-                    <p style={{ color: "red", fontSize: "15px" }}>
-                      {errors.gender}
-                    </p>
-                  ) : null}
+                    <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                    {errors.gender}
+                  </p>
+                ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                 </div>
                 <div
                   class="mt-3"
@@ -745,10 +701,10 @@ const Register = ({handleSwitch,  conditional }) => {
                     placeholder="Dirección"
                   />
                   {errors.address ? (
-                    <p style={{ color: "red", fontSize: "15px" }}>
-                      {errors.address}
-                    </p>
-                  ) : null}
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.address}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                 </div>
               </div>
               <div
@@ -778,10 +734,10 @@ const Register = ({handleSwitch,  conditional }) => {
                     <option value="Mexico">Mexico</option>
                   </select>
                   {errors.nationality ? (
-                    <p style={{ color: "red", fontSize: "15px" }}>
-                      {errors.nationality}
-                    </p>
-                  ) : null}
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.nationality}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                 </div>
 
                 <div
@@ -806,10 +762,10 @@ const Register = ({handleSwitch,  conditional }) => {
                     <option value="false">Usuario</option>
                   </select>
                   {errors.landlord ? (
-                    <p style={{ color: "red", fontSize: "15px" }}>
-                      {errors.landlord}
-                    </p>
-                  ) : null}
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.landlord}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                 </div>
               </div>
               <hr className={`${style.hr}`}></hr>
@@ -852,17 +808,48 @@ const Register = ({handleSwitch,  conditional }) => {
             </fieldset>
           </form>
 
-          <div>
-            <Toast show={toast}>
-              <Toast.Body>
-                {
-                  <div className>
-                    <p> Creado con éxito. Redirigiendote...</p>
-                  </div>
-                }
-              </Toast.Body>
-            </Toast>
-          </div>
+          {(toast && typeof toastBody.response === "object") ? (
+                <div class="justify-self-center align-self-center">
+                  <Modal show={toast}>
+                    <Modal.Header>
+                      <Modal.Title>Registrado con éxito✅</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div>
+                        <h3>Bienvenido</h3>
+                       <div>
+                        
+                          <img
+                            src={toastBody.response.data.profilePic}
+                            alt="foto de perfil"
+                          ></img>
+                        </div>
+                        <h6>{toastBody.response.data.userName}</h6>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <p> Redirigiendote....</p>
+                    </Modal.Footer>
+                  </Modal>
+                </div>)
+                : typeof toastBody.response === "string" ? 
+                (
+                    <div class="justify-self-center align-self-center">
+                      <Modal show={toast}>
+                        <Modal.Header>
+                          <Modal.Title>Algo salio mal❌</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <div>
+                           <h6>{toastBody.response}</h6>
+                           <br></br>
+                           <h6> Intentalo de nuevo </h6>
+                          </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                        </Modal.Footer>
+                      </Modal>
+                    </div>) : null }
         </>
       );
     }

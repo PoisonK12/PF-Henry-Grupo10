@@ -165,7 +165,7 @@ const createUserController = async ({
       return `El nombre de usuario ${userName} ya existe.`;
     }
 
-    return `Exito al crear el usuario ${userName}`;
+    return {success : true , data : createdUser};
   } catch (error) {
     console.error(error);
     throw error;
