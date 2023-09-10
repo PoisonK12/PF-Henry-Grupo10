@@ -288,7 +288,7 @@ export const getLogin = async (
     profilePic,
   } = login;
 
-console.log(typeForm);
+  console.log(typeForm);
   if (typeForm === "login") {
     try {
       const { data } = await axios.post("/login", { email, password });
@@ -296,6 +296,7 @@ console.log(typeForm);
       setToastBody({ success: data.success, data: data });
       setToast(true);
       localStorage.setItem("log", JSON.stringify(data.token));
+      localStorage.setItem("data", JSON.stringify(data.data))
       setTimeout(() => {
         setToast(false);
         navigate("/home");
@@ -330,17 +331,18 @@ console.log(typeForm);
         landlord,
         userType: "User",
       });
-      
+
       if (data) {
-        
-        localStorage.setItem("log", JSON.stringify({email : data.email , id : data.id}));
+        localStorage.setItem("log", JSON.stringify(data.token));
+        localStorage.setItem("data", JSON.stringify(data.data))
+
         setToastBody({ response: data });
         setToast(true);
-       /*   setTimeout(() => {
-              setToast(false)
-              navigate("/home")
-            }, 1500 ) */
-            return
+        setTimeout(() => {
+          setToast(false);
+          navigate("/home");
+        }, 1500);
+        return;
       }
     } catch (error) {
       console.log(error);

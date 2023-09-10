@@ -51,6 +51,7 @@ const PropertyForm = () => {
   const navigate = useNavigate();
   
   const [form, setForm] = useState({
+    
     name: "",
     images: [],
     country: "",
