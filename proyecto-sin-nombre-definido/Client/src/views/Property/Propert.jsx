@@ -297,7 +297,7 @@ const Property = () => {
         </div>
 
         <div className="col-md-9">
-          <select style={{width:"100%", padding:"5px", marginBottom:"20px"}}>
+          <select onChange={(e) => handleChange(e)} name="order" style={{width:"100%", padding:"5px", marginBottom:"20px"}}>
             <option>
               Ordenamiento{" "}
               <svg
@@ -314,7 +314,12 @@ const Property = () => {
                 />
               </svg>
             </option>
-            
+            <option name="order" value={"rentPriceAsc"} >{"Precio (Menor a mayor)"}</option>
+            <option name="order" value={"rentPriceDesc"} >{"Precio (Mayor a menor)"}</option>
+            <option name="order" value={"averageScoreAsc"} >{"Puntuacion media (Menor a mayor)"}</option>
+            <option name="order" value={"averageScoreDesc"} >{"Puntuacion media (Mayor a menor)"}</option>
+            <option name="order" value={"numberOfReviewsAsc"} >{"Numeros de reviews (Menor a mayor)"}</option>
+            <option name="order" value={"numberOfReviewsDesc"} >{"Numeros de reviews (Mayor a menor)"}</option>
           </select>
           {loader ? (
             <Loader></Loader>
