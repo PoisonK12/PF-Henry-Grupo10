@@ -56,7 +56,7 @@ const UserPanel = () => {
                   textAlign: "center",
                 }}
               >
-                <img src={data.profilePic} width={100} style={{borderRadius:"50%", objectFit:"cover"}}></img>
+                <img src={data.profilePic} width={150} style={{height:"150px",borderRadius:"50%", objectFit:"cover"}}></img>
                 <h5 className="card-title pt-1">{data.userName}</h5>
               </div>
               <ul>
