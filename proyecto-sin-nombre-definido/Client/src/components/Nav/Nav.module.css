@@ -121,3 +121,21 @@
     margin: 0.2rem 0.5rem;
   }
 }
+
+.noHover{
+  margin-right: 30px;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 20px;
+
+  padding-inline: 10px;
+  transition: background-color .5s ease;
+}
+
+
+.noHover.login{
+  padding: 5px;
+  padding-inline: 10px;
+  border-radius: 20px;
+  background-color: #9d0aca;
+}

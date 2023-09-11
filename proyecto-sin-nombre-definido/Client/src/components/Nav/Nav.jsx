@@ -90,10 +90,12 @@ export const Nav = () => {
           <><li>
           <NavLink
             to="/checkIn"
-            className={({ isActive }) => (isActive ? style.active : "")}
+            className={`${style.noHover} ${fixed ? style.login : ""}`}
+            // className={({ isActive }) => (isActive ? style.active : style.navHover)}
+            // style={{background:"#9d0aca", padding:"5px"}}
           >
             {" "}
-            <span> 👩‍💻 Acceder </span>
+            <span style={{color:"#f0f0f0"}}> Acceder </span>
           </NavLink>
         </li>
   
