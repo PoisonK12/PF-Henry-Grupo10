@@ -11,13 +11,15 @@ export default [
       "https://img.freepik.com/foto-gratis/hermosa-foto-interior-casa-moderna-paredes-blancas-relajantes-muebles-tecnologia_181624-3828.jpg"
     ],
     "onSale": true,
-    "total": 200000,
+    "total": 2000,
     "perPerson": 2000,
     "rooms": 2,
     "bathrooms": 1,
     "coveredArea": 35.5,
     "totalArea" : 200,
-    "offer": true
+    "offer": true,
+    "offerDiscount":"-30%",
+    "offerPrice": 1400
   },
   {
     "name": "Cabañas Monte Hermoso",
@@ -31,13 +33,15 @@ export default [
       "https://img.freepik.com/foto-gratis/hermosa-foto-interior-casa-moderna-paredes-blancas-relajantes-muebles-tecnologia_181624-3828.jpg"
     ],
     "onSale": true,
-    "total": 200000,
+    "total": 1800,
     "perPerson": 2000,
     "rooms": 2,
     "bathrooms": 1,
     "coveredArea": 35.5,
     "totalArea" : 200,
-    "offer": true
+    "offer": true,
+    "offerDiscount":"-60%",
+    "offerPrice": 1080
   },
   {
     "name": "TROPICANA SUITES DELUXE BEACH CLUB",
@@ -50,13 +54,15 @@ export default [
       "https://img.freepik.com/foto-gratis/hermosa-foto-interior-casa-moderna-paredes-blancas-relajantes-muebles-tecnologia_181624-3828.jpg",
       "https://img.freepik.com/foto-gratis/hermosa-foto-interior-casa-moderna-paredes-blancas-relajantes-muebles-tecnologia_181624-3828.jpg"
     ],
-    "onSale": true,
-    "total": 200000,
+    "onSale": false,
+    "total": 1650,
     "perPerson": 2000,
     "rooms": 2,
     "bathrooms": 1,
     "offer": true,
     "coveredArea": 35.5,
-    "totalArea" : 200
+    "totalArea" : 200,
+    "offerDiscount":"-20%",
+    "offerPrice": 330
   },
 ]

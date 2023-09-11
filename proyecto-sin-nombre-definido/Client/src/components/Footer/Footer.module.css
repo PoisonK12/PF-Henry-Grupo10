@@ -1,11 +1,12 @@
 .footer {
     z-index: 1000000;
+    padding-top: 20px    ;
     background-color:#161616;
 }
 
 .borderNone{
     background-color: blueviolet !important;
-    border: none;
+    border: 1px solid transparent;
 }
 
 .borderNone:hover{

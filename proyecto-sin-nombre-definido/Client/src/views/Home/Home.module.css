@@ -43,8 +43,9 @@
 
 .search{
     position: absolute;
+    display: flex;
     top: 60%;
-    left: 45%;
+    left: 46%;
     transform: translate(-50%, -50%);
     z-index: 99;
 }
@@ -130,6 +131,8 @@
   }
 
   .sale{
+    /* margin-top: 20px; */
+    background-color: #e7e7e7;
     position: relative;
     z-index: 6;
   }

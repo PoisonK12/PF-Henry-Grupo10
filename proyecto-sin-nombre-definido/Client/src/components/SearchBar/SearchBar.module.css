@@ -9,16 +9,18 @@
     color: #dfdfdf;
     border-radius: 0 10px 10px 0    ;
     /* padding: 4px 9px; */
-    left: 27px;
+    left: 25px;
     /* margin: 0; */
     align-items: center;
+    display: flex;
     justify-content: center;
+    height: 60px;
   }
   /* styling of whole input container */
   .form {
     --timing: 0.3s;
-    --width-of-input: 400px;
-    --height-of-input: 40px;
+    --width-of-input: 450px;
+    --height-of-input: 60px;
     --border-height: 2px;
     --input-bg: rgba(28,28,28, 0.7);
     --border-color: #dfdfdf;
@@ -97,8 +99,7 @@
   }
   /* sizing svg icons */
   .form svg {
-    width: 17px;
-    margin-top: -2px;
+    width: 25px;
   }
 
   .results{
@@ -107,8 +108,8 @@
     position: absolute;
     overflow-y: auto;
     margin-top: 0.25rem;
-    top: 36px;
-    width: 105%;
+    top: 56px;
+    width: 94%;
     left: 0;
     padding: 0.5rem;
     
