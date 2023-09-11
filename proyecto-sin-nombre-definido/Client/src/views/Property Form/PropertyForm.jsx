@@ -22,7 +22,7 @@ const PropertyForm = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [conditionalCreate, setConditionalCreate] = useState(false);
   
-  const token = localStorage.getItem("token")
+  const [userName, setUserName] = useState("")
   
 
 
@@ -50,8 +50,18 @@ const PropertyForm = () => {
   console.log(errors);
   const navigate = useNavigate();
   
+  useEffect(() => {
+    const data = localStorage.getItem("data")
+    if(data){
+      const jsonData = JSON.parse(data)
+      console.log(jsonData)
+      setUserName(jsonData.userName)
+      console.log(userName)
+    }
+  },[])
+
+
   const [form, setForm] = useState({
-    
     name: "",
     images: [],
     country: "",
@@ -70,6 +80,8 @@ const PropertyForm = () => {
     nearby: "asd",
     averageScore: 1,
     nearbyScore: 1,
+    userName : userName,
+
     amenities: [],
   });
 

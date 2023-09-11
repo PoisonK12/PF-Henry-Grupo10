@@ -158,7 +158,7 @@ const Property = () => {
                       htmlFor="inputName"
                       className={`form-label ${style.label}`}
                     >
-                      Venta
+                      Compra
                     </label>
                     <input
                       className={style.checkbox}
@@ -253,6 +253,7 @@ const Property = () => {
                   step={1}
                   onInput={(e) => handleChange(e)}
                   value={filter.rooms}
+                  style={{maxWidth:"100px", marginLeft:"65px"}}
                   id="inputName"
                   placeholder="Nombre de tu propiedad"
                 />
@@ -274,6 +275,8 @@ const Property = () => {
                   name="bathrooms"
                   min={0}
                   max={5}
+                  style={{maxWidth:"100px", marginLeft:"65px", justifyContent:"right"}}
+
                   step={1}
                   onInput={(e) => handleChange(e)}
                   value={filter.bathrooms}
