@@ -47,7 +47,7 @@ export const Nav = () => {
             }
           >
             {" "}
-            <span>Home </span>
+            <span>Inicio </span>
           </NavLink>
         </li>
         
