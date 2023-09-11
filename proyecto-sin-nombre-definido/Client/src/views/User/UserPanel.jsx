@@ -12,6 +12,7 @@ const UserPanel = () => {
   const [componenteActual, setComponenteActual] = useState("A");
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.myProperties);
+  console.log(allProperties)
   const navigate = useNavigate();
 
 
@@ -26,11 +27,12 @@ const UserPanel = () => {
     return <p className="card-text">{description}</p>;
   };
 
+  const data = localStorage.getItem("data");
+  // if (!data) return 
+  const jsonData = JSON.parse(data);
+  const id = jsonData.id;
+  console.log(id)
   useEffect(() => {
-    const data = localStorage.getItem("data");
-    if (!data) return 
-    const jsonData = JSON.parse(data);
-    const id = jsonData.id;
     dispatch(getPropertyByUser(id));
   }, []);
 

@@ -151,7 +151,7 @@ const Login = ({ handleSwitch}) => {
                   <hr className={style.hr}></hr>
                   <p style={{ marginTop: "15px" }}>O inicia sesion con</p>
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <GoogleLoginButton />
+                    {/* <GoogleLoginButton /> */}
                   </div>
                 </div>
               </div>
