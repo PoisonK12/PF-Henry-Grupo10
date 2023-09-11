@@ -14,7 +14,7 @@ const Menu = () => {
     setUserName({...userName, pic: data.profilePic, userName: data.userName});
     // const userName = data.userName;
     }
-
+    return
   },[])
 
 

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUserById, getAllUsers } from '../../../redux/actions';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import style from "./alluser.module.css"
 
 const AllUser = () => {
   const allUsers = useSelector(state => state.users);
   console.log('usuarios', allUsers);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // Estado para rastrear qué IDs deben deshabilitarse
   const [disabledRows, setDisabledRows] = useState([]);
@@ -19,7 +19,7 @@ const AllUser = () => {
   const handleDelete = (id) => {
     console.log('ID del usuario a eliminar:', id);
     dispatch(deleteUserById(id));
-    // navigate('/home');
+    navigate('/home');
     dispatch(getAllUsers());
   }
 

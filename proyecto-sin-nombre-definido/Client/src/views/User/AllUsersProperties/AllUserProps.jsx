@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import style from "./allProperties.module.css";
+import style from "./alluser.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -9,13 +9,13 @@ import {
   putProperty,
 } from "../../../redux/actions";
 import axios from "axios";
-import Widget from "./Balance/Balance";
+import Widget from "../../AdminDashboard/AllProperties/Balance/Balance";
 
 
 
-const AllProperties = () => {
+const AllUsersProps = () => {
   const dispatch = useDispatch();
-  const allProperties = useSelector((state) => state.propertiesCopy);
+  const allProperties = useSelector((state) => state.myProperties);
   console.log('sisis', allProperties);
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
@@ -927,4 +927,4 @@ const AllProperties = () => {
   );
 };
 
-export default AllProperties;
+export default AllUsersProps;
