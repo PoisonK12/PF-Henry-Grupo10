@@ -10,6 +10,9 @@ import fondo from "../../assets/images/Exteriores/Image2.jpg";
 import { useDispatch, useSelector } from "react-redux";
 
 const PropertyForm = () => {
+
+
+
   const [modal, setModal] = useState(false);
   const [modalBody, setModalBody] = useState({ response: [], message: "" });
   const [price, setPrice] = useState(false);
@@ -21,10 +24,9 @@ const PropertyForm = () => {
   const [states, setStates] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [conditionalCreate, setConditionalCreate] = useState(false);
-  
-  const token = localStorage.getItem("token")
-  
+  const [ckecked , setChecked] = useState(false)
 
+  const token = localStorage.getItem("log")
 
   const [errors, setErrors] = useState({
     name: "",
@@ -42,16 +44,33 @@ const PropertyForm = () => {
     errorsBack: [],
   });
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
-    onSale: "",
-    parking: "",
-    terrace: "",
+    Wifi  : "",
+    Cochera : "",
+    Piscina : "",
+    Jacuzzi : "",
+    Terraza : "",
+    "Dormitorio en suite" : "",
+    "Seguridad 24hs" : "",
+    GYM : "",
+    Sauna : "",
+    Helipuero : "",
   });
 
+  const handleSelected = (e) => {
+    const {name } = e.target ;
+    const {value} = e.target;
+    e.preventDefault();
+    setSelectedCheckbox({...selectedCkeckbox , [name] : value})
+  }
+console.log(selectedCkeckbox);
   console.log(errors);
   const navigate = useNavigate();
+
+
   useEffect(() => {
     !token ? navigate("/home") : "";
   }, [])
+
   const [form, setForm] = useState({
     name: "",
     images: [],
@@ -77,18 +96,14 @@ const PropertyForm = () => {
   console.log(form);
   if (modal && Array.isArray(modalBody.response)) console.log(true);
 
-  const handleCheckbox = (e) => {
-    if (e.target.name === "onSale" && e.target.value === "true") {
-      setPrice(true);
-    } else if (e.target.name === "onSale" && e.target.value === "false") {
-      setPrice(false);
-    }
 
-    setSelectedCheckbox({
-      ...selectedCkeckbox,
-      [e.target.name]: e.target.value,
-    });
-  };
+const handleSellPrice = (e) => {
+  const {value} = e.target;
+    if(value === "true") {
+      setPrice(true)
+  }
+};
+
 
   // Función para manejar el evento de soltar la imagen
   const handleDrop = (event) => {
@@ -207,12 +222,14 @@ const PropertyForm = () => {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
+    console.log(value);
     const errorDetect = validation({ [name]: value });
     setErrors((prevError) => ({
       ...prevError,
       [name]: errorDetect[name],
     }));
 
+ 
     if (name === "country" && value == "default") {
       return;
     }
@@ -233,13 +250,19 @@ const PropertyForm = () => {
   //!------------------------handleForm----------------------------------
 
   const handleForm = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
+    const push = Object.values(selectedCkeckbox).map(ele => Number(ele) );
+    const amenities = push.filter(ele => ele !== 0)
+    setForm({...form , amenities : amenities})
+    setErrors(validation({...form}))
     setModalBody({ response: form });
     setModal(true);
   };
 
   const handleCreate = async (e) => {
     e.preventDefault();
+   
+    /* setForm({...form , amenities : }) */
     await createAsset(
       form,
       setModal,
@@ -311,7 +334,7 @@ const PropertyForm = () => {
   };
 
   console.log(conditionalCreate);
-
+console.log(form);
   const MultiForm = (e) => {
     if (step === 1) {
       return (
@@ -328,9 +351,11 @@ const PropertyForm = () => {
                 className={`d-flex flex-row justify-content-center align-items-center ${style.formmer}`}
               >
                 <div>
-                  {errors.images && (
-                    <p style={{ color: "red" }}>{errors.images}</p>
-                  )}
+                {errors.images ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.images}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                   <input
                     type="file"
                     id="imageInput"
@@ -428,9 +453,11 @@ const PropertyForm = () => {
                         onChange={(e) => handleChange(e)}
                         placeholder="Nombre de tu propiedad"
                       />
-                      {errors.name && (
-                        <span style={{ color: "red" }}>{errors.name}</span>
-                      )}
+                     {errors.name ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.name}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                     </div>
 
                     <div className=" m-2 ">
@@ -447,9 +474,11 @@ const PropertyForm = () => {
                         onChange={(e) => handleChange(e)}
                         required
                       />
-                      {errors.address && (
-                        <span style={{ color: "red" }}>{errors.address}</span>
-                      )}
+                      {errors.address ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.address}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                     </div>
                   </div>
 
@@ -479,9 +508,11 @@ const PropertyForm = () => {
                         })}
                       </select>
 
-                      {errors.country && (
-                        <span style={{ color: "red" }}>{errors.country}</span>
-                      )}
+                      {errors.country ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.country}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                     </div>
                     <div className={""}>
                       <label htmlFor="inputCity" className="form-label">
@@ -503,9 +534,11 @@ const PropertyForm = () => {
                           );
                         })}
                       </select>
-                      {errors.location && (
-                        <span style={{ color: "red" }}>{errors.location}</span>
-                      )}
+                      {errors.location ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.location}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                       <div></div>
                     </div>
                   </div>
@@ -547,9 +580,11 @@ const PropertyForm = () => {
                       required
                     />
                     <div>
-                      {errors.totalArea ? (
-                        <p style={{ color: "red" }}>{errors.totalArea}</p>
-                      ) : null}
+                    {errors.totalArea ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.totalArea}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                     </div>
                   </div>
 
@@ -568,9 +603,11 @@ const PropertyForm = () => {
                       required
                     />
                     <div>
-                      {errors.rooms ? (
-                        <p style={{ color: "red" }}>{errors.rooms}</p>
-                      ) : null}
+                    {errors.rooms ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.rooms}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                     </div>
                   </div>
 
@@ -589,9 +626,11 @@ const PropertyForm = () => {
                       required
                     />
                     <div>
-                      {errors.bathrooms ? (
-                        <p style={{ color: "red" }}>{errors.bathrooms}</p>
-                      ) : null}
+                    {errors.bathrooms ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.bathrooms}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                     </div>
                   </div>
                   <div className="">
@@ -609,9 +648,11 @@ const PropertyForm = () => {
                       required
                     />
                     <div>
-                      {errors.coveredArea ? (
-                        <p style={{ color: "red" }}>{errors.coveredArea}</p>
-                      ) : null}
+                    {errors.coveredArea ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.coveredArea}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                     </div>
                   </div>
                  
@@ -633,12 +674,20 @@ const PropertyForm = () => {
                     ></input>
                     <div>
                       {errors.rentPrice ? (
-                        <p style={{ color: "red" }}>{errors.rentPrice}</p>
-                      ) : null}
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.rentPrice}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                     </div>
                   </div>
-                  {price ? (
-                    <div className={`d-block`}>
+                  {!price ? (
+                    
+                    <div>
+                  <label htmlFor="onSale"> Esta a la venta ?</label>
+                  <input type="checkbox" onChange={handleSellPrice} name="onSale" value={true}></input>
+                </div>
+                  ) : (
+                        <div >
                       <label htmlFor="inputPriceS" className="input-label">
                         {" "}
                         Precio de Venta{" "}
@@ -655,59 +704,28 @@ const PropertyForm = () => {
                         }}
                       ></input>
                     </div>
-                  ) : (
-                    ""
                   )}
+                  <div>
+                  {errors.sellPrice ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.sellPrice}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                  </div>
                 </div>
                 <fieldset className={`border p-3  ${style.fieldset2}`}>
-                  <label className="form-label">Esta a la venta?</label>
-
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      name="onSale"
-                      checked={selectedCkeckbox.onSale === "true"}
-                      onChange={(e) => {
-                        handleCheckbox(e);
-                        handleChange(e);
-                      }}
-                      className="form-check-input"
-                      id="checkbox1"
-                      value="true"
-                    />
-                    <label htmlFor="checkbox1" className="form-check-label">
-                      {" "}
-                      YES
-                    </label>
-                  </div>
-
-                  <div className="form-check ">
-                    <input
-                      type="checkbox"
-                      name="onSale"
-                      checked={selectedCkeckbox.onSale === "false"}
-                      onChange={(e) => {
-                        handleCheckbox(e);
-                        handleChange(e);
-                      }}
-                      className="form-check-input"
-                      id="checkbox2"
-                      value="false"
-                    />
-                    <label htmlFor="checkbox2" className="form-check-label">
-                      NO{" "}
-                    </label>
-                  </div>
-                  <div className="form-group ">
+                  
                     <label htmlFor="description" className="form-label">
                       {" "}
                       Descripción
                     </label>
+                  <div className="form-group  ">
                     <textarea
                       className="form-control"
                       value={form.description}
                       rows="8"
                       style={{
+                        padding : "50px",
                         resize: "none",
                         background: "rgb(230, 233, 237)",
                       }}
@@ -716,9 +734,11 @@ const PropertyForm = () => {
                       onChange={(e) => handleChange(e)}
                     ></textarea>
                     <div>
-                      {errors.description ? (
-                        <p style={{ color: "red" }}>{errors.description}</p>
-                      ) : null}
+                    {errors.description ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.description}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
                     </div>
                   </div>
                 </fieldset>
@@ -765,7 +785,65 @@ const PropertyForm = () => {
           <fieldset className={`border ${style.fieldset3} `}>
             <legend className="mb-3 mt-3"> Especificaciones </legend>
             <hr></hr>
-            <div className="d-flex  text-center  mt-4 m-5"></div>
+            <div className="d-flex flex-column justify-content-center align-items-center">
+            <div className="d-flex flex-row ">
+              <div>
+              <label  className="form-label"> Wifi ? {""}</label>
+              <input type="checkbox" name=" Wifi"  className="form-checkbox" onChange={handleSelected} value={1} ></input>
+            </div> 
+            <div>
+              <label htmlFor="wifi" className="form-label"> Terraza ? {""}</label>
+              <input type="checkbox" name="Terraza"  onChange={handleSelected} value= "6" ></input>
+            </div> 
+            </div>
+            <div className="d-flex flex-row">
+               <div>
+              <label htmlFor="wifi" className="form-label"> GYM ? {""}</label>
+              <input type="checkbox" name=" GYM "  onChange={handleSelected} value= "13" ></input>
+            </div> 
+            <div>
+              <label htmlFor="wifi" className="form-label"> Seguridad 24hs ? {""}</label>
+              <input type="checkbox" name="Seguridad 24hs"  onChange={handleSelected} value= "11" ></input>
+            </div> 
+            </div>
+            <div className="d-flex flex-row">
+               <div>
+              <label htmlFor="wifi" className="form-label"> Cochera ? {""}</label>
+              <input type="checkbox" name="Cochera "  onChange={handleSelected} value= "3" ></input>
+            </div> 
+            <div>
+              <label htmlFor="wifi" className="form-label"> Helipuerto ? {""}</label>
+              <input type="checkbox" name=" Helipuerto"  onChange={handleSelected} value= "69" ></input>
+            </div>
+            </div>
+            <div className="d-flex flex-row">
+              <div>
+              <label htmlFor="wifi" className="form-label"> Dormitorio en suite ? {""}</label>
+              <input type="checkbox" name="Dormitorio en suite"  onChange={handleSelected} value= "8" ></input>
+            </div>
+             <div>
+              <label htmlFor="wifi" className="form-label"> Sauna ?{""} </label>
+              <input type="checkbox" name="Sauna"  onChange={handleSelected} value= "14" ></input>
+            </div>
+            </div>
+            <div className="d-flex flex-row">
+               <div>
+              <label htmlFor="wifi" className="form-label"> Jacuzzi ? {""}</label>
+              <input type="checkbox" name="Jacuzzi"  onChange={handleSelected} value="5" ></input>
+            </div> 
+            <div>
+              <label htmlFor="wifi" className="form-label"> Piscina ? {""}</label>
+              <input type="checkbox" name="Piscina"  onChange={handleSelected} value= "4" ></input>
+            </div>
+            </div>
+            </div>
+            <div>
+            {errors.amenities ? (
+                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                     {errors.amenities}
+                   </p>
+                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+            </div>
 
             <div className="col-md-3 container d-flex flex-column ">
               <div className=" d-flex flex-row align-items-center justify-content-around mt-2 ">

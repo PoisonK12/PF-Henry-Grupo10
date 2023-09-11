@@ -69,6 +69,14 @@ const validation = (form) => {
   }else if(form.description && form.description.length < 10){
     errors.description = "Es muy corta"
   }
+  
+  if(form.amenities.length === 0) {
+    errors.amenities = "Tines que escoger alguna amenities"
+  } else if(form.amenities && form.amenities.length < 5) {
+    errors.amenities = "Tienes que tener un minimo de 5 "
+  } else if (form.amenities && form.amenities.length > 30) {
+    errors.amenities = "No pueden ser mayor a 30 amenities"
+  }
   return errors;
 };
 export default validation;
