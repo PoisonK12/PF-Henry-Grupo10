@@ -95,7 +95,7 @@ console.log(selectedCkeckbox);
   });
 
   console.log(form);
-  
+
   useEffect(() => {
     const setearName = () => {
       const data = localStorage.getItem("data")
@@ -213,6 +213,7 @@ const handleSellPrice = (e) => {
     }
 
     if (step === 2) {
+      setErrors(validation({ ...form }));
       const step2 = Object.values({
         bathrooms: errors.bathrooms,
         rooms: errors.rooms,
@@ -229,6 +230,7 @@ const handleSellPrice = (e) => {
     }
 
     if (step === 3) {
+      setErrors(validation({ ...form }));
       const step3 = Object.values({ description: errors.description });
       console.log(step3);
       if (step3.some((error) => typeof error === "string")) {
@@ -283,7 +285,7 @@ const handleSellPrice = (e) => {
   const handleCreate = async (e) => {
     e.preventDefault();
    
-    /* setForm({...form , amenities : }) */
+  
     await createAsset(
       form,
       setModal,
