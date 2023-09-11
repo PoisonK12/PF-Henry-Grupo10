@@ -7,7 +7,7 @@ import Favorites from "./Favorite/Favorites";
 import Reviews from "./Reviews/Reviews";
 import Widget from "../AdminDashboard/AllProperties/Balance/Balance";
 import User from "../AdminDashboard/Profile/Profile";
-import AllUsersProps from "./AllUsersProperties/AllUser";
+import AllUsersProps from "./AllUsersProperties/AllUserProps";
 
 const UserPanel = () => {
   const [componenteActual, setComponenteActual] = useState("A");
