@@ -11,6 +11,7 @@ import Sale from "../../components/Sale/Sale.jsx";
 import Contacts from "../Contacts/Contatcs";
 
 export const Home = () => {
+  
   return (
     <>
       <div className={`${style.containerFluid} ${style.container}`}>

@@ -24,9 +24,10 @@ const PropertyForm = () => {
   const [states, setStates] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [conditionalCreate, setConditionalCreate] = useState(false);
-  const [ckecked , setChecked] = useState(false)
+  
+  const [userName, setUserName] = useState("")
+  console.log(userName)
 
-  const token = localStorage.getItem("log")
 
   const [errors, setErrors] = useState({
     name: "",
@@ -65,11 +66,9 @@ const PropertyForm = () => {
 console.log(selectedCkeckbox);
   console.log(errors);
   const navigate = useNavigate();
+  
+ 
 
-
-  useEffect(() => {
-    !token ? navigate("/home") : "";
-  }, [])
 
   const [form, setForm] = useState({
     name: "",
@@ -90,10 +89,28 @@ console.log(selectedCkeckbox);
     nearby: "asd",
     averageScore: 1,
     nearbyScore: 1,
+    userName: "",
+
     amenities: [],
   });
 
   console.log(form);
+  
+  useEffect(() => {
+    const setearName = () => {
+      const data = localStorage.getItem("data")
+      
+        const jsonData = JSON.parse(data)
+        console.log("jalo",jsonData)
+        const userNames = jsonData.userName
+        setForm({...form, userName: userNames})
+        console.log("Neiim",userNames)
+    }
+    setearName()
+  },[])
+
+
+  console.log("form",form);
   if (modal && Array.isArray(modalBody.response)) console.log(true);
 
 

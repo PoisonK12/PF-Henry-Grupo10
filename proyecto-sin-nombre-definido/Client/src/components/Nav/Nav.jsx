@@ -47,14 +47,14 @@ export const Nav = () => {
             }
           >
             {" "}
-            <span>Home </span>
+            <span>Inicio </span>
           </NavLink>
         </li>
         
         <li>
           <NavLink
             to="/addProperty"
-            className={({ isActive }) => (isActive ? style.active : "")}
+            className={({ isActive }) => (isActive ? style.active : style.navHover)}
           >
             <span>Propiedades</span>
           </NavLink>
@@ -90,10 +90,12 @@ export const Nav = () => {
           <><li>
           <NavLink
             to="/checkIn"
-            className={({ isActive }) => (isActive ? style.active : "")}
+            className={`${style.noHover} ${fixed ? style.login : ""}`}
+            // className={({ isActive }) => (isActive ? style.active : style.navHover)}
+            // style={{background:"#9d0aca", padding:"5px"}}
           >
             {" "}
-            <span> 👩‍💻 Acceder </span>
+            <span style={{color:"#f0f0f0"}}> Acceder </span>
           </NavLink>
         </li>
   

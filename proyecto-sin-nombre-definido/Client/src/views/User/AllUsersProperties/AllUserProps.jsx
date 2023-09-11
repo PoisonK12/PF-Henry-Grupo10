@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import style from "./allProperties.module.css";
+import style from "./alluser.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -7,16 +7,17 @@ import {
   deleteAssetById,
   getAllReallyProperties,
   putProperty,
+  getPropertyByUser
 } from "../../../redux/actions";
 import axios from "axios";
-import Widget from "./Balance/Balance";
+import Widget from "../../AdminDashboard/AllProperties/Balance/Balance";
 
 
 
-const AllProperties = () => {
+const AllUsersProps = () => {
   const dispatch = useDispatch();
-  const allProperties = useSelector((state) => state.propertiesCopy);
-  console.log('sisis', allProperties);
+  const allProperties = useSelector((state) => state.myProperties);
+  const [datas, setDatas] = useState({})
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
@@ -26,6 +27,9 @@ const AllProperties = () => {
     parking: "",
     terrace: "",
   });
+
+
+
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -41,12 +45,26 @@ const AllProperties = () => {
     bathrooms: 0,
     coveredArea: 0,
     totalArea: 0,
+    userName: datas.id
   });
+
+  useEffect(() => {
+    // if (!data) return 
+   
+        const info = localStorage.getItem("data");
+        setDatas(JSON.parse(info))
+        
+       dispatch(getPropertyByUser(datas.id));
+        console.log(datas)
+      
+  }, [datas]);
+
+
 
   useEffect(() => {
     const getDataForFrom = async () => {
       const { data } = await axios(`/assets/` + idHouse);
-      setForm({
+      setForm(...form, {
         name: data.name,
         country: data?.country,
         state: data?.state,
@@ -64,7 +82,6 @@ const AllProperties = () => {
       });
     };
     getDataForFrom();
-    console.log(form);
   }, [idHouse]);
 
   const [errors, setErrors] = useState({
@@ -927,4 +944,4 @@ const AllProperties = () => {
   );
 };
 
-export default AllProperties;
+export default AllUsersProps;

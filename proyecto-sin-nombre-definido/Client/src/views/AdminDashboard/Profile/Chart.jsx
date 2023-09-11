@@ -9,18 +9,23 @@ import {
   import "./Chart.css";
   
   const data = [
-    { name: "January", Total: 1200 },
-    { name: "February", Total: 2100 },
-    { name: "March", Total: 800 },
-    { name: "April", Total: 1600 },
-    { name: "May", Total: 900 },
-    { name: "June", Total: 1700 },
+    { name: "Enero", Total: 1200 },
+    { name: "Febrero", Total: 2100 },
+    { name: "Marzo", Total: 800 },
+    { name: "Abril", Total: 1600 },
+    { name: "Mayo", Total: 900 },
+    { name: "Junio", Total: 1700 },
+    { name: "Julio", Total: 1300 },
+    { name: "Agosto", Total: 2100 },
+    { name: "Septiembre", Total: 3100 },
+    { name: "Octubre", Total: 700 },
+    { name: "Noviembre", Total: 700 },
   ];
   
   const Chart = () => {
     return (
       <div className="chart">
-        <div className="title">Last 6 Months (Revenue)</div>
+        <div className="title">Ultimos 6 meses (Ganancias)</div>
         <ResponsiveContainer width="100%" aspect={2 / 1}>
           <AreaChart
             width={730}

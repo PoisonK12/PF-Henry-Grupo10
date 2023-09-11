@@ -14,6 +14,9 @@ import {
   DELETE_USER_BY_ID,
   GET_ALL_USERS,
   GET_STATES,
+  GET_PROPERTIES_BY_USER,
+  GET_ALL_CONTACT,
+  DELETE_CONTACT_BY_ID
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -29,7 +32,19 @@ export const getAllProperties = (page) => {
     }
   };
 };
-
+export const getAllContact = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`/contact/`);
+      return dispatch({
+        type: GET_ALL_CONTACT,
+        payload: data,
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
 export const getAllReallyProperties = () => {
   return async (dispatch) => {
     try {
@@ -102,6 +117,14 @@ export const SearchByLocation = (query, page) => {
     }
   };
 };
+export const createContact = async(form) => {
+  try {
+    const {data} = await axios.post("/contact/" , form);
+    alert('Enviado con exito')
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export const createAsset = async (
   form,
@@ -211,7 +234,7 @@ export const deleteAssetById = (id) => {
   return async (dispatch) => {
     try {
       // Realiza la solicitud de eliminación al servidor
-      await axios.delete(`/assets/delete/${id}`);
+      await axios.delete(`/assets/${id}`);
 
       // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
       dispatch({
@@ -223,13 +246,29 @@ export const deleteAssetById = (id) => {
     }
   };
 };
+export const deleteMessageById = (id) => {
+  return async (dispatch) => {
+    try {
+      // Realiza la solicitud de eliminación al servidor
+      await axios.delete(`/contact/${id}`);
+
+      // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
+      dispatch({
+        type: DELETE_C_BY_ID,
+        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
 
 export const deleteUserById = (id) => {
   return async (dispatch) => {
     try {
       await axios.delete(`/users/${id}`);
       dispatch({
-        type: DELETE_USER_BY_ID,
+        type: DELETE_USER_B_ID,
         payload: id,
       });
     } catch (error) {
@@ -288,7 +327,7 @@ export const getLogin = async (
     profilePic,
   } = login;
 
-console.log(typeForm);
+  console.log(typeForm);
   if (typeForm === "login") {
     try {
       const { data } = await axios.post("/login", { email, password });
@@ -296,6 +335,8 @@ console.log(typeForm);
       setToastBody({ success: data.success, data: data });
       setToast(true);
       localStorage.setItem("log", JSON.stringify(data.token));
+      localStorage.setItem("data", JSON.stringify(data.data))
+      console.log('local', localStorage);
       setTimeout(() => {
         setToast(false);
         navigate("/home");
@@ -330,17 +371,18 @@ console.log(typeForm);
         landlord,
         userType: "User",
       });
-      
+
       if (data) {
-        
-        localStorage.setItem("log", JSON.stringify({email : data.email , id : data.id}));
+        localStorage.setItem("log", JSON.stringify(data.token));
+        localStorage.setItem("data", JSON.stringify(data.data))
+
         setToastBody({ response: data });
         setToast(true);
-       /*   setTimeout(() => {
-              setToast(false)
-              navigate("/home")
-            }, 1500 ) */
-            return
+        setTimeout(() => {
+          setToast(false);
+          navigate("/home");
+        }, 1500);
+        return;
       }
     } catch (error) {
       console.log(error);
@@ -353,3 +395,18 @@ console.log(typeForm);
     }
   }
 };
+
+
+export const getPropertyByUser = (id) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios(`assets/myassets/${id}`)
+      dispatch({
+        type:GET_PROPERTIES_BY_USER,
+        payload: data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}

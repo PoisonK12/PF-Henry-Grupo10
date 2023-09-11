@@ -103,14 +103,14 @@ const reviewAssetController = async (userName, score, comment, id) => {
     console.log(error);
   }
   try {
-    console.log(111111111111111111);
+    // console.log(111111111111111111);
     // try {
     const findAsset = await Asset.findByPk(id);
 
-    console.log(userName);
-    console.log(comment);
-    console.log(score);
-    console.log(333333333333333);
+    // console.log(userName);
+    // console.log(comment);
+    // console.log(score);
+    // console.log(333333333333333);
     if (findAsset) {
       const createdReview = await Review.create({
         userName,
@@ -118,7 +118,7 @@ const reviewAssetController = async (userName, score, comment, id) => {
         comment,
       });
 
-      console.log(444444444444444444);
+      // console.log(444444444444444444);
       await findAsset.addReview(createdReview);
       return `Exito al crear la review de ${findAsset.name}, ${userName}`;
     }

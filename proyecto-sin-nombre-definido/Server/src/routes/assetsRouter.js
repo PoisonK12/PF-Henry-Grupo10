@@ -10,7 +10,8 @@ const {
   getAllButAllAssetsHandler,
   getAllAssetsWithAmenitiesHandler,
   restoreAssetByIdHandler,
-  softDeleteAssetByIdHandler
+  softDeleteAssetByIdHandler,
+  getAssetsFromUserHandler,
 } = require("../handlers/assetHandler");
 
 const assetsRouter = Router();
@@ -26,9 +27,11 @@ assetsRouter.get("/amenities", getAmenitiesHandler);
 assetsRouter.get("/filtroporamenities", getAllAssetsWithAmenitiesHandler);
 
 //esta tal vez podemos combinarla con el all despues
-assetsRouter.get("/admin",getAllButAllAssetsHandler);
+assetsRouter.get("/admin", getAllButAllAssetsHandler);
 
 assetsRouter.get("/:id", getAssetByIdHandler);
+
+assetsRouter.get("/myassets/:id", getAssetsFromUserHandler);
 
 assetsRouter.put("/:id", updateAssetHandler);
 
