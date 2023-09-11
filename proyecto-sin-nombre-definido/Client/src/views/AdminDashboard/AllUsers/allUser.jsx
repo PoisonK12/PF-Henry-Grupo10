@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUserById, getAllUsers } from '../../../redux/actions';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import style from "./alluser.module.css"
 
 const AllUser = () => {
   const allUsers = useSelector(state => state.users);
   console.log('usuarios', allUsers);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // Estado para rastrear qué IDs deben deshabilitarse
   const [disabledRows, setDisabledRows] = useState([]);
@@ -19,7 +19,7 @@ const AllUser = () => {
   const handleDelete = (id) => {
     console.log('ID del usuario a eliminar:', id);
     dispatch(deleteUserById(id));
-    // navigate('/home');
+    navigate('/home');
     dispatch(getAllUsers());
   }
 
@@ -46,14 +46,14 @@ const AllUser = () => {
         <thead style={{ borderRadius: '10px' }}>
           <tr style={{ borderRadius: '10px' }}>
             <th scope="col">#</th>
-            <th scope="col">Image</th>
-            <th scope="col">FullName</th>
-            <th scope="col">Adress</th>
+            <th scope="col">Avatar</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Dirección</th>
             <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Nationality</th>
-            <th scope="col">Type</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Nationalidad</th>
+            <th scope="col">Permisos</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>

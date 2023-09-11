@@ -7,6 +7,7 @@ import Favorites from "./Favorite/Favorites";
 import Reviews from "./Reviews/Reviews";
 import Widget from "../AdminDashboard/AllProperties/Balance/Balance";
 import User from "../AdminDashboard/Profile/Profile";
+import AllUsersProps from "./AllUsersProperties/AllUser";
 
 const UserPanel = () => {
   const [componenteActual, setComponenteActual] = useState("A");
@@ -14,7 +15,6 @@ const UserPanel = () => {
   const [data, setData] = useState({})
   console.log(data)
   const allProperties = useSelector((state) => state.myProperties);
-  console.log(allProperties)
   const navigate = useNavigate();
 
 
@@ -199,313 +199,316 @@ const UserPanel = () => {
           </div>
         </div>
         {componenteActual === "A" ? (
-          <div className="col-md-9">
-            <h1>My Properties Created</h1>
-            <div>
-              <div className={style.widgets}>
-                <Widget type="user" />
-                <Widget type="order" />
-                <Widget type="earning" />
-                <Widget type="balance" />
-              </div>
-            </div>
-            <div>
-              {allProperties ? (
-                allProperties?.map((props, index) => (
-                  <div className={`${style.centeredContent}`} key={props.id}>
-                    <div className={`card mb-3 p-2 ${style.maxWidth}`}>
-                      <div className="row g-0">
-                        <div className="col-md-4">
-                          <div
-                            id={`carouselExampleIndicators-${index}`}
-                            className="carousel slide"
-                          >
-                            <div className="carousel-indicators">
-                              <button
-                                type="button"
-                                data-bs-target={`#carouselExampleIndicators-${index}`}
-                                data-bs-slide-to="0"
-                                className="active"
-                                aria-current="true"
-                                aria-label="Slide 1"
-                              ></button>
-                              <button
-                                type="button"
-                                data-bs-target={`#carouselExampleIndicators-${index}`}
-                                data-bs-slide-to="1"
-                                aria-label="Slide 2"
-                              ></button>
-                              <button
-                                type="button"
-                                data-bs-target={`#carouselExampleIndicators-${index}`}
-                                data-bs-slide-to="2"
-                                aria-label="Slide 3"
-                              ></button>
-                            </div>
-                            <div
-                              className={`carousel-inner ${style.containerImg}`}
-                            >
-                              <div className="carousel-item active">
-                                <img
-                                  style={{
-                                    width: "100%",
-                                    height: "238px",
-                                    objectFit: "cover",
-                                    backgroundPosition: "center bottom",
-                                  }}
-                                  src={props.images[0]}
-                                  className="d-block "
-                                  alt="..."
-                                />
-                              </div>
-                              <div className="carousel-item">
-                                <img
-                                  src={props.images[1]}
-                                  style={{
-                                    width: "100%",
-                                    height: "238px",
-                                    objectFit: "cover",
-                                    backgroundPosition: "center bottom",
-                                  }}
-                                  className="d-block w-100"
-                                  alt="..."
-                                />
-                              </div>
-                              <div className="carousel-item">
-                                <img
-                                  style={{
-                                    width: "100%",
-                                    height: "238px",
-                                    objectFit: "cover",
-                                    backgroundPosition: "center bottom",
-                                  }}
-                                  src={props.images[2]}
-                                  className="d-block "
-                                  alt="..."
-                                />
-                              </div>
-                            </div>
-                            <button
-                              className="carousel-control-prev"
-                              type="button"
-                              data-bs-target={`#carouselExampleIndicators-${index}`}
-                              data-bs-slide="prev"
-                            >
-                              <span
-                                className="carousel-control-prev-icon"
-                                aria-hidden="true"
-                              ></span>
-                              <span className="visually-hidden">Previous</span>
-                            </button>
-                            <button
-                              className="carousel-control-next"
-                              type="button"
-                              data-bs-target={`#carouselExampleIndicators-${index}`}
-                              data-bs-slide="next"
-                            >
-                              <span
-                                className="carousel-control-next-icon"
-                                aria-hidden="true"
-                              ></span>
-                              <span className="visually-hidden">Next</span>
-                            </button>
+          // <div className="col-md-9">
+          //   <h1>My Properties Created</h1>
+          //   <div>
+          //     <div className={style.widgets}>
+          //       <Widget type="user" />
+          //       <Widget type="order" />
+          //       <Widget type="earning" />
+          //       <Widget type="balance" />
+          //     </div>
+          //   </div>
+          //   <div>
+          //     {allProperties ? (
+          //       allProperties?.map((props, index) => (
+          //         <div className={`${style.centeredContent}`} key={props.id}>
+          //           <div className={`card mb-3 p-2 ${style.maxWidth}`}>
+          //             <div className="row g-0">
+          //               <div className="col-md-4">
+          //                 <div
+          //                   id={`carouselExampleIndicators-${index}`}
+          //                   className="carousel slide"
+          //                 >
+          //                   <div className="carousel-indicators">
+          //                     <button
+          //                       type="button"
+          //                       data-bs-target={`#carouselExampleIndicators-${index}`}
+          //                       data-bs-slide-to="0"
+          //                       className="active"
+          //                       aria-current="true"
+          //                       aria-label="Slide 1"
+          //                     ></button>
+          //                     <button
+          //                       type="button"
+          //                       data-bs-target={`#carouselExampleIndicators-${index}`}
+          //                       data-bs-slide-to="1"
+          //                       aria-label="Slide 2"
+          //                     ></button>
+          //                     <button
+          //                       type="button"
+          //                       data-bs-target={`#carouselExampleIndicators-${index}`}
+          //                       data-bs-slide-to="2"
+          //                       aria-label="Slide 3"
+          //                     ></button>
+          //                   </div>
+          //                   <div
+          //                     className={`carousel-inner ${style.containerImg}`}
+          //                   >
+          //                     <div className="carousel-item active">
+          //                       <img
+          //                         style={{
+          //                           width: "100%",
+          //                           height: "238px",
+          //                           objectFit: "cover",
+          //                           backgroundPosition: "center bottom",
+          //                         }}
+          //                         src={props.images[0]}
+          //                         className="d-block "
+          //                         alt="..."
+          //                       />
+          //                     </div>
+          //                     <div className="carousel-item">
+          //                       <img
+          //                         src={props.images[1]}
+          //                         style={{
+          //                           width: "100%",
+          //                           height: "238px",
+          //                           objectFit: "cover",
+          //                           backgroundPosition: "center bottom",
+          //                         }}
+          //                         className="d-block w-100"
+          //                         alt="..."
+          //                       />
+          //                     </div>
+          //                     <div className="carousel-item">
+          //                       <img
+          //                         style={{
+          //                           width: "100%",
+          //                           height: "238px",
+          //                           objectFit: "cover",
+          //                           backgroundPosition: "center bottom",
+          //                         }}
+          //                         src={props.images[2]}
+          //                         className="d-block "
+          //                         alt="..."
+          //                       />
+          //                     </div>
+          //                   </div>
+          //                   <button
+          //                     className="carousel-control-prev"
+          //                     type="button"
+          //                     data-bs-target={`#carouselExampleIndicators-${index}`}
+          //                     data-bs-slide="prev"
+          //                   >
+          //                     <span
+          //                       className="carousel-control-prev-icon"
+          //                       aria-hidden="true"
+          //                     ></span>
+          //                     <span className="visually-hidden">Previous</span>
+          //                   </button>
+          //                   <button
+          //                     className="carousel-control-next"
+          //                     type="button"
+          //                     data-bs-target={`#carouselExampleIndicators-${index}`}
+          //                     data-bs-slide="next"
+          //                   >
+          //                     <span
+          //                       className="carousel-control-next-icon"
+          //                       aria-hidden="true"
+          //                     ></span>
+          //                     <span className="visually-hidden">Next</span>
+          //                   </button>
 
-                            <button
-                              className={style.customButton}
-                              data-bs-target="#exampleModalToggle4"
-                              data-bs-toggle="modal"
-                              onClick={() => setIdHouse(props.id)}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="35"
-                                height="35"
-                                fill="currentColor"
-                                className={`bi bi-pencil-fill ${style.icon}`}
-                                viewBox="0 0 16 16"
-                              >
-                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                              </svg>
-                            </button>
-                          </div>
-                        </div>
-                        <div className="col-md-8">
-                          <div className="card-body">
-                            <h5 className="card-title">{props.name}</h5>
-                            {descripCut(props.description)}
-                            <p className="card-text">
-                              <small className="text-muted">
-                                {props.address}, {props.country}
-                              </small>
-                            </p>
-                            <div className={`  m-2 ${style.divButton}`}>
-                              <Link to={`/detail/${props.id}`}>
-                                <button className="btn btn-primary">
-                                  Ver Detalles
-                                </button>
-                              </Link>
-                              <div className={style.left}>
-                                <button
-                                  className={`btn btn-danger ${style.left} `}
-                                  onClick={() => {
-                                    // Llama a la función handleDelete para mostrar el modal de confirmación
-                                    handleDeleteAsset(props.id);
-                                  }}
-                                >
-                                  Eliminar
-                                </button>
-                                <button
-                                  className={`btn btn-primary ${style.left}`}
-                                  data-bs-target="#exampleModalToggle"
-                                  data-bs-toggle="modal"
-                                  onClick={() => setIdHouse(props.id)}
-                                >
-                                  Editar
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    margin: "auto 0",
-                    alignItems: "center",
-                  }}
-                >
-                  <h1>No tienes propiedades registradas</h1>
-                  <h2>
-                    Registra una propiedad{" "}
-                    <span
-                      style={{ color: "#9d0aca", cursor: "pointer" }}
-                      onClick={() => navigate("/addProperty")}
-                    >
-                      aqui
-                    </span>
-                  </h2>
-                </div>
-              )}
-            </div>
-            <div
-              class="modal fade"
-              id="exampleModalToggle4"
-              aria-hidden="true"
-              aria-labelledby="exampleModalToggleLabel"
-              tabindex="-1"
-            >
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
-                      Editar Perfil
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="row">
-                      <div class="col-6">
-                        <div
-                          id="drag-drop-area"
-                          style={{
-                            border: "2px dashed #ccc",
-                            textAlign: "center",
-                            paddingTop: "93px",
-                            cursor: "pointer",
-                            marginTop: "10px",
-                            marginBottom: "10px",
-                            borderRadius: "100%",
-                            height: "100%",
-                          }}
-                          onDragOver={(e) => e.preventDefault()}
-                          onDrop={(e) => handleFile(e.dataTransfer.files[0])}
-                        >
-                          Arrastra y suelta una imagen aquí o
-                          <label
-                            htmlFor="fileInput"
-                            style={{
-                              color: "blue",
-                              cursor: "pointer",
-                              justifyContent: "center",
-                            }}
-                          >
-                            selecciona un archivo
-                          </label>
-                          <input
-                            type="file"
-                            id="fileInput"
-                            accept="image/*"
-                            style={{ display: "none" }}
-                            onChange={(e) => handleFile(e.target.files[0])}
-                          />
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div className="mb-2">
-                          <label
-                            htmlFor="nombre"
-                            className="form-label"
-                            style={{ color: "black" }}
-                          >
-                            Nombre
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="nombre"
-                            placeholder="Nombre"
-                          />
-                        </div>
-                        <div className="mb-2">
-                          <label
-                            htmlFor="correo"
-                            className="form-label"
-                            style={{ color: "black" }}
-                          >
-                            Correo
-                          </label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="correo"
-                            placeholder="Correo electrónico"
-                          />
-                        </div>
-                        <div className="mb-2">
-                          <label
-                            htmlFor="contrasena"
-                            className="form-label"
-                            style={{ color: "black" }}
-                          >
-                            Contraseña
-                          </label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="contrasena"
-                            placeholder="Contraseña"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer justify-content-center">
-                    <button class="btn btn-primary">Actualizar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+          //                   <button
+          //                     className={style.customButton}
+          //                     data-bs-target="#exampleModalToggle4"
+          //                     data-bs-toggle="modal"
+          //                     onClick={() => setIdHouse(props.id)}
+          //                   >
+          //                     <svg
+          //                       xmlns="http://www.w3.org/2000/svg"
+          //                       width="35"
+          //                       height="35"
+          //                       fill="currentColor"
+          //                       className={`bi bi-pencil-fill ${style.icon}`}
+          //                       viewBox="0 0 16 16"
+          //                     >
+          //                       <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+          //                     </svg>
+          //                   </button>
+          //                 </div>
+          //               </div>
+          //               <div className="col-md-8">
+          //                 <div className="card-body">
+          //                   <h5 className="card-title">{props.name}</h5>
+          //                   {descripCut(props.description)}
+          //                   <p className="card-text">
+          //                     <small className="text-muted">
+          //                       {props.address}, {props.country}
+          //                     </small>
+          //                   </p>
+          //                   <div className={`  m-2 ${style.divButton}`}>
+          //                     <Link to={`/detail/${props.id}`}>
+          //                       <button className="btn btn-primary">
+          //                         Ver Detalles
+          //                       </button>
+          //                     </Link>
+          //                     <div className={style.left}>
+          //                       <button
+          //                         className={`btn btn-danger ${style.left} `}
+          //                         onClick={() => {
+          //                           // Llama a la función handleDelete para mostrar el modal de confirmación
+          //                           handleDeleteAsset(props.id);
+          //                         }}
+          //                       >
+          //                         Eliminar
+          //                       </button>
+          //                       <button
+          //                         className={`btn btn-primary ${style.left}`}
+          //                         data-bs-target="#exampleModalToggle"
+          //                         data-bs-toggle="modal"
+          //                         onClick={() => setIdHouse(props.id)}
+          //                       >
+          //                         Editar
+          //                       </button>
+          //                     </div>
+          //                   </div>
+          //                 </div>
+          //               </div>
+          //             </div>
+          //           </div>
+          //         </div>
+          //       ))
+          //     ) : (
+          //       <div
+          //         style={{
+          //           display: "flex",
+          //           flexDirection: "column",
+          //           justifyContent: "center",
+          //           margin: "auto 0",
+          //           alignItems: "center",
+          //         }}
+          //       >
+          //         <h1>No tienes propiedades registradas</h1>
+          //         <h2>
+          //           Registra una propiedad{" "}
+          //           <span
+          //             style={{ color: "#9d0aca", cursor: "pointer" }}
+          //             onClick={() => navigate("/addProperty")}
+          //           >
+          //             aqui
+          //           </span>
+          //         </h2>
+          //       </div>
+          //     )}
+          //   </div>
+          //   <div
+          //     class="modal fade"
+          //     id="exampleModalToggle4"
+          //     aria-hidden="true"
+          //     aria-labelledby="exampleModalToggleLabel"
+          //     tabindex="-1"
+          //   >
+          //     <div class="modal-dialog modal-dialog-centered">
+          //       <div class="modal-content">
+          //         <div class="modal-header">
+          //           <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
+          //             Editar Perfil
+          //           </h1>
+          //           <button
+          //             type="button"
+          //             class="btn-close"
+          //             data-bs-dismiss="modal"
+          //             aria-label="Close"
+          //           ></button>
+          //         </div>
+          //         <div class="modal-body">
+          //           <div class="row">
+          //             <div class="col-6">
+          //               <div
+          //                 id="drag-drop-area"
+          //                 style={{
+          //                   border: "2px dashed #ccc",
+          //                   textAlign: "center",
+          //                   paddingTop: "93px",
+          //                   cursor: "pointer",
+          //                   marginTop: "10px",
+          //                   marginBottom: "10px",
+          //                   borderRadius: "100%",
+          //                   height: "100%",
+          //                 }}
+          //                 onDragOver={(e) => e.preventDefault()}
+          //                 onDrop={(e) => handleFile(e.dataTransfer.files[0])}
+          //               >
+          //                 Arrastra y suelta una imagen aquí o
+          //                 <label
+          //                   htmlFor="fileInput"
+          //                   style={{
+          //                     color: "blue",
+          //                     cursor: "pointer",
+          //                     justifyContent: "center",
+          //                   }}
+          //                 >
+          //                   selecciona un archivo
+          //                 </label>
+          //                 <input
+          //                   type="file"
+          //                   id="fileInput"
+          //                   accept="image/*"
+          //                   style={{ display: "none" }}
+          //                   onChange={(e) => handleFile(e.target.files[0])}
+          //                 />
+          //               </div>
+          //             </div>
+          //             <div class="col-6">
+          //               <div className="mb-2">
+          //                 <label
+          //                   htmlFor="nombre"
+          //                   className="form-label"
+          //                   style={{ color: "black" }}
+          //                 >
+          //                   Nombre
+          //                 </label>
+          //                 <input
+          //                   type="text"
+          //                   className="form-control"
+          //                   id="nombre"
+          //                   placeholder="Nombre"
+          //                 />
+          //               </div>
+          //               <div className="mb-2">
+          //                 <label
+          //                   htmlFor="correo"
+          //                   className="form-label"
+          //                   style={{ color: "black" }}
+          //                 >
+          //                   Correo
+          //                 </label>
+          //                 <input
+          //                   type="email"
+          //                   className="form-control"
+          //                   id="correo"
+          //                   placeholder="Correo electrónico"
+          //                 />
+          //               </div>
+          //               <div className="mb-2">
+          //                 <label
+          //                   htmlFor="contrasena"
+          //                   className="form-label"
+          //                   style={{ color: "black" }}
+          //                 >
+          //                   Contraseña
+          //                 </label>
+          //                 <input
+          //                   type="password"
+          //                   className="form-control"
+          //                   id="contrasena"
+          //                   placeholder="Contraseña"
+          //                 />
+          //               </div>
+          //             </div>
+          //           </div>
+          //         </div>
+          //         <div class="modal-footer justify-content-center">
+          //           <button class="btn btn-primary">Actualizar</button>
+          //         </div>
+          //       </div>
+          //     </div>
+          //   </div>
+          // </div>
+          <div  className="col-md-9">
+            <AllUsersProps/>
           </div>
         ) : componenteActual === "B" ? (
           <div className="col-md-9">

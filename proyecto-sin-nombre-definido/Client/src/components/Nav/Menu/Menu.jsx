@@ -14,7 +14,7 @@ const Menu = () => {
     setUserName({...userName, pic: data.profilePic, userName: data.userName});
     // const userName = data.userName;
     }
-
+    return
   },[])
 
 
@@ -112,7 +112,7 @@ const Menu = () => {
                           d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
                         />
                       </svg>
-                      &nbsp; Profile
+                      &nbsp; Perfil
                     </div>
                   </a>
                 </li>
@@ -139,7 +139,7 @@ const Menu = () => {
                         <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z" />
                         <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
                       </svg>
-                      &nbsp; Recent
+                      &nbsp; Recientes
                     </div>
                   </a>
                 </li>
@@ -172,7 +172,7 @@ const Menu = () => {
                           d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
                         />
                       </svg>
-                      &nbsp; Log out
+                      &nbsp; Salir
                     </div>
                   </a>
                 </li>
