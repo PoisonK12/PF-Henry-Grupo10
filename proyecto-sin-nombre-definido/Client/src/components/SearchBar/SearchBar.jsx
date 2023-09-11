@@ -77,7 +77,7 @@ export const SearchBar = () => {
         <input
           className={s.input}
           type="text"
-          placeholder="Search name..."
+          placeholder="Indica tu destino"
           value={search}
           onChange={handleSearch}
           onClick={handleOnClick}
