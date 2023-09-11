@@ -6,6 +6,7 @@ import { getAllReallyProperties} from "../../redux/actions";
 import AllUser from "./AllUsers/allUser";
 import AllProperties from "./AllProperties/allProperties";
 import User from "./Profile/Profile";
+import Message from "./Message/Messages";
 
 
 const AdminDashboard = () => {
@@ -86,6 +87,20 @@ const AdminDashboard = () => {
                       </div>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" onClick={() => setComponenteActual('D')} href="#"   style={{
+                        display: "flex",
+                        alignItems: "center",
+                        height: "80px",
+                      }}>
+                      <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
+                        <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+                      </svg>
+                      &nbsp; All Message
+                      </div>
+                    </a>
+                  </li>
               </ul>
 
               </div>
@@ -99,9 +114,13 @@ const AdminDashboard = () => {
         <div className="col-md-9">
           <AllProperties/>
         </div>
-        : 
+        : componenteActual === "C"?
         <div className="col-md-9">
           <AllUser/>
+        </div>
+        :
+        <div className="col-md-9">
+          <Message/>
         </div>
         }
       </div>
