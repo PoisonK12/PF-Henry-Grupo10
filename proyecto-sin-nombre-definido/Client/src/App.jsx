@@ -23,7 +23,7 @@ axios.defaults.baseURL = "http://localhost:3001"
 import jwt_decode from "jwt-decode"
 import {ScrollToTop} from './Helpers';
 import Loader from './components/Loader/Loader';
-import RutaProtegida from './components/Ruta Protegida/RutaProtegida';
+
 
 
 
@@ -55,12 +55,12 @@ function App() {
       <Route path='/home' element={<><Home/><Footer/><Chatbot/></>}/>
       {/* <Route path='/property' element={<><Property/><Footer/><Chatbot/></>}/> */}
       {/* <RutaProtegida exact path="/addProperty" componente={<Property></Property>} token={token} ></RutaProtegida> */}
-      <Route path="/addPropery" element={<RutaProtegida token={token} ><PropertyForm></PropertyForm></RutaProtegida>} />
+      {/* <Route path="/addPropery" element={<RutaProtegida token={token} ><PropertyForm></PropertyForm></RutaProtegida>} /> */}
       <Route path='/contacts' element={<><Contatcs/><Footer/><Chatbot/></>}/>
       <Route path='/property' element={<><Property/><Chatbot/><Footer/></>}/>
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
       <Route path='/userPanel' element={<><UserPanel/><Footer/></>}/>
-      <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>    
+      <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>           
       <Route path="/checkIn" element={<><LoginRegister/><Footer/></>}></Route>
       <Route path="/demo" element={<><Loader/><Footer/></>}></Route>
       <Route path="*" element={<><NotFound/><Footer/></>}/>

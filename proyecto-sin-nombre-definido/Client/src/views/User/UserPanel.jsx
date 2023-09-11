@@ -2,19 +2,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllReallyProperties, getPropertyByUser } from "../../redux/actions";
 import style from "./user.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import Favorites from "./Favorite/Favorites";
 import Reviews from "./Reviews/Reviews";
 import Widget from "../AdminDashboard/AllProperties/Balance/Balance";
 import User from "../AdminDashboard/Profile/Profile";
 import AllUsersProps from "./AllUsersProperties/AllUserProps";
+import PropertyForm from "../Property Form/PropertyForm";
+import { Route, Routes } from "react-router-dom";
 
 const UserPanel = () => {
   const [componenteActual, setComponenteActual] = useState("A");
+  console.log(componenteActual);
   // const dispatch = useDispatch();
-  const [data, setData] = useState({})
-
-
+  const [data, setData] = useState({});
 
   const descripCut = (description) => {
     if (description.length > 220) {
@@ -27,10 +28,24 @@ const UserPanel = () => {
     return <p className="card-text">{description}</p>;
   };
 
+  const handlerClick = () => {
+    <Routes>
+      <Route
+        path="/addPropery"
+        element={
+          <RutaProtegida token={token}>
+            <PropertyForm></PropertyForm>
+          </RutaProtegida>
+        }
+      />
+      ;
+    </Routes>;
+  };
+
   useEffect(() => {
     // if (!data) return
-        const info = localStorage.getItem("data");
-        setData(JSON.parse(info))
+    const info = localStorage.getItem("data");
+    setData(JSON.parse(info));
   }, [localStorage]);
 
   return (
@@ -52,7 +67,15 @@ const UserPanel = () => {
                   textAlign: "center",
                 }}
               >
-                <img src={data?.profilePic} width={150} style={{height:"150px",borderRadius:"50%", objectFit:"cover"}}></img>
+                <img
+                  src={data?.profilePic}
+                  width={150}
+                  style={{
+                    height: "150px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                ></img>
                 <h5 className="card-title pt-1">{data?.userName}</h5>
               </div>
               <ul>
@@ -109,34 +132,37 @@ const UserPanel = () => {
                     </div>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      height: "80px",
-                    }}
-                    href="#"
-                    onClick={() => setComponenteActual("C")}
-                  >
-                    <div>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="35"
-                        height="35"
-                        fill="currentColor"
-                        class="bi bi-house-add-fill"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 1 1-1 0v-1h-1a.5.5 0 1 1 0-1h1v-1a.5.5 0 0 1 1 0Z" />
-                        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
-                        <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
-                      </svg>
-                      &nbsp; Agregar propiedad
-                    </div>
-                  </a>
-                </li>
+                <NavLink to="/addPropery">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        height: "80px",
+                      }}
+                      href="#"
+                      // onClick={() => setComponenteActual("C")}
+                      // onClick={handlerClick}
+                    >
+                      <div>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="35"
+                          height="35"
+                          fill="currentColor"
+                          class="bi bi-house-add-fill"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 1 1-1 0v-1h-1a.5.5 0 1 1 0-1h1v-1a.5.5 0 0 1 1 0Z" />
+                          <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
+                          <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
+                        </svg>
+                        &nbsp; Agregar propiedad
+                      </div>
+                    </a>
+                  </li>
+                </NavLink>
                 <li class="nav-item">
                   <a
                     class="nav-link"
@@ -195,9 +221,8 @@ const UserPanel = () => {
           </div>
         </div>
         {componenteActual === "A" ? (
-          
-          <div  className="col-md-9">
-            <AllUsersProps/>
+          <div className="col-md-9">
+            <AllUsersProps />
           </div>
         ) : componenteActual === "B" ? (
           <div className="col-md-9">
@@ -205,7 +230,7 @@ const UserPanel = () => {
           </div>
         ) : componenteActual === "C" ? (
           <div className="col-md-9">
-            <Reviews />
+            <PropertyForm />
           </div>
         ) : (
           <div className="col-md-9">
