@@ -38,6 +38,7 @@
 .nav ul {
   display: flex;
   font-family: "Avenir", sans-serif;
+  margin-right: 65px;
 }
 
 .nav ul li {
@@ -73,6 +74,7 @@
 .nav img {
   width: 150px;
   height: 150px;
+  overflow: hidden;
 }
 
 .nav .menu {
