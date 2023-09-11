@@ -106,7 +106,10 @@ const Landing = () => {
 
   useEffect(() => {
     const redirectTimeout = setTimeout(() => {
-      navigate("/home"); // Redireccionar después de 3 segundos
+      setTimeout(() => {
+        {<Loader></Loader>}
+      }, 3000 )
+        navigate("/home"); // Redireccionar después de 3 segundos
     }, 2000);
 
     return () => {
@@ -115,22 +118,22 @@ const Landing = () => {
   }, []);
 
   return(
-    // <div>
-    //   <section className={style.select}>
-    //     <div className={style.textOverlay}>
-    //       <h1 className={style.text}>Welcome to</h1>
-    //       <p className={style.parra}> Experience the allure of modern hospitality at our premier rentals. Wake up to stunning views and luxurious comfort, making your stay truly unforgettable.</p>
-    //     </div>
-    //     <img className={style.ima} name='S02' src={landing2} alt="" />
-    //     <img name='S04' src={landing4} alt="" />
-    //     <img name='S01' src={landind1} alt="" />
-    //     <img className={style.ima} name='S05' src={landing5} alt="" />
-    //     <img className={style.ima} name='S03' src={landing3} alt="" />
-    //   </section>
-    // </div>
-    <>
-      <Loader></Loader>
-    </>
+    <div>
+      <section className={style.select}>
+        <div className={style.textOverlay}>
+          <h1 className={style.text}>Welcome to</h1>
+          <p className={style.parra}> Experience the allure of modern hospitality at our premier rentals. Wake up to stunning views and luxurious comfort, making your stay truly unforgettable.</p>
+        </div>
+        <img className={style.ima} name='S02' src={landing2} alt="" />
+        <img name='S04' src={landing4} alt="" />
+        <img name='S01' src={landind1} alt="" />
+        <img className={style.ima} name='S05' src={landing5} alt="" />
+        <img className={style.ima} name='S03' src={landing3} alt="" />
+      </section>
+    </div>
+    // <>
+    //   <Loader></Loader>
+    // </>
   )
 
 }

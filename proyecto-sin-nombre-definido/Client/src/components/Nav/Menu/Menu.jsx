@@ -11,12 +11,11 @@ const Menu = () => {
 
   const logOut = () => {
     localStorage.removeItem("log");
-    if (location.pathname === "/home") {
-      return;
-    } else {
-      navigate("/home");
-      return;
-    }
+    localStorage.removeItem("data");
+    
+      navigate("/checkIn");
+
+    
   };
 
   return (

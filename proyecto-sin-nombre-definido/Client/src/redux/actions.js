@@ -14,6 +14,7 @@ import {
   DELETE_USER_BY_ID,
   GET_ALL_USERS,
   GET_STATES,
+  GET_PROPERTIES_BY_USER,
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -355,3 +356,18 @@ export const getLogin = async (
     }
   }
 };
+
+
+export const getPropertyByUser = (id) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios(`assets/myassets/${id}`)
+      dispatch({
+        type:GET_PROPERTIES_BY_USER,
+        payload: data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
