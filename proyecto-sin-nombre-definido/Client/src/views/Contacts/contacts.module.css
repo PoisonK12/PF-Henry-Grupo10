@@ -108,9 +108,9 @@
   padding: 20px;
   padding-left: 50px;
   transition: all ease-in-out;
-
   margin: 0 auto;
   flex: 2;
+  text-align: left;
 }
 
 .info h2{
