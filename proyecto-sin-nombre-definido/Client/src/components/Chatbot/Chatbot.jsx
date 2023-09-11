@@ -48,7 +48,7 @@ const theme = {
 };
 
 const config = {
-  botAvatar: 'img.png',
+  botAvatar: 'avatar.png',
   floating: true,
 };
 
