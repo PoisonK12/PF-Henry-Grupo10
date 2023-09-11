@@ -84,13 +84,13 @@ const Contacts = () => {
   }, []);
 
   return (
-    <div className={style.background}>
+    <div className={style.background}>  
       <div className={style.contImg}>
         <img className={style.img} src={fondo} alt="Background" />
       </div>
       <div className={style.cont}>
         <form onSubmit={handleSubmit} className={`${style["row-cols-1"]} ${style["custom-container"]} ${style['formulario-entrada']} ${visible ?  style['formulario-visible'] : ""}`}>
-          <h2 className={style.title}>Contact</h2>
+          <h2 className={style.title}>Envíanos un mensaje...</h2>
           <div className="mb-3 w-90 ">
             <label htmlFor="name" className="form-label ">
               Nombre
