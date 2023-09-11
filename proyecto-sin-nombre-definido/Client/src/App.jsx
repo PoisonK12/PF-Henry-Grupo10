@@ -60,7 +60,7 @@ function App() {
       <Route path='/property' element={<><Property/><Chatbot/><Footer/></>}/>
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
       <Route path='/userPanel' element={<><UserPanel/><Footer/></>}/>
-      {/* <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>            */}
+      <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>    
       <Route path="/checkIn" element={<><LoginRegister/><Footer/></>}></Route>
       <Route path="/demo" element={<><Loader/><Footer/></>}></Route>
       <Route path="*" element={<><NotFound/><Footer/></>}/>
