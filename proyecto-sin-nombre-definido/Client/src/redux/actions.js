@@ -336,6 +336,7 @@ export const getLogin = async (
       setToast(true);
       localStorage.setItem("log", JSON.stringify(data.token));
       localStorage.setItem("data", JSON.stringify(data.data))
+      console.log('local', localStorage);
       setTimeout(() => {
         setToast(false);
         navigate("/home");
