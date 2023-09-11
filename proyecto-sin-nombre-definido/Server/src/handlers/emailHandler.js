@@ -17,6 +17,9 @@ const sendMail = (req, res) => {
               auth: {
                 user: "greatravel@grupo-cava.com",
                 pass: "00oscar00"
+              },
+              tls:{
+                rejectUnauthorized:false
               }
             });
           
