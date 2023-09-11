@@ -99,12 +99,16 @@ console.log(selectedCkeckbox);
   useEffect(() => {
     const setearName = () => {
       const data = localStorage.getItem("data")
-      
+      if(data){
         const jsonData = JSON.parse(data)
         console.log("jalo",jsonData)
         const userNames = jsonData.userName
         setForm({...form, userName: userNames})
         console.log("Neiim",userNames)
+
+      }else{
+        console.log("no hay data")
+      }
     }
     setearName()
   },[])
