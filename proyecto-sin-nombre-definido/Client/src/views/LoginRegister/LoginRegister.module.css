@@ -128,6 +128,26 @@ label {
   z-index: 200;
   /* clip: rect(0, 385px, 616px, 0); */
 }
+.overlay h3{
+  font: 700 80px/1 'Lato', sans-serif;
+  margin: 50px;
+  color:#f0f0f0;
+}
+.overlay button{
+  font-size: 20px;
+  color: #091f44;
+  padding: 16px;
+  background-color: #9d0aca;
+  border-radius: 30px;
+  border: 2px solid transparent;
+  transition: background-color 0.5s ease;
+}
+
+.overlay button:hover{
+  border: 2px solid #091f44;
+  background-color: #f0f0f0;
+  color:#091f44
+}
 
 .overlay.login, .overlay.register{
     /*  Width is 385px - padding  */

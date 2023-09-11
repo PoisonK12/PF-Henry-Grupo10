@@ -129,11 +129,13 @@
   text-decoration: none;
   padding: 5px;
   border-radius: 20px;
-
   padding-inline: 10px;
   transition: background-color .5s ease;
 }
+li{
+  list-style: none;
 
+}
 
 .noHover.login{
   padding: 5px;

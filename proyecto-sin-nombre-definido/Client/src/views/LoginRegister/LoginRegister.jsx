@@ -3,6 +3,7 @@ import Login from "../../components/Login/Login.jsx";
 import Register from "../../components/Register/Register";
 import style from "./LoginRegister.module.css";
 import fondo from "../../assets/images/Exteriores/imageLogin.avif";
+import { Link } from "react-router-dom";
 
 const LoginRegister = () => {
   const [conditional, setConditional] = useState("login");
@@ -40,12 +41,17 @@ const LoginRegister = () => {
               height: "616px",
               width: "100%",
               display: "block",
+              position:"relative"
               // width: "70%",
               // border: "none",
               // borderRadius:"none",
             }}
             className={style.img}
-          ></img>
+            ></img>
+            <div style={{position:"absolute"}}>
+            <h3>Estoy de visita!</h3>
+            <Link to={"/home"}> <button>Volver a la pagina principal</button></Link>
+            </div>
         </div>
         
         <div
