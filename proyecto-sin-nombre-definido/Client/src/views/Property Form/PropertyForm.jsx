@@ -23,7 +23,7 @@ const PropertyForm = () => {
   const [conditionalCreate, setConditionalCreate] = useState(false);
   
   const [userName, setUserName] = useState("")
-  
+  console.log(userName)
 
 
   const [errors, setErrors] = useState({
@@ -50,15 +50,7 @@ const PropertyForm = () => {
   console.log(errors);
   const navigate = useNavigate();
   
-  useEffect(() => {
-    const data = localStorage.getItem("data")
-    if(data){
-      const jsonData = JSON.parse(data)
-      console.log(jsonData)
-      setUserName(jsonData.userName)
-      console.log(userName)
-    }
-  },[])
+ 
 
 
   const [form, setForm] = useState({
@@ -80,12 +72,26 @@ const PropertyForm = () => {
     nearby: "asd",
     averageScore: 1,
     nearbyScore: 1,
-    userName : userName,
+    userName: "",
 
     amenities: [],
   });
 
-  console.log(form);
+  useEffect(() => {
+    const setearName = () => {
+      const data = localStorage.getItem("data")
+      
+        const jsonData = JSON.parse(data)
+        console.log("jalo",jsonData)
+        const userNames = jsonData.userName
+        setForm({...form, userName: userNames})
+        console.log("Neiim",userNames)
+    }
+    setearName()
+  },[])
+
+
+  console.log("form",form);
   if (modal && Array.isArray(modalBody.response)) console.log(true);
 
   const handleCheckbox = (e) => {

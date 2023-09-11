@@ -1,13 +1,22 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import style from "./Menu.module.css";
+import { useEffect, useState } from "react";
 
 const Menu = () => {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState({})
   const location = useLocation();
-  const jsonData = localStorage.getItem("data");
-  const data = JSON.parse(jsonData);
-  const imageProfile = data.profilePic;
-  const userName = data.userName;
+  
+  useEffect(() => {
+    const jsonData = localStorage.getItem("data");
+    if(jsonData){
+      const data = JSON.parse(jsonData);
+    setUserName({...userName, pic: data.profilePic, userName: data.userName});
+    // const userName = data.userName;
+    }
+
+  },[])
+
 
   const logOut = () => {
     localStorage.removeItem("log");
@@ -32,7 +41,7 @@ const Menu = () => {
             aria-label="Toggle navigation"
           >
             <img
-              src={imageProfile}
+              src={userName.pic}
               style={{width:"50px",height:"50px",objectFit:"cover", borderRadius: "50%" }}
               className={style.button}
 
@@ -64,8 +73,8 @@ const Menu = () => {
             aria-labelledby="offcanvasDarkNavbarLabel"
           >
             <div class="offcanvas-header" style={{display:"flex", flexDirection:"column"}}>
-              <img src={imageProfile} style={{borderRadius:"50%", objectFit:"cover", marginBottom:"20px"}}/>
-              <h3 style={{color:"#f0f0f0"}}>{userName}</h3>
+              <img src={userName.pic} style={{borderRadius:"50%", objectFit:"cover", marginBottom:"20px"}}/>
+              <h3 style={{color:"#f0f0f0"}}>{userName.userName}</h3>
               <button
                 type="button"
                 class="btn-close btn-close-white"
