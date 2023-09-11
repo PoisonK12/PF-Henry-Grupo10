@@ -282,7 +282,7 @@ const Detail = () => {
                   No pagues sin ver la propiedad o tener documentación
                   certificada.
                 </p>
-                <h1 style={{ marginRight: "10px", color: "#091f44" }}>2</h1>
+                <h1 style={{ marginRight: "10px", color: "#091f44" }}>3</h1>
                 <p style={{ color: "#091f44" }}>
                   Evita compartir información bancaria o contraseñas por
                   mensajes.
@@ -291,7 +291,7 @@ const Detail = () => {
               <div
                 style={{ display: "flex", width: "100%", alignItems: "center" }}
               >
-                <h1 style={{ marginRight: "10px", color: "#091f44" }}>3</h1>
+                <h1 style={{ marginRight: "10px", color: "#091f44" }}>2</h1>
                 <p style={{ color: "#091f44" }}>
                   Precios demasiado bajos pueden ser señal de estafa.
                 </p>

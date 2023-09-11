@@ -178,6 +178,7 @@ const PropertyForm = () => {
   };
 
   const handleStep = (e) => {
+    console.log('ss',e);
     e.preventDefault();
 
     if (e.target.value === "prev") {
@@ -348,14 +349,14 @@ const PropertyForm = () => {
     if (step === 1) {
       return (
         <div class="justify-content-center align-items-center d-flex flex-column text-center ">
-          <div>
-            <h3 className=" display-6 m-4 p-3"> Agrega una nueva propiedad </h3>
-          </div>
 
           <form
-            className={`d-flex flex-row align-items-center justify-content-center text-center`}
+            className={`d-flex flex-row align-items-center justify-content-center text-center mt-5`}
           >
             <fieldset className={`p-5 d-flex flex-column ${style.fieldset} `}>
+          <div>
+            <h3 className=" display-6 fw-bold"> Agrega una nueva propiedad </h3>
+          </div>
               <div
                 className={`d-flex flex-row justify-content-center align-items-center ${style.formmer}`}
               >
@@ -593,7 +594,7 @@ const PropertyForm = () => {
                   </div>
                 </div>
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <button
                   type={step === 3 ? "submit" : "button"}
                   className={`ml-4 ${style.button}`}
@@ -609,9 +610,9 @@ const PropertyForm = () => {
     } else if (step === 2) {
       return (
         <div class="justify-content-center align-items-center d-flex flex-column text-center ">
-          <h2 className=" display-6 m-4">Agrega sus características </h2>
-          <form className=" d-flex flex-row align-items-center justify-content-center text-center">
+          <form className=" d-flex flex-row align-items-center justify-content-center text-center mt-5">
             <fieldset className={`p-1 d-flex flex-column ${style.fieldset} `}>
+            <h3 className=" display-6 mb-5 fw-bold">Agrega sus características </h3>
               <div className={`${style.gridForm}`}>
                 <div className={`${style.inputForm}`}>
                   <div className="">
@@ -890,7 +891,9 @@ const PropertyForm = () => {
           onSubmit={handleForm}
         >
           <fieldset className={`border ${style.fieldset3} `}>
-            <legend className="mb-3 mt-3"> Especificaciones </legend>
+            <div>
+              <h2 className=" display-6 mt-3 fw-bold"> ESPECIFICACIONES </h2>
+            </div>
             <hr></hr>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="d-flex flex-row ">
