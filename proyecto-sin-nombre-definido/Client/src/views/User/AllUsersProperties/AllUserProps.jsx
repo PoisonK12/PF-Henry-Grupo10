@@ -7,6 +7,7 @@ import {
   deleteAssetById,
   getAllReallyProperties,
   putProperty,
+  getPropertyByUser
 } from "../../../redux/actions";
 import axios from "axios";
 import Widget from "../../AdminDashboard/AllProperties/Balance/Balance";
@@ -16,7 +17,7 @@ import Widget from "../../AdminDashboard/AllProperties/Balance/Balance";
 const AllUsersProps = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.myProperties);
-  console.log('sisis', allProperties);
+  const [datas, setDatas] = useState({})
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
@@ -26,6 +27,9 @@ const AllUsersProps = () => {
     parking: "",
     terrace: "",
   });
+
+
+
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -41,12 +45,26 @@ const AllUsersProps = () => {
     bathrooms: 0,
     coveredArea: 0,
     totalArea: 0,
+    userName: datas.id
   });
+
+  useEffect(() => {
+    // if (!data) return 
+   
+        const info = localStorage.getItem("data");
+        setDatas(JSON.parse(info))
+        
+       dispatch(getPropertyByUser(datas.id));
+        console.log(datas)
+      
+  }, [datas]);
+
+
 
   useEffect(() => {
     const getDataForFrom = async () => {
       const { data } = await axios(`/assets/` + idHouse);
-      setForm({
+      setForm(...form, {
         name: data.name,
         country: data?.country,
         state: data?.state,
@@ -64,7 +82,6 @@ const AllUsersProps = () => {
       });
     };
     getDataForFrom();
-    console.log(form);
   }, [idHouse]);
 
   const [errors, setErrors] = useState({

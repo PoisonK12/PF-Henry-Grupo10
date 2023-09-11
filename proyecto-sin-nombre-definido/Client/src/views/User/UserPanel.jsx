@@ -11,11 +11,9 @@ import AllUsersProps from "./AllUsersProperties/AllUserProps";
 
 const UserPanel = () => {
   const [componenteActual, setComponenteActual] = useState("A");
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [data, setData] = useState({})
-  console.log(data)
-  const allProperties = useSelector((state) => state.myProperties);
-  const navigate = useNavigate();
+
 
 
   const descripCut = (description) => {
@@ -30,12 +28,10 @@ const UserPanel = () => {
   };
 
   useEffect(() => {
-    const info = localStorage.getItem("data");
-    // if (!data) return 
-    setData(JSON.parse(info))
-    
-    dispatch(getPropertyByUser(data.id));
-  }, []);
+    // if (!data) return
+        const info = localStorage.getItem("data");
+        setData(JSON.parse(info))
+  }, [localStorage]);
 
   return (
     <div

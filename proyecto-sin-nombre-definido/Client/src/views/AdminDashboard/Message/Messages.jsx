@@ -145,10 +145,15 @@ const Message = () => {
                 type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
+                aria-label="Close"
+
               >
                 Close
               </button>
               <button
+                aria-label="Close"
+                data-bs-dismiss="modal"
+
                 type="button"
                 class="btn btn-primary"
                 onClick={() => handleSendMessage()}
