@@ -46,14 +46,14 @@ const AllUser = () => {
         <thead style={{ borderRadius: '10px' }}>
           <tr style={{ borderRadius: '10px' }}>
             <th scope="col">#</th>
-            <th scope="col">Image</th>
-            <th scope="col">FullName</th>
-            <th scope="col">Adress</th>
+            <th scope="col">Avatar</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Dirección</th>
             <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Nationality</th>
-            <th scope="col">Type</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Nationalidad</th>
+            <th scope="col">Permisos</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
