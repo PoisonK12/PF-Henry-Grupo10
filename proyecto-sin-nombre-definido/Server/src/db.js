@@ -6,6 +6,7 @@ const RentModel = require("./models/rents");
 const AssetModel = require("./models/assets");
 const ReviewModel = require("./models/reviews");
 const AmenityModel = require("./models/amenities");
+const ContactModel = require("./models/contacts");
 
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const sequelize = new Sequelize(
@@ -18,8 +19,9 @@ RentModel(sequelize);
 AssetModel(sequelize);
 ReviewModel(sequelize);
 AmenityModel(sequelize);
+ContactModel(sequelize);
 
-const { User, Rent, Asset, Review } = sequelize.models;
+const { User, Rent, Asset, Review, Contact} = sequelize.models;
 
 User.belongsToMany(Asset, { through: "userAssets" });
 Asset.belongsTo(User, { through: "userAssets" });
@@ -32,6 +34,9 @@ Review.belongsTo(Asset, { through: "assetReview" });
 
 User.belongsToMany(Review, { through: "userReview" });
 Review.belongsTo(User, { through: "userReview" });
+
+Contact.belongsToMany(User, { through: "userContact" });
+User.belongsTo(Contact, { through: "userContact" });
 
 module.exports = {
   sequelize,
