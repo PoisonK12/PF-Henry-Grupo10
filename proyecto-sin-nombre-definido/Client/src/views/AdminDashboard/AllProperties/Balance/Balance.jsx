@@ -9,9 +9,9 @@ const Widget = ({ type }) => {
   switch (type) {
     case "user":
       data = {
-        title: "USERS",
+        title: "USUARIOS",
         isMoney: false,
-        link: "See all users",
+        link: "Ver todos los usuarios",
         icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi bi-person-fill ${style.icon}`} viewBox="0 0 16 16" style={{
                 color: "crimson",
@@ -25,9 +25,9 @@ const Widget = ({ type }) => {
       break;
     case "order":
       data = {
-        title: "ORDERS",
+        title: "ORDENES",
         isMoney: false,
-        link: "View all orders",
+        link: "Ver todas las órdenes",
         icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi bi-cart-check-fill ${style.icon}`}  viewBox="0 0 16 16" style={{
                 color: "goldenrod",
@@ -40,9 +40,9 @@ const Widget = ({ type }) => {
       break;
     case "earning":
       data = {
-        title: "EARNINGS",
+        title: "GANANCIAS",
         isMoney: true,
-        link: "View net earnings",
+        link: "Ver ganancias",
         icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi bi-coin  ${style.icon}`}  viewBox="0 0 16 16" style={{
                 color: "green",
@@ -59,7 +59,7 @@ const Widget = ({ type }) => {
       data = {
         title: "BALANCE",
         isMoney: false,
-        link: "See details",
+        link: "Ver detalles",
         icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi bi-bar-chart-fill ${style.icon}`} viewBox="0 0 16 16"  style={{
                 color: "purple",
