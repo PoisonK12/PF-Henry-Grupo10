@@ -204,9 +204,9 @@ export const searchByFilter = (
     sellPriceMax,
     sellPriceMin,
     order,
-    // amenities
+    amenities,
+    page
   },
-  page
 ) => {
   return async (dispatch) => {
     try {
@@ -217,9 +217,17 @@ export const searchByFilter = (
       if (rentPriceMin == 0) rentPriceMin = "";
       if (sellPriceMax == 1000) sellPriceMax = "";
       if (sellPriceMin == 0) sellPriceMin = "";
-      // if (amenities.length = 0) amenities = ""
+      // if (amenities.length == 0) amenities = ""
+      const mapAmen = Array.isArray(amenities) && amenities.length > 0
+        ? `&amenities=${amenities.join("&amenities=")}`
+        : '';
+        
+      console.log("KJDASJKDSAJK",amenities)
+
+      // console.log("BLABLABLA",searchAmen)
+
       const { data } = await axios(
-        `/assets?size=10&page=${page}&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}&${order}=yes`
+        `/assets?size=10&page=${page}&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}&${order}=yes${mapAmen}`
       );
       console.log(data);
       return dispatch({

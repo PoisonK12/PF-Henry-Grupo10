@@ -7,7 +7,7 @@ import jwtDecode from "jwt-decode";
 
 export const Nav = () => {
   const location = useLocation();
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("log");
   console.log(token);
   const [fixed, setFixed] = useState(false);
   const [access , setAccess] = useState(false)
@@ -20,7 +20,6 @@ export const Nav = () => {
   };
 
 
- const log = localStorage.getItem("log")
   
 
   useEffect(() => {
