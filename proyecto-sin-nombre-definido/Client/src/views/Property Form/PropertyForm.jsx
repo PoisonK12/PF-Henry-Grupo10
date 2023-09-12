@@ -21,6 +21,7 @@ const PropertyForm = () => {
   const [states, setStates] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [conditionalCreate, setConditionalCreate] = useState(false);
+  
   const [Checked , setChecked] = useState({
   Wifi: false,
   Cochera: false,

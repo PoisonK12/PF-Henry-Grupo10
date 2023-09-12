@@ -64,7 +64,6 @@ const validation = (form) => {
    if (!form.rentPrice) {
      errors.rentPrice = "Ingrese un precio de alquiler";
    }
-
    if ( !form.description) {
      errors.description = "Ingrese una descripcion";
    } else if (form.description && form.description.length < 10) {
