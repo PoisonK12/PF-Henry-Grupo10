@@ -26,6 +26,10 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: "Disponible",
       },
+      expirationTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
     },
     { timestamps: false }
   );
