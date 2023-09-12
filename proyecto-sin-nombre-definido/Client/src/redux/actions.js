@@ -304,97 +304,7 @@ export const getStates = (country) => {
   }
 };
 
-export const getLogin = async (
-  login,
-  setToastBody,
-  setToast,
-  navigate,
-  setErrors,
-  typeForm
-) => {
-  const {
-    email,
-    password,
-    userName,
-    fullName,
-    birthDate,
-    gender,
-    address,
-    nationality,
-    phoneNumber,
-    verificationNumber,
-    landlord,
-    profilePic,
-  } = login;
 
-  console.log(typeForm);
-  if (typeForm === "login") {
-    try {
-      const { data } = await axios.post("/login", { email, password });
-      console.log(data);
-      setToastBody({ success: data.success, data: data });
-      setToast(true);
-      localStorage.setItem("log", JSON.stringify(data.token));
-      localStorage.setItem("data", JSON.stringify(data.data))
-      console.log('local', localStorage);
-      setTimeout(() => {
-        setToast(false);
-        navigate("/home");
-      }, 1000);
-      return;
-    } catch (error) {
-      console.log(error);
-      setToastBody({ success: error.response.data.success });
-      setErrors({ errorBack: error.response.data.msg });
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 1000);
-    }
-  }
-
-  //?-------- crear una variable para cada formulario asi se diferencian ------------------------
-  if (typeForm === "register") {
-    try {
-      const { data } = await axios.post("/users/create", {
-        email,
-        password,
-        userName,
-        fullName,
-        verificationNumber,
-        birthDate,
-        gender,
-        address,
-        nationality,
-        phoneNumber,
-        profilePic,
-        landlord,
-        userType: "User",
-      });
-
-      if (data) {
-        localStorage.setItem("log", JSON.stringify(data.token));
-        localStorage.setItem("data", JSON.stringify(data.data))
-
-        setToastBody({ response: data });
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-          navigate("/home");
-        }, 1500);
-        return;
-      }
-    } catch (error) {
-      console.log(error);
-      setToastBody({ response: error.message });
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 1000);
-      return;
-    }
-  }
-};
 
 
 export const getPropertyByUser = (id) => {
@@ -405,8 +315,69 @@ export const getPropertyByUser = (id) => {
         type:GET_PROPERTIES_BY_USER,
         payload: data
       })
-    } catch (error) {
-      console.log(error)
+  } catch (error) {
+   console.log(error) 
+  }
+}
+}
+
+
+
+ export const getLogin = async (login  , setToast, conditional,setToastBody, navigate , setErrors) => {
+
+   const {email , password  , userName , fullName , birthDate , gender , address , nationality , phoneNumber ,verificationNumber, landlord} = login;
+   
+  
+     
+  if (conditional === "login"){
+      try { 
+        
+        const {data} = await axios.post("/login" , {email , password})
+          localStorage.setItem("log", JSON.stringify(data.token))
+           setToastBody({success :data.success, data : data})
+          setToast(true)
+           setTimeout(() => {
+             setToast(false)
+             navigate("/home")
+            }, 1000 )
+             return
+         
+    
+      } catch(error) {
+        console.log(error);
+        setToastBody({success : error.response.data.success})
+        setErrors({errorBack :  error.response.data.msg})
+        setToast(true)
+        setTimeout(() => {
+            setToast(false)
+        }, 1000);
+        return
+      }
+    }
+
+
+  if(conditional === "register") {
+        try {
+        const {data} = await axios.post("/users/create", {email, password  , userName , fullName, verificationNumber  , birthDate , gender , address , nationality  ,phoneNumber , landlord } )
+        console.log(data);
+          
+            localStorage.setItem("log", JSON.stringify(data.token))
+            console.log(data);
+            setToastBody({response :data})
+            setToast(true)
+            setTimeout(() => {
+              setToast(false)
+              navigate("/home")
+            }, 1500 )
+            return
+          } catch (error) {
+    setToastBody({response : error.message})
+    setToast(true)
+    setTimeout(()=> {
+      setToast(false)
+    }, 1500)
+    return 
+      
     }
   }
 }
