@@ -371,8 +371,9 @@ export const getLogin = async (
         landlord,
         userType: "User",
       });
-
       if (data) {
+
+
         localStorage.setItem("log", JSON.stringify(data.token));
         localStorage.setItem("data", JSON.stringify(data.data))
 
@@ -386,7 +387,12 @@ export const getLogin = async (
       }
     } catch (error) {
       console.log(error);
-      setToastBody({ response: error.message });
+      if(error.response.data.error.includes("sintaxis")){
+        setToastBody({ response: "Faltan datos!" });
+      }else if(error.response.data.error.includes("Validation Error")){
+
+        setToastBody({ response: "Ese correo ya esta en uso!" });
+      }
       setToast(true);
       setTimeout(() => {
         setToast(false);

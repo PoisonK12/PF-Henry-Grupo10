@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import style from "../Login/apa.module.css";
 import { getLogin } from "../../redux/actions";
 import { validation } from "./validation.js";
-import { Modal} from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Register = ({handleSwitch}) => {
-
+const Register = ({ handleSwitch }) => {
   const [toastBody, setToastBody] = useState({ response: "" });
   const [toast, setToast] = useState(false);
   const [step, setStep] = useState(1);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const typeForm = "register";
   const [errors, setErrors] = useState({
     profilePic: "",
@@ -47,18 +46,37 @@ const Register = ({handleSwitch}) => {
     confirmPassword: "",
   });
 
-  const handleStep = (e) => {
+  const handleStep =  (e) => {
     e.preventDefault();
 
     if (e.target.value === "previous") {
+      setErrors({
+        profilePic: "",
+        userName: "",
+        fullName: "",
+        phoneNumber: "",
+        verificationNumber: "",
+          gender: "",
+        address: "",
+        landlord: false,
+        nationality: "",
+        birthDate: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
       setStep(step - 1);
       return;
     } else if (e.target.value === "continue") {
-      setStep(step + 1);
-      return;
+      const formErrors = validation(register, register.password, step);
+      setErrors(formErrors);
+      console.log(formErrors);
+
+      if (Object.keys(formErrors).length === 0) {
+        setStep(step + 1);
+      }
     }
   };
-
 
   const handleChange = (e) => {
     const { name } = e.target;
@@ -80,13 +98,12 @@ const Register = ({handleSwitch}) => {
       ...register,
       [name]: value,
     });
-    const errorDetect = validation({ [name]: value });
-  
+    // const errorDetect = validation({ [name]: value }, register.password);
 
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: errorDetect[name],
-    }));
+    // setErrors((prevErrors) => ({
+    //   ...prevErrors,
+    //   [name]: errorDetect[name],
+    // }));
   };
 
   const handleHide = (e) => {
@@ -106,8 +123,6 @@ const Register = ({handleSwitch}) => {
       }
     }
   };
-
-  console.log(toastBody);
 
   const iconVisible = (
     <svg
@@ -222,15 +237,21 @@ const Register = ({handleSwitch}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-     setErrors(validation({ ...register }));
-     if (Object.keys(errors).length > 0) {
-        console.log(errors);
-       return;
-     } else {
-         await  getLogin(register,  setToastBody, setToast, navigate, setErrors, typeForm);
-     }
 
+    setErrors(validation({ ...register }));
+    if (Object.keys(errors).length > 0) {
+      console.log(errors);
+      return;
+    } else {
+      await getLogin(
+        register,
+        setToastBody,
+        setToast,
+        navigate,
+        setErrors,
+        typeForm
+      );
+    }
   };
 
   //?-----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -278,11 +299,19 @@ const Register = ({handleSwitch}) => {
                     placeholder="Correo electrónico"
                   />
                   {errors.email ? (
-                    <p style={{ color: "red", fontSize: "15px", visibility:"visible", margin:"none" }}>
+                    <p
+                      style={{
+                        color: "red",
+                        fontSize: "15px",
+                        visibility: "visible",
+                        margin: "none",
+                      }}
+                    >
                       {errors.email}
                     </p>
-                  ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
-                  
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
               </div>
               <div
@@ -295,8 +324,7 @@ const Register = ({handleSwitch}) => {
                     textAlign: "left",
                     width: "100%",
                     gridArea: "password",
-                    position:"relative"
-
+                    position: "relative",
                   }}
                 >
                   <label class="form-label lead" htmlFor="password">
@@ -314,19 +342,26 @@ const Register = ({handleSwitch}) => {
                     class={style.iconPassword}
                     id="hide1"
                     type="button"
-
                     onClick={(e) => handleHide(e)}
                   >
                     {passwordType ? iconVisible : iconInvisible}
                   </button>
                   {errors.password ? (
-                    <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                    <p
+                      style={{
+                        color: "red",
+                        visibility: "visible",
+                        marginBottom: "0",
+                      }}
+                    >
                       {errors.password}
                     </p>
-                  ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
-                </div>
-                <div
+              </div>
+              <div
                 className={`d-flex flex-row align-items-center justify-content-center ${style.gridForm}`}
                 style={{ width: "90%" }}
               >
@@ -336,7 +371,7 @@ const Register = ({handleSwitch}) => {
                     textAlign: "left",
                     width: "100%",
                     gridArea: "confirmPassword",
-                    position:"relative"
+                    position: "relative",
                   }}
                 >
                   <label class="form-label lead" htmlFor="confirmPassword">
@@ -347,28 +382,34 @@ const Register = ({handleSwitch}) => {
                     name="confirmPassword"
                     value={register.confirmPassword}
                     class={`form-control ${style.inputs}`}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                     placeholder="Confirmar contraseña"
                   />
                   <button
                     className={style.iconPassword}
                     id="hide2"
                     type="button"
-                
                     onClick={(e) => handleHide(e)}
                   >
                     {passwordType2 ? iconVisible2 : iconInvisible2}
                   </button>
                   {errors.confirmPassword ? (
-                    <p style={{ color: "red", fontSize: "15px", visibility:"visible", margin:"none" }}>
+                    <p
+                      style={{
+                        color: "red",
+                        fontSize: "15px",
+                        visibility: "visible",
+                        margin: "none",
+                      }}
+                    >
                       {errors.confirmPassword}
                     </p>
-                  ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
               </div>
-             
 
-             
               <div class="d-flex flex-row align-items-center justify-content-center">
                 <div class="col-xs-6 m-3">
                   <button
@@ -427,6 +468,8 @@ const Register = ({handleSwitch}) => {
                     margin: `15px 15px`,
                     textAlign: "center",
                     width: "200px",
+                    top:"40px",
+                    position:"relative",
                     height: "200px",
                     borderRadius: "100px",
                   }}
@@ -437,7 +480,7 @@ const Register = ({handleSwitch}) => {
                   {register.profilePic ? (
                     <img
                       style={{
-                        borderRadius : "100px",
+                        borderRadius: "100px",
                         width: "200px",
                         height: "200px",
                         maxHeight: "200px",
@@ -475,10 +518,18 @@ const Register = ({handleSwitch}) => {
                   )}
                 </div>
                 {errors.profilePic ? (
-                    <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
-                      {errors.profilePic}
-                    </p>
-                  ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                  <p
+                    style={{
+                      color: "red",
+                      visibility: "visible",
+                      marginBottom: "0",
+                    }}
+                  >
+                    {errors.profilePic}
+                  </p>
+                ) : (
+                  <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                )}
               </div>
 
               <div
@@ -504,11 +555,19 @@ const Register = ({handleSwitch}) => {
                     onChange={handleChange}
                     placeholder="Nombre complleto"
                   />
-                   {errors.fullName ? (
-                    <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
+                  {errors.fullName ? (
+                    <p
+                      style={{
+                        color: "red",
+                        visibility: "visible",
+                        marginBottom: "0",
+                      }}
+                    >
                       {errors.fullName}
                     </p>
-                  ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
                 <div
                   class="mt-3"
@@ -530,10 +589,18 @@ const Register = ({handleSwitch}) => {
                     placeholder="Nombre de usuario"
                   />
                   {errors.userName ? (
-                    <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
-                    {errors.userName}
-                  </p>
-                ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                    <p
+                      style={{
+                        color: "red",
+                        visibility: "visible",
+                        marginBottom: "0",
+                      }}
+                    >
+                      {errors.userName}
+                    </p>
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
               </div>
               <div
@@ -561,10 +628,18 @@ const Register = ({handleSwitch}) => {
                     onChange={handleChange}
                   />
                   {errors.birthDate ? (
-                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
-                     {errors.birthDate}
-                   </p>
-                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                    <p
+                      style={{
+                        color: "red",
+                        visibility: "visible",
+                        marginBottom: "0",
+                      }}
+                    >
+                      {errors.birthDate}
+                    </p>
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
                 <div
                   class="mt-3"
@@ -586,14 +661,22 @@ const Register = ({handleSwitch}) => {
                     placeholder="Número de teléfono"
                   />
                   {errors.phoneNumber ? (
-                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
-                     {errors.phoneNumber}
-                   </p>
-                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                    <p
+                      style={{
+                        color: "red",
+                        visibility: "visible",
+                        marginBottom: "0",
+                      }}
+                    >
+                      {errors.phoneNumber}
+                    </p>
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
               </div>
               <hr className={style.hr}></hr>
-              <div class="d-flex flex-row align-items-center justify-content-center">
+              <div class="d-flex flex-row align-items-center justify-content-center" style={{marginBottom:"20px"}}>
                 <div class="col-xs-6 m-3">
                   <button
                     style={{
@@ -678,10 +761,18 @@ const Register = ({handleSwitch}) => {
                     <option value="No apply">No aplicar</option>
                   </select>
                   {errors.gender ? (
-                    <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
-                    {errors.gender}
-                  </p>
-                ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                    <p
+                      style={{
+                        color: "red",
+                        visibility: "visible",
+                        marginBottom: "0",
+                      }}
+                    >
+                      {errors.gender}
+                    </p>
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
                 <div
                   class="mt-3"
@@ -701,10 +792,18 @@ const Register = ({handleSwitch}) => {
                     placeholder="Dirección"
                   />
                   {errors.address ? (
-                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
-                     {errors.address}
-                   </p>
-                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                    <p
+                      style={{
+                        color: "red",
+                        visibility: "visible",
+                        marginBottom: "0",
+                      }}
+                    >
+                      {errors.address}
+                    </p>
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
               </div>
               <div
@@ -734,10 +833,18 @@ const Register = ({handleSwitch}) => {
                     <option value="Mexico">Mexico</option>
                   </select>
                   {errors.nationality ? (
-                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
-                     {errors.nationality}
-                   </p>
-                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                    <p
+                      style={{
+                        color: "red",
+                        visibility: "visible",
+                        marginBottom: "0",
+                      }}
+                    >
+                      {errors.nationality}
+                    </p>
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
 
                 <div
@@ -762,10 +869,18 @@ const Register = ({handleSwitch}) => {
                     <option value="false">Usuario</option>
                   </select>
                   {errors.landlord ? (
-                     <p style={{ color: "red", visibility:"visible", marginBottom:"0" }}>
-                     {errors.landlord}
-                   </p>
-                 ) : <p style={{ visibility: "hidden" }}>&nbsp;</p>}
+                    <p
+                      style={{
+                        color: "red",
+                        visibility: "visible",
+                        marginBottom: "0",
+                      }}
+                    >
+                      {errors.landlord}
+                    </p>
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
                 </div>
               </div>
               <hr className={`${style.hr}`}></hr>
@@ -790,7 +905,6 @@ const Register = ({handleSwitch}) => {
                 <div class="col-xs-6 m-3">
                   <button
                     type="submit"
-
                     style={{
                       width: "100%",
                       paddingInline: "35px",
@@ -798,7 +912,6 @@ const Register = ({handleSwitch}) => {
                       marginBottom: "20px",
                     }}
                     className={style.button}
-                    
                   >
                     {" "}
                     Enviar
@@ -808,67 +921,64 @@ const Register = ({handleSwitch}) => {
             </fieldset>
           </form>
 
-          {(toast && typeof toastBody.response === "object") ? (
-                <div class="justify-self-center align-self-center">
-                  <Modal show={toast}>
-                    <Modal.Header>
-                      <Modal.Title>Registrado con éxito✅</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div>
-                        <h3>Bienvenido</h3>
-                       <div
-                  className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
-                  style={{
-                    border: "10px  #ccc",
-                    background: "rgba(169, 181, 197, 0.562)",
-                    margin: `15px 15px`,
-                    textAlign: "center",
-                    width: "200px",
-                    height: "200px",
-                    borderRadius: "100px",
-                  }}>
-                        
-                        <img
+          {toast && typeof toastBody.response === "object" ? (
+            <div class="justify-self-center align-self-center">
+              <Modal show={toast}>
+                <Modal.Header>
+                  <Modal.Title>Registrado con éxito✅</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div>
+                    <h3>Bienvenido</h3>
+                    <div
+                      className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
                       style={{
-                        borderRadius : "100px",
+                        border: "10px  #ccc",
+                        background: "rgba(169, 181, 197, 0.562)",
+                        margin: `15px 15px`,
+                        textAlign: "center",
                         width: "200px",
                         height: "200px",
-                        maxHeight: "200px",
-                        objectFit: "cover",
+                        borderRadius: "100px",
                       }}
-                      src={toastBody.response.data.profilePic}
-                      alt="foto de perfil"
-                     
-                    />
-                       
-                        </div>
-                        <h4>{toastBody.response.data.userName}</h4>
-                      </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <p> Redirigiendote....</p>
-                    </Modal.Footer>
-                  </Modal>
-                </div>)
-                : typeof toastBody.response === "string" ? 
-                (
-                    <div class="justify-self-center align-self-center">
-                      <Modal show={toast}>
-                        <Modal.Header>
-                          <Modal.Title>Algo salio mal❌</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <div>
-                           <h6>{toastBody.response}</h6>
-                           <br></br>
-                           <h6> Intentalo de nuevo </h6>
-                          </div>
-                        </Modal.Body>
-                        <Modal.Footer>
-                        </Modal.Footer>
-                      </Modal>
-                    </div>) : null }
+                    >
+                      <img
+                        style={{
+                          borderRadius: "100px",
+                          width: "200px",
+                          height: "200px",
+                          maxHeight: "200px",
+                          objectFit: "cover",
+                        }}
+                        src={toastBody.response.data.profilePic}
+                        alt="foto de perfil"
+                      />
+                    </div>
+                    <h4>{toastBody.response.data.userName}</h4>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <p> Redirigiendote....</p>
+                </Modal.Footer>
+              </Modal>
+            </div>
+          ) : typeof toastBody.response === "string" ? (
+            <div class="justify-self-center align-self-center">
+              <Modal show={toast}>
+                <Modal.Header>
+                  <Modal.Title>Algo salio mal❌</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div>
+                    <h6>{toastBody.response}</h6>
+                    <br></br>
+                    <h6> Intentalo de nuevo </h6>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer></Modal.Footer>
+              </Modal>
+            </div>
+          ) : null}
         </>
       );
     }

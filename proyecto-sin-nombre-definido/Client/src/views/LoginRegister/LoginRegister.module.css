@@ -135,18 +135,18 @@ label {
 }
 .overlay button{
   font-size: 20px;
-  color: #091f44;
+  color: #f0f0f0;
   padding: 16px;
-  background-color: #9d0aca;
+  background-color: transparent;
   border-radius: 30px;
-  border: 2px solid transparent;
+  border: 3px solid #f0f0f0;
   transition: background-color 0.5s ease;
 }
 
 .overlay button:hover{
-  border: 2px solid #091f44;
-  background-color: #f0f0f0;
-  color:#091f44
+  border: 3px solid #d5d2d2;
+  /* background-color: #f0f0f0; */
+  color:#d5d2d2
 }
 
 .overlay.login, .overlay.register{
