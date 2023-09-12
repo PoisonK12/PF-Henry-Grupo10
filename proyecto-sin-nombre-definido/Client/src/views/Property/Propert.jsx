@@ -154,7 +154,7 @@ const Property = () => {
                 </select>
               </div>
               <div className={style.filterInput}>
-                <h4>Tipo de contrato</h4>
+                <label>Tipo de contrato</label>
                 <div className={style.checkboxContainer}>
                   <div className={style.yes}>
                     <label
@@ -355,12 +355,23 @@ const Property = () => {
                   </button>
                 </div>
               </div>
-              <div className={style.amenities}>
+              <div className={`${style.filterInput}`}>
                 <label  htmlFor="inputName"
                   style={{ marginTop: "7px", marginRight: "10px" }}
                   className={`form-label ${style.label}`}>
                     Amenidades
                   </label>
+                  <div style={{display:"flex", flexDirection:"column", }}>
+                    {allAmenities?.map((e) =>{
+                      console.log(e)
+                      return(
+                        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                          <label className="form-label">{e.name}</label>
+                          <input type="checkbox" style={{width:"15px"}}></input>
+                        </div>
+                      )
+                    }) }
+                  </div>
               </div>
 
               <button

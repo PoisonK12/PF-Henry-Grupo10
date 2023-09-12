@@ -64,6 +64,7 @@ const AllUsersProps = () => {
   useEffect(() => {
     const getDataForFrom = async () => {
       const { data } = await axios(`/assets/` + idHouse);
+      console.log(data)
       setForm(...form, {
         name: data.name,
         country: data?.country,
