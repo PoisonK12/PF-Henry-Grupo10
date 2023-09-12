@@ -1,16 +1,26 @@
 const { type } = require("os");
 
 // const { dataSchemePost } = require("../helpers/rentValidation.ts");
-const {
+const { createRent, createBook } = require("../controllers/rentController.js");
 
- createRent,
-
-} = require("../controllers/rentController.js");
-
+const createBookHandler = async (req, res) => {
+  const { assetId, userId, checkInDate, checkOutDate } = req.body;
+  try {
+    const response = await createBook(
+      assetId,
+      userId,
+      checkInDate,
+      checkOutDate
+    );
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 const createRentHandler = async (req, res) => {
   const {
-    onSale, 
+    onSale,
     user,
     asset,
     checkIn,
@@ -23,7 +33,6 @@ const createRentHandler = async (req, res) => {
     guest,
     guestName,
     guestPhoneNumber,
-
   } = req.body;
 
   try {
@@ -45,19 +54,19 @@ const createRentHandler = async (req, res) => {
       },
     });
     const response = await createRent(
-        onSale,
-        user,
-        asset,
-        checkIn,
-        checkInTime,
-        checkOut,
-        checkOutTime,
-        price,
-        termCon,
-        paymentMethod,
-        guest,
-        guestName,
-        guestPhoneNumber,
+      onSale,
+      user,
+      asset,
+      checkIn,
+      checkInTime,
+      checkOut,
+      checkOutTime,
+      price,
+      termCon,
+      paymentMethod,
+      guest,
+      guestName,
+      guestPhoneNumber
     );
 
     res.status(201).json(response);
@@ -66,13 +75,7 @@ const createRentHandler = async (req, res) => {
   }
 };
 
-
-
-
-
-
 module.exports = {
-
   createRentHandler,
-
+  createBookHandler,
 };
