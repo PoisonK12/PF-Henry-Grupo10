@@ -10,30 +10,26 @@ import "rc-slider/assets/index.css";
 import Loader from "../../components/Loader/Loader";
 
 const Property = () => {
-  const ref = useRef()
+  const ref = useRef();
 
   useEffect(() => {
     ref.current = filter;
-  })
+  });
   const prevFilter = ref.current;
 
-
-
-
-
-
   const allProp = useSelector((state) => state.properties);
-  const allAmenities = useSelector((state) => state.amenities)
+  const allAmenities = useSelector((state) => state.amenities);
   const [visible, setVisible] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const locationValue = searchParams.get("location");
   const rentPriceMaxValue = searchParams.get("rentPriceMax");
   const rentPriceMinValue = searchParams.get("rentPriceMin");
-  console.log(locationValue);
   // const { location } = useParams();
   const history = useNavigate();
   const [onSale, setOnSale] = useState(false);
+  const [checkedAmen, setCheckedAmen] = useState({});
+  const [selectAmen, setSelectAmen] = useState({});
 
   console.log(history);
   const dispatch = useDispatch();
@@ -45,10 +41,10 @@ const Property = () => {
     rentPriceMin: rentPriceMinValue ? rentPriceMinValue : 0,
     sellPriceMax: 1000,
     sellPriceMin: 0,
-    order: "rentPriceAsc",
+    order: [],
     page: 1,
     onSale: false,
-    amenities: []
+    amenities: [],
   });
   const [values, setValues] = useState([0, 1000]);
   const [valuesSell, setValuesSell] = useState([0, 1000]);
@@ -67,14 +63,11 @@ const Property = () => {
     if (prevFilter !== filter) {
       const fetchData = () => {
         dispatch(searchByFilter(filter));
-        setTimeout(() => {
-          setLoader(false);
-        }, 2000);
+
       };
       fetchData();
     }
   }, [filter]);
-
 
   const allLocation = useSelector((state) => state.location);
   const [locations, setLocations] = useState(allLocation.locations);
@@ -87,7 +80,6 @@ const Property = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(filter);
 
     setFilter({ ...filter, [name]: value });
   };
@@ -117,11 +109,18 @@ const Property = () => {
 
   useEffect(() => {
     setVisible(true);
-    dispatch(getAmenities())
+    dispatch(getAmenities());
     dispatch(getLocation());
   }, []);
 
-  console.log(allProp);
+  const handleChecked = (e) => {
+    const { name, value , checked } = e.target;
+    setCheckedAmen({...checkedAmen , [name] : checked})
+    setSelectAmen({ ...selectAmen, [name]: checked ? value : "" });
+    const push = Object.values(selectAmen).map((ele) => Number(ele));
+    const amenities = push.filter((ele) => ele !== 0);
+    setFilter({ ...filter, amenities: amenities });
+  };
 
   return (
     <div className={style.container}>
@@ -142,7 +141,9 @@ const Property = () => {
                   className={style.input}
                   onChange={handleChange}
                 >
-                  <option name="location" value={locationValue}>Cambiar localidad</option>
+                  <option name="location" value={locationValue}>
+                    Cambiar localidad
+                  </option>
                   {locations
                     ? locations.map((ele) => (
                         <option value={ele} key={ele} name="location">
@@ -356,26 +357,41 @@ const Property = () => {
                 </div>
               </div>
               <div className={`${style.filterInput}`}>
-                <label  htmlFor="inputName"
+                <label
+                  htmlFor="inputName"
                   style={{ marginTop: "7px", marginRight: "10px" }}
-                  className={`form-label ${style.label}`}>
-                    Amenidades
-                  </label>
-                  <div style={{display:"flex", flexDirection:"column", }}>
-                    {allAmenities?.map((e) =>{
-                      console.log(e)
-                      return(
-                        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-                          <label className="form-label">{e.name}</label>
-                          <input type="checkbox" style={{width:"15px"}}></input>
-                        </div>
-                      )
-                    }) }
-                  </div>
+                  className={`form-label ${style.label}`}
+                >
+                  Amenidades
+                </label>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {allAmenities?.map((e) => {
+                    console.log(e);
+                    return (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <label className="form-label">{e.name}</label>
+                        <input
+                          onChange={(e) => handleChecked(e)}
+                          type="checkbox"
+                          name={e.name}
+                          checked={checkedAmen.name}
+                          value={e.id}
+                          style={{ width: "15px" }}
+                        ></input>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               <button
-                onClick={(e) =>
+                onClick={(e) => {
                   setFilter({
                     location: locationValue,
                     rooms: 0,
@@ -387,8 +403,10 @@ const Property = () => {
                     order: "rentPriceAsc",
                     page: 1,
                     onSale: false,
-                  })
-                }
+                    amenities: [],
+                  });
+                  setOnSale(false);
+                }}
                 className={style.button}
               >
                 Resetear filtros!{" "}
