@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
       isAvailable: {
         type: DataTypes.ENUM("Disponible", "Reservada", "Indispuesta"),
         allowNull: false,
-        defaultValue: true,
+        defaultValue: "Disponible",
       },
     },
     { timestamps: false }
