@@ -8,8 +8,9 @@ const logOutRouter = require('./logOut')
 const rentsRouter = require("./rentsRouters");
 const contactRouter = require('./contactRouter');
 const emailContact = require('./email');
-const router = Router();
 const googleLoginRouter = require('./googleLogin') 
+const {paymentRouter} = require('./payment.routes')
+const router = Router();
 
 router.use('/googleAuth', googleLoginRouter)
 router.use("/login", loginRouter);
@@ -21,5 +22,6 @@ router.use("/reviews", reviewsRouter);
 router.use("/rents", rentsRouter);
 router.use("/contact", contactRouter);
 router.use("/sendmail", emailContact);
+router.use('/pay', paymentRouter)
 
 module.exports = router;
