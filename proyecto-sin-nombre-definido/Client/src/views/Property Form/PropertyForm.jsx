@@ -21,24 +21,43 @@ const PropertyForm = () => {
   const [states, setStates] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [conditionalCreate, setConditionalCreate] = useState(false);
+  const [Checked , setChecked] = useState({
+  Wifi: false,
+  Cochera: false,
+  Piscina: false,
+  Jacuzzi: false,
+  Terraza: false,
+  "Dormitorio en suite": false,
+  "Seguridad 24hs": false,
+  GYM: false,
+  Sauna: false,
+  Helipuerto: false})
 
   const [userName, setUserName] = useState("");
   console.log(userName);
 
   const [errors, setErrors] = useState({
     name: "",
-    location: "",
+    images: "",
     country: "",
     address: "",
-    bathrooms: "",
-    rooms: "",
-    images: "",
-    totalArea: "",
-    coveredArea: "",
-    sellPrice: "",
-    rentPrice: "",
+    location: "",
+    onSale: "",
+    sellPrice:"",
+    rentPrice:"",
+    type: "",
+    rooms:"",
+    bathrooms:"",
     description: "",
-    errorsBack: [],
+    coveredArea:"",
+    totalArea:"",
+    reviews: "asdasdasd",
+    nearby: "asd",
+    averageScore:"",
+    nearbyScore:"",
+    userName: "",
+
+    amenities: "",
   });
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
     Wifi: "",
@@ -50,17 +69,11 @@ const PropertyForm = () => {
     "Seguridad 24hs": "",
     GYM: "",
     Sauna: "",
-    Helipuero: "",
+    Helipuerto: "",
   });
 
-  const handleSelected = (e) => {
-    const { name } = e.target;
-    const { value } = e.target;
-    e.preventDefault();
-    setSelectedCheckbox({ ...selectedCkeckbox, [name]: value });
-  };
   console.log(selectedCkeckbox);
-  console.log(errors);
+  
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -163,7 +176,7 @@ const PropertyForm = () => {
   console.log(form.images);
 
   const handleDelete = (index) => {
-    event.preventDefault();
+ 
     const updatedImages = form.images.filter((ele, i) => i !== index);
     console.log(form.images);
     setForm({ ...form, images: updatedImages });
@@ -184,11 +197,12 @@ const PropertyForm = () => {
     if (e.target.value === "prev") {
       setStep(step - 1);
       console.log(step);
-      return;
+      return
     }
 
     if (step === 1) {
-      setErrors(validation({ ...form }));
+      setErrors(validation({...form}));
+
       const step1 = Object.values({
         images: errors.images,
         name: errors.name,
@@ -197,13 +211,36 @@ const PropertyForm = () => {
         address: errors.address,
       });
       console.log(step1);
+      
       if (step1.some((error) => typeof error === "string")) {
         return;
+      } else {
+      
+        setStep(step + 1);
+        setErrors({ 
+          onSale: "",
+        sellPrice:"",
+        rentPrice:"",
+        type: "",
+        rooms:"",
+        bathrooms:"",
+        description: "",
+        coveredArea:"",
+        totalArea:"",
+        reviews: "asdasdasd",
+        nearby: "asd",
+        averageScore:"",
+        nearbyScore:"",
+        userName: "",
+    
+        amenities: "",})
       }
     }
 
     if (step === 2) {
-      setErrors(validation({ ...form }));
+      setErrors(validation({ ...form}));
+
+      console.log(errors);
       const step2 = Object.values({
         bathrooms: errors.bathrooms,
         rooms: errors.rooms,
@@ -214,21 +251,14 @@ const PropertyForm = () => {
         description: errors.description,
       });
       console.log(step2);
+     
       if (step2.some((error) => typeof error === "string")) {
         return;
+      } else {
+        setErrors({})
+        setStep(step + 1);
       }
     }
-
-    if (step === 3) {
-      setErrors(validation({ ...form }));
-      const step3 = Object.values({ description: errors.description });
-      console.log(step3);
-      if (step3.some((error) => typeof error === "string")) {
-        return;
-      }
-    }
-
-    setStep(step + 1);
 
     return;
   };
@@ -259,16 +289,57 @@ const PropertyForm = () => {
     setForm({ ...form, [name]: value });
   };
 
+
+  const handleSelected = (e) => {
+    const { name } = e.target;
+    const { value } = e.target;
+  
+    setSelectedCheckbox({ ...selectedCkeckbox, [name]: value });
+
+  };
+
+  const handleCkecked = (e) => {
+  
+    const {name} = e.target;
+    const {checked} = e.target;
+    const {value} = e.target;
+    setChecked({...Checked , [name] : checked})
+    console.log(Checked);
+    setSelectedCheckbox({ ...selectedCkeckbox, [name]: checked ? value : "" });
+    const push = Object.values(selectedCkeckbox).map((ele) => Number(ele));
+    const amenities = push.filter((ele) => ele !== 0);
+    setForm({ ...form, amenities: amenities });
+  }
+
+
   //!------------------------handleForm----------------------------------
 
   const handleForm = async (e) => {
     e.preventDefault();
+    console.log("hola");
     const push = Object.values(selectedCkeckbox).map((ele) => Number(ele));
     const amenities = push.filter((ele) => ele !== 0);
     setForm({ ...form, amenities: amenities });
+
     setErrors(validation({ ...form }));
-    setModalBody({ response: form });
-    setModal(true);
+    if( form.amenities.length === 0) {
+      return
+  
+   /*  setErrors(validation({ ...form }));
+
+    const step3 = Object.values({ amenities: errors.amenities });
+
+    console.log(errors);
+
+    if (step3.some((error) => typeof error === "string")) {
+      return; */
+
+    } else {
+      setModalBody({ response: form });
+      setModal(true);
+
+    }
+
   };
 
   const handleCreate = async (e) => {
@@ -308,6 +379,8 @@ const PropertyForm = () => {
       "https://countriesnow.space/api/v0.1/countries/states",
       stateSave
     );
+
+
 
     const noProvince = data.data.states.map((ele) => {
       const keywordsToRemove = [
@@ -354,42 +427,23 @@ const PropertyForm = () => {
 
           <form
             className={`d-flex flex-row align-items-center justify-content-center text-center mt-5`}
-          >
+          > 
             <fieldset className={`p-5 d-flex flex-column ${style.fieldset} `}>
-          <div>
-            <h3 className=" display-6 fw-bold"> Agrega una nueva propiedad </h3>
+         <div>
+            <h3 className=" display-6 "> Agrega una nueva propiedad </h3>
           </div>
               <div
                 className={`d-flex flex-row justify-content-center align-items-center ${style.formmer}`}
               >
                 <div>
-                  {errors.images ? (
-                    <p
-                      style={{
-                        color: "red",
-                        visibility: "visible",
-                        marginBottom: "0",
-                      }}
-                    >
-                      {errors.images}
-                    </p>
-                  ) : (
-                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
-                  )}
-                  <input
-                    type="file"
-                    id="imageInput"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={(e) => handleFile(e.target.files[0])}
-                  />
-
+                
+                 
                   <div
                     className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
                     style={{
-                      border: "2px dashed #ccc",
+                    
                       background: "rgba(169, 181, 197, 0.562)",
-                      margin: `20px 20px`,
+                      margin: `50px 40px 20px 0px`,
                       textAlign: "center",
                       width: "300px",
                       height: "250px",
@@ -409,7 +463,7 @@ const PropertyForm = () => {
                         }}
                       >
                         {form.images?.map((imageUrl, index) => (
-                          <Carousel.Item key={index}>
+                         <Carousel.Item key={index}>
                             <img
                               className={style.carouselImage}
                               style={{
@@ -419,14 +473,19 @@ const PropertyForm = () => {
                               }}
                               src={imageUrl}
                               alt={`Image ${index}`}
-                            />
-                            <button
-                              className={`${style.buton}`}
-                              onClick={() => handleDelete(index)}
                             >
-                              X
-                            </button>
+                            
+                            </img>
+                         
+                            <button
+                           className={`${style.buton}`}
+                           onClick={() => handleDelete(index)}
+                         >
+                           X
+                         </button>
                           </Carousel.Item>
+
+                          
                         ))}
                       </Carousel>
                     ) : (
@@ -455,8 +514,35 @@ const PropertyForm = () => {
                         </span>
                         !
                       </div>
-                    )}
+                    )} 
+                  
+                  </div>   
+                  <div >
+                {errors.images ? (
+                    <p
+                      style={{
+                        color: "red",
+                        visibility: "visible",
+                        margin: "10px",
+                        marginRight : "50px ",
+                        marginBottom : "15px"
+                      }}
+                    >
+                      {errors.images}
+                    </p>
+                  ) : (
+                    <p style={{ visibility: "hidden" }}>&nbsp;</p>
+                  )}
+                  <label className={style.label} htmlFor="imageInput">Selecciona un archivo</label>
+                  <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                    className={style.inputfile}
+                    onChange={(e) => handleFile(e.target.files[0])}
+                  />
                   </div>
+
                 </div>
                 <div className={style.formContainer}>
                   <div className="d-flex space-between">
@@ -532,7 +618,7 @@ const PropertyForm = () => {
                         name="country"
                         className="form-select"
                       >
-                        <option name="country" value="default">
+                        <option name="country" >
                           Seleccione un pais
                         </option>
                         {allCountries?.map((ele) => {
@@ -569,7 +655,7 @@ const PropertyForm = () => {
                         name="location"
                         className="form-select"
                       >
-                        <option name="location">Seleccione una ciudad</option>
+                        <option name="location" >Seleccione una ciudad</option>
                         {states?.map((ele) => {
                           return (
                             <option name="location" value={ele}>
@@ -596,7 +682,7 @@ const PropertyForm = () => {
                   </div>
                 </div>
               </div>
-              <div className="mb-3">
+              <div className="mb-1">
                 <button
                   type={step === 3 ? "submit" : "button"}
                   className={`ml-4 ${style.button}`}
@@ -903,10 +989,11 @@ const PropertyForm = () => {
                   <label className="form-label"> Wifi ? {""}</label>
                   <input
                     type="checkbox"
-                    name=" Wifi"
+                    name="Wifi"
                     className="form-checkbox"
-                    onChange={handleSelected}
                     value={1}
+                    onChange={handleCkecked}
+                    checked={Checked.Wifi}
                   ></input>
                 </div>
                 <div>
@@ -917,7 +1004,8 @@ const PropertyForm = () => {
                   <input
                     type="checkbox"
                     name="Terraza"
-                    onChange={handleSelected}
+                    onChange={handleCkecked}
+                    checked={Checked.Terraza}
                     value="6"
                   ></input>
                 </div>
@@ -930,8 +1018,9 @@ const PropertyForm = () => {
                   </label>
                   <input
                     type="checkbox"
-                    name=" GYM "
-                    onChange={handleSelected}
+                    name="GYM"
+                    onChange={handleCkecked}
+                    checked={Checked.GYM}
                     value="13"
                   ></input>
                 </div>
@@ -943,7 +1032,8 @@ const PropertyForm = () => {
                   <input
                     type="checkbox"
                     name="Seguridad 24hs"
-                    onChange={handleSelected}
+                    onChange={handleCkecked}
+                    checked={Checked["Seguridad 24hs"]}
                     value="11"
                   ></input>
                 </div>
@@ -956,8 +1046,9 @@ const PropertyForm = () => {
                   </label>
                   <input
                     type="checkbox"
-                    name="Cochera "
-                    onChange={handleSelected}
+                    name="Cochera"
+                    onChange={handleCkecked}
+                    checked={Checked.Cochera}
                     value="3"
                   ></input>
                 </div>
@@ -968,8 +1059,9 @@ const PropertyForm = () => {
                   </label>
                   <input
                     type="checkbox"
-                    name=" Helipuerto"
-                    onChange={handleSelected}
+                    name="Helipuerto"
+                    onChange={handleCkecked}
+                    checked={Checked.Helipuerto}
                     value="69"
                   ></input>
                 </div>
@@ -983,7 +1075,8 @@ const PropertyForm = () => {
                   <input
                     type="checkbox"
                     name="Dormitorio en suite"
-                    onChange={handleSelected}
+                    onChange={handleCkecked}
+                    checked={Checked["Dormitorio en suite"]}
                     value="8"
                   ></input>
                 </div>
@@ -995,7 +1088,8 @@ const PropertyForm = () => {
                   <input
                     type="checkbox"
                     name="Sauna"
-                    onChange={handleSelected}
+                    onChange={handleCkecked}
+                    checked={Checked.Sauna}
                     value="14"
                   ></input>
                 </div>
@@ -1009,7 +1103,8 @@ const PropertyForm = () => {
                   <input
                     type="checkbox"
                     name="Jacuzzi"
-                    onChange={handleSelected}
+                    onChange={handleCkecked}
+                    checked={Checked.Jacuzzi}
                     value="5"
                   ></input>
                 </div>
@@ -1021,7 +1116,8 @@ const PropertyForm = () => {
                   <input
                     type="checkbox"
                     name="Piscina"
-                    onChange={handleSelected}
+                    onChange={handleCkecked}
+                    checked={Checked.Piscina}
                     value="4"
                   ></input>
                 </div>

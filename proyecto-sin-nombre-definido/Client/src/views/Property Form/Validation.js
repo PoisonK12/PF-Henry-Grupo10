@@ -2,6 +2,7 @@ const validation = (form) => {
   //   console.log(form);
   let errors = {};
 
+
    if (!form.name) errors.name = "Ingrese un nombre ";
    else if (form.name && form.name.length < 6)
      errors.name = "El nombre  es muy corto";
@@ -20,9 +21,10 @@ const validation = (form) => {
      errors.address = "Tiene que tener el número de calle";
    }
 
-   if (form.country && !form.country) errors.country = "Ingrese un pais ";
+   if (!form.country) errors.country = "Ingrese un pais ";
+   else if (form.country && form.country === "Seleccione un pais") errors.country = "Ingrese un pais"
 
-   if (form.location && form.location == "")
+   if (!form.location )
      errors.location = "Ingrese un locacion ";
    else if (form.location && form.location == "Seleccione una ciudad")
      errors.location = "Ingrese una ciudad";
@@ -33,7 +35,7 @@ const validation = (form) => {
      errors.images = "No puedes subir mas de 3 imagenes";
    }
 
-   if (form.rooms && !form.rooms) {
+   if (!form.rooms) {
      errors.rooms = "Debes seleccionar al menos una habitación";
    } else if (form.rooms && form.rooms.length > 3) {
      errors.rooms = "No puedes poner mas de 3 cifras en habitaciones";
@@ -41,7 +43,7 @@ const validation = (form) => {
      errors.rooms = "No puede ser un numero negativo";
    }
 
-   if (form.bathrooms && !form.bathrooms) {
+   if (!form.bathrooms) {
      errors.bathrooms = "Debes seleccionar al menos una habitación";
    } else if (form.bathrooms && form.bathrooms.length > 2) {
      errors.rooms = "No puedes poner mas de 2 cifras en baños";
@@ -49,27 +51,27 @@ const validation = (form) => {
      errors.bathrooms = "No puede ser un numero negativo";
    }
 
-   if (form.coveredArea && !form.coveredArea) {
+   if (!form.coveredArea) {
      errors.coveredArea = "Ingrese una superficie cubierta";
    } else if (form.coveredArea && form.coveredArea.length > 4)
      errors.coveredArea = "La superficie cubierta es muy grande";
 
-   if (form.totalArea && !form.totalArea) {
+   if (!form.totalArea) {
      errors.totalArea = "Ingrese una superficie total";
    } else if (form.totalArea && form.totalArea.length > 4)
      errors.totalArea = "La superficie total es muy grande";
 
-   if (form.rentPrice && !form.rentPrice) {
+   if (!form.rentPrice) {
      errors.rentPrice = "Ingrese un precio de alquiler";
    }
 
-   if (form.description && !form.description) {
+   if ( !form.description) {
      errors.description = "Ingrese una descripcion";
    } else if (form.description && form.description.length < 10) {
      errors.description = "Es muy corta";
    }
 
-   if (form.amenities.length === 0) {
+   if (form.amenities && form.amenities.length === 0) {
      errors.amenities = "Tines que escoger alguna amenities";
    } else if (form.amenities && form.amenities.length < 5) {
      errors.amenities = "Tienes que tener un minimo de 5 ";
