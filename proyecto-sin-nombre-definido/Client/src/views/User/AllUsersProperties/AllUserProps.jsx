@@ -18,7 +18,7 @@ const AllUsersProps = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.myProperties);
   const deletedProperties = allProperties?.filter((property) => property.eliminado !== true);
-  console.log('sisisi',deletedProperties);
+  console.log('sisisi',allProperties);
   const [datas, setDatas] = useState({})
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
