@@ -10,9 +10,11 @@
 .sale h2{
     /* font-size: 60px; */
     margin-top: 30px;
-    color: rgb(39, 39, 39);
+    color: rgb(26, 26, 26);
     font: 700 60px/1 'Lato', sans-serif;
     text-align: center;
+    
+
 }
 
 .cont{
@@ -22,3 +24,6 @@
 
 }
 
+.sale{
+    padding: 20px;
+}

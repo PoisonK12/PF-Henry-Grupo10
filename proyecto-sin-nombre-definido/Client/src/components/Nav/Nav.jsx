@@ -6,9 +6,9 @@ import Menu from "./Menu/Menu";
 import jwtDecode from "jwt-decode";
 
 export const Nav = () => {
-
-  const location = useLocation()
-
+  const location = useLocation();
+  const token = localStorage.getItem("token");
+  console.log(token);
   const [fixed, setFixed] = useState(false);
   const [access , setAccess] = useState(false)
   const handleScroll = () => {
@@ -25,6 +25,7 @@ export const Nav = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    // localStorage.removeItem("log")
     return () => window.removeEventListener("scroll", handleScroll);
   }, [])
 
@@ -36,7 +37,7 @@ export const Nav = () => {
         fixed && location.pathname !== "/addProperty"
           ? style.fixed
           : location.pathname == "/addProperty" ||
-            /^\/detail\/[\w-]+$/.test(location.pathname)
+            /^\/detail\/[\w-]+$/.test(location.pathname) ||  location.pathname == "/property"
           ? style.back
           : ""
       }`}
@@ -54,14 +55,14 @@ export const Nav = () => {
             }
           >
             {" "}
-            <span>Home </span>
+            <span>Inicio </span>
           </NavLink>
         </li>
         
         <li>
           <NavLink
             to="/addProperty"
-            className={({ isActive }) => (isActive ? style.active : "")}
+            className={({ isActive }) => (isActive ? style.active : style.navHover)}
           >
             <span>Propiedades</span>
           </NavLink>
@@ -88,22 +89,26 @@ export const Nav = () => {
           </NavLink>
         </li>
       </ul>
-      <div >
-        {log ? (
-          <Menu />
-        )
-       : (<li>
-         
+      <div>
+        {token ? (
+          <> 
+            <Menu />{" "}
+          </>
+        ) : (
+          <><li>
           <NavLink
             to="/checkIn"
-            className={({ isActive }) => (isActive ? style.active : "")}
+            className={`${style.noHover} ${fixed ? style.login : ""}`}
+            // className={({ isActive }) => (isActive ? style.active : style.navHover)}
+            // style={{background:"#9d0aca", padding:"5px"}}
           >
             {" "}
-            <span> 👩‍💻 Acceder </span>
+            <span style={{color:"#f0f0f0"}}> Acceder </span>
           </NavLink>
-        </li>)
-}
-        
+        </li>
+  
+          </>
+        )}
       </div>
     </nav>
   );

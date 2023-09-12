@@ -1,7 +1,6 @@
-const { Asset, Amenity, User } = require("../db");
+const { Asset, Amenity, User, userAssets } = require("../db");
 const { Op, Sequelize } = require("sequelize");
 const { filterLocation } = require("../helpers/filterLocation");
-const amenities = require("../models/amenities");
 
 //Prototipos de borralo logico
 
@@ -17,14 +16,14 @@ Asset.prototype.restore = function () {
   return this.update({ eliminado: false });
 };
 
-// Trae todas las propiedades
-const getAllButAllAssets = async () => {
+// Trae todas las propiedades para mostrar en el menu de administrador
+const getAdminAssets = async () => {
   try {
     const response = await Asset.findAll({});
     return response;
   } catch (error) {
     console.log(error);
-    throw error
+    throw error;
   }
 };
 
@@ -43,89 +42,132 @@ const getAllAssets = async (req) => {
     averageScoreMin,
     averageScoreMax,
     amenities,
-    sortBy,
+    // sortBy,
   } = req.query;
-try {
-  let page = 1;
-  let size = 10;
-  if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
-    page = pageAsNumber;
-  }
-  if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
-    size = sizeAsNumber;
-  }
-  // promedio    # de votos
-  // [   4.7   ,      5    ]
-  // nuevo voto: 3
-
-  // nuevo promedio = ((4.7 * 5) + 3)/(5+1)
-  // nueva # de voto = 5 +1
-  // console.log(typeof amenities);
-  // console.log(amenities);
-
-  let filter = {
-    eliminado: false,
-  };
-
-  if (sellPriceMin !== 1) {
-    if (sellPriceMin) {
-      filter.sellPrice = { ...filter.sellPrice, [Op.gte]: sellPriceMin };
+  try {
+    let page = 1;
+    let size = 10;
+    if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
+      page = pageAsNumber;
     }
-    if (sellPriceMax) {
-      filter.sellPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
+    if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
+      size = sizeAsNumber;
     }
-  }
-  if (rentPriceMin) {
-    filter.rentPrice = { ...filter.rentPrice, [Op.gte]: rentPriceMin };
-  }
-  if (rentPriceMax) {
-    filter.rentPrice = { ...filter.rentPrice, [Op.lte]: rentPriceMax };
-  }
-  if (amenities) {
-    filter.amenities = { ...filter.amenities, [Op.contains]: amenities };
-  }
-  if (averageScoreMin) {
-    filter.averageScore = { ...filter.averageScore, [Op.gte]: averageScoreMin };
-  }
-  if (averageScoreMax) {
-    filter.averageScore = { ...filter.averageScore, [Op.lte]: averageScoreMax };
-  }
-  if (bathrooms) {
-    filter.bathrooms = bathrooms;
-  }
-  if (location) {
-    filter.location = location;
-  }
-  if (onSale) {
-    filter.onSale = onSale;
-  }
-  if (rooms) {
-    filter.rooms = rooms;
-  }
+    const { query } = req;
 
-  const assets = await Asset.findAndCountAll({
-    where: filter,
-    order: [],
-    limit: size,
-    offset: (page - 1) * size,
+    const sortMap = {
+      sellPriceAsc: ["sellPrice", "ASC"],
+      sellPriceDesc: ["sellPrice", "DESC"],
+      rentPriceAsc: ["rentPrice", "ASC"],
+      rentPriceDesc: ["rentPrice", "DESC"],
+      averageScoreAsc: ["averageScore", "ASC"],
+      averageScoreDesc: ["averageScore", "DESC"],
+      numberOfReviewsAsc: ["numberOfReviews", "ASC"],
+      numberOfReviewsDesc: ["numberOfReviews", "DESC"],
+    };
+
+    const order = [];
+    for (const param in query) {
+      if (sortMap[param] && query[param] === "yes") {
+        order.push(sortMap[param]);
+      }
+    }
+
+    if (order.length === 0) {
+      throw new Error(
+        "No se proporcionaron parámetros de ordenamiento válidos."
+      );
+    }
+    console.log(order);
+    let filter = {
+      eliminado: false,
+    };
+
+    if (sellPriceMin !== 1) {
+      if (sellPriceMin) {
+        filter.sellPrice = { ...filter.sellPrice, [Op.gte]: sellPriceMin };
+      }
+      if (sellPriceMax) {
+        filter.sellPrice = { ...filter.sellPrice, [Op.lte]: sellPriceMax };
+      }
+    }
+    if (rentPriceMin) {
+      filter.rentPrice = { ...filter.rentPrice, [Op.gte]: rentPriceMin };
+    }
+    if (rentPriceMax) {
+      filter.rentPrice = { ...filter.rentPrice, [Op.lte]: rentPriceMax };
+    }
+    if (amenities) {
+      filter.amenities = { ...filter.amenities, [Op.contains]: amenities };
+    }
+    if (averageScoreMin) {
+      filter.averageScore = {
+        ...filter.averageScore,
+        [Op.gte]: averageScoreMin,
+      };
+    }
+    if (averageScoreMax) {
+      filter.averageScore = {
+        ...filter.averageScore,
+        [Op.lte]: averageScoreMax,
+      };
+    }
+    if (bathrooms) {
+      filter.bathrooms = bathrooms;
+    }
+    if (location) {
+      filter.location = location;
+    }
+    if (onSale) {
+      filter.onSale = onSale;
+    }
+    if (rooms) {
+      filter.rooms = rooms;
+    }
+
+    const assets = await Asset.findAndCountAll({
+      where: filter,
+      order,
+      limit: size,
+      offset: (page - 1) * size,
+    });
+    return assets;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// Trae todas las propiedades de un usuario especifico
+
+const getAssetsByUserId = async (id) => {
+  // Buscar todas las filas en la tabla userAssets que tienen el userId proporcionado
+  const userAss = await userAssets.findAll({
+    where: { UserId: id },
   });
+
+  // Extraer los IDs de las propiedades desde las filas encontradas
+  const assetIds = userAss.map((a) => a.AssetId);
+  console.log(assetIds);
+  // Buscar las propiedades correspondientes a los IDs obtenidos
+  const assets = await Asset.findAll({
+    where: { id: assetIds },
+  });
+
   return assets;
-} catch (error) {
-  console.log(error)
-  throw error;
-}};
+};
 
 // Trae una propiedad especificada por el id
 const getAssetById = async (id) => {
   try {
-  const asset = await Asset.findOne({
-    where: { id: id },
-  });
-  return asset;
-} catch (error) {
-  console.log(error)
-  throw error;
-}
+    const asset = await Asset.findOne({
+      where: { id: id },
+    });
+    return asset;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 const updateReviewAsset = async (id, averageScore, numberOfReviews) => {
@@ -139,7 +181,7 @@ const updateReviewAsset = async (id, averageScore, numberOfReviews) => {
     });
     return updateReviewAsset;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw error;
   }
 };
@@ -155,30 +197,32 @@ const updateAsset = async (
   rooms,
   bathrooms,
   coveredArea,
-  amenities,
+  amenities
 ) => {
+  
   try {
-  const updateAsset = await Asset.findOne({ where: { id: id } });
-  await updateAsset.update({
-    name,
-    description,
-    images,
-    onSale,
-    sellPrice,
-    rentPrice,
-    rooms,
-    bathrooms,
-    coveredArea,
-    amenities,
-  });
-  return updateAsset;
-} catch (error) {
-  console.log(error)
-  throw error
-}
+    const updateAsset = await Asset.findOne({ where: { id: id } });
+    await updateAsset.update({
+      name,
+      description,
+      images,
+      onSale,
+      sellPrice,
+      rentPrice,
+      rooms,
+      bathrooms,
+      coveredArea,
+      amenities,
+    });
+    return updateAsset;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 const createAsset = async (
+  userName,
   name,
   description,
   address,
@@ -198,9 +242,10 @@ const createAsset = async (
     // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando
     const existingAsset = await Asset.findOne({ where: { name } });
     if (existingAsset) {
-      throw new Error("La Asset ya existe");
-   }
+      throw new Error("Ya existe una publicacion con ese nombre");
+    }
     const createdAsset = await Asset.create({
+      userName,
       name,
       description,
       address,
@@ -216,14 +261,13 @@ const createAsset = async (
       totalArea,
       amenities,
     });
-    // for (const findId of amenities) {
-    //   const findAmen = await Amenity.findOne({
-    //     where: { id: findId },
-    //   });
-    //   if (findAmen) {
-    //     await createdAsset.addAmenity(findAmen);
-    //   }
-    // }
+
+    const findOwner = await User.findOne({
+      where: { userName: userName },
+    });
+    if (findOwner) {
+      await findOwner.addAsset(createdAsset);
+    }
 
     return createdAsset;
   } catch (error) {
@@ -233,64 +277,67 @@ const createAsset = async (
 };
 
 const softDeleteAssetById = async (id) => {
-try {
-  //Borrado logico añadido
-  const asset = await Asset.findOne({
-    where: {
-      id: id,
-    },
-  });
+  try {
+    //Borrado logico añadido
+    const asset = await Asset.findOne({
+      where: {
+        id: id,
+      },
+    });
 
-  if (!asset) {
-    throw new Error("Asset not found");
+    if (!asset) {
+      throw new Error("Propiedad no encontrada");
+    }
+
+    await asset.softDelete();
+
+    return "Propiedad eliminada con exito!";
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
-
-  await asset.softDelete();
-
-  return "Asset deleted successfully";
-} catch (error) {
-  console.log(error);
-  throw error;
-}};
+};
 
 const deleteAssetById = async (id) => {
- try {
-  const asset = await Asset.findOne({
-    where: {
-      id: id,
-    },
-  });
+  try {
+    const asset = await Asset.findOne({
+      where: {
+        id: id,
+      },
+    });
 
-  if (!asset) {
-    throw new Error("You sure this asset exist?");
+    if (!asset) {
+      throw new Error("Estas seguro de que esta propiedad existe?");
+    }
+
+    await asset.destroy();
+
+    return "La propiedad ha sido eliminada permanentemente";
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
-
-  await asset.destroy();
-
-  return "Asset deleted permanently successfully";
-} catch (error) {
-  console.log(error);
-  throw error;
-}};
+};
 
 const restoreAssetById = async (id) => {
   try {
-  const asset = await Asset.findOne({
-    where: {
-      id: id,
-    },
-  });
+    const asset = await Asset.findOne({
+      where: {
+        id: id,
+      },
+    });
 
-  if (!asset) {
-    throw new Error("Asset not found");
+    if (!asset) {
+      throw new Error("Propiedad no encontrada");
+    }
+    await asset.restore();
+
+    return "Propiedad restaurada exitosamente";
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
-  await asset.restore();
-
-  return "Asset restored successfully";
-} catch (error) {
-  console.log(error);
-  throw error;
-}};
+};
 
 const getAllLocations = async () => {
   try {
@@ -301,18 +348,17 @@ const getAllLocations = async () => {
     return response;
   } catch (error) {
     console.log(error);
-    throw error
+    throw error;
   }
 };
 
 const getAllAmenities = async () => {
   try {
     const allAmenities = await Amenity.findAll();
-
     return allAmenities;
   } catch (error) {
     console.log(error);
-    throw error
+    throw error;
   }
 };
 
@@ -326,6 +372,7 @@ module.exports = {
   updateAsset,
   getAllLocations,
   getAllAmenities,
-  getAllButAllAssets,
+  getAdminAssets,
   updateReviewAsset,
+  getAssetsByUserId,
 };

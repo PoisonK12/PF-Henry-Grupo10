@@ -2,11 +2,13 @@ import React from "react";
 import style from "./CardProperties.module.css";
 import { Link } from "react-router-dom";
 
-
 const CardProperties = (props) => {
   const descripCut = () => {
     if (props.description.length > 220) {
-      const newDesc = props.description.split("").slice(0, 220).join("");
+      const newDesc = props.description
+        .split("")
+        .slice(0, 220)
+        .join("");
       return <p className="card-text">{newDesc}...</p>;
     }
     return <p className="card-text">{props.description}</p>;
@@ -19,7 +21,12 @@ const CardProperties = (props) => {
           <div className="col-md-4">
             <img
               src={props.images[0]}
-              style={{width: "100%" , height : "270px", objectFit: "cover", objectPosition: "center bottom"}}
+              style={{
+                width: "100%",
+                height: "270px",
+                objectFit: "cover",
+                objectPosition: "center bottom",
+              }}
               className="img-fluid rounded-start"
               alt="..."
             />
@@ -33,10 +40,13 @@ const CardProperties = (props) => {
                   {props.address}, {props.country}, {props.location}
                 </small>
               </p>
-            <p className={`card-text`}>Precio ${props?.rentPrice}</p>
-              <div className="d-flex justify-content-end">
+              <div
+                className="d-flex"
+                style={{ justifyContent: "space-between" }}
+              >
+                <p className={`card-text`}>Precio ${props?.rentPrice}</p>
                 <Link to={`/detail/${props.id}`} target="_blank">
-                  <button  className="btn btn-primary">Ver Detalles</button>
+                  <button className="btn btn-primary">Ver Detalles</button>
                 </Link>
               </div>
             </div>

@@ -7,11 +7,11 @@ export const validation = (form) => {
 
 
     if(!form.profilePic) {
-        errors.profilePic = "Tines que agregar una foto"
+        errors.profilePic = "Ingresa una foto"
          }
 
     if(!form.email) {
-        errors.email = "Tienes que agregar un email"
+        errors.email = "Ingresa un email"
     }else if((form.email && !emailRegex.test(form.email))) {
         errors.email = "No es un email válido"
     } else if(form.email && form.email.length === 60) {
@@ -21,47 +21,43 @@ export const validation = (form) => {
     };
 
     if(!form.password) {
-        errors.password = "Tines que escribir una contraseña"
+        errors.password = "Ingresa una contraseña"
     } else if(form.password && !/[0-9]+/.test(form.password)) {
-        errors.password = "Tiene que tener un al menos un número"
+        errors.password = "Al menos un número"
     } else if( form.password &&  !/[A-Z]/.test(form.password)) {
-        errors.password = "Tiene que tener al menos una mayúscula"
-    } else if( form.password && !/^(?=(?:.*\d){1})(?=(?:.*[@$?¡\-_]){1})/.test(form.password)) {
-        errors.password = "Tiene que tener al menos un carácter especial"
+        errors.password = "Al menos una mayúscula"
     }
     
     if(!form.confirmPassword) {
-        errors.confirmPassword = "Tines que confirmar la contraseña"    
+        errors.confirmPassword = "Confirma la contraseña"    
     } else if((form.confirmPassword && form.password) && form.password !== form.confirmPassword) {
         errors.confirmPassword = "Las contraseñas no coinciden"
     }
 
     if(!form.userName) {
-        errors.userName = "Tienes que tener un nombre de usuario"
+        errors.userName = "Ingresa un nombre de usuario"
     } else if(form.userName && form.userName.length > 15) {
-        errors.userName = "Elusuario será muy largo"
+        errors.userName = "El nombre es muy largo"
     } else if (form.userName && form.userName.length < 3) {
-        errors.userName = "Es demaciado corto"
+        errors.userName = "El nombre es muy corto"
     }
 
     if(!form.fullName) {
-        errors.fullName = "Escribe tu nombre completo"
+        errors.fullName = "Ingresa tu nombre completo"
     } else if(form.fullName && !/[A-Z]/.test(form.fullName)) {
-        errors.fullName = " Las iniciales tienen que estar con mayusculas"
-    } else if(form.fullName && form.fullName.length > 20) {
-        errors.fullName = " Es  demaciado largo "
-    }
+        errors.fullName = " Inicial con mayuscula"
+    } 
 
     if(!form.phoneNumber) {
-        errors.phoneNumber = "Escribe tu número e teléfono"
+        errors.phoneNumber = "Ingresa tu número de teléfono"
     } else if(form.phoneNumber && !/^[0-9()+\- ]*$/.test(form.phoneNumber)) {
-        errors.phoneNumber = "Tiene que tener el prefijo nacional.EJ:(+54)"
+        errors.phoneNumber = "Necesario el prefijo nacional. EJ:(+54)"
     } else if( form.phoneNumber &&  form.phoneNumber.length > 15) {
-        errors.phoneNumber = "El número de telefono grande"
+        errors.phoneNumber = "El número de telefono es muy largo"
     }
 
     if(!form.birthDate) {
-        errors.birthDate = "Pon tu fecha de nacimiento"
+        errors.birthDate = "Ingresa tu fecha de nacimiento"
     } else if(form.birthDate && !/^\d{4}-\d{2}-\d{2}$/.test(form.birthDate)) {
         errors.birthDate = "El formato de fecha no es válido"
     } else if (year > 2023) {
@@ -81,15 +77,15 @@ export const validation = (form) => {
     }
 
     if(!form.gender) {
-        errors.gender = "Tienes que seleccionar un género"
+        errors.gender = "Necesario un género"
     } else if (form.gender && form.gender === "") {
-        errors.gender = "Tienes que seleccionar un género"
+        errors.gender = "Necesario un género"
     }
 
     if(!form.landlord) {
-        errors.landlord = "Tienes que seleccionar un género"
+        errors.landlord = "Necesario un rol"
     } else if (form.landlord && form.landlord === "") {
-        errors.landlord = "Tienes que seleccionar un género"
+        errors.landlord = "Necesario un rol"
     }
         return errors
 }
