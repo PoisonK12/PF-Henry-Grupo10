@@ -16,8 +16,8 @@ Asset.prototype.restore = function () {
   return this.update({ eliminado: false });
 };
 
-// Trae todas las propiedades
-const getAllButAllAssets = async () => {
+// Trae todas las propiedades para mostrar en el menu de administrador
+const getAdminAssets = async () => {
   try {
     const response = await Asset.findAll({});
     return response;
@@ -42,7 +42,7 @@ const getAllAssets = async (req) => {
     averageScoreMin,
     averageScoreMax,
     amenities,
-    sortBy,
+    // sortBy,
   } = req.query;
   try {
     let page = 1;
@@ -199,6 +199,7 @@ const updateAsset = async (
   coveredArea,
   amenities
 ) => {
+  
   try {
     const updateAsset = await Asset.findOne({ where: { id: id } });
     await updateAsset.update({
@@ -241,7 +242,7 @@ const createAsset = async (
     // esto es para verificar si en Asset encuentra alguna Asset que tenga el mismo nombre que la que estoy creando
     const existingAsset = await Asset.findOne({ where: { name } });
     if (existingAsset) {
-      throw new Error("La Asset ya existe");
+      throw new Error("Ya existe una publicacion con ese nombre");
     }
     const createdAsset = await Asset.create({
       userName,
@@ -285,12 +286,12 @@ const softDeleteAssetById = async (id) => {
     });
 
     if (!asset) {
-      throw new Error("Asset not found");
+      throw new Error("Propiedad no encontrada");
     }
 
     await asset.softDelete();
 
-    return "Asset deleted successfully";
+    return "Propiedad eliminada con exito!";
   } catch (error) {
     console.log(error);
     throw error;
@@ -306,12 +307,12 @@ const deleteAssetById = async (id) => {
     });
 
     if (!asset) {
-      throw new Error("You sure this asset exist?");
+      throw new Error("Estas seguro de que esta propiedad existe?");
     }
 
     await asset.destroy();
 
-    return "Asset deleted permanently successfully";
+    return "La propiedad ha sido eliminada permanentemente";
   } catch (error) {
     console.log(error);
     throw error;
@@ -327,11 +328,11 @@ const restoreAssetById = async (id) => {
     });
 
     if (!asset) {
-      throw new Error("Asset not found");
+      throw new Error("Propiedad no encontrada");
     }
     await asset.restore();
 
-    return "Asset restored successfully";
+    return "Propiedad restaurada exitosamente";
   } catch (error) {
     console.log(error);
     throw error;
@@ -354,7 +355,6 @@ const getAllLocations = async () => {
 const getAllAmenities = async () => {
   try {
     const allAmenities = await Amenity.findAll();
-
     return allAmenities;
   } catch (error) {
     console.log(error);
@@ -372,7 +372,7 @@ module.exports = {
   updateAsset,
   getAllLocations,
   getAllAmenities,
-  getAllButAllAssets,
+  getAdminAssets,
   updateReviewAsset,
   getAssetsByUserId,
 };

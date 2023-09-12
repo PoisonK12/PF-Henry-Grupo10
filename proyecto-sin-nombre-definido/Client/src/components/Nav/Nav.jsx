@@ -3,12 +3,14 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import style from "./Nav.module.css";
 import Menu from "./Menu/Menu";
+import jwtDecode from "jwt-decode";
 
 export const Nav = () => {
   const location = useLocation();
-  const token = localStorage.getItem("log");
+  const token = localStorage.getItem("token");
   console.log(token);
   const [fixed, setFixed] = useState(false);
+  const [access , setAccess] = useState(false)
   const handleScroll = () => {
     if (window.scrollY > 50) {
       setFixed(true);
@@ -17,11 +19,17 @@ export const Nav = () => {
     }
   };
 
+
+ const log = localStorage.getItem("log")
+  
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     // localStorage.removeItem("log")
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [])
+
+ 
 
   return (
     <nav

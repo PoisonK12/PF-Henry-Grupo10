@@ -47,9 +47,14 @@ const getAllUserController = async (req) => {
         "No se proporcionaron parámetros de ordenamiento válidos."
       );
     }
+    
     const response = await User.findAll({
-      order,
-    });
+      where:{ 
+        [Op.or]: [
+          {userName:  {[Op.iLike] : `%(search)%`}},
+          {email:     {[Op.iLike] : `%(search)%`}}]}},
+      order
+    );
 
     if (response.length === 0) {
       throw new Error("No hay usuarios registrados!");

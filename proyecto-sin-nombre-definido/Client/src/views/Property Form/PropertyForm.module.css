@@ -6,7 +6,6 @@ body {
    
 }
 
- 
  .container {
     width: 100vw;
     display: flex;
@@ -33,7 +32,10 @@ body {
 
 
 .divDrop {
-    background : rgba(232, 232, 232, 0.987)
+    position: relative;
+    display: inline-block;
+    background : rgba(232, 232, 232, 0.987);
+    
 }
 
 
@@ -85,22 +87,36 @@ body {
 }
 
 .formmer{
+    
     height: 100%;
     width: 100%;
-    padding: 15px 0;
+    padding: 10px 0;
    background-color: rgb(230, 233, 237);     
 }
 
-.buton {
+.buton { 
+    position: absolute;
+   /*  bottom: 80.5%;
+    left: 91%; */
+    top : 0;
+    right : 0;
+    transform: translate(-0%, 0%);
+    z-index: 2;
     background-color: rgb(35, 90, 163);
     color: #ffffff;
     border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
+    padding: 5px 5px;
+    border-top-left-radius: none !important;
+   /*  border-radius: 3px; */
     cursor: pointer;
-    margin-top: 20px;
-    width: 75px;
+    /* margin-top: 20px; */
+    width: 53px;
     transition: background-color 0.3s ease;
+  
+}
+
+.buton:hover {
+    background-color: rgb(19, 60, 113);
 }
 
 .fieldset .selects{
@@ -122,6 +138,7 @@ body {
 }
 
 .button {
+    margin-left: 340px !important;
     border-color: rgba(137, 43, 226, 0);
     border-radius: 15px;
     padding : 7px 40px;
@@ -129,6 +146,45 @@ body {
     background-color: rgb(35, 90, 163);
     transition: background-color 0.3s ease;
 
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.label {
+    margin-top: 0;
+    margin-right: 44px;
+    text-align: center;
+    padding: 12px;
+    font-size: 15px;
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(35, 90, 163);
+    display: inline-block;
+    border-radius: 15px;
+}
+ 
+.label:focus, 
+.label:hover {
+    background-color: rgb(19, 60, 113);
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
 }
 
 .fieldset3{
@@ -149,10 +205,7 @@ body {
 .button:hover{
     background-color: rgb(19, 60, 113) ;
 }
-.buton{
-    background-color: rgb(19, 60, 113) ;
 
-}
 
 .inputForm{
     margin: 0 20px;

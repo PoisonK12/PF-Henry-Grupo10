@@ -31,7 +31,7 @@ const UserPanel = () => {
   const handlerClick = () => {
     <Routes>
       <Route
-        path="/addPropery"
+        path="/addProperty"
         element={
           <RutaProtegida token={token}>
             <PropertyForm></PropertyForm>

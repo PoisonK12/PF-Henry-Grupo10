@@ -10,30 +10,10 @@ const {
   updateAsset,
   getAllLocations,
   getAllAmenities,
-  getAllButAllAssets,
-  getAllAssetsWithAmenities,
+  getAdminAssets,
   getAssetsByUserId,
   restoreAssetById,
 } = require("../controllers/assetController");
-
-const getAssetsFromUserHandler = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const response = await getAssetsByUserId(id);
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-const getAllButAllAssetsHandler = async (req, res) => {
-  try {
-    const response = await getAllButAllAssets();
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
 
 const getAllAssetsHandler = async (req, res) => {
   try {
@@ -45,10 +25,52 @@ const getAllAssetsHandler = async (req, res) => {
   }
 };
 
+const getAllLocationsHandler = async (req, res) => {
+  try {
+    const response = await getAllLocations();
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: error.message });
+  }
+};
+
+const getAmenitiesHandler = async (req, res) => {
+  try {
+    const response = await getAllAmenities();
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: error.message });
+  }
+};
+
+// Traigo todos los asset de un usuario para mostrar en su perfil
+const getAssetsFromUserHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await getAssetsByUserId(id);
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getAdminAssetsHandler = async (req, res) => {
+  try {
+    const response = await getAdminAssets();
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//Peticion de asset para detail
 const getAssetByIdHandler = async (req, res) => {
   const { id } = req.params;
   try {
-    const response = id ? await getAssetById(id) : await getAllAssets();
+    // const response = id ? await getAssetById(id) : await getAllAssets();
+    const response = await getAssetById(id)
 
     res.status(200).json(response);
   } catch (error) {
@@ -146,6 +168,7 @@ const createAssetHandler = async (req, res) => {
     //     amenities,
     //   },
     // });
+    
     const response = await createAsset(
       userName,
       name,
@@ -206,36 +229,9 @@ const restoreAssetByIdHandler = async (req, res) => {
   }
 };
 
-const getAllLocationsHandler = async (req, res) => {
-  try {
-    const response = await getAllLocations();
-    res.status(200).json(response);
-  } catch (error) {
-    console.log(error);
-    res.status(404).json({ error: error.message });
-  }
-};
 
-const getAmenitiesHandler = async (req, res) => {
-  try {
-    const response = await getAllAmenities();
-    res.status(200).json(response);
-  } catch (error) {
-    console.log(error);
-    res.status(404).json({ error: error.message });
-  }
-};
 
-const getAllAssetsWithAmenitiesHandler = async (req, res) => {
-  const { amenitiesss } = req.query;
-  try {
-    const response = await getAllAssetsWithAmenities(amenitiesss);
-    res.status(200).json(response);
-  } catch (error) {
-    console.log(error);
-    res.status(404).json({ error: error.message });
-  }
-};
+
 
 module.exports = {
   deleteAssetByIdHandler,
@@ -246,8 +242,7 @@ module.exports = {
   updateAssetHandler,
   getAllLocationsHandler,
   getAmenitiesHandler,
-  getAllButAllAssetsHandler,
-  getAllAssetsWithAmenitiesHandler,
+  getAdminAssetsHandler,
   restoreAssetByIdHandler,
   getAssetsFromUserHandler,
 };

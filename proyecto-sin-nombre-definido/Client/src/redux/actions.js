@@ -16,7 +16,7 @@ import {
   GET_STATES,
   GET_PROPERTIES_BY_USER,
   GET_ALL_CONTACT,
-  DELETE_CONTACT_BY_ID
+  DELETE_CONTACT_BY_ID,
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -39,12 +39,12 @@ export const getAllContact = () => {
       return dispatch({
         type: GET_ALL_CONTACT,
         payload: data,
-      })
+      });
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 export const getAllReallyProperties = () => {
   return async (dispatch) => {
     try {
@@ -117,14 +117,14 @@ export const SearchByLocation = (query, page) => {
     }
   };
 };
-export const createContact = async(form) => {
+export const createContact = async (form) => {
   try {
-    const {data} = await axios.post("/contact/" , form);
-    alert('Enviado con exito')
+    const { data } = await axios.post("/contact/", form);
+    alert("Enviado con exito");
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 export const createAsset = async (
   form,
@@ -262,7 +262,7 @@ export const deleteMessageById = (id) => {
       console.error(error);
     }
   };
-}
+};
 
 export const deleteUserById = (id) => {
   return async (dispatch) => {
@@ -313,6 +313,8 @@ export const getLogin = async (
   setErrors,
   typeForm
 ) => {
+  console.log(typeForm);
+
   const {
     email,
     password,
@@ -328,7 +330,6 @@ export const getLogin = async (
     profilePic,
   } = login;
 
-  console.log(typeForm);
   if (typeForm === "login") {
     try {
       const { data } = await axios.post("/login", { email, password });
@@ -336,8 +337,8 @@ export const getLogin = async (
       setToastBody({ success: data.success, data: data });
       setToast(true);
       localStorage.setItem("log", JSON.stringify(data.token));
-      localStorage.setItem("data", JSON.stringify(data.data))
-      console.log('local', localStorage);
+      localStorage.setItem("data", JSON.stringify(data.data));
+      console.log("local", localStorage);
       setTimeout(() => {
         setToast(false);
         navigate("/home");
@@ -373,10 +374,8 @@ export const getLogin = async (
         userType: "User",
       });
       if (data) {
-
-
         localStorage.setItem("log", JSON.stringify(data.token));
-        localStorage.setItem("data", JSON.stringify(data.data))
+        localStorage.setItem("data", JSON.stringify(data.data));
 
         setToastBody({ response: data });
         setToast(true);
@@ -388,10 +387,9 @@ export const getLogin = async (
       }
     } catch (error) {
       console.log(error);
-      if(error.response.data.error.includes("sintaxis")){
+      if (error.response.data.error.includes("sintaxis")) {
         setToastBody({ response: "Faltan datos!" });
-      }else if(error.response.data.error.includes("Validation Error")){
-
+      } else if (error.response.data.error.includes("Validation Error")) {
         setToastBody({ response: "Ese correo ya esta en uso!" });
       }
       setToast(true);
@@ -403,17 +401,16 @@ export const getLogin = async (
   }
 };
 
-
 export const getPropertyByUser = (id) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios(`assets/myassets/${id}`)
+      const { data } = await axios(`assets/myassets/${id}`);
       dispatch({
-        type:GET_PROPERTIES_BY_USER,
-        payload: data
-      })
+        type: GET_PROPERTIES_BY_USER,
+        payload: data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-}
+  };
+};
