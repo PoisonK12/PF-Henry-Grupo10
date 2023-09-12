@@ -16,30 +16,14 @@ const UserPanel = () => {
   console.log(componenteActual);
   // const dispatch = useDispatch();
   const [data, setData] = useState({});
+  const [color, setColor] = useState('white');
+  const [selectedLink, setSelectedLink] = useState(null);
 
-  const descripCut = (description) => {
-    if (description.length > 220) {
-      const newDesc = description
-        .split("")
-        .slice(0, 220)
-        .join("");
-      return <p className="card-text">{newDesc}...</p>;
-    }
-    return <p className="card-text">{description}</p>;
-  };
-
-  const handlerClick = () => {
-    <Routes>
-      <Route
-        path="/addPropery"
-        element={
-          <RutaProtegida token={token}>
-            <PropertyForm></PropertyForm>
-          </RutaProtegida>
-        }
-      />
-      ;
-    </Routes>;
+ 
+  const handleLinkClick = (linkName) => {
+    setComponenteActual(linkName);
+    setSelectedLink(linkName); // Establecer el enlace seleccionado al hacer clic
+    setColor('gray'); // Restablecer el color cuando se hace clic en un enlace
   };
 
   useEffect(() => {
@@ -82,11 +66,17 @@ const UserPanel = () => {
                 <li class="nav-item">
                   <a
                     class="nav-link"
-                    onClick={() => setComponenteActual("D")}
+                    onClick={() => {handleLinkClick("D");
+                      
+                  }
+                  }
+
+                    
                     style={{
                       display: "flex",
                       alignItems: "center",
                       height: "80px",
+                      backgroundColor: selectedLink === "D" ? color : "white", 
                     }}
                     href="#"
                   >
@@ -109,11 +99,12 @@ const UserPanel = () => {
                   <a
                     class="nav-link"
                     href="#"
-                    onClick={() => setComponenteActual("A")}
+                    onClick={() => handleLinkClick("A")}
                     style={{
                       display: "flex",
                       alignItems: "center",
                       height: "80px",
+                      backgroundColor: selectedLink === "A" ? color : "white", 
                     }}
                   >
                     <div>
@@ -132,46 +123,50 @@ const UserPanel = () => {
                     </div>
                   </a>
                 </li>
-                <NavLink to="/addPropery">
+                <Link to={'/addProperty'} style={{textDecoration : "none", color: "#212529"}}>
                   <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        height: "80px",
-                      }}
-                      href="#"
-                      // onClick={() => setComponenteActual("C")}
-                      // onClick={handlerClick}
-                    >
-                      <div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="35"
-                          height="35"
-                          fill="currentColor"
-                          class="bi bi-house-add-fill"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 1 1-1 0v-1h-1a.5.5 0 1 1 0-1h1v-1a.5.5 0 0 1 1 0Z" />
-                          <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
-                          <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
-                        </svg>
-                        &nbsp; Agregar propiedad
-                      </div>
-                    </a>
+                      <a
+                        class="nav-link"
+                        onClick={() => handleLinkClick("E")}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          height: "80px",
+                          backgroundColor: selectedLink === "E" ? color : "white", 
+                        }}
+                        href="#"
+                        // onClick={() => setComponenteActual("C")}
+                        // onClick={handlerClick}
+                      >
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="35"
+                            height="35"
+                            fill="currentColor"
+                            class="bi bi-house-add-fill"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 1 1-1 0v-1h-1a.5.5 0 1 1 0-1h1v-1a.5.5 0 0 1 1 0Z" />
+                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
+                            <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
+                          </svg>
+                          &nbsp; Agregar propiedad
+                        </div>
+                      </a>
                   </li>
-                </NavLink>
+                </Link>
                 <li class="nav-item">
                   <a
                     class="nav-link"
                     href="#"
-                    onClick={() => setComponenteActual("B")}
+                    onClick={() => handleLinkClick("B")}
+                 
                     style={{
                       display: "flex",
                       alignItems: "center",
                       height: "80px",
+                      backgroundColor: selectedLink === "B" ? color : "white", 
                     }}
                   >
                     <div>
@@ -193,11 +188,12 @@ const UserPanel = () => {
                   <a
                     class="nav-link"
                     href="#"
-                    onClick={() => setComponenteActual("C")}
+                    onClick={() => handleLinkClick("C")}
                     style={{
                       display: "flex",
                       alignItems: "center",
                       height: "80px",
+                      backgroundColor: selectedLink === "C" ? color : "white", 
                     }}
                   >
                     <div>
@@ -230,7 +226,7 @@ const UserPanel = () => {
           </div>
         ) : componenteActual === "C" ? (
           <div className="col-md-9">
-            <PropertyForm />
+            <Reviews/>
           </div>
         ) : (
           <div className="col-md-9">

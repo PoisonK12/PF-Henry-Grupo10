@@ -5,6 +5,7 @@ import {
   GET_LOCATIONS,
   SEARCH_BY_LOCATION,
   PUT_PROPERTY,
+  PUT_USER,
   GET_ALL_ALL_PROPERTIES,
   SEARCH_BY_FILTER,
   DELETE_ASSET_BY_ID,
@@ -12,11 +13,14 @@ import {
   GET_COUNTRIES,
   GET_AMENITIES,
   DELETE_USER_BY_ID,
+  DELETE_LOGIC_ASSET_BY_ID,
   GET_ALL_USERS,
   GET_STATES,
   GET_PROPERTIES_BY_USER,
   GET_ALL_CONTACT,
-  DELETE_CONTACT_BY_ID
+  DELETE_CONTACT_BY_ID,
+  GET_USER_BY_ID,
+  DELETE_LOGIC_USER_BY_ID
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -193,6 +197,20 @@ export const putProperty = (id, form) => {
   };
 };
 
+export const putUser = (id, form) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`/users/${id}`, form);
+      return dispatch({
+        type: PUT_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
 export const searchByFilter = (
   {
     location,
@@ -229,7 +247,6 @@ export const searchByFilter = (
   };
 };
 
-// Acción para eliminar una propiedad por su ID
 export const deleteAssetById = (id) => {
   return async (dispatch) => {
     try {
@@ -246,6 +263,42 @@ export const deleteAssetById = (id) => {
     }
   };
 };
+
+// Acción para eliminar una propiedad por su ID
+export const deleteLogicAssetById = (id) => {
+  return async (dispatch) => {
+    try {
+      // Realiza la solicitud de eliminación al servidor
+      await axios.delete(`/assets/delete/${id}`);
+
+      // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
+      dispatch({
+        type: DELETE_LOGIC_ASSET_BY_ID,
+        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const deleteLogicUserById = (id) => {
+  return async (dispatch) => {
+    try {
+      // Realiza la solicitud de eliminación al servidor
+      await axios.delete(`/users/delete/${id}`);
+
+      // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
+      dispatch({
+        type: DELETE_LOGIC_USER_BY_ID,
+        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
 export const deleteMessageById = (id) => {
   return async (dispatch) => {
     try {
@@ -407,12 +460,27 @@ export const getPropertyByUser = (id) => {
   return async (dispatch) => {
     try {
       const {data} = await axios(`assets/myassets/${id}`)
+      
       dispatch({
         type:GET_PROPERTIES_BY_USER,
         payload: data
       })
     } catch (error) {
       console.log(error)
+    }
+  }
+}
+
+export const getUserById = (id) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios(`/users/${id}`)
+      dispatch({
+        type: GET_USER_BY_ID,
+        payload: data
+      })
+    } catch (error) {
+      console.log(error);
     }
   }
 }
