@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { isAdmin } = require('../helpers/authMiddleware')
+const { isAdmin, isAdminOrUser } = require('../helpers/authMiddleware')
 const {
   userPostHandler,
   getUserHandler,

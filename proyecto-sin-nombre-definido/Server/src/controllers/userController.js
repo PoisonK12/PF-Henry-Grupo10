@@ -1,5 +1,6 @@
 const { User } = require("../db");
 const { Op, Sequelize } = require("sequelize");
+const { generateRegistrationToken } = require('../helpers/token/registerToken')
 
 // Método para soft delete
 //(delete) http://localhost:3001/users/id
@@ -165,12 +166,15 @@ const createUserController = async ({
       return `El nombre de usuario ${userName} ya existe.`;
     }
 
-    return {success : true , data : createdUser};
+    const registrationToken = await generateRegistrationToken();
+
+    return { success: true, data: createdUser, registrationToken };
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
+
 
 const softDeleteUserById = async (id) => {
   //Borrado logico añadido

@@ -1,5 +1,5 @@
 const { compare } = require('../handlers/handleBcrypt');
-const { tokenSign } = require('../helpers/generateToken')
+const { tokenSign } = require('../helpers/token/loginToken')
 const { User } = require('../db');
 
 
