@@ -1,26 +1,48 @@
-const { Rent } = require("../db");
-const Availability = require("../models/availability");
+const { Rent, Availability } = require("../db");
+const { removeExpiredRecords } = require("../helpers/removeExpiredRecords");
+
 // const { Op, Sequelize } = require("sequelize");
 // const { filterLocation } = require("../helpers/filterLocation");
 
 const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
-  if (checkInDate >= checkOutDate) {
+  let innerDate = new Date(checkInDate);
+
+  let checkOuting = new Date(checkOutDate);
+
+  await removeExpiredRecords();
+  const expirationTime = new Date();
+  expirationTime.setMinutes(expirationTime.getMinutes() + 15);
+
+  const gathered = await Availability.findAll({
+    where: { assetId },
+    attributes: ["dates"],
+  }).then((datess) => {
+    const allDates = datess.map((element) => element.dates);
+    return [].concat(...allDates);
+  });
+
+  if (innerDate >= checkOuting) {
     return "fechas incorrectas";
   } else {
     const innerDates = [];
-    const innerDate = new Date(checkInDate);
 
-    while (innerDate <= checkOutDate) {
+    while (innerDate < checkOuting) {
+      const innerDateFormatted = innerDate.toISOString().split("T")[0];
+      if (gathered.includes(innerDateFormatted))
+        return "La propiedad está reservada para los días indicados";
       innerDates.push(new Date(innerDate));
       innerDate.setDate(innerDate.getDate() + 1);
     }
+
+    await Availability.create({
+      dates: innerDates,
+      isAvailable: "Reservada",
+      assetId: assetId,
+      userId: userId,
+      expirationTime: expirationTime,
+    });
+    return `mantendremos la propiedad reservada para vos por 15min... Así que metele porque vuela!!`;
   }
-  const response = await Availability.create({
-    dates: innerDates,
-    isAvailable: "Reservada",
-    assetId: assetId,
-    userId: userId,
-  });
 };
 
 const createRent = async (

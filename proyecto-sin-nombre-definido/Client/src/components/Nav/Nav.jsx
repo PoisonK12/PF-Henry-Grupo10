@@ -3,12 +3,14 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import style from "./Nav.module.css";
 import Menu from "./Menu/Menu";
+import jwtDecode from "jwt-decode";
 
 export const Nav = () => {
   const location = useLocation();
   const token = localStorage.getItem("log");
   console.log(token);
   const [fixed, setFixed] = useState(false);
+  const [access , setAccess] = useState(false)
   const handleScroll = () => {
     if (window.scrollY > 50) {
       setFixed(true);
@@ -17,11 +19,16 @@ export const Nav = () => {
     }
   };
 
+
+  
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     // localStorage.removeItem("log")
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [])
+
+ 
 
   return (
     <nav
@@ -80,11 +87,26 @@ export const Nav = () => {
             <span>Admin</span>
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            to="/faqs"
+            className={({ isActive }) =>
+              isActive ? style.active : style.navHover
+            }
+          >
+            {" "}
+            <span>FAQ's </span>
+          </NavLink>
+        </li>
+        
       </ul>
       <div>
         {token ? (
           <> 
+          <div style={{display:"flex", flexDirection:"row"}}>
+            <p style={{display:"flex", alignItems:"center", margin:"0 auto", color:"#f0f0f0"}}>Mi perfil</p>
             <Menu />{" "}
+          </div>
           </>
         ) : (
           <><li>

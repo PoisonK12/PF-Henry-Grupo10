@@ -20,7 +20,7 @@ import {
   GET_ALL_CONTACT,
   DELETE_CONTACT_BY_ID,
   GET_USER_BY_ID,
-  DELETE_LOGIC_USER_BY_ID
+  DELETE_LOGIC_USER_BY_ID,
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -43,12 +43,12 @@ export const getAllContact = () => {
       return dispatch({
         type: GET_ALL_CONTACT,
         payload: data,
-      })
+      });
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 export const getAllReallyProperties = () => {
   return async (dispatch) => {
     try {
@@ -121,14 +121,14 @@ export const SearchByLocation = (query, page) => {
     }
   };
 };
-export const createContact = async(form) => {
+export const createContact = async (form) => {
   try {
-    const {data} = await axios.post("/contact/" , form);
-    alert('Enviado con exito')
+    const { data } = await axios.post("/contact/", form);
+    alert("Enviado con exito");
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 export const createAsset = async (
   form,
@@ -222,21 +222,30 @@ export const searchByFilter = (
     sellPriceMax,
     sellPriceMin,
     order,
+    amenities,
+    page
   },
-  page
 ) => {
   return async (dispatch) => {
     try {
       if (order == "") order = "rentPriceAsc";
       if (rooms == 0) rooms = "";
       if (bathrooms == 0) bathrooms = "";
-      if (onSale == false) onSale = "";
-      if (rentPriceMax == 0) rentPriceMax = "";
+      if (rentPriceMax == 1000) rentPriceMax = "";
       if (rentPriceMin == 0) rentPriceMin = "";
-      if (sellPriceMax == 0) sellPriceMax = "";
+      if (sellPriceMax == 1000) sellPriceMax = "";
       if (sellPriceMin == 0) sellPriceMin = "";
+      // if (amenities.length == 0) amenities = ""
+      const mapAmen = Array.isArray(amenities) && amenities.length > 0
+        ? `&amenities=${amenities.join("&amenities=")}`
+        : '';
+        
+      console.log("KJDASJKDSAJK",amenities)
+
+      // console.log("BLABLABLA",searchAmen)
+
       const { data } = await axios(
-        `/assets?size=10&page=${page}&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}&${order}=yes`
+        `/assets?size=10&page=${page}&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}&${order}=yes${mapAmen}`
       );
       console.log(data);
       return dispatch({
@@ -314,7 +323,7 @@ export const deleteMessageById = (id) => {
       console.error(error);
     }
   };
-}
+};
 
 export const deleteUserById = (id) => {
   return async (dispatch) => {
@@ -365,6 +374,8 @@ export const getLogin = async (
   setErrors,
   typeForm
 ) => {
+  console.log(typeForm);
+
   const {
     email,
     password,
@@ -380,7 +391,6 @@ export const getLogin = async (
     profilePic,
   } = login;
 
-  console.log(typeForm);
   if (typeForm === "login") {
     try {
       const { data } = await axios.post("/login", { email, password });
@@ -388,8 +398,8 @@ export const getLogin = async (
       setToastBody({ success: data.success, data: data });
       setToast(true);
       localStorage.setItem("log", JSON.stringify(data.token));
-      localStorage.setItem("data", JSON.stringify(data.data))
-      console.log('local', localStorage);
+      localStorage.setItem("data", JSON.stringify(data.data));
+      console.log("local", localStorage);
       setTimeout(() => {
         setToast(false);
         navigate("/home");
@@ -425,10 +435,8 @@ export const getLogin = async (
         userType: "User",
       });
       if (data) {
-
-
         localStorage.setItem("log", JSON.stringify(data.token));
-        localStorage.setItem("data", JSON.stringify(data.data))
+        localStorage.setItem("data", JSON.stringify(data.data));
 
         setToastBody({ response: data });
         setToast(true);
@@ -440,10 +448,9 @@ export const getLogin = async (
       }
     } catch (error) {
       console.log(error);
-      if(error.response.data.error.includes("sintaxis")){
+      if (error.response.data.error.includes("sintaxis")) {
         setToastBody({ response: "Faltan datos!" });
-      }else if(error.response.data.error.includes("Validation Error")){
-
+      } else if (error.response.data.error.includes("Validation Error")) {
         setToastBody({ response: "Ese correo ya esta en uso!" });
       }
       setToast(true);
@@ -455,30 +462,14 @@ export const getLogin = async (
   }
 };
 
-
 export const getPropertyByUser = (id) => {
   return async (dispatch) => {
     try {
       const {data} = await axios(`assets/myassets/${id}`)
-      
       dispatch({
-        type:GET_PROPERTIES_BY_USER,
-        payload: data
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
-
-export const getUserById = (id) => {
-  return async (dispatch) => {
-    try {
-      const {data} = await axios(`/users/${id}`)
-      dispatch({
-        type: GET_USER_BY_ID,
-        payload: data
-      })
+        type: GET_PROPERTIES_BY_USER,
+        payload: data,
+      });
     } catch (error) {
       console.log(error);
     }
