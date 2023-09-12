@@ -8,8 +8,8 @@ const logOutRouter = require('./logOut')
 const rentsRouter = require("./rentsRouters");
 const contactRouter = require('./contactRouter');
 const emailContact = require('./email');
-const googleLoginRouter = require('./googleLogin') 
-const {paymentRouter} = require('./payment.routes')
+const googleLoginRouter = require('./googleLogin')
+const { paymentRouter } = require('./payment.routes')
 const router = Router();
 
 router.use('/googleAuth', googleLoginRouter)
