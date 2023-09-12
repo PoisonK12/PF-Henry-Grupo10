@@ -6,11 +6,12 @@ const { removeExpiredRecords } = require("../helpers/removeExpiredRecords");
 
 const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
   let innerDate = new Date(checkInDate);
+
   let checkOuting = new Date(checkOutDate);
 
   await removeExpiredRecords();
   const expirationTime = new Date();
-  expirationTime.setMinutes(expirationTime.getMinutes() + 1);
+  expirationTime.setMinutes(expirationTime.getMinutes() + 15);
 
   const gathered = await Availability.findAll({
     where: { assetId },
