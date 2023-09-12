@@ -171,3 +171,7 @@ body {
 .formulario-entrada.formulario-visible{
     margin-left: 0;
   }
+
+p{
+    margin-bottom: 0 !important;
+}

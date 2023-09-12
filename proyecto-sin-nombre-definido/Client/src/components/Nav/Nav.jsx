@@ -80,11 +80,26 @@ export const Nav = () => {
             <span>Admin</span>
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            to="/faqs"
+            className={({ isActive }) =>
+              isActive ? style.active : style.navHover
+            }
+          >
+            {" "}
+            <span>FAQ's </span>
+          </NavLink>
+        </li>
+        
       </ul>
       <div>
         {token ? (
           <> 
+          <div style={{display:"flex", flexDirection:"row"}}>
+            <p style={{display:"flex", alignItems:"center", margin:"0 auto", color:"#f0f0f0"}}>Mi perfil</p>
             <Menu />{" "}
+          </div>
           </>
         ) : (
           <><li>

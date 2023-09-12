@@ -1,16 +1,29 @@
 import style from "./property.module.css";
 
 import CardsProperties from "../../components/Cards/CardsProperties/CardsProperties";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Slider from "rc-slider";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { getLocation, searchByFilter } from "../../redux/actions";
+import { getLocation, searchByFilter, getAmenities } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import "rc-slider/assets/index.css";
 import Loader from "../../components/Loader/Loader";
 
 const Property = () => {
+  const ref = useRef()
+
+  useEffect(() => {
+    ref.current = filter;
+  })
+  const prevFilter = ref.current;
+
+
+
+
+
+
   const allProp = useSelector((state) => state.properties);
+  const allAmenities = useSelector((state) => state.amenities)
   const [visible, setVisible] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -20,33 +33,48 @@ const Property = () => {
   console.log(locationValue);
   // const { location } = useParams();
   const history = useNavigate();
+  const [onSale, setOnSale] = useState(false);
+
   console.log(history);
   const dispatch = useDispatch();
   const [filter, setFilter] = useState({
     location: locationValue,
     rooms: 0,
     bathrooms: 0,
-    onSale: false,
-    rentPriceMax: rentPriceMaxValue ? rentPriceMaxValue : 0,
+    rentPriceMax: rentPriceMaxValue ? rentPriceMaxValue : 1000,
     rentPriceMin: rentPriceMinValue ? rentPriceMinValue : 0,
-    sellPriceMax: 0,
+    sellPriceMax: 1000,
     sellPriceMin: 0,
     order: "rentPriceAsc",
     page: 1,
+    onSale: false,
+    amenities: []
   });
   const [values, setValues] = useState([0, 1000]);
   const [valuesSell, setValuesSell] = useState([0, 1000]);
-  const [onSale, setOnSale] = useState(false);
   const [loader, setLoader] = useState(true);
+  // useEffect(() => {
+  //   const fetchData = () => {
+  //     dispatch(searchByFilter(filter));
+  //     setTimeout(() => {
+  //       setLoader(false);
+  //     }, 2000);
+  //   };
+  //   fetchData();
+  // }, [allProp]);
+
   useEffect(() => {
-    const fetchData = () => {
-      dispatch(searchByFilter(filter));
-      setTimeout(() => {
-        setLoader(false);
-      }, 2000);
-    };
-    fetchData();
-  }, [allProp]);
+    if (prevFilter !== filter) {
+      const fetchData = () => {
+        dispatch(searchByFilter(filter));
+        setTimeout(() => {
+          setLoader(false);
+        }, 2000);
+      };
+      fetchData();
+    }
+  }, [filter]);
+
 
   const allLocation = useSelector((state) => state.location);
   const [locations, setLocations] = useState(allLocation.locations);
@@ -79,23 +107,19 @@ const Property = () => {
   };
 
   const handleCheckbox = (e) => {
-    if (e.target.name === "onSale" && e.target.value === "true") {
+    console.log("filtradisimo", filter);
+    if (e.target.name === "onSale" && e.target.value == "true") {
       setOnSale(true);
-    } else if (e.target.name === "onSale" && e.target.value === "false") {
+    } else if (e.target.name === "onSale" && e.target.value == "false") {
       setOnSale(false);
     }
   };
 
   useEffect(() => {
     setVisible(true);
-
+    dispatch(getAmenities())
     dispatch(getLocation());
   }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    dispatch(searchByFilter(filter));
-  };
 
   console.log(allProp);
 
@@ -118,7 +142,7 @@ const Property = () => {
                   className={style.input}
                   onChange={handleChange}
                 >
-                  <option name="location">Cambiar localidad</option>
+                  <option name="location" value={locationValue}>Cambiar localidad</option>
                   {locations
                     ? locations.map((ele) => (
                         <option value={ele} key={ele} name="location">
@@ -130,14 +154,14 @@ const Property = () => {
                 </select>
               </div>
               <div className={style.filterInput}>
-                <h4>Contrato</h4>
+                <h4>Tipo de contrato</h4>
                 <div className={style.checkboxContainer}>
                   <div className={style.yes}>
                     <label
                       htmlFor="inputName"
                       className={`form-label ${style.label}`}
                     >
-                      Renta
+                      Rentar una propiedad
                     </label>
                     <input
                       className={style.checkbox}
@@ -158,7 +182,7 @@ const Property = () => {
                       htmlFor="inputName"
                       className={`form-label ${style.label}`}
                     >
-                      Compra
+                      Deseo comprar
                     </label>
                     <input
                       className={style.checkbox}
@@ -244,19 +268,43 @@ const Property = () => {
                 >
                   Habitaciones
                 </label>
-                <input
-                  className={style.input}
-                  type="number"
-                  name="rooms"
-                  min={0}
-                  max={5}
-                  step={1}
-                  onInput={(e) => handleChange(e)}
-                  value={filter.rooms}
-                  style={{ maxWidth: "100px", marginLeft: "65px" }}
-                  id="inputName"
-                  placeholder="Nombre de tu propiedad"
-                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "end",
+                    alignItems: "center",
+                    marginRight: "0",
+                    width: "100%",
+                  }}
+                >
+                  <button
+                    onClick={() =>
+                      setFilter({ ...filter, rooms: filter.rooms - 1 })
+                    }
+                    className={style.masMenos}
+                  >
+                    -
+                  </button>
+                  <span
+                    style={{
+                      marginInline: "10px",
+                      color: "#9d0aca",
+                      fontSize: "20px",
+                      font: "",
+                    }}
+                  >
+                    {filter.rooms}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setFilter({ ...filter, rooms: filter.rooms + 1 })
+                    }
+                    className={style.masMenos}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
               <div
                 className={style.filterInput}
@@ -269,57 +317,133 @@ const Property = () => {
                 >
                   Baños
                 </label>
-                <input
-                  className={style.input}
-                  type="number"
-                  name="bathrooms"
-                  min={0}
-                  max={5}
+                <div
                   style={{
-                    maxWidth: "100px",
-                    marginLeft: "65px",
-                    justifyContent: "right",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "end",
+                    alignItems: "center",
+                    marginRight: "0",
+                    width: "100%",
                   }}
-                  step={1}
-                  onInput={(e) => handleChange(e)}
-                  value={filter.bathrooms}
-                  id="inputName"
-                  placeholder="Nombre de tu propiedad"
-                />
+                >
+                  <button
+                    onClick={() =>
+                      setFilter({ ...filter, bathrooms: filter.bathrooms - 1 })
+                    }
+                    className={style.masMenos}
+                  >
+                    -
+                  </button>
+                  <span
+                    style={{
+                      marginInline: "10px",
+                      color: "#9d0aca",
+                      fontSize: "20px",
+                      font: "",
+                    }}
+                  >
+                    {filter.bathrooms}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setFilter({ ...filter, bathrooms: filter.bathrooms + 1 })
+                    }
+                    className={style.masMenos}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <div className={style.amenities}>
+                <label  htmlFor="inputName"
+                  style={{ marginTop: "7px", marginRight: "10px" }}
+                  className={`form-label ${style.label}`}>
+                    Amenidades
+                  </label>
               </div>
 
-              {onSale ? <></> : ""}
-              <button onClick={(e) => handleSubmit(e)} className={style.button}>
-                Aplicar filtros!
+              <button
+                onClick={(e) =>
+                  setFilter({
+                    location: locationValue,
+                    rooms: 0,
+                    bathrooms: 0,
+                    rentPriceMax: rentPriceMaxValue ? rentPriceMaxValue : 1000,
+                    rentPriceMin: rentPriceMinValue ? rentPriceMinValue : 0,
+                    sellPriceMax: 1000,
+                    sellPriceMin: 0,
+                    order: "rentPriceAsc",
+                    page: 1,
+                    onSale: false,
+                  })
+                }
+                className={style.button}
+              >
+                Resetear filtros!{" "}
+                {
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-arrow-clockwise"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+                    />
+                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                  </svg>
+                }
               </button>
             </div>
           </div>
         </div>
 
         <div className="col-md-9">
-          <select onChange={(e) => handleChange(e)} name="order" style={{width:"100%", padding:"5px", marginBottom:"20px"}}>
+          <select
+            onChange={(e) => handleChange(e)}
+            name="order"
+            className={style.order}
+          >
             <option>
               Ordenamiento{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-arrow-down-up"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"
-                />
-              </svg>
+              {
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-arrow-down-up"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"
+                  />
+                </svg>
+              }
             </option>
-            <option name="order" value={"rentPriceAsc"} >{"Precio (Menor a mayor)"}</option>
-            <option name="order" value={"rentPriceDesc"} >{"Precio (Mayor a menor)"}</option>
-            <option name="order" value={"averageScoreAsc"} >{"Puntuacion media (Menor a mayor)"}</option>
-            <option name="order" value={"averageScoreDesc"} >{"Puntuacion media (Mayor a menor)"}</option>
-            <option name="order" value={"numberOfReviewsAsc"} >{"Numeros de reviews (Menor a mayor)"}</option>
-            <option name="order" value={"numberOfReviewsDesc"} >{"Numeros de reviews (Mayor a menor)"}</option>
+            <option name="order" value={"rentPriceAsc"}>
+              {"Precio (Menor a mayor)"}
+            </option>
+            <option name="order" value={"rentPriceDesc"}>
+              {"Precio (Mayor a menor)"}
+            </option>
+            <option name="order" value={"averageScoreAsc"}>
+              {"Puntuacion media (Menor a mayor)"}
+            </option>
+            <option name="order" value={"averageScoreDesc"}>
+              {"Puntuacion media (Mayor a menor)"}
+            </option>
+            <option name="order" value={"numberOfReviewsAsc"}>
+              {"Numeros de reviews (Menor a mayor)"}
+            </option>
+            <option name="order" value={"numberOfReviewsDesc"}>
+              {"Numeros de reviews (Mayor a menor)"}
+            </option>
           </select>
           {loader ? (
             <Loader></Loader>

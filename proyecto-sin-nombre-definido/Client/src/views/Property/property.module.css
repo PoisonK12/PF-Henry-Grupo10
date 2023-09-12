@@ -104,3 +104,30 @@
     margin-bottom: 10px;
   }
   
+  .order{
+    width:100%;
+     padding:10px; 
+    margin-bottom:20px;
+    background-color: #091f44;
+    border-radius: 20px;
+    color: #f0f0f0;
+    text-align: center;
+  }
+  .order:hover{
+    /* background-color: #06142c; */
+    cursor: pointer;
+  }
+  .order option{
+    background-color: #06142c;
+  }
+
+  .masMenos{
+    padding-block: 5px;
+    padding-inline: 20px;
+    background-color: transparent;
+    /* border: none; */
+    font-size: 20px;
+    border-radius: 20px;
+    border: 2px solid #989797;
+    /* box-shadow: inset -2px -2px 20px #06142c; */
+  }

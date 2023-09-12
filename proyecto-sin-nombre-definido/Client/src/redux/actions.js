@@ -204,6 +204,7 @@ export const searchByFilter = (
     sellPriceMax,
     sellPriceMin,
     order,
+    // amenities
   },
   page
 ) => {
@@ -212,11 +213,11 @@ export const searchByFilter = (
       if (order == "") order = "rentPriceAsc";
       if (rooms == 0) rooms = "";
       if (bathrooms == 0) bathrooms = "";
-      if (onSale == false) onSale = "";
-      if (rentPriceMax == 0) rentPriceMax = "";
+      if (rentPriceMax == 1000) rentPriceMax = "";
       if (rentPriceMin == 0) rentPriceMin = "";
-      if (sellPriceMax == 0) sellPriceMax = "";
+      if (sellPriceMax == 1000) sellPriceMax = "";
       if (sellPriceMin == 0) sellPriceMin = "";
+      // if (amenities.length = 0) amenities = ""
       const { data } = await axios(
         `/assets?size=10&page=${page}&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}&${order}=yes`
       );
