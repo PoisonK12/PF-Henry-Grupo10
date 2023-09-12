@@ -8,14 +8,16 @@ const logOutRouter = require('./logOut')
 const rentsRouter = require("./rentsRouters");
 const contactRouter = require('./contactRouter');
 const emailContact = require('./email');
-const googleLoginRouter = require('./googleLogin')
-const { paymentRouter } = require('./payment.routes')
+const favoritesRouter = require('./favoritesRouter');
+const googleLoginRouter = require('./googleLogin');
+const { paymentRouter } = require('./payment.routes');
 const router = Router();
 
 router.use('/googleAuth', googleLoginRouter)
 router.use("/login", loginRouter);
 router.use('/logout', logOutRouter)
 
+router.use("/favorites", favoritesRouter);
 router.use("/users", usersRouter); // falta search
 router.use("/assets", assetsRouter); // tal vez editar los throw de controllers 
 router.use("/amenities", amenitiesRouter);
