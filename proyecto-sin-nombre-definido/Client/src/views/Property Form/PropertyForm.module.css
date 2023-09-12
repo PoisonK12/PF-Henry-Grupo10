@@ -63,8 +63,9 @@ body {
 }
 
 .fieldset h3{
-  font:500 30px/1 sans-serif;
+  font:100 30px/1 sans-serif;
     text-transform: uppercase;
+    
 }
 
 .contImg{
@@ -138,7 +139,7 @@ body {
 }
 
 .button {
-    margin-left: 340px !important;
+   
     border-color: rgba(137, 43, 226, 0);
     border-radius: 15px;
     padding : 7px 40px;
@@ -189,8 +190,8 @@ body {
 
 .fieldset3{
     width: 818px;
-    max-height: 490px;
-    margin-top : 100px !important  ;
+    max-height: 620px;
+    margin-top : 80px !important  ;
     /* margin-bottom : 150px; */
     background-color: rgb(230, 233, 237);
 }
