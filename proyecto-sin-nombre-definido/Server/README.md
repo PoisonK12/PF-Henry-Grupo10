@@ -85,6 +85,10 @@ GET -> http://localhost:3001/users
 Get user por id (chequear)
 GET -> http://localhost:3001/users/:id
 
+(tentativo)
+Get user by name/email 
+
+
 Creacion de usuario
 POST -> http://localhost:3001/users/create
 Informacion enviada por body
@@ -128,6 +132,9 @@ Edicion por sistema
 
 Eliminar usuario (destroy)
 DELETE -> http://localhost:3001/users/:id
+
+
+
 
 
 Login
