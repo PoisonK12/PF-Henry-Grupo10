@@ -32,13 +32,13 @@ const AllUser = () => {
     }
   }
 
-  const handleDeleteUser = (id) => {
+  const handleDeleteUser = (handleDisable,id) => {
     const confirmed = window.confirm("¿Seguro que deseas eliminar este usuario?");
   
     if (confirmed) {
       // Llama a la acción para eliminar la propiedad por su ID
       dispatch(deleteLogicUserById(id));
-      setDisabledRows([...disabledRows, id]);
+      handleDisable(id)
     }
   }
 
@@ -89,7 +89,7 @@ const AllUser = () => {
                       <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 1 1 .708-.708z"></path>
                     </svg>
                   </button>
-                  <button type="button" className="btn btn-outline-warning" onClick={() => { handleDisable(ele.id); handleDeleteUser(ele.id) }}>
+                  <button type="button" className="btn btn-outline-warning" onClick={() => { handleDeleteUser(handleDisable, ele.id) }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pause-circle-fill" viewBox="0 0 16 16">
                       <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"></path>
                     </svg>
