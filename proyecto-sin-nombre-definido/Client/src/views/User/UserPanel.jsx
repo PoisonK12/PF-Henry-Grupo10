@@ -30,7 +30,7 @@ const UserPanel = () => {
     // if (!data) return
     const info = localStorage.getItem("data");
     setData(JSON.parse(info));
-  }, [localStorage]);
+  }, []);
 
   return (
     <div

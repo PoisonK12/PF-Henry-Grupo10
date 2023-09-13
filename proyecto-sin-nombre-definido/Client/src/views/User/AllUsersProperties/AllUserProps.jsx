@@ -157,17 +157,11 @@ const AllUsersProps = () => {
       dispatch()
     }
   };
-  useEffect(() => {
-    dispatch(getAllReallyProperties());
-  }, [allProperties]);
+  // useEffect(() => {
+  //   dispatch(getAllReallyProperties());
+  // }, [allProperties]);
 
-  useEffect(() => {
-    // Lógica para detectar eliminaciones
-    const deletedItems = previousProperties.filter(item => !allProperties.includes(item));
-    // Hacer algo con los elementos eliminados si es necesario
-    // Actualizar el estado anterior con el estado actual
-    setPreviousProperties(allProperties);
-  }, [allProperties]);
+
 
   return (
     <div className={style.background}>

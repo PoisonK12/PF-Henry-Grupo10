@@ -5,6 +5,7 @@ import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
   deleteAssetById,
+  deleteLogicAssetById,
   getAllReallyProperties,
   putProperty,
 } from "../../../redux/actions";
@@ -69,14 +70,21 @@ const AllProperties = ({ allProperties, setProps, props }) => {
   });
 
   //? Paginado ---------------------------------------
+  const scrollToTop = () => {
+   window.scrollTo({behavior:"smooth", top:0})
+  };
+
+
   const [currentPage, setCurrentPage] = useState(0)
   const totalProp = Math.ceil(allProperties?.count / 10);
 
   const nextHandler = () => {
+    scrollToTop()
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalProp - 1));
   };
 
   const prevHandler = () => {
+    scrollToTop()
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
@@ -161,6 +169,10 @@ const AllProperties = ({ allProperties, setProps, props }) => {
     }
   };
 
+  const handleLogicDelete = (id) => {
+    dispatch(deleteLogicAssetById(id))
+  }
+
   return (
     <div className={style.background}>
       <div>
@@ -172,7 +184,7 @@ const AllProperties = ({ allProperties, setProps, props }) => {
         </div>
       </div>
       <div>
-        {allProperties?.rows.map((props, index) => (
+        {allProperties?.rows?.map((props, index) => (
           <div className={`${style.centeredContent}`} key={props.id}>
             <div className={`card mb-3 p-2 ${style.maxWidth}`}>
               <div className="row g-0">
@@ -303,7 +315,7 @@ const AllProperties = ({ allProperties, setProps, props }) => {
                           }}
                           onClick={() => {
                             // Llama a la función handleDelete para mostrar el modal de confirmación
-                            handleDeleteAsset(props.id);
+                            handleLogicDelete(props.id);
                           }}
                         >
                           Suspender

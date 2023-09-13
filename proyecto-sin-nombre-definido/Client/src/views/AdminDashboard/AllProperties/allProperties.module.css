@@ -250,3 +250,35 @@ position: absolute;
       gap: 20px;
       padding: 20px;
     }
+
+    
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.buttonContainer p{
+    text-align: center;
+    /* align-items: center; */
+    align-content: center;
+    margin-top: 10px;
+    /* margin: auto 0; */
+}
+
+.button{
+    padding: 10px 15px;
+    border: 2px solid transparent;
+    background-color: #091f44;
+    color: #f4f4f4;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover{
+    position: relative;
+    background-color: #051229;
+    border: 2px solid transparent;
+    color: #f4f4f4;
+  }
