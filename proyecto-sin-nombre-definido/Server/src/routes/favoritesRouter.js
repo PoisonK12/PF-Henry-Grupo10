@@ -1,14 +1,14 @@
 const { Router } = require("express");
 const {
     
-   createFavoriteHandler,
+   updateFavoriteHandler,
    deleteFavoriteHandler,
    getAllFavoriteHandler
 } = require("../handlers/favoriteHandler");
 
 const favoritesRouter = Router();
 
-favoritesRouter.post("/like", createFavoriteHandler);
+favoritesRouter.put("/like", updateFavoriteHandler);
 favoritesRouter.delete("/unlike", deleteFavoriteHandler);
 favoritesRouter.get("/", getAllFavoriteHandler);
 
