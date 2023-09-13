@@ -89,8 +89,21 @@ const createRent = async (
     throw new Error("Error al registrar la renta");
   }
 };
+// Trae una renta especificada por el id
+const getRentById = async (id) => {
+  try {
+    const rent = await Rent.findOne({
+      where: { id: id },
+    });
+    return rent;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 module.exports = {
   createRent,
   createBook,
+  getRentById
 };

@@ -1,7 +1,7 @@
 const { type } = require("os");
 
 // const { rentSchemePost } = require("../helpers/validations/rentValidation.js");
-const { createRent, createBook } = require("../controllers/rentController.js");
+const { createRent, createBook,getRentById } = require("../controllers/rentController.js");
 
 const createBookHandler = async (req, res) => {
   const { assetId, userId, checkInDate, checkOutDate } = req.body;
@@ -75,7 +75,20 @@ const createRentHandler = async (req, res) => {
   }
 };
 
+const getRentByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await getRentById(id);
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: error.message });
+  }
+};
+
 module.exports = {
   createRentHandler,
   createBookHandler,
+  getRentByIdHandler
 };
