@@ -1,4 +1,4 @@
-const { userSchemePost } = require("../helpers/reviewValidation.ts");
+const { reviewSchemePost } = require("../helpers/validations/reviewValidation.js");
 
 const {
   getReviewByIdController,

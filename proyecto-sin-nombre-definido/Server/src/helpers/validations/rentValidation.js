@@ -1,6 +1,6 @@
 const { z } = require("zod");
 
-const dataSchemePost = z.object({
+const rentSchemePost = z.object({
   body: z.object({
     onSale: z.boolean(),
 
@@ -55,9 +55,7 @@ const dataSchemePost = z.object({
   }),
 });
 
-const dataSchemePut = "";
 
 module.exports = {
-  dataSchemePost,
-  dataSchemePut,
+  rentSchemePost,
 };

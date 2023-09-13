@@ -56,13 +56,13 @@
     display: flex;
 	align-items: center;
 	justify-content: center;
-    font-family: 'Avenir', sans-serif; ;
+    font-family: 'Avenir', sans-serif; 
 }
 
 
 
 .cajaCarrusel h1{
-    font-family: 'Geologica', sans-serif;
+    font-family: 'Avenir', sans-serif; 
     position: absolute;
     z-index: 10000;
     top: 35%;
@@ -74,7 +74,7 @@
     font-size: 3em;
     /* font-weight: 400; */
     text-align: center;
-    font-family: 'Avenir', sans-serif;
+    
 
 }
 

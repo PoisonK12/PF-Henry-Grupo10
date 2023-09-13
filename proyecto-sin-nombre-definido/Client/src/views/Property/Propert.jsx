@@ -52,9 +52,7 @@ const Property = () => {
   // useEffect(() => {
   //   const fetchData = () => {
   //     dispatch(searchByFilter(filter));
-  //     setTimeout(() => {
-  //       setLoader(false);
-  //     }, 2000);
+  //     
   //   };
   //   fetchData();
   // }, [allProp]);
@@ -63,7 +61,9 @@ const Property = () => {
     if (prevFilter !== filter) {
       const fetchData = () => {
         dispatch(searchByFilter(filter));
-
+        setTimeout(() => {
+                setLoader(false);
+              }, 2000);
       };
       fetchData();
     }
@@ -117,10 +117,17 @@ const Property = () => {
     const { name, value , checked } = e.target;
     setCheckedAmen({...checkedAmen , [name] : checked})
     setSelectAmen({ ...selectAmen, [name]: checked ? value : "" });
+    // const push = Object.values(selectAmen).map((ele) => Number(ele));
+    // const amenities = push.filter((ele) => ele !== 0);
+    // setFilter({ ...filter, amenities: amenities });
+  };
+
+  useEffect(() => {
     const push = Object.values(selectAmen).map((ele) => Number(ele));
     const amenities = push.filter((ele) => ele !== 0);
     setFilter({ ...filter, amenities: amenities });
-  };
+  }, [selectAmen]);
+  
 
   return (
     <div className={style.container}>
