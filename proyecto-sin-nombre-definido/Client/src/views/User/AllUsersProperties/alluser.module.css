@@ -4,6 +4,7 @@
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
 } */
+@import url('https://fonts.cdnfonts.com/css/avenir');
 .buttonGroup {
     display: flex;
     justify-content: space-between; /* Distribuye los botones horizontalmente */
@@ -235,7 +236,7 @@ position: absolute;
 }
 
 .background{
-    font-family: montserrat, arial, verdana;
+    font-family: 'Avenir', sans-serif; 
     background-color: transparent;
 }
 
