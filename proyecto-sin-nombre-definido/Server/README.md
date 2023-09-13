@@ -157,7 +157,7 @@ Para edicion por voluntad de usuario
     password									string
     landlord									boolean
 Edicion por sistema
-    userType									string ENUM("Admin", "User", "Premium User")
+    userType									string ENUM("Admin", "User")
     averageScore              float
     numberOfReviews           integer
     favorites                 array(string) uuid de asset favoritos
