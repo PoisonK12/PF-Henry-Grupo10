@@ -76,6 +76,9 @@ const Contacts = () => {
     });
   };
 
+  useEffect(() => {
+    setVisible(true);
+  }, []);
 
   return (
     <div className={style.background}>  
