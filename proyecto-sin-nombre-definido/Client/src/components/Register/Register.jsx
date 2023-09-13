@@ -478,7 +478,8 @@ const Register = ({ handleSwitch }) => {
                   onDrop={handleDrop}
                 >
                   {register.profilePic ? (
-                    <img
+                    <div> 
+                      <img
                       style={{
                         borderRadius: "100px",
                         width: "200px",
@@ -489,6 +490,14 @@ const Register = ({ handleSwitch }) => {
                       src={register.profilePic}
                       alt={`Image ${register.profilePic}`}
                     />
+                   
+                     <button
+                           className={`${style.buton}`}
+                           onClick={() => handleDelete(index)}
+                         >
+                           X
+                         </button>
+                         </div>
                   ) : (
                     <div>
                       <svg

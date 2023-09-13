@@ -1226,7 +1226,7 @@ const PropertyForm = () => {
                 ></Card>
               ) : (
                 <div>                
-                <h6>Felicidadess!</h6>
+                  <h6>Felicidadess!</h6>
                 <p> Has creado una nueva propiedad! </p>
                 <p> Ahora todos podrán verla </p>
                 </div>
