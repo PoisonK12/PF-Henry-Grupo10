@@ -17,9 +17,46 @@ Asset.prototype.restore = function () {
 };
 
 // Trae todas las propiedades para mostrar en el menu de administrador
-const getAdminAssets = async () => {
+const getAdminAssets = async (req) => {
+  const { query } = req;
+  const pageAsNumber = Number.parseInt(query.page);
+  const sizeAsNumber = Number.parseInt(query.size);
+  const { name } = query;
+
   try {
-    const response = await Asset.findAll({});
+    let page = 1;
+    let size = 10;
+    if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {page = pageAsNumber;}
+    if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {size = sizeAsNumber;}
+    const sortMap = {
+      sellPriceAsc: ["sellPrice", "ASC"],
+      sellPriceDesc: ["sellPrice", "DESC"],
+      rentPriceAsc: ["rentPrice", "ASC"],
+      rentPriceDesc: ["rentPrice", "DESC"],
+      averageScoreAsc: ["averageScore", "ASC"],
+      averageScoreDesc: ["averageScore", "DESC"],
+      numberOfReviewsAsc: ["numberOfReviews", "ASC"],
+      numberOfReviewsDesc: ["numberOfReviews", "DESC"],
+      nameAsc: ["name", "ASC"],
+      nameDesc: ["name", "DESC"],
+    };
+    
+    const order = [];
+    for (const param in query) {
+      if (sortMap[param] && query[param] === "yes") {
+        order.push(sortMap[param]);
+      }}
+      
+      if (order.length === 0) {
+        throw new Error("No se proporcionaron parámetros de ordenamiento válidos.");
+      }
+      
+    const response = await Asset.findAndCountAll({
+      where: {name : {[Op.iLike] : `%${name}%`}},
+      order,
+      limit: size,
+      offset: (page - 1) * size,
+    });
     return response;
   } catch (error) {
     console.log(error);
@@ -28,6 +65,7 @@ const getAdminAssets = async () => {
 };
 
 const getAllAssets = async (req) => {
+  const { query } = req;
   const pageAsNumber = Number.parseInt(req.query.page);
   const sizeAsNumber = Number.parseInt(req.query.size);
   const {
@@ -43,7 +81,7 @@ const getAllAssets = async (req) => {
     averageScoreMax,
     amenities,
   } = req.query;
-  console.log(amenities);
+
   try {
     let page = 1;
     let size = 10;
@@ -53,7 +91,6 @@ const getAllAssets = async (req) => {
     if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
       size = sizeAsNumber;
     }
-    const { query } = req;
 
     const sortMap = {
       sellPriceAsc: ["sellPrice", "ASC"],
@@ -114,7 +151,6 @@ const getAllAssets = async (req) => {
         };
       }
     }
-    console.log(filter);
     if (averageScoreMin) {
       filter.averageScore = {
         ...filter.averageScore,

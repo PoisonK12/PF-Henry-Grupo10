@@ -58,7 +58,7 @@ const getAssetsFromUserHandler = async (req, res) => {
 
 const getAdminAssetsHandler = async (req, res) => {
   try {
-    const response = await getAdminAssets();
+    const response = await getAdminAssets(req);
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ error: error.message });
