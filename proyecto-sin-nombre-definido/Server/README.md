@@ -10,14 +10,28 @@ GET ->http://localhost:3001/assets?
 &rooms=1
 &bathrooms=1
 &onSale=true
-&amenities=1&amenities=2                    (hay que realizar un apartado por cada amenitie)
 &rentPriceMin
 &rentPriceMax
 &sellPriceMin
 &sellPriceMax
 &averageScoreMin                            (decimal min 1)
 &averageScoreMax                            (decimal max 5)
-&sortBy                                     (sin terminar)
+
+Busqueda de amenities
+&amenities=1
+&amenities=2
+&amenities=...
+
+Ordenamiento encadenable (Min 1)
+&sellPriceAsc=yes
+&sellPriceDesc=yes
+&rentPriceAsc=yes
+&rentPriceDesc=yes
+&averageScoreAsc=yes
+&averageScoreDesc=yes
+&numberOfReviewsAsc=yes
+&numberOfReviewsDesc=yes
+
 
 Borrado logico (pausar/primer paso de borrar publicacion)
 Delete -> http://localhost:3001/assets/delete/:id
@@ -29,7 +43,10 @@ Borrado definitivo (boton adicional segundo paso borrado)
 Delete -> http://localhost:3001/assets/:id
 
 Get asset by ID
-http://localhost:3001/assets/:uuid
+http://localhost:3001/assets/:assetId
+
+Get all asset by user ID. 
+http://localhost:3001/assets/:userId
 
 Post asset
 POST -> http://localhost:3001/assets/create
@@ -62,7 +79,7 @@ coveredArea   float
 totalArea     float
 amenities     array(number)
 
-Get all but all (trae todas las publicaciones en BBDD aunque tengan un borrado logico)
+Get admin assets (trae todas las publicaciones en BBDD aunque tengan un borrado logico)
 GET -> http://localhost:3001/assets/admin
 
 
@@ -182,7 +199,7 @@ Template de post para BBDD user
 
     "birthDate": "2023-09-06",
     "phoneNumber": "11 0303 4560",
-		"verificationNumber": "11 0404 5670",
+    "verificationNumber": "11 0404 5670",
 
 
     "gender": "Male",
