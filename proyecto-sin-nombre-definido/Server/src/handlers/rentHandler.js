@@ -1,6 +1,6 @@
 const { type } = require("os");
 
-// const { dataSchemePost } = require("../helpers/rentValidation.ts");
+// const { rentSchemePost } = require("../helpers/validations/rentValidation.js");
 const { createRent, createBook } = require("../controllers/rentController.js");
 
 const createBookHandler = async (req, res) => {
