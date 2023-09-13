@@ -200,6 +200,11 @@ const Register = ({ handleSwitch }) => {
     </svg>
   );
 
+
+  const handleDelete = () => {
+    setRegister({...register , profilePic : ""})
+  };
+
   //?------------------------------------------------- Picture handlers -------------------------------------------------------------------------------
 
   const handleDrop = (event) => {
@@ -493,7 +498,7 @@ const Register = ({ handleSwitch }) => {
                    
                      <button
                            className={`${style.buton}`}
-                           onClick={() => handleDelete(index)}
+                           onClick={handleDelete}
                          >
                            X
                          </button>
@@ -684,7 +689,7 @@ const Register = ({ handleSwitch }) => {
                   )}
                 </div>
               </div>
-              <hr className={style.hr}></hr>
+             
               <div class="d-flex flex-row align-items-center justify-content-center" style={{marginBottom:"20px"}}>
                 <div class="col-xs-6 m-3">
                   <button
