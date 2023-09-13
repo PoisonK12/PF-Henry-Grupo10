@@ -5,7 +5,7 @@ const passport = require('passport')
 const googleLoginRouter = Router()
 
 //Permite iniciar sesion
-googleLoginRouter.get('/',
+googleLoginRouter.get('/login',
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 

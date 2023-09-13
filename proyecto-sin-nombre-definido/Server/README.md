@@ -175,6 +175,9 @@ POST -> http://localhost:3001/login
 email                         string
 password                      string original y se hashea en el recorrido para comparar
 
+Login google
+GET -> http://localhost:3001/google/login
+
 Logout
 GET -> http://localhost:3001/logout
 
