@@ -23,7 +23,7 @@ const UserPanel = () => {
   const handleLinkClick = (linkName) => {
     setComponenteActual(linkName);
     setSelectedLink(linkName); // Establecer el enlace seleccionado al hacer clic
-    setColor('gray'); // Restablecer el color cuando se hace clic en un enlace
+    setColor('#6693e2'); // Restablecer el color cuando se hace clic en un enlace
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const UserPanel = () => {
 
   return (
     <div
-      style={{ paddingTop: "5rem", backgroundColor: "gray", padding: "15px" }}
+      style={{ paddingTop: "5rem", backgroundColor: "#6693e2", padding: "15px" }}
     >
       <div className="row" style={{ marginTop: "3rem", width: "100%" }}>
         <div className="col-md-3">
@@ -75,7 +75,9 @@ const UserPanel = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      height: "80px",
+                      borderRadius: "15px",
+                      height: "70px",
+                      width: "90%",
                       backgroundColor: selectedLink === "D" ? color : "white", 
                     }}
                     href="#"
@@ -103,7 +105,9 @@ const UserPanel = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      height: "80px",
+                      borderRadius: "15px",
+                      height: "70px",
+                      width: "90%",
                       backgroundColor: selectedLink === "A" ? color : "white", 
                     }}
                   >
@@ -131,7 +135,9 @@ const UserPanel = () => {
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          height: "80px",
+                          borderRadius: "15px",
+                          height: "70px",
+                          width: "90%",
                           backgroundColor: selectedLink === "E" ? color : "white", 
                         }}
                         href="#"
@@ -165,7 +171,9 @@ const UserPanel = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      height: "80px",
+                      borderRadius: "15px",
+                      height: "70px",
+                      width: "90%",
                       backgroundColor: selectedLink === "B" ? color : "white", 
                     }}
                   >
@@ -192,7 +200,9 @@ const UserPanel = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      height: "80px",
+                      borderRadius: "15px",
+                      height: "70px",
+                      width: "90%",
                       backgroundColor: selectedLink === "C" ? color : "white", 
                     }}
                   >

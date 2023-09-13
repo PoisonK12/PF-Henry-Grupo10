@@ -211,27 +211,24 @@ function User() {
                       <FormGroup>
                         <label>Genero</label>
                         <Input
-                          name="phoneNumber"
-                          placeholder="Número Teléfono"
-                          type="text"
-                          value={editableData.gender}
+                          type="select"
+                          name="gender"
+                          id="genderSelect"
+                        
                           onChange={handleInputChange}
-                        />
+                        >
+                          <option>{editableData.gender}</option>
+                          <option value="masculino">Masculino</option>
+                          <option value="femenino">Femenino</option>
+                          <option value="no-binario">No binario</option>
+                        </Input>
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    <Col md="12">
+                    <Col md="12 d-flex justify-content-center align-items-center">
                       <FormGroup>
-                        <label>Sobre mí...</label>
-                        <Input
-                          name="aboutMe"
-                          placeholder="Sobre mí..."
-                          type="textarea"
-                          value={editableData.aboutMe || ""}
-                          onChange={handleInputChange}
-                        />
-                        <button className="btn btn-info" onClick={() => {handleUpdate(editableData.id)}}>
+                        <button className="btn btn-warning" onClick={() => {handleUpdate(editableData.id)}}>
                           Actualizar
                         </button>
                       </FormGroup>
