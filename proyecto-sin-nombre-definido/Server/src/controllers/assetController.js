@@ -21,9 +21,10 @@ const getAdminAssets = async (req) => {
   const { query } = req;
   const pageAsNumber = Number.parseInt(query.page);
   const sizeAsNumber = Number.parseInt(query.size);
-  const { name } = query;
+  const { name, eliminado } = query;
 
   try {
+    
     let page = 1;
     let size = 10;
     if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {page = pageAsNumber;}
@@ -51,8 +52,18 @@ const getAdminAssets = async (req) => {
         throw new Error("No se proporcionaron parámetros de ordenamiento válidos.");
       }
       
+      let filter = {};
+      if (eliminado) {
+        filter.eliminado = eliminado
+      }
+      if (name ) {
+        filter.name = { ...filter.name, [Op.iLike]:`%${name}%` };
+      }
+
+
+
     const response = await Asset.findAndCountAll({
-      where: {name : {[Op.iLike] : `%${name}%`}},
+      where: filter,
       order,
       limit: size,
       offset: (page - 1) * size,

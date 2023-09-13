@@ -84,6 +84,8 @@ GET -> http://localhost:3001/assets/admin
 &page=1
 &size=10
 &name=  fragmento de texto que deseo que contenga el nombre
+&eliminado= true/false
+
 Ordenamiento encadenable (Min 1)
 &nameAsc=yes
 &nameDesc=yes
