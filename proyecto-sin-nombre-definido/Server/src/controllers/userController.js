@@ -1,6 +1,6 @@
 const { User } = require("../db");
 const { Op, Sequelize } = require("sequelize");
-const { generateRegistrationToken } = require('../helpers/token/registerToken')
+const { generateRegistrationToken } = require("../helpers/token/registerToken");
 
 // Método para soft delete
 //(delete) http://localhost:3001/users/id
@@ -41,20 +41,30 @@ const getAllUserController = async (req) => {
         order.push(sortMap[param]);
       }
     }
-
+    const search = [];
+    for (const param in query) {
+      // console.log(query[param]);
+      // console.log(param);
+      // console.log(query);
+      if (param === "search") {
+        search.push(query[param]);
+      }
+    }
     if (order.length === 0) {
       throw new Error(
         "No se proporcionaron parámetros de ordenamiento válidos."
       );
     }
-    
+
     const response = await User.findAll({
-      where:{ 
+      where: {
         [Op.or]: [
-          {userName:  {[Op.iLike] : `%(search)%`}},
-          {email:     {[Op.iLike] : `%(search)%`}}]}},
-      order
-    );
+          { userName: { [Op.iLike]: `%${search}%` } },
+          { email: { [Op.iLike]: `%${search}%` } },
+        ],
+      },
+      order,
+    });
 
     if (response.length === 0) {
       throw new Error("No hay usuarios registrados!");
@@ -179,7 +189,6 @@ const createUserController = async ({
     throw error;
   }
 };
-
 
 const softDeleteUserById = async (id) => {
   //Borrado logico añadido

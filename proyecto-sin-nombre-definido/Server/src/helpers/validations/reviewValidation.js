@@ -1,6 +1,6 @@
 const { z } = require("zod");
 
-const dataSchemePost = z.object({
+const reviewSchemePost = z.object({
   body: z.object({
       comment: z.string({
         message: "String data is required(comment)",
@@ -16,9 +16,9 @@ const dataSchemePost = z.object({
   }),
 });
 
-const dataSchemePut = "";
+const reviewSchemePut = "";
 
 module.exports = {
-    dataSchemePost,
-    dataSchemePut,
+    reviewSchemePost,
+    reviewSchemePut,
 };
