@@ -41,24 +41,30 @@ const getAllUserController = async (req) => {
         order.push(sortMap[param]);
       }
     }
-
+    const search = [];
+    for (const param in query) {
+      // console.log(query[param]);
+      // console.log(param);
+      // console.log(query);
+      if (param === "search") {
+        search.push(query[param]);
+      }
+    }
     if (order.length === 0) {
       throw new Error(
         "No se proporcionaron parámetros de ordenamiento válidos."
       );
     }
 
-    const response = await User.findAll(
-      // {
-      //   where: {
-      //     [Op.or]: [
-      //       { userName: { [Op.iLike]: `%${search}%` } },
-      //       { email: { [Op.iLike]: `%${search}%` } },
-      //     ],
-      //   },
-      // },
-      { order }
-    );
+    const response = await User.findAll({
+      where: {
+        [Op.or]: [
+          { userName: { [Op.iLike]: `%${search}%` } },
+          { email: { [Op.iLike]: `%${search}%` } },
+        ],
+      },
+      order,
+    });
 
     if (response.length === 0) {
       throw new Error("No hay usuarios registrados!");
