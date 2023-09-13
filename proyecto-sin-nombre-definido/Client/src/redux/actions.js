@@ -197,10 +197,10 @@ export const putProperty = (id, form) => {
   };
 };
 
-export const putUser = (id, form) => {
+export const putUser = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/users/${id}`, form);
+      const { data } = await axios.put(`/users/`);
       return dispatch({
         type: PUT_USER,
         payload: data,

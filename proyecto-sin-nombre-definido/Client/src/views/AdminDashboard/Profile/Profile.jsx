@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-// reactstrap components
 import {
   Button,
   Card,
@@ -14,14 +12,22 @@ import {
   Col,
 } from "reactstrap";
 import Chart from "./chart";
-import { putUser } from "../../../redux/actions";
 import { useDispatch } from "react-redux";
-
-// core components
+import { putUser } from "../../../redux/actions";
 
 function User() {
   const [data, setData] = useState({});
-  const [editableData, setEditableData] = useState({});
+  const [form, setForm] = useState({
+    userName: "",
+    fullName: "",
+    profilePic: "",
+    address: "",
+    nationality: "",
+    birthDate: "",
+    phoneNumber: "",
+    gender: ""
+  });
+  console.log('formulario',form);
   const [errors, setErrors] = useState({
     image: "",
   });
@@ -29,7 +35,7 @@ function User() {
     image: "",
   });
   const dispatch = useDispatch();
-  
+
   const handleDrop = (event) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
@@ -58,6 +64,19 @@ function User() {
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleUpdate = () => {
+    console.log('Datos que se van a enviar:', form);
+    dispatch(putUser(form))
+    
+  };
+  
+  
+
   const cardStyle = {
     backgroundImage: `url(${imagen.image})`,
     backgroundSize: "cover",
@@ -66,30 +85,12 @@ function User() {
   };
 
   useEffect(() => {
+    // Obtén los datos del usuario y establece tanto "data" como "form"
     const info = localStorage.getItem("data");
-    setData(JSON.parse(info));
-    setEditableData(JSON.parse(info));
-  }, [localStorage]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditableData({
-      ...editableData,
-      [name]: value,
-    });
-  };
-
-  const handleUpdate = (id) => {
-    console.log('Si llega aca el ', id, 'y la data es',editableData);
-    dispatch(putUser(id, editableData)).then((response) => {
-      // Si la solicitud se realiza con éxito, puedes actualizar los datos en el estado local
-      // Puedes agregar manejo de errores según sea necesario
-      if (response.status === 200) {
-        localStorage.setItem("data", JSON.stringify(editableData));
-        setData({ ...editableData });
-      }
-    });
-  };
+    const userData = JSON.parse(info);
+    setData(userData);
+    setForm(userData);
+  }, []);
 
   return (
     <>
@@ -101,7 +102,7 @@ function User() {
                 <h5 className="title">Editar Perfil</h5>
               </CardHeader>
               <CardBody style={cardStyle}>
-                <Form>
+                <Form onSubmit={handleUpdate}>
                   <Row>
                     <Col md="12" className="d-flex justify-content-center align-items-center">
                       <FormGroup>
@@ -133,8 +134,8 @@ function User() {
                           name="userName"
                           placeholder="Nombre Usuario"
                           type="text"
-                          value={editableData.userName || ""}
-                          onChange={handleInputChange}
+                          value={form.userName || ""}
+                          disabled
                         />
                       </FormGroup>
                     </Col>
@@ -145,8 +146,8 @@ function User() {
                           name="fullName"
                           placeholder="Nombre Completo"
                           type="text"
-                          value={editableData.fullName || ""}
-                          onChange={handleInputChange}
+                          value={form.fullName || ""}
+                          onChange={handleChange}
                         />
                       </FormGroup>
                     </Col>
@@ -159,23 +160,22 @@ function User() {
                           name="address"
                           placeholder="Dirección"
                           type="text"
-                          value={editableData.address || ""}
-                          onChange={handleInputChange}
+                          value={form.address || ""}
+                          onChange={handleChange}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                  <Col className="pr-1" md="6">
+                    <Col className="pr-1" md="6">
                       <FormGroup>
                         <label>Nacionalidad</label>
                         <Input
                           name="nationality"
                           placeholder="Nacionalidad"
                           type="text"
-                          value={editableData.nationality || ""}
-                          onChange={handleInputChange}
-                          disabled
+                          value={form.nationality || ""}
+                          onChange={handleChange}
                         />
                       </FormGroup>
                     </Col>
@@ -186,15 +186,13 @@ function User() {
                           name="birthDate"
                           placeholder="Fecha Cumpleaños"
                           type="text"
-                          value={editableData.birthDate || ""}
-                          onChange={handleInputChange}
-                          disabled
+                          value={form.birthDate || ""}
+                          onChange={handleChange}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    
                     <Col className="pl-1" md="6">
                       <FormGroup>
                         <label>Número Teléfono</label>
@@ -202,35 +200,28 @@ function User() {
                           name="phoneNumber"
                           placeholder="Número Teléfono"
                           type="number"
-                          value={editableData.phoneNumber || ""}
-                          onChange={handleInputChange}
+                          value={form.phoneNumber || ""}
+                          onChange={handleChange}
                         />
                       </FormGroup>
                     </Col>
                     <Col className="pl-1" md="6">
                       <FormGroup>
-                        <label>Genero</label>
+                        <label>Género</label>
                         <Input
-                          type="select"
+                          type="text"
                           name="gender"
                           id="genderSelect"
-                        
-                          onChange={handleInputChange}
-                        >
-                          <option>{editableData.gender}</option>
-                          <option value="masculino">Masculino</option>
-                          <option value="femenino">Femenino</option>
-                          <option value="no-binario">No binario</option>
-                        </Input>
+                          value={form.gender || ""}
+                          onChange={handleChange}
+                        />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
                     <Col md="12 d-flex justify-content-center align-items-center">
                       <FormGroup>
-                        <button className="btn btn-warning" onClick={() => {handleUpdate(editableData.id)}}>
-                          Actualizar
-                        </button>
+                        <button type="submit" className="btn btn-warning">Editar</button>
                       </FormGroup>
                     </Col>
                   </Row>
@@ -282,7 +273,7 @@ function User() {
                         width="50"
                         height="50"
                         fill="currentColor"
-                        class="bi bi-card-image"
+                        className="bi bi-card-image"
                         viewBox="0 0 16 16"
                       >
                         <path
@@ -292,12 +283,11 @@ function User() {
                           d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"
                         />
                       </svg>
-                      <br></br>
+                      <br />
                       Arrastra o haz clic{" "}
                       <span
                         // Aquí puedes agregar un manejador de eventos para abrir el selector de archivos cuando se hace clic en "aquí".
                       >
-                        {" "}
                         aquí
                       </span>
                       !
@@ -327,3 +317,6 @@ function User() {
 }
 
 export default User;
+
+
+      
