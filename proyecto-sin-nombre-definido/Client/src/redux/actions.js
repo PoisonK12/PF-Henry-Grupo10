@@ -49,10 +49,10 @@ export const getAllContact = () => {
     }
   };
 };
-export const getAllReallyProperties = () => {
+export const getAllReallyProperties = ({ order}, page) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios("/assets/admin");
+      const { data } = await axios( `/assets?size=10&page=${page}&${order}=yes`);
       return dispatch({
         type: GET_ALL_ALL_PROPERTIES,
         payload: data,
