@@ -58,6 +58,10 @@ const CardsProperties = ({setFilter, filter}) => {
           location={ele.location}
           country={ele.country}
           images={ele.images}
+          rooms={ele.rooms}
+          bathrooms={ele.bathrooms}
+          coveredArea={ele.coveredArea}
+          totalArea={ele.totalArea}
           rentPrice={ele.rentPrice}
         />
       })}
