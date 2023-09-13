@@ -34,13 +34,14 @@ passport.use(
           // Si el usuario ya existe, devuélvelo
           return done(null, existingUser);
         } else {
+          console.log(111111111111111111111)
           // Si el usuario no existe, créalo
           const newUser = await User.create({
             googleId: profile.id,
             name: profile.displayName,
             email: profile.emails[0].value,
           });
-
+          console.log(222222222222222222222);
           return done(null, newUser);
         }
       } catch (err) {
