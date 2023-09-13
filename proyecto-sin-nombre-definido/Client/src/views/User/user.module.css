@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/avenir');
+
 .customButton {
     position: absolute;
       top: 50%;
@@ -60,7 +62,7 @@
     }
     
     .background{
-        font-family: montserrat, arial, verdana;
+        font-family: 'Avenir', sans-serif; 
         background-color: rgb(76, 131, 228);
         padding: 20px;
         padding-top: 100px;
@@ -72,7 +74,7 @@
     h1{
         text-align: center;
         padding-bottom: 15px;
-        font:700 60px/1 'Lato', sans-serif;
+        font-family: 'Avenir', sans-serif; 
     }
     .widgets,
     .charts {

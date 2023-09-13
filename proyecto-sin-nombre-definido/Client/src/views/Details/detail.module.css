@@ -101,7 +101,7 @@
 
 /* Estilos para las reseñas */
 .reviewCol {
-  background-color: #fff;
+  background-color: #CCCCFF;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
   margin-right: 20px;
@@ -243,12 +243,13 @@
 }
 
 .contReseña {
-  border: 3px solid rgb(216, 215, 217);
+  border-radius: 10%;
   margin-top: 30px;
   width: 100%;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -4px rgba(0, 0, 0, .5);
   padding: 20px;
+  background-color: #CCCCFF;
 }
 .contReseña h1 {
   font-size: 28px;

@@ -1,6 +1,5 @@
-const userSchemePost = require("../helpers/userValidation.ts");
 const { encrypt } = require("../handlers/handleBcrypt.js");
-const { dataSchemePost } = require("../helpers/userValidation.ts");
+const { userSchemePost } = require("../helpers/validations/userValidation.js");
 const {
   getUserByIdController,
   getAllUserController,
