@@ -89,13 +89,13 @@ export const Nav = () => {
         </li>
         <li>
           <NavLink
-            to="/faqs"
+            to="/faq"
             className={({ isActive }) =>
               isActive ? style.active : style.navHover
             }
           >
             {" "}
-            <span>FAQ's </span>
+            <span>FAQ</span>
           </NavLink>
         </li>
         
