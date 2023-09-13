@@ -42,8 +42,8 @@ const getAllAssets = async (req) => {
     averageScoreMin,
     averageScoreMax,
     amenities,
-    // sortBy,
   } = req.query;
+  console.log(amenities);
   try {
     let page = 1;
     let size = 10;
@@ -78,7 +78,7 @@ const getAllAssets = async (req) => {
         "No se proporcionaron parámetros de ordenamiento válidos."
       );
     }
-    console.log(order);
+    // console.log(order);
     let filter = {
       eliminado: false,
     };
@@ -97,9 +97,24 @@ const getAllAssets = async (req) => {
     if (rentPriceMax) {
       filter.rentPrice = { ...filter.rentPrice, [Op.lte]: rentPriceMax };
     }
+
+    const amenitiess = [];
     if (amenities) {
-      filter.amenities = { ...filter.amenities, [Op.contains]: amenities };
+      if (typeof amenities === "string") {
+        amenitiess.push(amenities);
+
+        filter.amenities = {
+          ...filter.amenities,
+          [Op.contains]: amenitiess,
+        };
+      } else {
+        filter.amenities = {
+          ...filter.amenities,
+          [Op.contains]: amenities,
+        };
+      }
     }
+    console.log(filter);
     if (averageScoreMin) {
       filter.averageScore = {
         ...filter.averageScore,
@@ -199,7 +214,6 @@ const updateAsset = async (
   coveredArea,
   amenities
 ) => {
-  
   try {
     const updateAsset = await Asset.findOne({ where: { id: id } });
     await updateAsset.update({
