@@ -10,9 +10,14 @@ const router = require('./routes/index');
 
 const server = express();
 
+const corsOptions = {
+  origin: 'http://localhost:5173', // Cambia esto según la URL de tu frontend
+  credentials: true, // Habilita el envío de cookies y encabezados de autenticación
+};
+
 server.use(morgan('dev'));
 server.use(express.json());
-server.use(cors());
+server.use(cors(corsOptions));
 
 server.use(session({
   secret: process.env.SESSION_SECRET,

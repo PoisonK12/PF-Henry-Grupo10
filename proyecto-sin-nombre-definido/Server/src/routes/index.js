@@ -9,13 +9,19 @@ const rentsRouter = require("./rentsRouters");
 const contactRouter = require('./contactRouter');
 const emailContact = require('./email');
 const favoritesRouter = require('./favoritesRouter');
+const forgotPassRouter = require('./forgotPassRouter');
+const resetPasswordRouter = require('./resetPassRouter');
 const googleLoginRouter = require('./googleLogin');
+
+
 const { paymentRouter } = require('./payment.routes');
 const router = Router();
 
 router.use('/googleAuth', googleLoginRouter)
 router.use("/login", loginRouter);
-router.use('/logout', logOutRouter)
+router.use('/logout', logOutRouter);
+router.use('/forgot-password', forgotPassRouter)
+router.use('/reset-password', resetPasswordRouter)
 
 router.use("/favorites", favoritesRouter);
 router.use("/users", usersRouter); // falta search
@@ -28,5 +34,6 @@ router.use("/rents", rentsRouter);
 router.use("/contact", contactRouter);
 router.use("/sendmail", emailContact);
 router.use('/pay', paymentRouter)
+
 
 module.exports = router;
