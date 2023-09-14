@@ -20,17 +20,21 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
       const allDates = datess.map((element) => element.dates);
       return [].concat(...allDates);
     });
-
     if (innerDate >= checkOuting) {
       return "Las fechas ingresadas son incorrectas";
     } else {
       const innerDates = [];
 
+      console.log(1);
       while (innerDate < checkOuting) {
         const innerDateFormatted = innerDate.toISOString().split("T")[0];
-        if (gathered.includes(innerDateFormatted))
+
+        console.log(innerDateFormatted);
+        if (gathered.includes(innerDateFormatted)) {
           return "La propiedad está reservada para los días indicados";
+        }
         innerDates.push(new Date(innerDate));
+        console.log(innerDate);
         innerDate.setDate(innerDate.getDate() + 1);
       }
 
@@ -41,6 +45,7 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
         userId: userId,
         expirationTime: expirationTime,
       });
+
       return `Mantendremos la propiedad reservada para vos por 15min... Pero metele porque vuela!!`;
     }
   } catch (error) {

@@ -1,7 +1,11 @@
 const { type } = require("os");
 
 // const { rentSchemePost } = require("../helpers/validations/rentValidation.js");
-const { createRent, createBook,getRentById } = require("../controllers/rentController.js");
+const {
+  createRent,
+  createBook,
+  getRentById,
+} = require("../controllers/rentController.js");
 
 const createBookHandler = async (req, res) => {
   const { assetId, userId, checkInDate, checkOutDate } = req.body;
@@ -90,5 +94,5 @@ const getRentByIdHandler = async (req, res) => {
 module.exports = {
   createRentHandler,
   createBookHandler,
-  getRentByIdHandler
+  getRentByIdHandler,
 };
