@@ -13,7 +13,7 @@ const googleLoginRouter = require('./googleLogin');
 const { paymentRouter } = require('./payment.routes');
 const router = Router();
 
-router.use('/googleAuth', googleLoginRouter)
+router.use('/google', googleLoginRouter)
 router.use("/login", loginRouter);
 router.use('/logout', logOutRouter)
 

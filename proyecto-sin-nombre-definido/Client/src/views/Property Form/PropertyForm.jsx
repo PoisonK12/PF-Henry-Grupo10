@@ -35,7 +35,6 @@ const PropertyForm = () => {
   Helipuerto: false})
 
   const [userName, setUserName] = useState("");
-  console.log(userName);
 
   const [errors, setErrors] = useState({
     name: "",
@@ -57,7 +56,6 @@ const PropertyForm = () => {
     averageScore:"",
     nearbyScore:"",
     userName: "",
-
     amenities: "",
   });
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
@@ -73,7 +71,6 @@ const PropertyForm = () => {
     Helipuerto: "",
   });
 
-  console.log(selectedCkeckbox);
   
   const navigate = useNavigate();
 
@@ -84,24 +81,22 @@ const PropertyForm = () => {
     address: "",
     location: "",
     onSale: false,
-    sellPrice: 0,
-    rentPrice: 0,
+    sellPrice: "",
+    rentPrice: "",
     type: "",
-    rooms: 0,
-    bathrooms: 0,
+    rooms: "",
+    bathrooms: "",
     description: "",
-    coveredArea: 0,
-    totalArea: 0,
+    coveredArea: "",
+    totalArea: "",
     reviews: "asdasdasd",
     nearby: "asd",
-    averageScore: 1,
-    nearbyScore: 1,
+    averageScore: "",
+    nearbyScore: "",
     userName: "",
-
     amenities: [],
   });
 
-  console.log(form);
 
   useEffect(() => {
     const setearName = () => {
@@ -123,10 +118,9 @@ const PropertyForm = () => {
   if (modal && Array.isArray(modalBody.response)) console.log(true);
 
   const handleSellPrice = (e) => {
-    const { value } = e.target;
-    if (value === "true") {
-      setPrice(true);
-    }
+    const { checked } = e.target;
+      setPrice(checked);
+  
   };
 
   // Función para manejar el evento de soltar la imagen
@@ -149,7 +143,6 @@ const PropertyForm = () => {
 
   // Función para manejar el archivo seleccionado
   const handleFile = async (file) => {
-    console.log(file);
 
     if (!file.type.includes("image")) {
       setErrors({ ...errors, images: "Solo puedes subir imagenes" });
@@ -174,12 +167,10 @@ const PropertyForm = () => {
     }
   };
 
-  console.log(form.images);
 
   const handleDelete = (index) => {
  
     const updatedImages = form.images.filter((ele, i) => i !== index);
-    console.log(form.images);
     setForm({ ...form, images: updatedImages });
 
     if (selectedIndex === form.images.length - 1) {
@@ -192,86 +183,49 @@ const PropertyForm = () => {
   };
 
   const handleStep = (e) => {
-    console.log('ss',e);
-    e.preventDefault();
-
+    
     if (e.target.value === "prev") {
       setStep(step - 1);
-      console.log(step);
-      return
+      setErrors({ 
+      name: "",
+      images: "",
+      country: "",
+      address: "",
+      location: "",
+      onSale: "",
+      sellPrice:"",
+      rentPrice:"",
+      type: "",
+      rooms:"",
+      bathrooms:"",
+      description: "",
+      coveredArea:"",
+      totalArea:"",
+      reviews: "asdasdasd",
+      nearby: "asd",
+      averageScore:"",
+      nearbyScore:"",
+      userName: "",
+      amenities: "",
+    });
+    return
+  }
+
+   else if(e.target.value === "next") {
+      const errorDetect = validation(form , step);
+      setErrors(errorDetect);
+      console.log("error" , errorDetect);
+      if(Object.keys(errorDetect).length === 0) {
+        setStep(step + 1)
+        return
+      } 
     }
-
-    if (step === 1) {
-      setErrors(validation({...form}));
-
-      const step1 = Object.values({
-        images: errors.images,
-        name: errors.name,
-        location: errors.location,
-        country: errors.country,
-        address: errors.address,
-      });
-      console.log(step1);
-      
-      if (step1.some((error) => typeof error === "string")) {
-        return;
-      } else {
-      
-        setStep(step + 1);
-        setErrors({ 
-          onSale: "",
-        sellPrice:"",
-        rentPrice:"",
-        type: "",
-        rooms:"",
-        bathrooms:"",
-        description: "",
-        coveredArea:"",
-        totalArea:"",
-        reviews: "asdasdasd",
-        nearby: "asd",
-        averageScore:"",
-        nearbyScore:"",
-        userName: "",
-    
-        amenities: "",})
-      }
-    }
-
-    if (step === 2) {
-      setErrors(validation({ ...form}));
-
-      console.log(errors);
-      const step2 = Object.values({
-        bathrooms: errors.bathrooms,
-        rooms: errors.rooms,
-        totalArea: errors.totalArea,
-        coveredArea: errors.coveredArea,
-        rentPrice: errors.rentPrice,
-        sellPrice: errors.sellPrice,
-        description: errors.description,
-      });
-      console.log(step2);
-     
-      if (step2.some((error) => typeof error === "string")) {
-        return;
-      } else {
-        setErrors({})
-        setStep(step + 1);
-      }
-    }
-
-    return;
   };
+  console.log(step);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    console.log(value);
-    const errorDetect = validation({ [name]: value });
-    setErrors((prevError) => ({
-      ...prevError,
-      [name]: errorDetect[name],
-    }));
+    
 
     if (name === "country" && value == "default") {
       return;
@@ -291,14 +245,6 @@ const PropertyForm = () => {
   };
 
 
-  const handleSelected = (e) => {
-    const { name } = e.target;
-    const { value } = e.target;
-  
-    setSelectedCheckbox({ ...selectedCkeckbox, [name]: value });
-
-  };
-
   const handleCkecked = (e) => {
   
     const {name} = e.target;
@@ -310,11 +256,11 @@ const PropertyForm = () => {
     const push = Object.values(selectedCkeckbox).map((ele) => Number(ele));
     const amenities = push.filter((ele) => ele !== 0);
     setForm({ ...form, amenities: amenities });
+    console.log(form);
   }
 
 
   //!------------------------handleForm----------------------------------
-
   const handleForm = async (e) => {
     e.preventDefault();
     console.log("hola");
@@ -416,11 +362,9 @@ const PropertyForm = () => {
 
     setShowCities(noProvince.length === 0);
 
-    console.log(noProvince);
   };
 
   console.log(conditionalCreate);
-  console.log(form);
   const MultiForm = (e) => {
     if (step === 1) {
       return (
@@ -431,7 +375,7 @@ const PropertyForm = () => {
           > 
             <fieldset className={`p-5 d-flex flex-column ${style.fieldset} `}>
          <div>
-            <h3 className=" display-6 "> Agrega una nueva propiedad </h3>
+            <h3 className=" display-6 "> Agrega una nueva propiedad {step}</h3>
           </div>
               <div
                 className={`d-flex flex-row justify-content-center align-items-center ${style.formmer}`}
@@ -685,7 +629,9 @@ const PropertyForm = () => {
               </div>
               <div className="mb-1">
                 <button
-                  type={step === 3 ? "submit" : "button"}
+                style={{marginLeft: "340px"}}
+                  type="button"
+                  value="next"
                   className={`ml-4 ${style.button}`}
                   onClick={(e) => handleStep(e)}
                 >
@@ -826,7 +772,32 @@ const PropertyForm = () => {
                       )}
                     </div>
                   </div>
-
+                  <div  className="d-flex flex-column ">
+                    <div className="form-check form-switch">
+                      <label className="form-check-label" htmlFor="onSale"> Esta a la venta ? </label>{" "}
+                      <input
+                        type="checkbox"
+                        onChange={handleSellPrice}
+                        name="onSale"
+                        className="form-check-input"
+                      ></input>
+                    </div>
+                  {price ?
+                    <div>
+                      <input
+                        type="number"
+                        id="inputPriceS"
+                        value={form.sellPrice}
+                        min="0"
+                        name="sellPrice"
+                        className=" form-control"
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      ></input>
+                    </div>
+                  : null }
+                  </div>
                   <div className="">
                     <label htmlFor="inputPriceR" className="input-label">
                       Precio de Renta
@@ -858,35 +829,7 @@ const PropertyForm = () => {
                       )}
                     </div>
                   </div>
-                  {!price ? (
-                    <div>
-                      <label htmlFor="onSale"> Esta a la venta ?</label>
-                      <input
-                        type="checkbox"
-                        onChange={handleSellPrice}
-                        name="onSale"
-                        value={true}
-                      ></input>
-                    </div>
-                  ) : (
-                    <div>
-                      <label htmlFor="inputPriceS" className="input-label">
-                        {" "}
-                        Precio de Venta{" "}
-                      </label>
-                      <input
-                        type="number"
-                        id="inputPriceS"
-                        value={form.sellPrice}
-                        min="0"
-                        name="sellPrice"
-                        className=" form-control"
-                        onChange={(e) => {
-                          handleChange(e);
-                        }}
-                      ></input>
-                    </div>
-                  )}
+                  
                   <div>
                     {errors.sellPrice ? (
                       <p
@@ -958,12 +901,12 @@ const PropertyForm = () => {
 
                   <div className="m-2">
                     <button
-                      type={step === 3 ? "submit" : "button"}
+                      type="button"
                       className={`ml-4 ${style.button}`}
                       value="next"
                       onClick={(e) => handleStep(e)}
                     >
-                      {step === 3 ? "Agregar" : "Continuar"}
+                      Continuar
                     </button>
                   </div>
                 </div>
@@ -984,25 +927,29 @@ const PropertyForm = () => {
               <h2 className=" display-6 mt-3 fw-bold"> ESPECIFICACIONES </h2>
             </div>
             <hr></hr>
-            <div className="d-flex flex-column justify-content-center align-items-center">
-              <div className="d-flex flex-row ">
-                <div>
-                  <label className="form-label"> Wifi ? {""}</label>
+
+          <div className="d-flex flex-row justify-content-center ">
+            <div className="d-flex flex-column justify-content-start align-items-start m-4">
+            
+              
+                <div className="form-check m-3 form-switch">
+                  <label className="form-check-label"> Wifi ? {""}</label>
                   <input
                     type="checkbox"
                     name="Wifi"
-                    className="form-checkbox"
+                    className="form-check-input"
                     value={1}
                     onChange={handleCkecked}
                     checked={Checked.Wifi}
                   ></input>
                 </div>
-                <div>
-                  <label htmlFor="wifi" className="form-label">
-                    {" "}
-                    Terraza ? {""}
+                <div className="form-check  m-3">
+                  <label className="form-check-label">
+                   
+                    Terraza ? 
                   </label>
                   <input
+                  className="form-check-input"
                     type="checkbox"
                     name="Terraza"
                     onChange={handleCkecked}
@@ -1010,14 +957,15 @@ const PropertyForm = () => {
                     value="6"
                   ></input>
                 </div>
-              </div>
-              <div className="d-flex flex-row">
-                <div>
-                  <label htmlFor="wifi" className="form-label">
-                    {" "}
+              
+             
+                <div className="form-check  m-3 ">
+                  <label  className="form-check-label">
+                   
                     GYM ? {""}
                   </label>
                   <input
+                   className="form-check-input"
                     type="checkbox"
                     name="GYM"
                     onChange={handleCkecked}
@@ -1025,12 +973,13 @@ const PropertyForm = () => {
                     value="13"
                   ></input>
                 </div>
-                <div>
-                  <label htmlFor="wifi" className="form-label">
-                    {" "}
+                <div className="form-check  m-3 ">
+                  <label  className="form-label">
+                   
                     Seguridad 24hs ? {""}
                   </label>
                   <input
+                  className="form-check-input"
                     type="checkbox"
                     name="Seguridad 24hs"
                     onChange={handleCkecked}
@@ -1038,14 +987,15 @@ const PropertyForm = () => {
                     value="11"
                   ></input>
                 </div>
-              </div>
-              <div className="d-flex flex-row">
-                <div>
-                  <label htmlFor="wifi" className="form-label">
-                    {" "}
+             
+              
+                <div className="form-check  m-3 ">
+                  <label className="form-label">
+                  
                     Cochera ? {""}
                   </label>
                   <input
+                  className="form-check-input"
                     type="checkbox"
                     name="Cochera"
                     onChange={handleCkecked}
@@ -1053,12 +1003,15 @@ const PropertyForm = () => {
                     value="3"
                   ></input>
                 </div>
-                <div>
-                  <label htmlFor="wifi" className="form-label">
-                    {" "}
-                    Helipuerto ? {""}
+                </div>
+              <div className="d-flex flex-column justify-content-start align-items-start m-4">
+                <div className="form-check  m-3">
+                  <label  className="form-label">
+                    
+                    Helipuerto ?
                   </label>
                   <input
+                  className="form-check-input"
                     type="checkbox"
                     name="Helipuerto"
                     onChange={handleCkecked}
@@ -1066,14 +1019,15 @@ const PropertyForm = () => {
                     value="69"
                   ></input>
                 </div>
-              </div>
-              <div className="d-flex flex-row">
-                <div>
-                  <label htmlFor="wifi" className="form-label">
-                    {" "}
+              
+              
+                <div className="form-check  m-3">
+                  <label  className="form-label">
+                   
                     Dormitorio en suite ? {""}
                   </label>
                   <input
+                  className="form-check-input"
                     type="checkbox"
                     name="Dormitorio en suite"
                     onChange={handleCkecked}
@@ -1081,12 +1035,13 @@ const PropertyForm = () => {
                     value="8"
                   ></input>
                 </div>
-                <div>
+                <div className="form-check  m-2 ">
                   <label htmlFor="wifi" className="form-label">
-                    {" "}
-                    Sauna ?{""}{" "}
+                    
+                    Sauna ?
                   </label>
                   <input
+                  className="form-check-input"
                     type="checkbox"
                     name="Sauna"
                     onChange={handleCkecked}
@@ -1094,14 +1049,15 @@ const PropertyForm = () => {
                     value="14"
                   ></input>
                 </div>
-              </div>
-              <div className="d-flex flex-row">
-                <div>
-                  <label htmlFor="wifi" className="form-label">
-                    {" "}
-                    Jacuzzi ? {""}
+              
+              
+                <div className="form-check  m-3">
+                  <label  className="form-label">
+                 
+                    Jacuzzi ? 
                   </label>
                   <input
+                  className="form-check-input"
                     type="checkbox"
                     name="Jacuzzi"
                     onChange={handleCkecked}
@@ -1109,12 +1065,13 @@ const PropertyForm = () => {
                     value="5"
                   ></input>
                 </div>
-                <div>
+                <div className="form-check  m-2 ">
                   <label htmlFor="wifi" className="form-label">
-                    {" "}
-                    Piscina ? {""}
+                    
+                    Piscina ? 
                   </label>
                   <input
+                  className="form-check-input"
                     type="checkbox"
                     name="Piscina"
                     onChange={handleCkecked}
@@ -1122,7 +1079,9 @@ const PropertyForm = () => {
                     value="4"
                   ></input>
                 </div>
-              </div>
+             
+            </div>
+            
             </div>
             <div>
               {errors.amenities ? (
@@ -1139,7 +1098,8 @@ const PropertyForm = () => {
                 <p style={{ visibility: "hidden" }}>&nbsp;</p>
               )}
             </div>
-
+            <iv></iv>
+<hr></hr>
             <div className="col-md-3 container d-flex flex-column ">
               <div className=" d-flex flex-row align-items-center justify-content-around mt-2 ">
                 <div className="m-3 ">
@@ -1224,7 +1184,12 @@ const PropertyForm = () => {
                   total={modalBody.response.rentPrice}
                 ></Card>
               ) : (
-                <p>"TU ASSETS HA SIDO CREADO CON ÉXITO "</p>
+                <div>                
+                  <h6>Felicidadess!</h6>
+                <p> Has creado una nueva propiedad! </p>
+                <p> Ahora todos podrán verla </p>
+                </div>
+
               )}
             </Modal.Body>
             <Modal.Footer class="d-flex flex-row justify-content-center align-items-center">
