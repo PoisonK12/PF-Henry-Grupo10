@@ -843,8 +843,8 @@ const Register = ({ handleSwitch }) => {
                     <option value=""> --Selecciona una opción--</option>
                     <option value="Argentina">Argentina</option>
                     <option value="Venezuela">Venezuela</option>
-                    <option value="Colombia">Columbia</option>
-                    <option value="Mexico">Mexico</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Mexico">México</option>
                   </select>
                   {errors.nationality ? (
                     <p
