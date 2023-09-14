@@ -4,27 +4,29 @@ import { useEffect, useState } from "react";
 
 const Menu = () => {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState({})
+  const [userName, setUserName] = useState({});
   const location = useLocation();
-  
+
   useEffect(() => {
     const jsonData = localStorage.getItem("data");
-    if(jsonData){
+    if (jsonData) {
       const data = JSON.parse(jsonData);
-    setUserName({...userName, pic: data.profilePic, userName: data.userName});
-    // const userName = data.userName;
+      setUserName({
+        ...userName,
+        pic: data.profilePic,
+        userName: data.userName,
+        id:data.id
+      });
+      // const userName = data.userName;
     }
-    return
-  },[])
-
+    return;
+  }, []);
 
   const logOut = () => {
     localStorage.removeItem("log");
     localStorage.removeItem("data");
-    
-      navigate("/checkIn");
 
-    
+    navigate("/checkIn");
   };
 
   return (
@@ -42,9 +44,13 @@ const Menu = () => {
           >
             <img
               src={userName.pic}
-              style={{width:"50px",height:"50px",objectFit:"cover", borderRadius: "50%" }}
+              style={{
+                width: "50px",
+                height: "50px",
+                objectFit: "cover",
+                borderRadius: "50%",
+              }}
               className={style.button}
-
             />
 
             {/* <svg
@@ -72,30 +78,41 @@ const Menu = () => {
             id="offcanvasDarkNavbar"
             aria-labelledby="offcanvasDarkNavbarLabel"
           >
-            <div class="offcanvas-header" style={{display:"flex", flexDirection:"column"}}>
-              <img src={userName.pic} style={{borderRadius:"50%", objectFit:"cover", marginBottom:"20px"}}/>
-              <h3 style={{color:"#f0f0f0"}}>{userName.userName}</h3>
+            <div
+              class="offcanvas-header"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <img
+                src={userName.pic}
+                style={{
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  marginBottom: "20px",
+                }}
+              />
+              <h3 style={{ color: "#f0f0f0" }}>{userName.userName}</h3>
               <button
                 type="button"
                 class="btn-close btn-close-white"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
-                style={{position:"absolute", right:"20px", top:"20px"}}
+                style={{ position: "absolute", right: "20px", top: "20px" }}
               ></button>
             </div>
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <a
+                <li class="nav-item" data-bs-dismiss="offcanvas">
+                  <Link
                     class="nav-link"
                     aria-current="page"
-                    href="/userPanel"
+                    to={`/userPanel/${userName.id}`}
                     style={{
                       display: "flex",
                       // justifyContent: "center",
                       alignItems: "center",
                       height: "80px",
                     }}
+                    aria-label="Close"
                   >
                     <div>
                       <svg
@@ -114,10 +131,10 @@ const Menu = () => {
                       </svg>
                       &nbsp; Perfil
                     </div>
-                  </a>
+                  </Link>
                 </li>
                 <li class="nav-item">
-                  <a
+                  <Link
                     class="nav-link"
                     onClick={logOut}
                     href="#"
@@ -147,7 +164,7 @@ const Menu = () => {
                       </svg>
                       &nbsp; Salir
                     </div>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

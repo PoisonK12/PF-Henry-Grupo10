@@ -567,7 +567,7 @@ const Register = ({ handleSwitch }) => {
                     class={`form-control ${style.inputs}`}
                     value={register.fullName}
                     onChange={handleChange}
-                    placeholder="Nombre complleto"
+                    placeholder="Nombre completo"
                   />
                   {errors.fullName ? (
                     <p

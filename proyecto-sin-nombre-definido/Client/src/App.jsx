@@ -31,14 +31,14 @@ import FAQ from './views/Faq/Faq';
 function App() {
   
   const location = useLocation()
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    const loader = setTimeout(() => {
-      setLoading(false)
-    }, 2000)
-    return () => clearTimeout(loader)
-  }, [])
+  // useEffect(() => {
+  //   const loader = setTimeout(() => {
+  //     setLoading(false)
+  //   }, 2000)
+  //   return () => clearTimeout(loader)
+  // }, [])
 
   const token = localStorage.getItem("log")
 
@@ -47,7 +47,6 @@ function App() {
   return (
     <>
     
-    {loading && <Loader></Loader>} {/*? lOADER */}
       {(location.pathname !== "/" && location.pathname !== "/checkIn" && location.pathname !=="/404") && <Nav />}
       <ScrollToTop></ScrollToTop>
      <Routes>
@@ -60,7 +59,7 @@ function App() {
       <Route path='/contacts' element={<><Contatcs/><Footer/><Chatbot/></>}/>
       <Route path='/property' element={<><Property/><Chatbot/><Footer/></>}/>
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
-      <Route path='/userPanel' element={<><UserPanel/><Footer/></>}/>
+      <Route path='/userPanel/:id' element={<><UserPanel/><Footer/></>}/>
       <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>           
       <Route path="/checkIn" element={<><LoginRegister/><Footer/></>}></Route>
       <Route path="/demo" element={<><Loader/><Footer/></>}></Route> 

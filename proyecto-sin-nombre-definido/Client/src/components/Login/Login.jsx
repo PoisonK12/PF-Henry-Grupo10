@@ -44,6 +44,7 @@ const Login = ({ handleSwitch}) => {
 
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
 
     const existUser = users.find((user) => user.email === login.email);
 
@@ -65,7 +66,6 @@ const Login = ({ handleSwitch}) => {
       return;
     }
     console.log(e);
-    e.preventDefault();
     setToast(true);
     setTimeout(() => {
       setToast(false);
