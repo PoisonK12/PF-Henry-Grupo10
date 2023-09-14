@@ -47,7 +47,8 @@ function App() {
   return (
     <>
     
-      {(location.pathname !== "/" && location.pathname !== "/checkIn" && location.pathname !=="/404" && location.pathname !== "/forgot-password" && location.pathname !== "/reset_password/:id/:token" ) && <Nav />}
+    {loading && <Loader></Loader>} {/*? lOADER */}
+      {(location.pathname !== "/" && location.pathname !== "/checkIn" && location.pathname !=="/404") && <Nav />}
       <ScrollToTop></ScrollToTop>
      <Routes>
       <Route path='/' element={<><Landing/></>} />
