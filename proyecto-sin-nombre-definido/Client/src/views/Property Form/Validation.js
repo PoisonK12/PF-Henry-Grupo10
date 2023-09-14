@@ -22,11 +22,11 @@ if(step == 1) {
      errors.address = "Tiene que tener el número de calle";
    }
 
-   if (!form.country) errors.country = "Ingrese un pais ";
-   else if (form.country && form.country === "Seleccione un pais") errors.country = "Ingrese un país"
+   if (!form.country) errors.country = "Ingrese un país ";
+   else if (form.country && form.country === "Seleccione un país") errors.country = "Ingrese un país"
 
    if (!form.location )
-     errors.location = "Ingrese un locacion ";
+     errors.location = "Ingrese un locación ";
     else if (form.location && form.location == "Seleccione una ciudad")
      errors.location = "Ingrese una ciudad";
     
