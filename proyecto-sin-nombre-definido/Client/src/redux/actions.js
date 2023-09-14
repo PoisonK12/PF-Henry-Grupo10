@@ -21,6 +21,7 @@ import {
   DELETE_CONTACT_BY_ID,
   GET_USER_BY_ID,
   DELETE_LOGIC_USER_BY_ID,
+  RESTORE_USER_BY_ID,
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -307,6 +308,21 @@ export const deleteLogicUserById = (id) => {
     }
   };
 };
+
+export const restoreUserById = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.get(`/users/restore/${id}`)
+      dispatch({
+        type: RESTORE_USER_BY_ID,
+        payload: id,
+      })
+    } catch (error) {
+      console.error(error);
+    
+    }
+  }
+}
 
 export const deleteMessageById = (id) => {
   return async (dispatch) => {
