@@ -14,7 +14,7 @@ function ResetPassword() {
         
         .then(res => {
             if(res.data.Status === "Success") {
-                navigate('/login')
+                navigate('/checkIn')
                
             }
         }).catch(err => console.log(err))
