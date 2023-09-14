@@ -9,16 +9,66 @@ const {
   updateReviewUser,
   getUserByIdController,
 } = require("../controllers/userController");
-const { response } = require("express");
+// const { response } = require("express");
+// const { param } = require("../routes");
 
 const getReviewByIdController = async (req) => {
-  const { id } = req.query;
-  try {
-    const response = await Review.findOne({ where: { id: id } });
+  const { id } = req.params;
+  if (id.length !== 36) {
+    try {
+      const response = await Review.findAll({
+        where: { userName: id },
+        attributes: ["score", "comment", "userName", "createdAt"],
+      });
 
-    return response;
+      return response;
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+  // console.log(id);
+  try {
+    const response = await Review.findAll({
+      include: [
+        {
+          model: Asset,
+          through: {
+            where: {
+              AssetId: id,
+            },
+          },
+          attributes: [],
+        },
+      ],
+      where: {
+        "$Assets.id$": {
+          [Op.eq]: id,
+        },
+      },
+      attributes: ["score", "comment", "userName", "createdAt"],
+    });
+
+    console.log(response);
+    console.log(id);
+    if (response.length > 0) return response;
+    else {
+      const response = await Review.findAll({
+        include: [
+          {
+            model: User,
+            through: { where: { UserId: id } },
+            attributes: [],
+          },
+        ],
+        where: { "$Users.id$": { [Op.eq]: id } },
+        attributes: ["score", "comment", "userName", "createdAt"],
+      });
+      if (response.length > 0) return response;
+      return "No hay reviews relacionadas a los datos proporcionados";
+    }
   } catch (error) {
     console.error(error.message);
+    // throw error;
   }
 };
 //!------------------------------------------------------------------------

@@ -21,6 +21,7 @@ import {
   DELETE_CONTACT_BY_ID,
   GET_USER_BY_ID,
   DELETE_LOGIC_USER_BY_ID,
+  RESTORE_USER_BY_ID,
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -146,7 +147,7 @@ export const createAsset = async (
       setConditionalCreate(true);
       setTimeout(() => {
         setModal(false);
-        navigate("/home");
+        navigate("/detail/" + data.id);
       }, 1000);
 
       return;
@@ -197,10 +198,11 @@ export const putProperty = (id, form) => {
   };
 };
 
-export const putUser = (id, form) => {
+export const putUser = (form) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/users/${id}`, form);
+      const { data } = await axios.put(`/users`,form );
+      console.log(data)
       return dispatch({
         type: PUT_USER,
         payload: data,
@@ -307,6 +309,21 @@ export const deleteLogicUserById = (id) => {
     }
   };
 };
+
+export const restoreUserById = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.get(`/users/restore/${id}`)
+      dispatch({
+        type: RESTORE_USER_BY_ID,
+        payload: id,
+      })
+    } catch (error) {
+      console.error(error);
+    
+    }
+  }
+}
 
 export const deleteMessageById = (id) => {
   return async (dispatch) => {
