@@ -113,7 +113,9 @@ const updateUserHandler = async (req, res) => {
   } = req.body;
 
   try {
-    const passwordHash = await encrypt(password);
+    if(password){
+      password = await encrypt(password);
+    }
 
     await updateUser({
       userName,
@@ -126,7 +128,7 @@ const updateUserHandler = async (req, res) => {
       address,
       nationality,
       email,
-      password: passwordHash,
+      password,
       landlord,
       //edicion por sistema
       userType,
