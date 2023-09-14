@@ -35,7 +35,6 @@ const PropertyForm = () => {
   Helipuerto: false})
 
   const [userName, setUserName] = useState("");
-  console.log(userName);
 
   const [errors, setErrors] = useState({
     name: "",
@@ -72,7 +71,6 @@ const PropertyForm = () => {
     Helipuerto: "",
   });
 
-  console.log(selectedCkeckbox);
   
   const navigate = useNavigate();
 
@@ -99,7 +97,6 @@ const PropertyForm = () => {
     amenities: [],
   });
 
-  console.log(form);
 
   useEffect(() => {
     const setearName = () => {
@@ -146,7 +143,6 @@ const PropertyForm = () => {
 
   // Función para manejar el archivo seleccionado
   const handleFile = async (file) => {
-    console.log(file);
 
     if (!file.type.includes("image")) {
       setErrors({ ...errors, images: "Solo puedes subir imagenes" });
@@ -171,12 +167,10 @@ const PropertyForm = () => {
     }
   };
 
-  console.log(form.images);
 
   const handleDelete = (index) => {
  
     const updatedImages = form.images.filter((ele, i) => i !== index);
-    console.log(form.images);
     setForm({ ...form, images: updatedImages });
 
     if (selectedIndex === form.images.length - 1) {
@@ -189,84 +183,49 @@ const PropertyForm = () => {
   };
 
   const handleStep = (e) => {
-
+    
     if (e.target.value === "prev") {
       setStep(step - 1);
-      console.log(step);
-      return
+      setErrors({ 
+      name: "",
+      images: "",
+      country: "",
+      address: "",
+      location: "",
+      onSale: "",
+      sellPrice:"",
+      rentPrice:"",
+      type: "",
+      rooms:"",
+      bathrooms:"",
+      description: "",
+      coveredArea:"",
+      totalArea:"",
+      reviews: "asdasdasd",
+      nearby: "asd",
+      averageScore:"",
+      nearbyScore:"",
+      userName: "",
+      amenities: "",
+    });
+    return
+  }
+
+    if(e.target.value === "next") {
+      const errorDetect = validation(form , step);
+      setErrors(errorDetect);
+      console.log("error" , errorDetect);
+      if(Object.keys(errors).length === 0) {
+        setStep(step + 1)
+        return
+      } 
     }
-
-    if (step === 1) {
-      setErrors(validation({...form}));
-
-      const step1 = Object.values({
-        images: errors.images,
-        name: errors.name,
-        location: errors.location,
-        country: errors.country,
-        address: errors.address,
-      });
-      console.log(step1);
-      
-      if (step1.some((error) => typeof error === "string")) {
-        return;
-      } else {
-      
-        setStep(step + 1);
-        setErrors({ 
-          onSale: "",
-        sellPrice:"",
-        rentPrice:"",
-        type: "",
-        rooms:"",
-        bathrooms:"",
-        description: "",
-        coveredArea:"",
-        totalArea:"",
-        reviews: "asdasdasd",
-        nearby: "asd",
-        averageScore:"",
-        nearbyScore:"",
-        userName: "",
-    
-        amenities: "",})
-      }
-    }
-
-    if (step === 2) {
-      setErrors(validation({ ...form}));
-
-      console.log(errors);
-      const step2 = Object.values({
-        bathrooms: errors.bathrooms,
-        rooms: errors.rooms,
-        totalArea: errors.totalArea,
-        coveredArea: errors.coveredArea,
-        rentPrice: errors.rentPrice,
-        sellPrice: errors.sellPrice,
-        description: errors.description,
-      });
-      console.log(step2);
-     
-      if (step2.some((error) => typeof error === "string")) {
-        return;
-      } else {
-        setErrors({})
-        setStep(step + 1);
-      }
-    }
-
-    return;
   };
+  console.log(step);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    console.log(value);
-    const errorDetect = validation({ [name]: value });
-    setErrors((prevError) => ({
-      ...prevError,
-      [name]: errorDetect[name],
-    }));
+    
 
     if (name === "country" && value == "default") {
       return;
@@ -297,11 +256,11 @@ const PropertyForm = () => {
     const push = Object.values(selectedCkeckbox).map((ele) => Number(ele));
     const amenities = push.filter((ele) => ele !== 0);
     setForm({ ...form, amenities: amenities });
+    console.log(form);
   }
 
 
   //!------------------------handleForm----------------------------------
-
   const handleForm = async (e) => {
     e.preventDefault();
     console.log("hola");
@@ -403,11 +362,9 @@ const PropertyForm = () => {
 
     setShowCities(noProvince.length === 0);
 
-    console.log(noProvince);
   };
 
   console.log(conditionalCreate);
-  console.log(form);
   const MultiForm = (e) => {
     if (step === 1) {
       return (
@@ -418,7 +375,7 @@ const PropertyForm = () => {
           > 
             <fieldset className={`p-5 d-flex flex-column ${style.fieldset} `}>
          <div>
-            <h3 className=" display-6 "> Agrega una nueva propiedad </h3>
+            <h3 className=" display-6 "> Agrega una nueva propiedad {step}</h3>
           </div>
               <div
                 className={`d-flex flex-row justify-content-center align-items-center ${style.formmer}`}
@@ -674,6 +631,7 @@ const PropertyForm = () => {
                 <button
                 style={{marginLeft: "340px"}}
                   type="button"
+                  value="next"
                   className={`ml-4 ${style.button}`}
                   onClick={(e) => handleStep(e)}
                 >
@@ -1140,6 +1098,7 @@ const PropertyForm = () => {
                 <p style={{ visibility: "hidden" }}>&nbsp;</p>
               )}
             </div>
+            <iv></iv>
 <hr></hr>
             <div className="col-md-3 container d-flex flex-column ">
               <div className=" d-flex flex-row align-items-center justify-content-around mt-2 ">
@@ -1226,7 +1185,7 @@ const PropertyForm = () => {
                 ></Card>
               ) : (
                 <div>                
-                <h6>Felicidadess!</h6>
+                  <h6>Felicidadess!</h6>
                 <p> Has creado una nueva propiedad! </p>
                 <p> Ahora todos podrán verla </p>
                 </div>
