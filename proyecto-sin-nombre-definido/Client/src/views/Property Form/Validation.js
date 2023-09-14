@@ -13,7 +13,7 @@ if(step == 1) {
    if (!form.address) errors.address = "Ingrese una direccion";
    else if (form.address && form.address.length < 3)
      errors.address = "La direccion es muy corta";
-   else if (form.address && form.address.length > 25)
+   else if (form.address && form.address.length > 75)
      errors.address = "La direccion es muy larga";
    else if (
      form.address &&
