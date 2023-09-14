@@ -8,7 +8,7 @@ import fondo from "../../assets/images/Exteriores/imageLogin.avif";
 import GoogleLoginButton from "../GoogleAuth/LoginButton/";
 import Register from "../Register/Register";
 import { useDispatch, useSelector } from "react-redux";
-
+import Swal from 'sweetalert2';
 
 const Login = ({ handleSwitch}) => {
   const users = useSelector(state => state.users)
@@ -48,15 +48,20 @@ const Login = ({ handleSwitch}) => {
     const existUser = users.find((user) => user.email === login.email);
 
     if (!existUser) {
-      // El usuario no existe en la lista de usuarios
-      // Puedes mostrar un mensaje de error o tomar la acción adecuada
-      alert("Usuario no encontrado");
+      Swal.fire({
+        title: 'Usuario no encontrado',
+        icon: 'error',
+        text: 'El usuario no existe en la lista de usuarios.',
+      });
       return;
     }
+    
     if (existUser.hide) {
-      // El usuario está oculto en la base de datos
-      // Mostrar un mensaje de error o tomar alguna acción adecuada
-      alert("El usuario está oculto");
+      Swal.fire({
+        title: 'Usuario suspendedio',
+        icon: 'error',
+        text: 'El usuario está suspendido porfavor comunicate con nosotros.',
+      });
       return;
     }
     console.log(e);

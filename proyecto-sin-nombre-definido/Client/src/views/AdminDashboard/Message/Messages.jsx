@@ -44,7 +44,9 @@ const Message = () => {
   return (
     <div>
       <div>
-        <h1>Mensajes</h1>
+        <div className={style.name}>
+          <h1 className={style.titulo}>📩Mensajes</h1>
+        </div>
 
         <div className={style.cardsCont}>
           {contact?.map((ele) => (
