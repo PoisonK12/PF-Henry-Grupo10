@@ -12,7 +12,7 @@ const FAQ = () => {
     {
       question: '¿Cuáles son las opciones de pago disponibles?',
       answer:
-        'Aceptamos tarjetas de crédito principales, transferencias bancarias y otros métodos de pago. Puedes seleccionar tu método de pago preferido durante el proceso de reserva.'
+        'Por el momemnto solo aceptamos pago por Stripe, transferencias bancarias y otros métodos de pago serán incluidos próximamente. Puedes seleccionar tu método de pago durante el proceso de reserva.'
     },
     {
       question: '¿Cómo puedo ponerme en contacto con el propietario de la propiedad?',

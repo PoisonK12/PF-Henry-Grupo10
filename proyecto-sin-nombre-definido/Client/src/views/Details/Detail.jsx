@@ -11,6 +11,8 @@ import NotFoundPage from "../404/404";
 import Calendar from "./Calendar";
 import Card from "../../components/Card/CardOffer/CardOffer";
 import Loader from "../../components/Loader/Loader";
+import Maps from "../../views/Map/Map"
+
 
 const Detail = () => {
   const { id } = useParams();
@@ -172,16 +174,7 @@ const Detail = () => {
               <p>{assetDetail.description}</p>
             </div>
             <div className={style.googleMap}>
-              <iframe
-                title="Google Map"
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15908.325523601628!2d-74.18270045!3d4.5794067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1693329189613!5m2!1ses-419!2sco"
-                width="100%"
-                height="300"
-                style={{ border: "0" }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+             <Maps location={assetDetail.location}/>
             </div>
           </div>
           <div className={style.reseñas}>
