@@ -48,9 +48,6 @@ function User() {
     console.log('Datos que se van a enviar:', form);
     dispatch(putUser(form))
     const info = localStorage.getItem("data");
-    info = form
-    localStorage.setItem("data", form);
-
   };
   
   
