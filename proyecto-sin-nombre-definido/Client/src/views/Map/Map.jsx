@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -27,17 +27,27 @@ async function geocodeAddress(address) {
 
 const Maps = ({ location }) => {
   const initialAddress = location || "Buenos Aires, Argentina";
-  const [coordinates, setCoordinates] = useState({ lat: 19.4326296, lng: -99.1331785 });
+  const [coordinates, setCoordinates] = useState({lat:0 , lng:0});
   const [address, setAddress] = useState(initialAddress);
   const [error, setError] = useState(null);
+
+
+  const mapRef = useRef(null);
 
   useEffect(() => {
     async function getCoordinates() {
       try {
         const coords = await geocodeAddress(address);
-        setCoordinates({... coordinates, lat: coords.lat, lng: coords.lng });
-        console.log("coodernadas", coords);
-        setError(null);
+        if (coords && coords.lat !== null && coords.lng !== null) {
+          setCoordinates(coords);
+          
+          setError(null);
+          if (mapRef.current) {
+            mapRef.current.setView(coords, 14);
+          }
+        }else{
+          setError("Las coordenadas son invalidas");
+        }
       } catch (error) {
         setError(error.message);
       }
@@ -51,7 +61,7 @@ getCoordinates()
     // } else if (address.trim() !== "") {
     //   getCoordinates();
    // }
-  }, [address, coordinates]);
+  }, [address]);
 
   return (
     <div>
@@ -59,8 +69,9 @@ getCoordinates()
 
       {error && <p>{error}</p>}
       <MapContainer
+      ref={mapRef}
         center={coordinates}
-        zoom={15}
+        zoom={14}
         scrollWheelZoom
         style={{ height: "350px", width: "350px" }}
       >

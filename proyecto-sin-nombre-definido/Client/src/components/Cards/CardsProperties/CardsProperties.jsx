@@ -45,7 +45,7 @@ const CardsProperties = ({setFilter, filter}) => {
   console.log(allProperties)
   return (
     <>
-    {allProperties.rows.length ? (
+    {allProperties?.rows?.length ? (
       <>
     <div className={style.background} ref={listContainerRef}> 
       {allProperties.rows?.map((ele) => {
