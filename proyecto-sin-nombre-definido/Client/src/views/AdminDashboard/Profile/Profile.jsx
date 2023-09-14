@@ -96,7 +96,6 @@ function User() {
                           src={form.profilePic}
                           alt=""
                           style={{
-                            height: "150px",
                             borderRadius: "50%",
                             objectFit: "cover",
                             border: "10px  #ccc",
@@ -106,7 +105,6 @@ function User() {
                             width: "200px",
                             top: "40px",
                             height: "200px",
-                            borderRadius: "100px",
                           }}
                         />
                       </FormGroup>
