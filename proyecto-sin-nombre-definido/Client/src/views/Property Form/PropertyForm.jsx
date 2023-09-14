@@ -211,11 +211,11 @@ const PropertyForm = () => {
     return
   }
 
-    if(e.target.value === "next") {
+   else if(e.target.value === "next") {
       const errorDetect = validation(form , step);
       setErrors(errorDetect);
       console.log("error" , errorDetect);
-      if(Object.keys(errors).length === 0) {
+      if(Object.keys(errorDetect).length === 0) {
         setStep(step + 1)
         return
       } 

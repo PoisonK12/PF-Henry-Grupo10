@@ -18,7 +18,7 @@ import { putUser } from "../../../redux/actions";
 function User() {
   const [data, setData] = useState({});
   const [form, setForm] = useState({
-    userName: "",
+    userName: data.userName,
     fullName: "",
     profilePic: "",
     address: "",
@@ -69,7 +69,8 @@ function User() {
     setForm({ ...form, [name]: value });
   };
 
-  const handleUpdate = () => {
+  const handleUpdate =  (e) => {
+    e.preventDefault(e)
     console.log('Datos que se van a enviar:', form);
     dispatch(putUser(form))
     
@@ -88,8 +89,17 @@ function User() {
     // Obtén los datos del usuario y establece tanto "data" como "form"
     const info = localStorage.getItem("data");
     const userData = JSON.parse(info);
-    setData(userData);
-    setForm(userData);
+    // setData(userData);
+    setForm({userName: userData.userName,
+      fullName: userData.fullName,
+      profilePic: userData.profilePic,
+      address: userData.address,
+      nationality: userData.nationality,
+      birthDate: userData.birthDate,
+      phoneNumber: userData.phoneNumber,
+      gender: userData.gender,
+      password:userData.password
+    });
   }, []);
 
   return (
@@ -99,7 +109,7 @@ function User() {
           <Col md="8">
             <Card>
               <CardHeader>
-                <h5 className="title">Editar Perfil</h5>
+                <h5 className="title">Editar Perfil {form.phoneNumber}</h5>
               </CardHeader>
               <CardBody style={cardStyle}>
                 <Form onSubmit={handleUpdate}>
@@ -107,7 +117,7 @@ function User() {
                     <Col md="12" className="d-flex justify-content-center align-items-center">
                       <FormGroup>
                         <img
-                          src={data.profilePic}
+                          src={form.profilePic}
                           alt=""
                           style={{
                             height: "150px",
@@ -134,7 +144,7 @@ function User() {
                           name="userName"
                           placeholder="Nombre Usuario"
                           type="text"
-                          value={form.userName || ""}
+                          value={form.userName}
                           disabled
                         />
                       </FormGroup>
@@ -146,7 +156,7 @@ function User() {
                           name="fullName"
                           placeholder="Nombre Completo"
                           type="text"
-                          value={form.fullName || ""}
+                          value={form.fullName}
                           onChange={handleChange}
                         />
                       </FormGroup>
@@ -174,7 +184,7 @@ function User() {
                           name="nationality"
                           placeholder="Nacionalidad"
                           type="text"
-                          value={form.nationality || ""}
+                          value={form.nationality}
                           onChange={handleChange}
                         />
                       </FormGroup>
@@ -186,7 +196,7 @@ function User() {
                           name="birthDate"
                           placeholder="Fecha Cumpleaños"
                           type="text"
-                          value={form.birthDate || ""}
+                          value={form.birthDate}
                           onChange={handleChange}
                         />
                       </FormGroup>
@@ -199,8 +209,8 @@ function User() {
                         <Input
                           name="phoneNumber"
                           placeholder="Número Teléfono"
-                          type="number"
-                          value={form.phoneNumber || ""}
+                          type="text"
+                          value={form.phoneNumber}
                           onChange={handleChange}
                         />
                       </FormGroup>
@@ -212,7 +222,7 @@ function User() {
                           type="text"
                           name="gender"
                           id="genderSelect"
-                          value={form.gender || ""}
+                          value={form.gender}
                           onChange={handleChange}
                         />
                       </FormGroup>

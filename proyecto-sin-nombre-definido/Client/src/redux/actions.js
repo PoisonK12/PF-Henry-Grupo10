@@ -146,7 +146,7 @@ export const createAsset = async (
       setConditionalCreate(true);
       setTimeout(() => {
         setModal(false);
-        navigate("/home");
+        navigate("/detail/" + data.id);
       }, 1000);
 
       return;
@@ -197,10 +197,11 @@ export const putProperty = (id, form) => {
   };
 };
 
-export const putUser = () => {
+export const putUser = (form) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/users/`);
+      const { data } = await axios.put(`/users`,form );
+      console.log(data)
       return dispatch({
         type: PUT_USER,
         payload: data,
