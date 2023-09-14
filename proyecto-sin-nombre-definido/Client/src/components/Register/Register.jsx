@@ -380,7 +380,7 @@ const Register = ({ handleSwitch }) => {
                   }}
                 >
                   <label class="form-label lead" htmlFor="confirmPassword">
-                    Confirmar Contraseña :
+                    Confirmar contraseña :
                   </label>
                   <input
                     type={passwordType2 ? "text" : "password"}
@@ -517,7 +517,7 @@ const Register = ({ handleSwitch }) => {
                         <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z" />
                       </svg>
                       <br></br>
-                      Arrastra o haga click{" "}
+                      Arrastra o haz click{" "}
                       <span
                         className={style.click}
                         onClick={() =>
@@ -559,7 +559,7 @@ const Register = ({ handleSwitch }) => {
                   }}
                 >
                   <label class="form-label lead" htmlFor="fullName">
-                    Nombre Completo :{" "}
+                    Nombre completo :{" "}
                   </label>
                   <input
                     type="text"
@@ -743,7 +743,7 @@ const Register = ({ handleSwitch }) => {
                   color: "#091f44",
                 }}
               >
-                ULTIMOS PASOS
+                ÚLTIMOS PASOS
               </h2>
 
               <br></br>
@@ -772,7 +772,7 @@ const Register = ({ handleSwitch }) => {
                     <option value="Male">Hombre</option>
                     <option value="Female">Mujer</option>
                     <option value="Undefined">Indefinido</option>
-                    <option value="No apply">No aplicar</option>
+                    <option value="No apply">No aplica</option>
                   </select>
                   {errors.gender ? (
                     <p
@@ -796,7 +796,7 @@ const Register = ({ handleSwitch }) => {
                     gridArea: "address",
                   }}
                 >
-                  <label class="form-label lead">Direccion :</label>
+                  <label class="form-label lead">Dirección :</label>
                   <input
                     type="text"
                     name="address"
@@ -843,8 +843,8 @@ const Register = ({ handleSwitch }) => {
                     <option value=""> --Selecciona una opción--</option>
                     <option value="Argentina">Argentina</option>
                     <option value="Venezuela">Venezuela</option>
-                    <option value="Colombia">Columbia</option>
-                    <option value="Mexico">Mexico</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Mexico">México</option>
                   </select>
                   {errors.nationality ? (
                     <p
@@ -972,7 +972,7 @@ const Register = ({ handleSwitch }) => {
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
-                  <p> Redirigiendote....</p>
+                  <p> Redirigiendo...</p>
                 </Modal.Footer>
               </Modal>
             </div>
@@ -986,7 +986,7 @@ const Register = ({ handleSwitch }) => {
                   <div>
                     <h6>{toastBody.response}</h6>
                     <br></br>
-                    <h6> Intentalo de nuevo </h6>
+                    <h6> Inténtalo de nuevo </h6>
                   </div>
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>

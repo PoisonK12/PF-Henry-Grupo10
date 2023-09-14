@@ -9,6 +9,7 @@ import GoogleLoginButton from "../GoogleAuth/LoginButton/";
 import Register from "../Register/Register";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from 'sweetalert2';
+import { Link } from "react-router-dom";
 
 const Login = ({ handleSwitch}) => {
   const users = useSelector(state => state.users)
@@ -138,6 +139,8 @@ const Login = ({ handleSwitch}) => {
                     onChange={handleChange}
                     placeholder="Escriba su contraseña"
                   />
+                  <br />
+                  <Link to="/forgot-password">¿Olvidaste tu contraseña?</Link>
                   {errors.password ? (
                     <p style={{ color: "red", fontSize: "3px" }}>
                       {errors.password}

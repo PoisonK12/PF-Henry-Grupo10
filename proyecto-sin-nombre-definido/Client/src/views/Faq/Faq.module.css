@@ -1,15 +1,12 @@
 @import url('https://fonts.cdnfonts.com/css/avenir');
 
 .wrap{
-height: 69.9vh;
-
-background-image: url('../../assets/images/faq.jpg'); 
+  height:80vh;
+  background-image: url('../../assets/images/faq.jpg'); 
   background-size: cover; 
   background-position: center; 
   background-repeat: no-repeat;
   margin-bottom: 0;
-
-
 }
 
 .faq-container {
@@ -27,7 +24,7 @@ background-image: url('../../assets/images/faq.jpg');
     font-size: 4em;
     margin-bottom: 15px;
     font-family: 'Avenir', sans-serif; 
-    margin-top: 100px;
+    margin-top: 50px;
     color: #ccc;
   }
   
