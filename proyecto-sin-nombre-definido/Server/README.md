@@ -157,7 +157,7 @@ Para edicion por voluntad de usuario
     password									string
     landlord									boolean
 Edicion por sistema
-    userType									string ENUM("Admin", "User", "Premium User")
+    userType									string ENUM("Admin", "User")
     averageScore              float
     numberOfReviews           integer
     favorites                 array(string) uuid de asset favoritos
@@ -174,6 +174,9 @@ Login
 POST -> http://localhost:3001/login
 email                         string
 password                      string original y se hashea en el recorrido para comparar
+
+Login google
+GET -> http://localhost:3001/google/login
 
 Logout
 GET -> http://localhost:3001/logout

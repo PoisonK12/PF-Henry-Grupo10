@@ -12,9 +12,9 @@ if(step == 1) {
 
    if (!form.address) errors.address = "Ingrese una direccion";
    else if (form.address && form.address.length < 3)
-     errors.address = "La direccion es muy corta";
-   else if (form.address && form.address.length > 25)
-     errors.address = "La direccion es muy larga";
+     errors.address = "La dirección es muy corta";
+   else if (form.address && form.address.length > 75)
+     errors.address = "La dirección es muy larga";
    else if (
      form.address &&
      !/^[\w\sñÑáéíóúÁÉÍÓÚ]*\d+[\w\sñÑáéíóúÁÉÍÓÚ]*$/.test(form.address)
@@ -22,18 +22,18 @@ if(step == 1) {
      errors.address = "Tiene que tener el número de calle";
    }
 
-   if (!form.country) errors.country = "Ingrese un pais ";
-   else if (form.country && form.country === "Seleccione un pais") errors.country = "Ingrese un pais"
+   if (!form.country) errors.country = "Ingrese un país ";
+   else if (form.country && form.country === "Seleccione un país") errors.country = "Ingrese un país"
 
    if (!form.location )
-     errors.location = "Ingrese un locacion ";
+     errors.location = "Ingrese un locación ";
     else if (form.location && form.location == "Seleccione una ciudad")
      errors.location = "Ingrese una ciudad";
     
     if (form.images && form.images.length < 1) {
-      errors.images = "Debes subir  al menos 1 imagenes";
+      errors.images = "Debes subir  al menos una imagen";
     } else if (form.images && form.images.length > 3) {
-      errors.images = "No puedes subir mas de 3 imagenes";
+      errors.images = "No puedes subir mas de 3 imágenes";
     }
   };
 if(step == 2) {
@@ -51,7 +51,7 @@ if(step == 2) {
    } else if (form.bathrooms && form.bathrooms.length > 2) {
      errors.rooms = "No puedes poner mas de 2 cifras en baños";
    } else if (form.bathrooms && form.bathrooms < 0) {
-     errors.bathrooms = "No puede ser un numero negativo";
+     errors.bathrooms = "No puede ser un número negativo";
    }
 
    if (!form.coveredArea) {
@@ -68,20 +68,20 @@ if(step == 2) {
      errors.rentPrice = "Ingrese un precio de alquiler";
    }
    if ( !form.description) {
-     errors.description = "Ingrese una descripcion";
+     errors.description = "Ingrese una descripción";
    } else if (form.description && form.description.length < 10) {
-     errors.description = "Es muy corta";
+     errors.description = "La descripción es muy corta";
    }
 
   }; 
   if(step === 3) {
 
     if (form.amenities && form.amenities.length === 0) {
-      errors.amenities = "Tines que escoger alguna amenities";
+      errors.amenities = "Tines que escoger alguna amenidad";
     } else if (form.amenities && form.amenities.length < 5) {
-      errors.amenities = "Tienes que tener un minimo de 5 ";
+      errors.amenities = "Debes ingresar al menos 5 amenidades";
     } else if (form.amenities && form.amenities.length > 30) {
-      errors.amenities = "No pueden ser mayor a 30 amenities";
+      errors.amenities = "No puedes agregar más de 30 amenidades";
     }
   };
   return errors;

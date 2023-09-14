@@ -50,11 +50,11 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
 
 const createRent = async (
   onSale,
-  user,
-  asset,
-  checkIn,
+  userId,
+  assetId,
+  checkInDate,
   checkInTime,
-  checkOut,
+  checkOutDate,
   checkOutTime,
   price,
   termCon,
@@ -63,14 +63,18 @@ const createRent = async (
   guestName,
   guestPhoneNumber
 ) => {
+  let innerDate = new Date(checkInDate);
+  let checkOuting = new Date(checkOutDate);
+  await removeExpiredRecords();
+
   try {
     const createdRent = await Rent.create({
       onSale,
-      user,
-      asset,
-      checkIn,
+      userId,
+      assetId,
+      checkInDate,
       checkInTime,
-      checkOut,
+      checkOutDate,
       checkOutTime,
       price,
       termCon,
@@ -80,9 +84,37 @@ const createRent = async (
       guestPhoneNumber,
     });
 
+    const collate = await Availability.findAll({
+      where: { assetId, userId },
+      attributes: ["dates"],
+    }).then((datess) => {
+      const allDates = datess.map((element) => element.dates);
+      return [].concat(...allDates);
+    });
+    if (innerDate >= checkOuting) {
+      return "Las fechas ingresadas en el contrato son incorrectas";
+    } else {
+      const innerDates = [];
+
+      while (innerDate < checkOuting) {
+        const innerDateFormatted = innerDate.toISOString().split("T")[0];
+        if (collate.includes(innerDateFormatted))
+          return "Su reserva expiró y la propiedad pudo haber sido reservada por otro usuario. Comuniquese con atención al cliente para gestionar la devolución de su dinero, obtener un vaucher, o ver más opciones. Lamentamos las molestias financieras que esto pudiera llegar a ocacionarle; así como cualquier otro inconveniente que esté fuera de nuestro alcance empatico. Lo invitamos a escracharnos en las redes. Más abajo está el link que lo llevará a nuestro perfil de instagram. Suerte cliqueándolo...";
+        innerDates.push(new Date(innerDate));
+        innerDate.setDate(innerDate.getDate() + 1);
+      }
+
+      await Availability.create({
+        dates: innerDates,
+        isAvailable: "Indispuesta",
+        assetId: assetId,
+        userId: userId,
+      });
+      return `Casa tomada!!`;
+    }
+
     return createdRent;
   } catch (error) {
-    // console.log(error);
     throw new Error("Error al registrar la renta");
   }
 };

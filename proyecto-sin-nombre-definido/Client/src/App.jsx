@@ -24,8 +24,6 @@ import jwt_decode from "jwt-decode"
 import {ScrollToTop} from './Helpers';
 import Loader from './components/Loader/Loader';
 import FAQ from './views/Faq/Faq';
-import ForgotPassword from './views/ForgotPassword/ForgotPassword';
-import ResetPassword from './views/ForgotPassword/ResetPassword';
 
 
 
@@ -33,14 +31,14 @@ import ResetPassword from './views/ForgotPassword/ResetPassword';
 function App() {
   
   const location = useLocation()
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    const loader = setTimeout(() => {
-      setLoading(false)
-    }, 2000)
-    return () => clearTimeout(loader)
-  }, [])
+  // useEffect(() => {
+  //   const loader = setTimeout(() => {
+  //     setLoading(false)
+  //   }, 2000)
+  //   return () => clearTimeout(loader)
+  // }, [])
 
   const token = localStorage.getItem("log")
 
@@ -49,7 +47,6 @@ function App() {
   return (
     <>
     
-    {loading && <Loader></Loader>} {/*? lOADER */}
       {(location.pathname !== "/" && location.pathname !== "/checkIn" && location.pathname !=="/404" && location.pathname !== "/forgot-password" && location.pathname !== "/reset_password/:id/:token" ) && <Nav />}
       <ScrollToTop></ScrollToTop>
      <Routes>
@@ -62,13 +59,13 @@ function App() {
       <Route path='/contacts' element={<><Contatcs/><Footer/><Chatbot/></>}/>
       <Route path='/property' element={<><Property/><Chatbot/><Footer/></>}/>
       <Route path='/adminDashboard' element={<><AdminDashboard/><Footer/></>}/>
-      <Route path='/userPanel' element={<><UserPanel/><Footer/></>}/>
+      <Route path='/userPanel/:id' element={<><UserPanel/><Footer/></>}/>
       <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>           
       <Route path="/checkIn" element={<><LoginRegister/><Footer/></>}></Route>
       <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
       <Route path="/reset_password/:id/:token" element={<ResetPassword />}></Route>
       <Route path="/demo" element={<><Loader/><Footer/></>}></Route> 
-      <Route path="/faq" element={<><FAQ/><Footer/></>}></Route>       
+      <Route path="/faq" element={<><FAQ/><Footer/></>}></Route>
       <Route path="*" element={<><NotFound/><Footer/></>}/>
      </Routes>
       
