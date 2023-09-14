@@ -11,6 +11,16 @@ import Sale from "../../components/Sale/Sale.jsx";
 import Contacts from "../Contacts/Contatcs";
 
 export const Home = () => {
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextIndex = (activeIndex + 1) % 3;
+      setActiveIndex(nextIndex)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [activeIndex])
+
   
   return (
     <>
@@ -59,21 +69,21 @@ export const Home = () => {
                   ></button>
                 </div>
                 <div className="carousel-inner">
-                  <div className="carousel-item active">
+                  <div className={`carousel-item ${activeIndex == 0 ? "active" : ""}`}>
                     <img
                       className="d-block mx-auto img-fluid "
                       src={forest}
                       alt="..."
                     />
                   </div>
-                  <div className="carousel-item">
+                  <div className={`carousel-item ${activeIndex == 1 ? "active" : ""}`}>
                     <img
                       className="d-block mx-auto img-fluid"
                       src={playa2}
                       alt="..."
                     />
                   </div>
-                  <div className="carousel-item">
+                  <div className={`carousel-item ${activeIndex == 2 ? "active" : ""}`}>
                     <img
                       className="d-block mx-auto img-fluid"
                       src={playa3}
