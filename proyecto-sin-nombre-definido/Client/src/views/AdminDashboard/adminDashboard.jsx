@@ -12,6 +12,8 @@ const AdminDashboard = () => {
   const dispatch = useDispatch();
   const [componenteActual, setComponenteActual] = useState("A");
   const [data, setData] = useState({});
+  const [color, setColor] = useState('white');
+  const [selectedLink, setSelectedLink] = useState(null);
 
   //? PROPIEDADES -------------------------------------------
 
@@ -34,7 +36,11 @@ const AdminDashboard = () => {
 
   //? ---------------------------------------------------------
 
-
+  const handleLinkClick = (linkName) => {
+    setComponenteActual(linkName);
+    setSelectedLink(linkName); // Establecer el enlace seleccionado al hacer clic
+    setColor('#6693e2'); // Restablecer el color cuando se hace clic en un enlace
+  };
 
 
   useEffect(() => {
@@ -79,11 +85,14 @@ const AdminDashboard = () => {
                 <li class="nav-item">
                   <a
                     class="nav-link"
-                    onClick={() => setComponenteActual("A")}
+                    onClick={() => {handleLinkClick("A")}}
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      height: "80px",
+                      borderRadius: "15px",
+                      height: "70px",
+                      width: "90%",
+                      backgroundColor: selectedLink === "A" ? color : "white", 
                     }}
                     href="#"
                   >
@@ -106,11 +115,14 @@ const AdminDashboard = () => {
                   <a
                     class="nav-link"
                     href="#"
-                    onClick={() => setComponenteActual("B")}
+                    onClick={() => {handleLinkClick("B")}}
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      height: "80px",
+                      borderRadius: "15px",
+                      height: "70px",
+                      width: "90%",
+                      backgroundColor: selectedLink === "B" ? color : "white", 
                     }}
                   >
                     <div>
@@ -132,12 +144,15 @@ const AdminDashboard = () => {
                 <li class="nav-item">
                   <a
                     class="nav-link"
-                    onClick={() => setComponenteActual("C")}
+                    onClick={() => {handleLinkClick("C")}}
                     href="#"
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      height: "80px",
+                      borderRadius: "15px",
+                      height: "70px",
+                      width: "90%",
+                      backgroundColor: selectedLink === "C" ? color : "white", 
                     }}
                   >
                     <div>
@@ -158,12 +173,15 @@ const AdminDashboard = () => {
                 <li class="nav-item">
                   <a
                     class="nav-link"
-                    onClick={() => setComponenteActual("D")}
+                    onClick={() => {handleLinkClick("D")}}
                     href="#"
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      height: "80px",
+                      borderRadius: "15px",
+                      height: "70px",
+                      width: "90%",
+                      backgroundColor: selectedLink === "D" ? color : "white", 
                     }}
                   >
                     <div>
