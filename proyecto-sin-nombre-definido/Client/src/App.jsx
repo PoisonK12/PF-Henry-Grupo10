@@ -24,6 +24,7 @@ import jwt_decode from "jwt-decode"
 import {ScrollToTop} from './Helpers';
 import Loader from './components/Loader/Loader';
 import FAQ from './views/Faq/Faq';
+import Reserv from './views/Reserv/Reserv';
 
 
 
@@ -64,7 +65,8 @@ function App() {
       <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>           
       <Route path="/checkIn" element={<><LoginRegister/><Footer/></>}></Route>
       <Route path="/demo" element={<><Loader/><Footer/></>}></Route> 
-      <Route path="/faq" element={<><FAQ/><Footer/></>}></Route>       
+      <Route path="/faq" element={<><FAQ/><Footer/></>}></Route>  
+      <Route path="/reserv" element={<><Reserv/><Footer/></>}></Route>     
       <Route path="*" element={<><NotFound/><Footer/></>}/>
      </Routes>
       

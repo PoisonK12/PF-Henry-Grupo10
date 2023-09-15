@@ -8,11 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { SearchByLocation, getAssetById } from "../../redux/actions";
 import { useParams, Link } from "react-router-dom";
 import NotFoundPage from "../404/404";
-import Calendar from "./Calendar";
 import Card from "../../components/Card/CardOffer/CardOffer";
 import Loader from "../../components/Loader/Loader";
+import Booking from "../Reserv/Booking";
 
 const Detail = () => {
+
+  
   const { id } = useParams();
   const dispatch = useDispatch();
   const assetDetail = useSelector((state) => state.detail);
@@ -21,7 +23,10 @@ const Detail = () => {
   const sugs = propertiesSug.rows?.filter((el) => el.id !== assetDetail.id);
   console.log("Detalle", assetDetail);
   const [loading, setLoading] = useState(true);
-
+  
+   const token = localStorage.getItem("log")
+    
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -165,6 +170,25 @@ const Detail = () => {
             </ul>
           </div>
         </div>
+
+       {token ? 
+        <div className={style.infoAvailable} >
+          <div >
+             <Booking></Booking> 
+          </div>
+        </div>
+        
+        : <div className={style.alert}  >
+            <h5>Hola! Para rentar esta propiedad debes de estar <b style={{color : "#e43838"}}>registrado</b > o <b style={{color : "#e43838"}}>logeado</b>.</h5>
+            <p> Por favor 
+              <Link to="/checkIn"> Inicia sesión </Link>
+                para reservar o 
+               <Link to="/checkIn"> créate una cuenta </Link> 
+               para acceder a todos los beneficios que ofrece esta página
+            </p>
+          </div>
+          } 
+
         <div className={style.info}>
           <div style={{ display: "flex" }}>
             <div className={style.description}>
