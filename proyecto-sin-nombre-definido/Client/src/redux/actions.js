@@ -64,10 +64,14 @@ export const getAllReallyProperties = ({ order}, page) => {
   };
 };
 
-export const getAllUsers = () => {
+export const getAllUsers = ({search, order}) => {
+  console.log(search)
+  if(!search) search = ""
+  if(order == "") order = "userNameAsc"
+
   return async (dispatch) => {
     try {
-      const { data } = await axios("/users?userNameAsc=si");
+      const { data } = await axios(`/users?search=${search}&${order}=si`);
       dispatch({
         type: GET_ALL_USERS,
         payload: data,
@@ -110,7 +114,7 @@ export const SearchByLocation = (query, page) => {
   return async (dispatch) => {
     try {
       const { data } = await axios(
-        `/assets?size=10&page=${page}&location=${query}`
+        `/assets?size=10&page=${page}&location=${query}&rentPriceAsc=yes`
       );
       console.log(data);
       return dispatch({

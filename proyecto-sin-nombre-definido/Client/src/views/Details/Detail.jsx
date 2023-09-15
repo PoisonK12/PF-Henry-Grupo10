@@ -20,7 +20,7 @@ const Detail = () => {
   const assetDetail = useSelector((state) => state.detail);
   const [imageUrl, setImageUrl] = useState(null);
   const propertiesSug = useSelector((state) => state.properties);
-  const sugs = propertiesSug.rows?.filter((el) => el.id !== assetDetail.id);
+  const sugs = propertiesSug?.rows?.filter((el) => el.id !== assetDetail.id);
   console.log("Detalle", assetDetail);
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +28,7 @@ const Detail = () => {
     const fetchData = async () => {
       try {
         dispatch(getAssetById(id));
-        dispatch(SearchByLocation(assetDetail.location));
+        dispatch(SearchByLocation(assetDetail.location, 1));
         setTimeout(() => {
           setLoading(false);
 
@@ -219,13 +219,13 @@ const Detail = () => {
             </div>
           </div>
 
-          {propertiesSug.count <= 0 ? (
+          {!propertiesSug?.count ? (
             ""
           ) : (
             <div className={style.sugs}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h4>
-                  Hemos encontrado <span>{propertiesSug.count - 1}</span>{" "}
+                  Hemos encontrado <span>{propertiesSug?.count - 1}</span>{" "}
                   coincidencias de localidad
                 </h4>
                 <Link to={`/property?location=${assetDetail.location}`}>
