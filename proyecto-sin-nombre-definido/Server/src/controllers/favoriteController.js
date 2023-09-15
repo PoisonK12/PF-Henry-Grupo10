@@ -1,35 +1,63 @@
 const { User, Asset } = require('../db');
 
 
- const updateUserFavorite = async (idUser, idAsset) => {
-
-//     try {
-//         const user = await User.findOne({ where: { id: idUser } });
-//         const asset = await Asset.findOne({ where: { id: idAsset } });
+ const userAddFavorite = async (userId, assetId) => {
+    try {
+        const user = await User.findByPk(userId);
+        if(!user){ throw new Error ("Usuario no encontrado")}
+        const asset = await Asset.findByPk(assetId);
+        if(!asset){ throw new Error ("Propiedad no encontrada")}
+        const newFavorites = [...user.dataValues.favorites]
     
-//         // la idea es traer los id de user y asset involucrados
-//         // favorites es una propiedad del modelo de User, es un array de strings,
-//         // como es un array, la idea era, crear un array nuevo al que le haya pusheado,
-//         // todas las assets que estan dentro de los favorites del usuario
-//         // y luego reemplazarlo por el favorites que está en el modelo
+        if (!newFavorites.includes(assetId)){
+        newFavorites.push(assetId)
+        await user.update({favorites : newFavorites})
+        return user
+    } else 
+    return "Esta propiedad ya esta en favoritos"
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
 
-//         const newFavorite = [];
-    
-//         newFavorite.push(asset.name);
-    
-//         await user.update({
-//             favorites = newFavorite //??
-//         })
+const userRemoveFavorite = async (userId, assetId) => {
+    try {
+        const user = await User.findByPk(userId);
+        if (!user) {throw new Error("Usuario no encontrado");}
+        const asset = await Asset.findByPk(assetId);
+        if(!asset){ throw new Error ("Propiedad no encontrada")}
+        
+        const favoriteIndex = user.favorites.indexOf(assetId);
+        if (favoriteIndex === -1) {
+            return "El asset no está en la lista de favoritos del usuario.";
+        }
+
+        const newFavorites = [...user.favorites];
+        newFavorites.splice(favoriteIndex, 1);
+
+        await user.update({ favorites: newFavorites });
+        return user
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
 
 
-//         return updateUserFavorite;
-//     } catch (error) {
-//         console.log(error);
-//         throw error;
-//     }
-
+const userAllFavorites = async (userId) => {
+    try {
+        const user = await User.findByPk(userId);
+        if(!user){ throw new Error("Usuario no encontrado") }
+        return user.favorites
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 }
 
 module.exports = {
-    updateUserFavorite,
+    userAddFavorite,
+    userRemoveFavorite,
+    userAllFavorites
 }

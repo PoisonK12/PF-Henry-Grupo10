@@ -43,9 +43,6 @@ const getAllUserController = async (req) => {
     }
     const search = [];
     for (const param in query) {
-      // console.log(query[param]);
-      // console.log(param);
-      // console.log(query);
       if (param === "search") {
         search.push(query[param]);
       }
@@ -67,7 +64,9 @@ const getAllUserController = async (req) => {
     });
 
     if (response.length === 0) {
-      throw new Error("No hay usuarios registrados!");
+      throw new Error(
+        "No hay usuarios registrados con los parametros proporcionados"
+      );
     }
     return response;
   } catch (error) {
@@ -100,7 +99,6 @@ const updateUser = async ({
     const updateUser = await User.findOne({
       where: { userName: userName },
     });
-    console.log(userName);
     await updateUser.update({
       //edicion por usuario
       fullName,

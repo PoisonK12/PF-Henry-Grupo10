@@ -32,10 +32,10 @@ User.belongsToMany(Rent, { through: "userRents" });
 Rent.belongsTo(User, { through: "userRents" });
 
 Asset.belongsToMany(Review, { through: "assetReview" });
-Review.belongsTo(Asset, { through: "assetReview" });
+Review.belongsToMany(Asset, { through: "assetReview" });
 
 User.belongsToMany(Review, { through: "userReview" });
-Review.belongsTo(User, { through: "userReview" });
+Review.belongsToMany(User, { through: "userReview" });
 
 Contact.belongsToMany(User, { through: "userContact" });
 User.belongsTo(Contact, { through: "userContact" });

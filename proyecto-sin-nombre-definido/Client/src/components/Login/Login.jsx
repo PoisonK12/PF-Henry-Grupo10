@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import style from "./apa.module.css";
-import { getLogin } from "../../redux/actions";
+import { getAllUsers, getLogin } from "../../redux/actions";
 import { validation } from "./validation";
 import { Modal, ToastBody } from "react-bootstrap";
 import fondo from "../../assets/images/Exteriores/imageLogin.avif";
 import GoogleLoginButton from "../GoogleAuth/LoginButton/";
 import Register from "../Register/Register";
-
+import { useDispatch, useSelector } from "react-redux";
+import Swal from 'sweetalert2';
+import { Link } from "react-router-dom";
 
 const Login = ({ handleSwitch}) => {
-
-
+  const users = useSelector(state => state.users)
+  console.log('AllUsers', users);
+  const dispatch = useDispatch()
   const typeForm = "login";
   const [login, setLogin] = useState({
     email: "",
@@ -42,8 +45,28 @@ const Login = ({ handleSwitch}) => {
 
 
   const handleSubmit = async (e) => {
-    console.log(e);
     e.preventDefault();
+
+    const existUser = users.find((user) => user.email === login.email);
+
+    if (!existUser) {
+      Swal.fire({
+        title: 'Usuario no encontrado',
+        icon: 'error',
+        text: 'El usuario no existe en la lista de usuarios.',
+      });
+      return;
+    }
+    
+    if (existUser.hide) {
+      Swal.fire({
+        title: 'Usuario suspendedio',
+        icon: 'error',
+        text: 'El usuario está suspendido porfavor comunicate con nosotros.',
+      });
+      return;
+    }
+    console.log(e);
     setToast(true);
     setTimeout(() => {
       setToast(false);
@@ -57,6 +80,9 @@ const Login = ({ handleSwitch}) => {
       typeForm 
     );
   };
+  useEffect(() => {
+    dispatch(getAllUsers())
+  },[])
 
   console.log(toastBody);
 
@@ -113,6 +139,8 @@ const Login = ({ handleSwitch}) => {
                     onChange={handleChange}
                     placeholder="Escriba su contraseña"
                   />
+                  <br />
+                  <Link to="/forgot-password">¿Olvidaste tu contraseña?</Link>
                   {errors.password ? (
                     <p style={{ color: "red", fontSize: "3px" }}>
                       {errors.password}
@@ -151,7 +179,7 @@ const Login = ({ handleSwitch}) => {
                   <hr className={style.hr}></hr>
                   <p style={{ marginTop: "15px" }}>O inicia sesion con</p>
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    {/* <GoogleLoginButton /> */}
+                    <GoogleLoginButton />
                   </div>
                 </div>
               </div>

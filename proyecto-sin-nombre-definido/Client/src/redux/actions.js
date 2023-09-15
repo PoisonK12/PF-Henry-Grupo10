@@ -21,6 +21,7 @@ import {
   DELETE_CONTACT_BY_ID,
   GET_USER_BY_ID,
   DELETE_LOGIC_USER_BY_ID,
+  RESTORE_USER_BY_ID,
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -63,10 +64,14 @@ export const getAllReallyProperties = ({ order}, page) => {
   };
 };
 
-export const getAllUsers = () => {
+export const getAllUsers = ({search, order}) => {
+  console.log(search)
+  if(!search) search = ""
+  if(order == "") order = "userNameAsc"
+
   return async (dispatch) => {
     try {
-      const { data } = await axios("/users?userNameAsc=si");
+      const { data } = await axios(`/users?search=${search}&${order}=si`);
       dispatch({
         type: GET_ALL_USERS,
         payload: data,
@@ -109,7 +114,7 @@ export const SearchByLocation = (query, page) => {
   return async (dispatch) => {
     try {
       const { data } = await axios(
-        `/assets?size=10&page=${page}&location=${query}`
+        `/assets?size=10&page=${page}&location=${query}&rentPriceAsc=yes`
       );
       console.log(data);
       return dispatch({
@@ -146,7 +151,7 @@ export const createAsset = async (
       setConditionalCreate(true);
       setTimeout(() => {
         setModal(false);
-        navigate("/home");
+        navigate("/detail/" + data.id);
       }, 1000);
 
       return;
@@ -197,10 +202,11 @@ export const putProperty = (id, form) => {
   };
 };
 
-export const putUser = () => {
+export const putUser = (form) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/users/`);
+      const { data } = await axios.put(`/users`,form );
+      console.log(data)
       return dispatch({
         type: PUT_USER,
         payload: data,
@@ -307,6 +313,21 @@ export const deleteLogicUserById = (id) => {
     }
   };
 };
+
+export const restoreUserById = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.get(`/users/restore/${id}`)
+      dispatch({
+        type: RESTORE_USER_BY_ID,
+        payload: id,
+      })
+    } catch (error) {
+      console.error(error);
+    
+    }
+  }
+}
 
 export const deleteMessageById = (id) => {
   return async (dispatch) => {

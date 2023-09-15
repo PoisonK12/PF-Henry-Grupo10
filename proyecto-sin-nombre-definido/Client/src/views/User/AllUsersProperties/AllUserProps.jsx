@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "./alluser.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   deleteLogicAssetById,
   getAllReallyProperties,
@@ -16,6 +16,7 @@ import Widget from "../../AdminDashboard/AllProperties/Balance/Balance";
 
 const AllUsersProps = () => {
   const dispatch = useDispatch();
+  const {id} = useParams()
   const allProperties = useSelector((state) => state.myProperties);
   const deletedProperties = allProperties?.filter((property) => property.eliminado !== true);
   console.log('sisisi',allProperties);
@@ -55,10 +56,10 @@ const AllUsersProps = () => {
         const info = localStorage.getItem("data");
         setDatas(JSON.parse(info))
         
-       dispatch(getPropertyByUser(datas.id));
+       dispatch(getPropertyByUser(id));
         console.log(datas)
       
-  }, [datas]);
+  }, []);
 
 
 
@@ -165,14 +166,14 @@ const AllUsersProps = () => {
 
   return (
     <div className={style.background}>
-          <div>
+          {/* <div>
             <div className={style.widgets}>
               <Widget type="user" />
               <Widget type="order" />
               <Widget type="earning" />
               <Widget type="balance" />
             </div>
-          </div>
+          </div> */}
           <div>
             {deletedProperties?.map((props, index) => (
               <div className={`${style.centeredContent}`} key={props.id}>

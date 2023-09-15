@@ -11,38 +11,38 @@ module.exports = (sequelize) => {
       },
       userName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       fullName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       profilePic: {
         type: DataTypes.TEXT,
       },
       birthDate: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       phoneNumber: {
         type: DataTypes.STRING, // Cambiado: NUMBER a STRING si incluye caracteres no numéricos
-        allowNull: false,
+        allowNull: true,
       },
       verificationNumber: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       gender: {
         type: DataTypes.ENUM("Male", "Female", "agender", "No binary"),
-        allowNull: false,
+        allowNull: true,
       },
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       nationality: {
         type: DataTypes.ENUM("Argentina", "Mexico", "Colombia", "Venezuela"),
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,
@@ -54,11 +54,11 @@ module.exports = (sequelize) => {
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       landlord: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
       },
       userType: {
         type: DataTypes.ENUM("admin", "user"),
@@ -77,14 +77,25 @@ module.exports = (sequelize) => {
       favorites: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
+        defaultValue:[]
       },
       history: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
+        defaultValue:[]
       },
       hide: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+      },
+      // Modelo de datos de Google
+      googleId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {
