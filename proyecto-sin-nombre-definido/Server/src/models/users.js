@@ -88,14 +88,10 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      // Modelo de datos de Google
       googleId: {
         type: DataTypes.STRING,
         allowNull: true,
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        unique: true, // Establecer como único para evitar duplicados
       },
     },
     {
