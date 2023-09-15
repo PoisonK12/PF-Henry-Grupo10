@@ -20,7 +20,6 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
       const allDates = datess.map((element) => element.dates);
       return [].concat(...allDates);
     });
-
     if (innerDate >= checkOuting) {
       return "Las fechas ingresadas son incorrectas";
     } else {
@@ -28,20 +27,27 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
 
       while (innerDate < checkOuting) {
         const innerDateFormatted = innerDate.toISOString().split("T")[0];
-        if (gathered.includes(innerDateFormatted))
+
+        console.log(innerDateFormatted);
+        if (gathered.includes(innerDateFormatted)) {
           return "La propiedad está reservada para los días indicados";
+        }
         innerDates.push(new Date(innerDate));
+        console.log(innerDate);
         innerDate.setDate(innerDate.getDate() + 1);
       }
 
-      await Availability.create({
+      const response = await Availability.create({
         dates: innerDates,
         isAvailable: "Reservada",
         assetId: assetId,
         userId: userId,
         expirationTime: expirationTime,
       });
-      return `Mantendremos la propiedad reservada para vos por 15min... Pero metele porque vuela!!`;
+
+      return response.id;
+      // +" --- " +
+      // `Mantendremos la propiedad reservada para vos por 15min... Pero metele porque vuela!!`
     }
   } catch (error) {
     return "El servidor está caído. Por favor intentá más tarde.";
@@ -49,73 +55,70 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
 };
 
 const createRent = async (
-  onSale,
-  userId,
-  assetId,
-  checkInDate,
-  checkInTime,
-  checkOutDate,
-  checkOutTime,
-  price,
-  termCon,
-  paymentMethod,
-  guest,
-  guestName,
-  guestPhoneNumber
+  req,
+  res
+  // bookingCode,
+  // onSale,
+  // userId,
+  // assetId,
+  // checkInDate,
+  // checkInTime,
+  // checkOutDate,
+  // checkOutTime,
+  // price,
+  // termCon,
+  // paymentMethod,
+  // guest,
+  // guestName,
+  // guestPhoneNumber
 ) => {
-  let innerDate = new Date(checkInDate);
-  let checkOuting = new Date(checkOutDate);
+  // console.log(1);
+  // console.log(6);
+  const bookingCode = req.params.id;
   await removeExpiredRecords();
+  // console.log(2);
+  // console.log(bookingCode);
+  const isItAvailable = await Availability.findOne({
+    where: { id: bookingCode },
+  });
+  // console.log(3);
+  // console.log(isItAvailable);
+  if (isItAvailable === null) {
+    return "Debes hacer una reserva, antes de efectuar el pago";
+  }
+  // await pago();
+  // console.log(4);
 
   try {
-    const createdRent = await Rent.create({
-      onSale,
-      userId,
-      assetId,
-      checkInDate,
-      checkInTime,
-      checkOutDate,
-      checkOutTime,
-      price,
-      termCon,
-      paymentMethod,
-      guest,
-      guestName,
-      guestPhoneNumber,
+    // const createdRent = await Rent.create({
+    //   bookingCode,
+    //   onSale,
+    //   userId,
+    //   assetId,
+    //   checkInDate,
+    //   checkInTime,
+    //   checkOutDate,
+    //   checkOutTime,
+    //   price,
+    //   termCon,
+    //   paymentMethod,
+    //   guest,
+    //   guestName,
+    //   guestPhoneNumber,
+    // });
+    const booked = await Availability.findOne({ where: { id: bookingCode } });
+    console.log(booked);
+    console.log(5555555555555555);
+    await booked.update({
+      isAvailable: "Indispuesta",
+      expirationTime: null,
     });
+    console.log(5);
+    return `Casa tomada!!`;
 
-    const collate = await Availability.findAll({
-      where: { assetId, userId },
-      attributes: ["dates"],
-    }).then((datess) => {
-      const allDates = datess.map((element) => element.dates);
-      return [].concat(...allDates);
-    });
-    if (innerDate >= checkOuting) {
-      return "Las fechas ingresadas en el contrato son incorrectas";
-    } else {
-      const innerDates = [];
-
-      while (innerDate < checkOuting) {
-        const innerDateFormatted = innerDate.toISOString().split("T")[0];
-        if (collate.includes(innerDateFormatted))
-          return "Su reserva expiró y la propiedad pudo haber sido reservada por otro usuario. Comuniquese con atención al cliente para gestionar la devolución de su dinero, obtener un vaucher, o ver más opciones. Lamentamos las molestias financieras que esto pudiera llegar a ocacionarle; así como cualquier otro inconveniente que esté fuera de nuestro alcance empatico. Lo invitamos a escracharnos en las redes. Más abajo está el link que lo llevará a nuestro perfil de instagram. Suerte cliqueándolo...";
-        innerDates.push(new Date(innerDate));
-        innerDate.setDate(innerDate.getDate() + 1);
-      }
-
-      await Availability.create({
-        dates: innerDates,
-        isAvailable: "Indispuesta",
-        assetId: assetId,
-        userId: userId,
-      });
-      return `Casa tomada!!`;
-    }
-
-    return createdRent;
+    // return createdRent;
   } catch (error) {
-    throw new Error("Error al registrar la renta");
+    console.error(error.message);
   }
 };
 // Trae una renta especificada por el id

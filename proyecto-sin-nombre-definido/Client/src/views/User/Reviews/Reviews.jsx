@@ -5,7 +5,7 @@ const Reviews = () => {
     <div>
         <div>
         <h1>Soy el componete reviews</h1>
-        <div className={style.cardsCont}>
+        {/* <div className={style.cardsCont}>
             <div className={style.cardCont}>
             <div className={style.cardTittle}>
                 <h2>Hola</h2>
@@ -34,7 +34,7 @@ const Reviews = () => {
             </div>
             </div>
             
-        </div>
+        </div> */}
         
         </div>
         

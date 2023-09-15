@@ -99,7 +99,6 @@ const updateUser = async ({
     const updateUser = await User.findOne({
       where: { userName: userName },
     });
-    console.log(userName);
     await updateUser.update({
       //edicion por usuario
       fullName,

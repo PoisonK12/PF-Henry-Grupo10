@@ -8,20 +8,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { SearchByLocation, getAssetById } from "../../redux/actions";
 import { useParams, Link } from "react-router-dom";
 import NotFoundPage from "../404/404";
-import Calendar from "./Calendar";
 import Card from "../../components/Card/CardOffer/CardOffer";
 import Loader from "../../components/Loader/Loader";
+import Booking from "../Reserv/Booking";
 import Maps from "../../views/Map/Map"
 
 
 const Detail = () => {
+
+  
   const { id } = useParams();
   const dispatch = useDispatch();
   const assetDetail = useSelector((state) => state.detail);
   const [imageUrl, setImageUrl] = useState(null);
   const [btnFav, setBtnFav] = useState('white');
   const propertiesSug = useSelector((state) => state.properties);
-  const sugs = propertiesSug.rows?.filter((el) => el.id !== assetDetail.id);
+  const sugs = propertiesSug?.rows?.filter((el) => el.id !== assetDetail.id);
   console.log("Detalle", assetDetail);
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +40,6 @@ const Detail = () => {
     const fetchData = async () => {
       try {
         dispatch(getAssetById(id));
-        dispatch(SearchByLocation(assetDetail.location));
         setTimeout(() => {
           setLoading(false);
 
@@ -49,6 +50,11 @@ const Detail = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    dispatch(SearchByLocation(assetDetail.location, 1));
+  }, [assetDetail])
+
   console.log("Soliii", sugs);
 
   const handlerImage = (e) => {
@@ -180,6 +186,25 @@ const Detail = () => {
             </ul>
           </div>
         </div>
+
+       {token ? 
+        <div className={style.infoAvailable} >
+          <div >
+             <Booking></Booking> 
+          </div>
+        </div>
+        
+        : <div className={style.alert}  >
+            <h5>Hola! Para rentar esta propiedad debes de estar <b style={{color : "#e43838"}}>registrado</b > o <b style={{color : "#e43838"}}>logeado</b>.</h5>
+            <p> Por favor 
+              <Link to="/checkIn"> Inicia sesión </Link>
+                para reservar o 
+               <Link to="/checkIn"> créate una cuenta </Link> 
+               para acceder a todos los beneficios que ofrece esta página
+            </p>
+          </div>
+          } 
+
         <div className={style.info}>
           <div style={{ display: "flex" }}>
             <div className={style.description}>
@@ -232,13 +257,13 @@ const Detail = () => {
             </div>
           </div>
 
-          {propertiesSug.count <= 0 ? (
+          {!propertiesSug?.count ? (
             ""
           ) : (
             <div className={style.sugs}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h4>
-                  Hemos encontrado <span>{propertiesSug.count - 1}</span>{" "}
+                  Hemos encontrado <span>{propertiesSug?.count - 1}</span>{" "}
                   coincidencias de localidad
                 </h4>
                 <Link to={`/property?location=${assetDetail.location}`}>

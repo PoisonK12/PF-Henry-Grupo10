@@ -77,10 +77,12 @@ module.exports = (sequelize) => {
       favorites: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
+        defaultValue:[]
       },
       history: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
+        defaultValue:[]
       },
       hide: {
         type: DataTypes.BOOLEAN,

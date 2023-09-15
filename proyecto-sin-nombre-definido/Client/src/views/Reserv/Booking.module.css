@@ -1,0 +1,27 @@
+
+.legend {
+    text-align: left !important;
+    font-size: 30px;
+    margin-bottom: 12px;
+    color: #091f44;
+   
+    
+}
+.button {
+    display: block;
+    border-radius: 10px; 
+    border-width: 3px;
+    border-color: #9d0aca;
+    color: #9d0aca;
+    background-color: white;
+    padding: 5px;
+    font-weight: 400;
+    font-size: medium;
+    cursor: pointer;
+}
+
+.button:hover {
+        color : white;
+        background-color: #9d0aca;
+}
+

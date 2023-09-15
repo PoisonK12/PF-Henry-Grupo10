@@ -166,14 +166,14 @@ const AllUsersProps = () => {
 
   return (
     <div className={style.background}>
-          <div>
+          {/* <div>
             <div className={style.widgets}>
               <Widget type="user" />
               <Widget type="order" />
               <Widget type="earning" />
               <Widget type="balance" />
             </div>
-          </div>
+          </div> */}
           <div>
             {deletedProperties?.map((props, index) => (
               <div className={`${style.centeredContent}`} key={props.id}>

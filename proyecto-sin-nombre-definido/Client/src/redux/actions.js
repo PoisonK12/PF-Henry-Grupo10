@@ -65,10 +65,13 @@ export const getAllReallyProperties = ({ order}, page) => {
   };
 };
 
-export const getAllUsers = () => {
+export const getAllUsers = ({search, order}) => {
+  if(!search) search = ""
+  if(order == "") order = "userNameAsc"
+
   return async (dispatch) => {
     try {
-      const { data } = await axios("/users?userNameAsc=si");
+      const { data } = await axios(`/users?search=${search}&${order}=si`);
       dispatch({
         type: GET_ALL_USERS,
         payload: data,
@@ -111,7 +114,7 @@ export const SearchByLocation = (query, page) => {
   return async (dispatch) => {
     try {
       const { data } = await axios(
-        `/assets?size=10&page=${page}&location=${query}`
+        `/assets?size=10&page=${page}&location=${query}&rentPriceAsc=yes`
       );
       console.log(data);
       return dispatch({
@@ -315,10 +318,6 @@ export const deleteLogicUserById = (id) => {
       await axios.delete(`/users/delete/${id}`);
 
       // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
-      dispatch({
-        type: DELETE_LOGIC_USER_BY_ID,
-        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
-      });
     } catch (error) {
       console.error(error);
     }
@@ -329,10 +328,7 @@ export const restoreUserById = (id) => {
   return async (dispatch) => {
     try {
       await axios.get(`/users/restore/${id}`)
-      dispatch({
-        type: RESTORE_USER_BY_ID,
-        payload: id,
-      })
+     
     } catch (error) {
       console.error(error);
     
@@ -508,4 +504,21 @@ export const getPropertyByUser = (id) => {
       console.log(error);
     }
   }
-}
+};
+
+export const setBookingDate = async (booking , setResponse)  => {
+      try {
+          const res = await axios.post("/rents/reserva", booking);
+          if(res) {
+            console.log(res);
+            if(res.includes("-")) {
+              setResponse({success : true , msg : res});
+            } 
+              setResponse({success : false , msg : res})
+            
+          }
+      } catch (error) {
+        setResponse({success : false })
+        
+      }
+};

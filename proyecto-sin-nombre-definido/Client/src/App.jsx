@@ -24,6 +24,7 @@ import jwt_decode from "jwt-decode"
 import {ScrollToTop} from './Helpers';
 import Loader from './components/Loader/Loader';
 import FAQ from './views/Faq/Faq';
+import Reserv from './views/Reserv/Reserv';
 import ForgotPassword from './views/ForgotPassword/ForgotPassword';
 import ResetPassword from './views/ForgotPassword/ResetPassword';
 
@@ -68,6 +69,8 @@ function App() {
       <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
       <Route path="/reset_password/:id/:token" element={<ResetPassword/>}></Route>
       <Route path="/demo" element={<><Loader/><Footer/></>}></Route> 
+      <Route path="/faq" element={<><FAQ/><Footer/></>}></Route>  
+      <Route path="/reserv" element={<><Reserv/><Footer/></>}></Route>     
       <Route path="/faq" element={<><FAQ/><Footer/></>}></Route>
       <Route path="*" element={<><NotFound/><Footer/></>}/>
      </Routes>
