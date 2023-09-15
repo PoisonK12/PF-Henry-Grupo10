@@ -497,7 +497,7 @@ export const getPropertyByUser = (id) => {
   }
 };
 
-export const setBooking = async (booking)  => {
+export const setBookingDate = async (booking)  => {
       try {
           const res = await axios.post("/rents/reserva", booking);
           if(res) {
