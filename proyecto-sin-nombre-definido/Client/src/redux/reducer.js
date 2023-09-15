@@ -1,4 +1,4 @@
-import { GET_ALL_PROPERTIES, DELETE_LOGIC_ASSET_BY_ID,DELETE_LOGIC_USER_BY_ID,GET_ASSET_BY_ID,GET_ALL_USERS, DELETE_USER_BY_ID, GET_LOCATIONS, SEARCH_BY_LOCATION, PUT_PROPERTY, GET_ALL_ALL_PROPERTIES, SEARCH_BY_FILTER, GET_COUNTRIES, GET_STATES, GET_AMENITIES, GET_PROPERTIES_BY_USER, GET_ALL_CONTACT, DELETE_CONTACT_BY_ID, GET_USER_BY_ID, PUT_USER, RESTORE_USER_BY_ID} from "./types"
+import { GET_ALL_PROPERTIES, DELETE_LOGIC_ASSET_BY_ID,FAV_USER_PROPERTY,DELETE_LOGIC_USER_BY_ID,GET_ASSET_BY_ID,GET_ALL_USERS, DELETE_USER_BY_ID, GET_LOCATIONS, SEARCH_BY_LOCATION, PUT_PROPERTY, GET_ALL_ALL_PROPERTIES, SEARCH_BY_FILTER, GET_COUNTRIES, GET_STATES, GET_AMENITIES, GET_PROPERTIES_BY_USER, GET_ALL_CONTACT, DELETE_CONTACT_BY_ID, GET_USER_BY_ID, PUT_USER, RESTORE_USER_BY_ID} from "./types"
 
 const initialState = {
     properties: [],
@@ -11,6 +11,7 @@ const initialState = {
     countries: [],
     cities: [],
     myProperties:[],
+    myFavoritesProps : [],
     userById: {},
 }
 
@@ -75,6 +76,9 @@ const rootReducer = (state = initialState, action) => {
 
         case DELETE_LOGIC_USER_BY_ID:
             return{...state, users :action.payload}
+            
+        case FAV_USER_PROPERTY: 
+            return{...state, myFavoritesProps: action.payload}
     
             default:
             return state
