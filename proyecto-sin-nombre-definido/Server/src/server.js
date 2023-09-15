@@ -6,7 +6,9 @@ const session = require('express-session');
 const passport = require('passport');
 require('./helpers/middlewares/passport-config');
 const router = require('./routes/index');
+const { User } = require('./db')
 // const cookieSession = require('cookie-session');
+
 
 const server = express();
 
@@ -17,7 +19,10 @@ const corsOptions = {
 
 server.use(morgan('dev'));
 server.use(express.json());
-server.use(cors(corsOptions));
+server.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true, // Habilita las credenciales si es necesario (cookies, autenticación, etc.)
+}));
 
 server.use(session({
   secret: process.env.SESSION_SECRET,
@@ -32,6 +37,23 @@ server.use(passport.initialize());
 //   keys: [process.env.COOKIE_KEY1, process.env.COOKIE_KEY2],
 // }));
 server.use(passport.session());
+
+// Configura serializeUser y deserializeUser antes de configurar Passport
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findByPk(id);
+    if (!user) {
+      return done(null, false);
+    }
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
+});
 
 server.use(router);
 
