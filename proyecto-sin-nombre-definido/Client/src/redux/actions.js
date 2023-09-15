@@ -487,4 +487,15 @@ export const getPropertyByUser = (id) => {
       console.log(error);
     }
   }
-}
+};
+
+export const setBooking = async (booking)  => {
+      try {
+          const res = await axios.post("/rents/reserva", booking);
+          if(res) {
+            console.log(res);
+          }
+      } catch (error) {
+        
+      }
+};
