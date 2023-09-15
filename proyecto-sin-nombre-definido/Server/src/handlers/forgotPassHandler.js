@@ -1,10 +1,19 @@
 const { User } = require('../db.js');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const path = require('path');
+const fs = require('fs'); // Asegúrate de requerir fs
+const templatePath = path.join(__dirname, 'mailingTemplates', 'ResetPass.html');
 
 const forgotPassHandler = async (req, res) => {
     const { email } = req.body;
     try {
+        fs.readFile(templatePath, 'utf8', async (err, html) => {
+            if (err) {
+              console.error('Error al leer el archivo de plantilla:', err);
+              return res.status(500).json({ error: "Error al registrar el usuario", details: err.message });
+            }
+        
         const user = await User.findOne({ email: email });
 
         if (!user) {
@@ -26,11 +35,13 @@ const forgotPassHandler = async (req, res) => {
               }
         });
 
+        html = html.replace('<strong id="userPassword"></strong>', `<strong id="userPassword">${`http://localhost:5173/reset_password/${user.id}/${token}`}</strong>`);
+
         var mailOptions = {
             from: 'greatravel@grupo-cava.com',
             to: email,
             subject: 'Reset Password Link',
-            text: `http://localhost:5173/reset_password/${user.id}/${token}`
+            html: html
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -41,6 +52,7 @@ const forgotPassHandler = async (req, res) => {
                 return res.send({ Status: "Success" });
             }
         });
+    })
     } catch (error) {
         console.error(error);
         return res.status(500).send({ Status: "Internal Server Error" });

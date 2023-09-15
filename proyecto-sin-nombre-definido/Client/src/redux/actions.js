@@ -22,6 +22,7 @@ import {
   GET_USER_BY_ID,
   DELETE_LOGIC_USER_BY_ID,
   RESTORE_USER_BY_ID,
+  FAV_USER_PROPERTY
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -216,6 +217,20 @@ export const putUser = (form) => {
   };
 }
 
+export const favUserProperty = (like) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.put('/favorites/like', like)
+      return dispatch({
+        type: FAV_USER_PROPERTY,
+        payload: data
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
 export const searchByFilter = (
   {
     location,
@@ -378,6 +393,8 @@ export const getStates = (country) => {
     console.log(error);
   }
 };
+
+
 
 export const getLogin = async (
   login,
