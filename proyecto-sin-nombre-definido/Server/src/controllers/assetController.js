@@ -210,7 +210,6 @@ const getAssetsByUserId = async (id) => {
 
   // Extraer los IDs de las propiedades desde las filas encontradas
   const assetIds = userAss.map((a) => a.AssetId);
-  console.log(assetIds);
   // Buscar las propiedades correspondientes a los IDs obtenidos
   const assets = await Asset.findAll({
     where: { id: assetIds },
@@ -224,6 +223,10 @@ const getAssetById = async (id) => {
   try {
     const asset = await Asset.findOne({
       where: { id: id },
+      // include:[{
+      //   model: User,
+      //   attributes: ["fullName", "profilePic"]
+      // }]
     });
     return asset;
   } catch (error) {

@@ -117,7 +117,7 @@ const updateUserHandler = async (req, res) => {
       password = await encrypt(password);
     }
 
-    const newUser = await updateUser({
+    const response = await updateUser({
       userName,
       //edicion por usuario
       fullName,
@@ -137,7 +137,7 @@ const updateUserHandler = async (req, res) => {
       favorites,
       history,
     });
-    res.status(200).json(newUser);
+    res.status(200).json(response);
   } catch (error) {
     console.log(error);
 
