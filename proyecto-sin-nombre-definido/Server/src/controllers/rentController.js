@@ -64,6 +64,52 @@ const createRent = async (
   guestPhoneNumber
 ) => {
   try {
+    /**Validaciones en el caso de no poder usar zod */
+    
+    // if (!user || !asset || !checkIn || !checkInTime || !checkOut || !checkOutTime || !price || !termCon || !paymentMethod || !guest) {
+    //   throw Error("Faltan datos")
+    // }
+    // if (typeof onSale !== "boolean") {
+    //   throw Error("onSale debe ser un booleano")
+    // }
+    // if (typeof user !== "string") {
+    //   throw Error("El nombre de usuario ingresado debe ser un string");
+    // }
+    // if (typeof asset !== "string") {
+    //   throw Error("La propiedad ingresada debe ser un string");
+    // }
+    // if (! (checkIn instanceof Date)) {
+    //   throw Error("checkIn no es del tipo Date");
+    // }
+    // if (! (checkInTime instanceof Date)) {
+    //   throw Error("checkInTime no es del tipo Date");
+    // }
+    // if (! (checkOut instanceof Date)) {
+    //   throw Error("checkOut no es del tipo Date");
+    // }
+    // if (! (checkOutTime instanceof Date)) {
+    //   throw Error("checkOutTime no es del tipo Date");
+    // }
+      // if (typeof price !== "number") {
+    //     throw Error(" El precio de renta debe ser un número")
+    // }
+    // if (price < 1) {
+    //   throw Error("El precio de renta no puede ser menor que 1")
+    // }
+    // if (typeof termCon !== "boolean") {
+    //   throw Error("termCon debe ser un booleano")
+    // }
+    // if(
+    //   paymentMethod !== "Card" &&
+    //   paymentMethod !== "Cash" 
+    // ){
+    //   throw Error("El método de pago debe ser Card o Cash");
+    // }
+    // if (typeof guest !== "boolean") {
+    //   throw Error("guest debe ser un booleano")
+    // }
+      
+
     const createdRent = await Rent.create({
       onSale,
       user,

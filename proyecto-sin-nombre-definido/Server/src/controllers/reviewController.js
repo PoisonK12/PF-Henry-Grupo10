@@ -43,6 +43,19 @@ const updateReview = async (
   //edicion por sistema
   score
 ) => {
+  /**Validaciones en el caso de no poder usar zod */
+    // if (!score) {
+    //     throw Error("Falta cargar puntuación")
+    //   }
+    // if (typeof userName !== "string") {
+    //   throw Error("El nombre de usuario ingresado debe ser un string");
+    // }
+    // if (typeof comment !== "string") {
+    //   throw Error("El comentario ingresado debe ser un string");
+    // }
+    // if (typeof score !== "number") {
+    //   throw Error("El score ingresado debe ser un número");
+    // }
   const updateReview = await User.findOne({
     where: { userName: userName },
   });
@@ -59,6 +72,19 @@ const updateReview = async (
 //!---------------------------------evaluador-texto--puntos-evaluado---------------------------------
 const reviewUserController = async (userName, score, comment, id) => {
   try {
+    /**Validaciones en el caso de no poder usar zod */
+    // if (!score) {
+    //     throw Error("Falta cargar puntuación")
+    //   }
+    // if (typeof userName !== "string") {
+    //   throw Error("El nombre de usuario ingresado debe ser un string");
+    // }
+    // if (typeof comment !== "string") {
+    //   throw Error("El comentario ingresado debe ser un string");
+    // }
+    // if (typeof score !== "number") {
+    //   throw Error("El score ingresado debe ser un número");
+    // }
     const response = await getUserByIdController(id);
     let { averageScore, numberOfReviews } = response;
 
@@ -91,6 +117,19 @@ const reviewUserController = async (userName, score, comment, id) => {
 //!---------------------------------evaluador-texto--puntos-evaluada---------------------------------
 const reviewAssetController = async (userName, score, comment, id) => {
   try {
+        /**Validaciones en el caso de no poder usar zod */
+    // if (!score) {
+    //     throw Error("Falta cargar puntuación")
+    //   }
+    // if (typeof userName !== "string") {
+    //   throw Error("El nombre de usuario ingresado debe ser un string");
+    // }
+    // if (typeof comment !== "string") {
+    //   throw Error("El comentario ingresado debe ser un string");
+    // }
+    // if (typeof score !== "number") {
+    //   throw Error("El score ingresado debe ser un número");
+    // }
     const response = await getAssetById(id);
     let { averageScore, numberOfReviews } = response;
 
