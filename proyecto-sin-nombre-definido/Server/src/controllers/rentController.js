@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Rent, Availability } = require("../db");
 const { removeExpiredRecords } = require("../helpers/removeExpiredRecords");
 
@@ -72,22 +73,17 @@ const createRent = async (
   // guestName,
   // guestPhoneNumber
 ) => {
-  // console.log(1);
-  // console.log(6);
   const bookingCode = req.params.id;
   await removeExpiredRecords();
-  // console.log(2);
-  // console.log(bookingCode);
+
   const isItAvailable = await Availability.findOne({
     where: { id: bookingCode },
   });
-  // console.log(3);
-  // console.log(isItAvailable);
+
   if (isItAvailable === null) {
     return "Debes hacer una reserva, antes de efectuar el pago";
   }
   // await pago();
-  // console.log(4);
 
   try {
     // const createdRent = await Rent.create({
@@ -106,17 +102,21 @@ const createRent = async (
     //   guestName,
     //   guestPhoneNumber,
     // });
-    const booked = await Availability.findOne({ where: { id: bookingCode } });
-    console.log(booked);
-    console.log(5555555555555555);
+    const booked = await Availability.findOne({
+      where: { id: bookingCode, expirationTime: { [Op.not]: null } },
+    });
+    if (booked === null) return "Homero, ya marcaste...";
     await booked.update({
       isAvailable: "Indispuesta",
       expirationTime: null,
     });
-    console.log(5);
-    return `Casa tomada!!`;
-
-    // return createdRent;
+    return (
+      "Felices vacaciones!!" +
+      " " +
+      "Y no te olvides de usar filtro solar." +
+      " " +
+      "Y no seas rata y traele algo a la abuela. Un imancito.., lo que sea. Con una boludes de dos mangos, la haces sentir re bien ;-)"
+    );
   } catch (error) {
     console.error(error.message);
   }
