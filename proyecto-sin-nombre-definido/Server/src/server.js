@@ -17,7 +17,10 @@ const corsOptions = {
 
 server.use(morgan('dev'));
 server.use(express.json());
-server.use(cors(corsOptions));
+server.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true, // Habilita las credenciales si es necesario (cookies, autenticación, etc.)
+}));
 
 server.use(session({
   secret: process.env.SESSION_SECRET,

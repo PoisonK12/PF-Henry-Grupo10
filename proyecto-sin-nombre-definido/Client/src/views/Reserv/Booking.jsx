@@ -4,11 +4,13 @@ import es from 'date-fns/locale/es';
 import {  useSelector } from "react-redux"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; 
+import { setBookingDate } from "../../redux/actions";
 
 const Booking = () => {
     const assetDetail = useSelector((state) => state.detail)
-    const userData = localStorage.getItem("data");
-    
+    const userData = JSON.parse(localStorage.getItem("data"));
+  
+
     const [booking ,setBooking] = useState({
         assetId : assetDetail.id,
         userId : userData.id,
@@ -29,15 +31,13 @@ const Booking = () => {
   
     const handleSubmit = async (e) => {
       e.preventDefault();
-    
+     await setBookingDate(booking)
     };
     return (
-        <div >
-            <fieldset className={style.fieldset}>
-                <legend className={style.legend}> Disponibilidad </legend>
-                <hr></hr>
-            </fieldset>
-            <form onSubmit={handleSubmit}>
+    <div >
+       <h2 className={style.legend}> Disponibilidad </h2>
+               
+    <form onSubmit={handleSubmit}>
       <div className="d-flex flex-column " style={{marginTop : "40px" , marginBottom : "20px"}}>
       <fieldset class="border p-1 border-primary rounded" style={{borderColor : "red"}}>
         
