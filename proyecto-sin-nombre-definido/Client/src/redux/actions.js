@@ -489,13 +489,19 @@ export const getPropertyByUser = (id) => {
   }
 };
 
-export const setBookingDate = async (booking)  => {
+export const setBookingDate = async (booking , setResponse)  => {
       try {
           const res = await axios.post("/rents/reserva", booking);
           if(res) {
             console.log(res);
+            if(res.includes("-")) {
+              setResponse({success : true , msg : res});
+            } 
+              setResponse({success : false , msg : res})
+            
           }
       } catch (error) {
+        setResponse({success : false })
         
       }
 };

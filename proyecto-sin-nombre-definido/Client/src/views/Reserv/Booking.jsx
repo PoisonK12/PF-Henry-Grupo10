@@ -9,7 +9,7 @@ import { setBookingDate } from "../../redux/actions";
 const Booking = () => {
     const assetDetail = useSelector((state) => state.detail)
     const userData = JSON.parse(localStorage.getItem("data"));
-  
+    const [response ,setResponse] = useState({succes : false , msg : ""})
 
     const [booking ,setBooking] = useState({
         assetId : assetDetail.id,
@@ -31,7 +31,8 @@ const Booking = () => {
   
     const handleSubmit = async (e) => {
       e.preventDefault();
-     await setBookingDate(booking)
+     await setBookingDate(booking ,setResponse);
+     console.log(response);
     };
     return (
     <div >

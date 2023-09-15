@@ -8,8 +8,8 @@ const ReviewModel = require("./models/reviews");
 const AmenityModel = require("./models/amenities");
 const ContactModel = require("./models/contacts");
 const AvailabilityModel = require("./models/availability");
-const GoogleUsersModel = require("./models/googleUsers")
-
+/* const GoogleUsersModel = require("./models/googleUsers")
+ */
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/GOAT10`,
@@ -23,8 +23,8 @@ ReviewModel(sequelize);
 AmenityModel(sequelize);
 ContactModel(sequelize);
 AvailabilityModel(sequelize);
-GoogleUsersModel(sequelize);
-
+/* GoogleUsersModel(sequelize);
+ */
 const { User, Rent, Asset, Review, Contact } = sequelize.models;
 
 User.belongsToMany(Asset, { through: "userAssets" });
