@@ -43,11 +43,14 @@ function User() {
     setForm({ ...form, [name]: value });
   };
 
-  const handleUpdate =  (e) => {
+  const handleUpdate =  async (e) => {
     e.preventDefault(e)
     console.log('Datos que se van a enviar:', form);
     dispatch(putUser(form))
-    const info = localStorage.getItem("data");
+    const {data} = await axios.put("/users",form)
+    let info = localStorage.getItem("data");
+    info = data
+    localStorage.setItem("data", JSON.stringify(info))
   };
   
   
@@ -71,8 +74,7 @@ function User() {
       nationality: userData.nationality,
       birthDate: userData.birthDate,
       phoneNumber: userData.phoneNumber,
-      gender: userData.gender,
-      password:userData.password
+      gender: userData.gender
     });
   }, []);
 
