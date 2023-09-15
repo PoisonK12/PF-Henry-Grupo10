@@ -19,10 +19,20 @@ const Detail = () => {
   const dispatch = useDispatch();
   const assetDetail = useSelector((state) => state.detail);
   const [imageUrl, setImageUrl] = useState(null);
+  const [btnFav, setBtnFav] = useState('white');
   const propertiesSug = useSelector((state) => state.properties);
   const sugs = propertiesSug.rows?.filter((el) => el.id !== assetDetail.id);
   console.log("Detalle", assetDetail);
   const [loading, setLoading] = useState(true);
+
+  const handlerOnclick = (id) => {
+    setBtnFav("blueviolet")
+    const info = localStorage.getItem("data")
+    const userData = JSON.parse(info);
+    console.log('idUser',userData.id, 'idAsset', id);
+
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,7 +128,7 @@ const Detail = () => {
             {assetDetail.location}, {assetDetail.country}
           </p>
           <div className={style.icons}>
-            <div className={style.fav}>
+            <div className={style.fav} style={{backgroundColor: btnFav}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -126,6 +136,8 @@ const Detail = () => {
                 fill="currentColor"
                 class="bi bi-heart-fill"
                 viewBox="0 0 16 16"
+                onClick={() => handlerOnclick(assetDetail.id)}
+                style={{color: btnFav}}
               >
                 <path
                   fill-rule="evenodd"
@@ -133,6 +145,7 @@ const Detail = () => {
                 />
               </svg>
             </div>
+
             <div className={style.fav}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

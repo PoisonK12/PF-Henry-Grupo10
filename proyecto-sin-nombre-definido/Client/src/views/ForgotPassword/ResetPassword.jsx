@@ -9,16 +9,27 @@ function ResetPassword() {
 
     axios.defaults.withCredentials = true;
     const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.post(`http://localhost:3001/reset-password/${id}/${token}`, {password})
-        
-        .then(res => {
-            if(res.data.Status === "Success") {
-                navigate('/checkIn')
-               
-            }
-        }).catch(err => console.log(err))
-    }
+        e.preventDefault();
+      
+        if (password.length >= 5) {
+          axios.post(`http://localhost:3001/reset-password/${id}/${token}`, { password })
+            .then(res => {
+              if (res.data.Status === "Success") {
+                navigate('/checkIn');
+              } else {
+                // Si la respuesta no es "Success", podrías mostrar un mensaje de error.
+                alert('Error al restablecer la contraseña');
+              }
+            })
+            .catch(err => {
+              console.log(err);
+              alert('Error al realizar la solicitud');
+            });
+        } else {
+          alert('Contraseña muy corta');
+        }
+      };
+      
 
     return (
         <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
