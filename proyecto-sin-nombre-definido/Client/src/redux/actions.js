@@ -22,6 +22,7 @@ import {
   GET_USER_BY_ID,
   DELETE_LOGIC_USER_BY_ID,
   RESTORE_USER_BY_ID,
+  FAV_USER_PROPERTY
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -216,6 +217,20 @@ export const putUser = (form) => {
   };
 }
 
+export const favUserProperty = (like) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.put('/favorites/like', like)
+      return dispatch({
+        type: FAV_USER_PROPERTY,
+        payload: data
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
 export const searchByFilter = (
   {
     location,
@@ -379,6 +394,8 @@ export const getStates = (country) => {
   }
 };
 
+
+
 export const getLogin = async (
   login,
   setToastBody,
@@ -489,13 +506,19 @@ export const getPropertyByUser = (id) => {
   }
 };
 
-export const setBookingDate = async (booking)  => {
+export const setBookingDate = async (booking , setResponse)  => {
       try {
           const res = await axios.post("/rents/reserva", booking);
           if(res) {
             console.log(res);
+            if(res.includes("-")) {
+              setResponse({success : true , msg : res});
+            } 
+              setResponse({success : false , msg : res})
+            
           }
       } catch (error) {
+        setResponse({success : false })
         
       }
 };
