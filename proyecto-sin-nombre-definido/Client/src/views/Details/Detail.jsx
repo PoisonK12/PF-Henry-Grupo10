@@ -33,7 +33,6 @@ const Detail = () => {
     const fetchData = async () => {
       try {
         dispatch(getAssetById(id));
-        dispatch(SearchByLocation(assetDetail.location, 1));
         setTimeout(() => {
           setLoading(false);
 
@@ -44,6 +43,11 @@ const Detail = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    dispatch(SearchByLocation(assetDetail.location, 1));
+  }, [assetDetail])
+
   console.log("Soliii", sugs);
 
   const handlerImage = (e) => {

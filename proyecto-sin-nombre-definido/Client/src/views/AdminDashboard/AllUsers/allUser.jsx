@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteLogicUserById,
@@ -10,11 +10,20 @@ import { useNavigate } from "react-router-dom";
 import style from "./alluser.module.css";
 import Swal from "sweetalert2";
 
+import axios from "axios";
+
 const AllUser = () => {
   // Obtenemos la lista de usuarios del estado global
+
+  const userRef = useRef();
+  useEffect(() => {
+    userRef.current = users;
+  });
+  const prevUser = userRef.current;
+
   const users = useSelector((state) => state.users);
   const dispatch = useDispatch();
-  const [allUsers, setAllUsers] = useState(users);
+  const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate();
 
   // Estado para rastrear el filtro de búsqueda
@@ -50,29 +59,50 @@ const AllUser = () => {
     });
   };
 
-  const handlePauseUser = (e, id) => {
+  const handlePauseUser = async (e, id) => {
     e.preventDefault(); // Evita la recarga de la página
 
-    Swal.fire({
+    const confirmed = await Swal.fire({
       title: "¿Seguro que deseas pausar este usuario?",
       text: "Esta acción no se puede deshacer.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Sí, pausar",
       cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Llama a la acción para pausar el usuario por su ID
-        dispatch(deleteLogicUserById(id));
-        handleDisable(id);
-      }
     });
+    if (confirmed.isConfirmed) {
+      try {
+        dispatch(deleteLogicUserById(id));
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un problema al pausar el usuario.",
+        });
+      }
+    }
+
+    //   if (result.isConfirmed) {
+    //     // Llama a la acción para pausar el usuario por su ID
+    //     axios.delete(`/assets/delete/${id}`);
+
+    //   }
+    // });
   };
+
+  useEffect(() => {
+    dispatch(getAllUsers(filter));
+  }, [filter, dispatch]);
 
   // Efecto para cargar la lista de usuarios al montar el componente
   useEffect(() => {
-    dispatch(getAllUsers(filter));
-  }, [filter, allUsers]);
+    if (prevUser != users) {
+      dispatch(getAllUsers(filter));
+    }
+
+    // console.log(allUsers)
+  }, [filter, prevUser, dispatch]);
 
   // Filtrar usuarios basados en el filtro de búsqueda
   // const filteredUsers = allUsers?.filter((ele) =>
@@ -81,8 +111,8 @@ const AllUser = () => {
 
   // Manejador para cambios en el input de búsqueda
   const handleInputChange = (event) => {
-    const {value, name} = event.target
-    setFilter({...filter, [name]:value});
+    const { value, name } = event.target;
+    setFilter({ ...filter, [name]: value });
   };
 
   return (
@@ -111,7 +141,7 @@ const AllUser = () => {
         </thead>
         <tbody>
           {users.length > 0 ? (
-            users.map((ele, index) => (
+            users?.map((ele, index) => (
               <tr key={ele.id}>
                 <th
                   style={{ backgroundColor: ele.hide ? "#edd55e" : "#9bdb92" }}

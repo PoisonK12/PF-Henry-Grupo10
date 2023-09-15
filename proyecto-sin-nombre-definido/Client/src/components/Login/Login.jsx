@@ -81,7 +81,7 @@ const Login = ({ handleSwitch}) => {
     );
   };
   useEffect(() => {
-    dispatch(getAllUsers())
+    dispatch(getAllUsers({search:"",order:""}))
   },[])
 
   console.log(toastBody);
