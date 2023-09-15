@@ -65,7 +65,6 @@ export const getAllReallyProperties = ({ order}, page) => {
 };
 
 export const getAllUsers = ({search, order}) => {
-  console.log(search)
   if(!search) search = ""
   if(order == "") order = "userNameAsc"
 
@@ -304,10 +303,6 @@ export const deleteLogicUserById = (id) => {
       await axios.delete(`/users/delete/${id}`);
 
       // Si la eliminación fue exitosa, despacha la acción para actualizar el estado
-      dispatch({
-        type: DELETE_LOGIC_USER_BY_ID,
-        payload: id, // Puedes enviar el ID de la propiedad eliminada como payload
-      });
     } catch (error) {
       console.error(error);
     }
@@ -318,10 +313,7 @@ export const restoreUserById = (id) => {
   return async (dispatch) => {
     try {
       await axios.get(`/users/restore/${id}`)
-      dispatch({
-        type: RESTORE_USER_BY_ID,
-        payload: id,
-      })
+     
     } catch (error) {
       console.error(error);
     
