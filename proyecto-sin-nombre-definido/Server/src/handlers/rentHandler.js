@@ -79,7 +79,6 @@ const createRentHandler = async (req, res) => {
       // guestPhoneNumber
     );
     res.status(201).json(response);
-    console.log("bbb");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

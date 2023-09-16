@@ -22,7 +22,8 @@ ReviewModel(sequelize);
 AmenityModel(sequelize);
 ContactModel(sequelize);
 AvailabilityModel(sequelize);
-
+/* GoogleUsersModel(sequelize);
+ */
 const { User, Rent, Asset, Review, Contact } = sequelize.models;
 
 User.belongsToMany(Asset, { through: "userAssets" });
