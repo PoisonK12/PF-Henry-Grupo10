@@ -5,7 +5,7 @@ import bath from "../../assets/images/svg/bath.svg";
 import ruler from "../../assets/images/svg/ruler.svg";
 import allSize from "../../assets/images/svg/allSize.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { SearchByLocation, getAssetById } from "../../redux/actions";
+import { SearchByLocation, favUserProperty, getAllFavUserProps, getAssetById } from "../../redux/actions";
 import { useParams, Link } from "react-router-dom";
 import NotFoundPage from "../404/404";
 import Card from "../../components/Card/CardOffer/CardOffer";
@@ -16,23 +16,29 @@ import Maps from "../../views/Map/Map"
 
 const Detail = () => {
 
-  
+  const favoritesData = useSelector(state => state.myFavoritesProps)
+  console.log('infoafv',favoritesData);
   const { id } = useParams();
   const dispatch = useDispatch();
   const assetDetail = useSelector((state) => state.detail);
   const [imageUrl, setImageUrl] = useState(null);
-  const [btnFav, setBtnFav] = useState('white');
+
   const propertiesSug = useSelector((state) => state.properties);
   const sugs = propertiesSug?.rows?.filter((el) => el.id !== assetDetail.id);
   console.log("Detalle", assetDetail);
   const [loading, setLoading] = useState(true);
 
+  const isFavorite = Array.isArray(favoritesData) && favoritesData.includes(id);
+  console.log('kolor', isFavorite);
+
   const handlerOnclick = (id) => {
-    setBtnFav("blueviolet")
     const info = localStorage.getItem("data")
     const userData = JSON.parse(info);
     console.log('idUser',userData.id, 'idAsset', id);
-
+    const idUser = userData.id
+    dispatch(favUserProperty(idUser,id))
+    alert('Propiedad guardada en favoritos')
+    dispatch(getAllFavUserProps(userData.id))
   }
 
 
@@ -50,6 +56,12 @@ const Detail = () => {
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    const info = localStorage.getItem("data")
+    const userData = JSON.parse(info);
+    console.log('idUser',userData);
+    dispatch(getAllFavUserProps(userData.id))
+},[])
 
   useEffect(() => {
     dispatch(SearchByLocation(assetDetail.location, 1));
@@ -133,17 +145,17 @@ const Detail = () => {
             <strong>Dirección:</strong> {assetDetail.address},{" "}
             {assetDetail.location}, {assetDetail.country}
           </p>
-          <div className={style.icons}>
-            <div className={style.fav} style={{backgroundColor: btnFav}}>
+          <div className={style.icons} >
+            <div className={style.fav}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
-                fill="currentColor"
+                fill={isFavorite ? "blue" : "currentColor"}
                 class="bi bi-heart-fill"
                 viewBox="0 0 16 16"
                 onClick={() => handlerOnclick(assetDetail.id)}
-                style={{color: btnFav}}
+                
               >
                 <path
                   fill-rule="evenodd"
@@ -187,14 +199,15 @@ const Detail = () => {
           </div>
         </div>
 
-       {token ? 
+       {/* {token ?  */}
         <div className={style.infoAvailable} >
           <div >
              <Booking></Booking> 
           </div>
         </div>
         
-        : <div className={style.alert}  >
+        {/* : */}
+         <div className={style.alert}  >
             <h5>Hola! Para rentar esta propiedad debes de estar <b style={{color : "#e43838"}}>registrado</b > o <b style={{color : "#e43838"}}>logeado</b>.</h5>
             <p> Por favor 
               <Link to="/checkIn"> Inicia sesión </Link>
@@ -203,7 +216,7 @@ const Detail = () => {
                para acceder a todos los beneficios que ofrece esta página
             </p>
           </div>
-          } 
+          {/* }  */}
 
         <div className={style.info}>
           <div style={{ display: "flex" }}>

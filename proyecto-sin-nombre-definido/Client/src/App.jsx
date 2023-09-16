@@ -51,7 +51,7 @@ function App() {
     <>
     
     {/* {loading && <Loader></Loader>} ? lOADER */}
-      {(location.pathname !== "/" && location.pathname !== "/checkIn" && location.pathname !=="/404") && <Nav />}
+      {(location.pathname !== "/" && location.pathname !== "/checkIn" && location.pathname !=="/404") && location.pathname !== "/forgot-password" && location.pathname !== "/reset_password/" &&<Nav />}
       <ScrollToTop></ScrollToTop>
      <Routes>
       <Route path='/' element={<><Landing/></>} />
