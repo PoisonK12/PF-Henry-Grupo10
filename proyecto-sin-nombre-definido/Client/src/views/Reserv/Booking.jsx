@@ -1,5 +1,6 @@
 import React , {useState} from "react";
 import style from "./Booking.module.css"
+import style from "./Booking.module.css"
 import es from 'date-fns/locale/es';
 import {  useSelector } from "react-redux"
 import DatePicker from "react-datepicker";

@@ -44,11 +44,9 @@
   transition: color 0.3s ease;
   color: blueviolet;
 }
-.icons div:hover {
-  background-color: blueviolet;
-}
+
 .icons div:hover svg {
-  color: #cccccc;
+  color: blue;
 }
 
 .primary,

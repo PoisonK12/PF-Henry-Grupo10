@@ -52,7 +52,7 @@ function App() {
     
     {/* {loading && <Loader></Loader>} ? lOADER */}
       {(location.pathname !== "/" && location.pathname !== "/checkIn" && location.pathname !=="/404") && <Nav />}
-      <ScrollToTop></ScrollToTop>
+      {/* <ScrollT></ScrollT  oTop> */}
      <Routes>
       <Route path='/' element={<><Landing/></>} />
       <Route path='/detail/:id' element={<><Detail/><Footer/><Chatbot/></>} />

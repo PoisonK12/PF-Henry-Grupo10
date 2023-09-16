@@ -22,7 +22,10 @@ import {
   GET_USER_BY_ID,
   DELETE_LOGIC_USER_BY_ID,
   RESTORE_USER_BY_ID,
-  FAV_USER_PROPERTY
+  FAV_USER_PROPERTY,
+  GET_REVIEWS,
+  GET_ALL_FAV_USER_PROPERTY,
+  DELETE_FAV_USER_PROPERTY
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -217,12 +220,41 @@ export const putUser = (form) => {
   };
 }
 
-export const favUserProperty = (like) => {
+export const favUserProperty = (idUser, idAsset) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.put('/favorites/like', like)
+      const { data } = await axios.put('/favorites/like', { userId: idUser, assetId: idAsset });
+      console.log('favinfo', data);
       return dispatch({
         type: FAV_USER_PROPERTY,
+        payload: data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export const deleteFavUserProperty = (idUser, idAsset) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put('/favorites/unlike', { userId: idUser, assetId: idAsset });
+      return dispatch({
+        type: DELETE_FAV_USER_PROPERTY,
+        payload: data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export const getAllFavUserProps = (id) => {
+  return async (dispatch)=> {
+    try {
+      const {data} = await axios.get(`http://localhost:3001/favorites?userId=${id}`)
+      return dispatch({
+        type:GET_ALL_FAV_USER_PROPERTY,
         payload: data
       })
     } catch (error) {
@@ -548,7 +580,7 @@ export const  getPayment = async (asset, setPaymentOpen ) => {
         const top = (screen.height - height) / 2;
         const options = `width=${width}, height=${height}, left=${left}, top=${top}, location=no, toolbar=no`;
         var open = window.open(data.data.url, '_blank', options);
-       /*  const interval = setInterval(() => {
+        const interval = setInterval(() => {
           if (open.closed) {
             clearInterval(interval);
           } else {
@@ -563,7 +595,7 @@ export const  getPayment = async (asset, setPaymentOpen ) => {
               console.error(error);
             }
           }
-        }, 1000);  */
+        }, 1000); 
         if(open.location.href.includes("success")) {
           open.close()
           console.log(("holi"));
@@ -573,3 +605,29 @@ export const  getPayment = async (asset, setPaymentOpen ) => {
       
     }
 };
+
+export const reviewsPut = async (form , condicional) =>{
+  
+    try {
+      const {data} = await axios.put(`/reviews/${condicional}/`, form)
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  
+}
+
+export const reviewsGet = (id) => {
+  return async (dispatch) =>{
+    try {
+      const {data} = await axios("/reviews/"+ id)
+      console.log(data)
+      return dispatch({
+        type: GET_REVIEWS,
+        payload: data
+      })
+    } catch (error) {
+      
+    }
+  }
+}
