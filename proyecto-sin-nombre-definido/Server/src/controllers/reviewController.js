@@ -107,7 +107,7 @@ const updateReview = async (
 };
 
 //!---------------------------------evaluador-texto--puntos-evaluado---------------------------------
-const reviewUserController = async (userName, score, comment, id) => {
+const reviewUserController = async (Pk, userName, score, comment, id) => {
   try {
     const response = await getUserByIdController(id);
     let { averageScore, numberOfReviews } = response;
@@ -123,13 +123,14 @@ const reviewUserController = async (userName, score, comment, id) => {
   try {
     const findUser = await User.findByPk(id);
     if (findUser) {
-      const createdReview = await Review.create({
+      const toUpdate = await Review.findByPk(Pk);
+      await toUpdate.update({
         userName,
         comment,
         score,
       });
 
-      await findUser.addReview(createdReview);
+      // await findUser.addReview(createdReview);
       return `Exito al crear la review de ${findUser.userName}, ${userName}`;
     }
     res.status(500).json(`Mala mia`);
@@ -139,7 +140,7 @@ const reviewUserController = async (userName, score, comment, id) => {
   }
 };
 //!---------------------------------evaluador-texto--puntos-evaluada---------------------------------
-const reviewAssetController = async (userName, score, comment, id) => {
+const reviewAssetController = async (Pk, userName, score, comment, id) => {
   try {
     const response = await getAssetById(id);
     let { averageScore, numberOfReviews } = response;
@@ -156,13 +157,14 @@ const reviewAssetController = async (userName, score, comment, id) => {
     const findAsset = await Asset.findByPk(id);
 
     if (findAsset) {
-      const createdReview = await Review.create({
+      const toUpdate = await Review.findByPk(Pk);
+      await toUpdate.update({
         userName,
         score,
         comment,
       });
 
-      await findAsset.addReview(createdReview);
+      // await findAsset.addReview(createdReview);
       return `Exito al crear la review de ${findAsset.name}, ${userName}`;
     }
 
