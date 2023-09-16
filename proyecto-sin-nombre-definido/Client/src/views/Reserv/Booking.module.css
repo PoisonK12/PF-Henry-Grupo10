@@ -25,3 +25,15 @@
         background-color: #9d0aca;
 }
 
+.alert {
+    background-color: #fff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+      0 4px 6px -4px rgba(0, 0, 0, 0.2);
+    
+    border: 3px solid #e43838;
+    border-radius: 5px;
+    width: 1065px;
+    margin: 0 auto;
+    padding: 20px;
+    margin: 30px 0;
+  }

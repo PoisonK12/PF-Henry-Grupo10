@@ -506,13 +506,70 @@ export const getPropertyByUser = (id) => {
   }
 };
 
-export const setBookingDate = async (booking)  => {
+export const setBookingDate = async (booking, setReserv , setBookingId , setErrors)  => {
       try {
           const res = await axios.post("/rents/reserva", booking);
-          if(res) {
-            console.log(res);
-          }
+          if(res.data.includes("-")) {
+            setReserv(true)
+            setBookingId(res.data)
+            console.log(res.data);
+            return
+          } 
+            setReserv(false);
+            setErrors(res.data)
+            console.log(res.data);
+          return
       } catch (error) {
-        
+        return console.log(error);
       }
+};
+
+
+export const handleReserv = async (bookingId) => {
+
+    try {
+      const res = await axios.post(`/rents/create/${bookingId}`);
+      if(res) {
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+};
+
+export const  getPayment = async (asset, setPaymentOpen ) => {
+  const {name , description , price} = asset;
+    try {
+      const data = await axios.post("/pay/create-checkout-session" , {name : name , description : description , price : price})
+      if(data) {
+        var width = 500;
+        var height = 600;
+        const left = (screen.width - width) / 2;
+        const top = (screen.height - height) / 2;
+        const options = `width=${width}, height=${height}, left=${left}, top=${top}, location=no, toolbar=no`;
+        var open = window.open(data.data.url, '_blank', options);
+       /*  const interval = setInterval(() => {
+          if (open.closed) {
+            clearInterval(interval);
+          } else {
+            try {
+              const currentURL = open.location.href;
+              console.log(currentURL);
+              // Realiza acciones con la URL actual de la ventana emergente
+              if (currentURL.includes("success")) {
+                open.close();
+              }
+            } catch (error) {
+              console.error(error);
+            }
+          }
+        }, 1000);  */
+        if(open.location.href.includes("success")) {
+          open.close()
+          console.log(("holi"));
+        }
+      }
+    } catch (error) {
+      
+    }
 };

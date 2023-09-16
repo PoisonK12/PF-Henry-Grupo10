@@ -12,11 +12,12 @@ import Card from "../../components/Card/CardOffer/CardOffer";
 import Loader from "../../components/Loader/Loader";
 import Booking from "../Reserv/Booking";
 import Maps from "../../views/Map/Map"
+import Reserv from "../Reserv/Reserv";
 
 
 const Detail = () => {
 
-  
+  const token = localStorage.getItem("log")
   const { id } = useParams();
   const dispatch = useDispatch();
   const assetDetail = useSelector((state) => state.detail);

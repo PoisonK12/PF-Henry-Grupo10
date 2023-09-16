@@ -27,7 +27,7 @@ import FAQ from './views/Faq/Faq';
 import Reserv from './views/Reserv/Reserv';
 import ForgotPassword from './views/ForgotPassword/ForgotPassword';
 import ResetPassword from './views/ForgotPassword/ResetPassword';
-
+import TermsAndConditions from "./components/TermsAndConditions/TermsAndConditions"
 
 
 
@@ -73,6 +73,7 @@ function App() {
       <Route path="/reserv" element={<><Reserv/><Footer/></>}></Route>     
       <Route path="/faq" element={<><FAQ/><Footer/></>}></Route>
       <Route path="*" element={<><NotFound/><Footer/></>}/>
+      <Route path="/terms&Conditions" element={<><TermsAndConditions/><Footer/></>}></Route>
      </Routes>
       
      
