@@ -107,7 +107,7 @@ const updateReview = async (
 };
 
 //!---------------------------------evaluador-texto--puntos-evaluado---------------------------------
-const reviewUserController = async (userName, score, comment, id) => {
+const reviewUserController = async (Pk, userName, score, comment, id) => {
   try {
     const response = await getUserByIdController(id);
     let { averageScore, numberOfReviews } = response;
@@ -123,13 +123,14 @@ const reviewUserController = async (userName, score, comment, id) => {
   try {
     const findUser = await User.findByPk(id);
     if (findUser) {
-      const createdReview = await Review.create({
+      const toUpdate = await Review.findByPk(Pk);
+      await toUpdate.update({
         userName,
         comment,
         score,
       });
 
-      await findUser.addReview(createdReview);
+      // await findUser.addReview(createdReview);
       return `Exito al crear la review de ${findUser.userName}, ${userName}`;
     }
     res.status(500).json(`Mala mia`);
@@ -139,7 +140,7 @@ const reviewUserController = async (userName, score, comment, id) => {
   }
 };
 //!---------------------------------evaluador-texto--puntos-evaluada---------------------------------
-const reviewAssetController = async (userName, score, comment, id) => {
+const reviewAssetController = async (Pk, userName, score, comment, id) => {
   try {
     const response = await getAssetById(id);
     let { averageScore, numberOfReviews } = response;
@@ -153,23 +154,17 @@ const reviewAssetController = async (userName, score, comment, id) => {
     console.log(error);
   }
   try {
-    // console.log(111111111111111111);
-    // try {
     const findAsset = await Asset.findByPk(id);
 
-    // console.log(userName);
-    // console.log(comment);
-    // console.log(score);
-    // console.log(333333333333333);
     if (findAsset) {
-      const createdReview = await Review.create({
+      const toUpdate = await Review.findByPk(Pk);
+      await toUpdate.update({
         userName,
         score,
         comment,
       });
 
-      // console.log(444444444444444444);
-      await findAsset.addReview(createdReview);
+      // await findAsset.addReview(createdReview);
       return `Exito al crear la review de ${findAsset.name}, ${userName}`;
     }
 
@@ -195,6 +190,41 @@ const deleteReviewById = async (id) => {
   return "Review eliminado con exito";
 };
 
+const emptyAssetReviewCreater = async (userName, id) => {
+  try {
+    // console.log(userName);
+    const findAsset = await Asset.findByPk(id);
+    console.log(findAsset);
+
+    if (findAsset) {
+      const createdReview = await Review.create({
+        userName: userName,
+        score: 2,
+        comment: "",
+      });
+      await findAsset.addReview(createdReview);
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+const emptyUserReviewCreater = async (userName, id) => {
+  try {
+    const findUser = await User.findByPk(id);
+
+    if (findUser) {
+      const createdReview = await Review.create({
+        userName: userName,
+        score: 1,
+        comment: "",
+      });
+      await findUser.addReview(createdReview);
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 module.exports = {
   getReviewByIdController,
   getAllReviewController,
@@ -202,4 +232,6 @@ module.exports = {
   updateReview,
   reviewUserController,
   reviewAssetController,
+  emptyAssetReviewCreater,
+  emptyUserReviewCreater,
 };
