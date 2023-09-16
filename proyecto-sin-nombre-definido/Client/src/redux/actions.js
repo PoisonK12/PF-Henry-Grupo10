@@ -23,7 +23,9 @@ import {
   DELETE_LOGIC_USER_BY_ID,
   RESTORE_USER_BY_ID,
   FAV_USER_PROPERTY,
-  GET_REVIEWS
+  GET_REVIEWS,
+  GET_ALL_FAV_USER_PROPERTY,
+  DELETE_FAV_USER_PROPERTY
 } from "./types";
 
 export const getAllProperties = (page) => {
@@ -218,12 +220,41 @@ export const putUser = (form) => {
   };
 }
 
-export const favUserProperty = (like) => {
+export const favUserProperty = (idUser, idAsset) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.put('/favorites/like', like)
+      const { data } = await axios.put('/favorites/like', { userId: idUser, assetId: idAsset });
+      console.log('favinfo', data);
       return dispatch({
         type: FAV_USER_PROPERTY,
+        payload: data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export const deleteFavUserProperty = (idUser, idAsset) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put('/favorites/unlike', { userId: idUser, assetId: idAsset });
+      return dispatch({
+        type: DELETE_FAV_USER_PROPERTY,
+        payload: data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export const getAllFavUserProps = (id) => {
+  return async (dispatch)=> {
+    try {
+      const {data} = await axios.get(`http://localhost:3001/favorites?userId=${id}`)
+      return dispatch({
+        type:GET_ALL_FAV_USER_PROPERTY,
         payload: data
       })
     } catch (error) {

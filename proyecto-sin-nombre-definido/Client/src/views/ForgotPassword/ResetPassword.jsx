@@ -32,13 +32,26 @@ function ResetPassword() {
       
 
     return (
-        <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-            <div className="bg-white p-3 rounded w-25">
-                <h4>Reset Password</h4>
+        <div className="d-flex justify-content-center align-items-center bg-secondary vh-100"
+        style={{
+          background:
+            "linear-gradient(45deg, rgba(29,88,148,1) 7%, rgba(186,38,224,1) 100%)",
+          border: "none",
+          width: "100vw",
+          display: "flex",
+          padding: "50px",
+          paddingInline: "10%",
+          paddingBlock: "5%",
+          position: "relative",
+          margin: "auto",
+        }}
+        >
+            <div className="bg-white p-3 rounded w-25" style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 1)' }}>
+                <h4>Restablecer Contraseña</h4>
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
+                    <div className="mb-3 mt-3">
                         <label htmlFor="email">
-                            <strong>New Password</strong>
+                            <strong>Nueva Contraseña</strong>
                         </label>
                         <input
                             type="password"
@@ -49,8 +62,8 @@ function ResetPassword() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <button type="submit" className="btn btn-success w-100 rounded-0">
-                        Update
+                    <button type="submit" className="btn btn-success w-100 rounded-15">
+                        Actualizar
                     </button>
                 </form>
             </div>
