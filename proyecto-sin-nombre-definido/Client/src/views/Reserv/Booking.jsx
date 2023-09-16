@@ -1,5 +1,5 @@
 import React , {useState} from "react";
-import style from "../Details/Calendar.module.css"
+import style from "./Booking.module.css"
 import es from 'date-fns/locale/es';
 import {  useSelector } from "react-redux"
 import DatePicker from "react-datepicker";
@@ -39,7 +39,7 @@ const Booking = () => {
                
     <form onSubmit={handleSubmit}>
       <div className="d-flex flex-column " style={{marginTop : "40px" , marginBottom : "20px"}}>
-      <fieldset class="border p-1 border-primary rounded" style={{borderColor : "red"}}>
+      <fieldset class="p-1  rounded" style={{border : "3px solid blueviolet"}}>
         
     
     <div className="d-flex flex-row m-4 ">
