@@ -22,7 +22,6 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
       const allDates = datess.map((element) => element.dates);
       return [].concat(...allDates);
     });
-
     if (innerDate >= checkOuting) {
       return "Las fechas ingresadas son incorrectas";
     } else {
@@ -30,20 +29,27 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
 
       while (innerDate < checkOuting) {
         const innerDateFormatted = innerDate.toISOString().split("T")[0];
-        if (gathered.includes(innerDateFormatted))
+
+        console.log(innerDateFormatted);
+        if (gathered.includes(innerDateFormatted)) {
           return "La propiedad está reservada para los días indicados";
+        }
         innerDates.push(new Date(innerDate));
+        console.log(innerDate);
         innerDate.setDate(innerDate.getDate() + 1);
       }
 
-      await Availability.create({
+      const response = await Availability.create({
         dates: innerDates,
         isAvailable: "Reservada",
         assetId: assetId,
         userId: userId,
         expirationTime: expirationTime,
       });
-      return `Mantendremos la propiedad reservada para vos por 15min... Pero metele porque vuela!!`;
+
+      return response.id;
+      // +" --- " +
+      // `Mantendremos la propiedad reservada para vos por 15min... Pero metele porque vuela!!`
     }
   } catch (error) {
     return "El servidor está caído. Por favor intentá más tarde.";
@@ -62,7 +68,7 @@ const createRent = async (req) => {
     if (isItAvailable === null) {
       return "Debes hacer una reserva, antes de efectuar el pago";
     }
-    // await pago();
+    // await pago($786487, userName);
 
     // const createdRent = await Rent.create();
 
@@ -108,8 +114,7 @@ const createRent = async (req) => {
       "Y no seas rata y traele algo a la abuela. Un imancito.., lo que sea. Con una boludes de dos mangos, la haces sentir re bien ;-)"
     );
   } catch (error) {
-    // console.log(error);
-    throw new Error("Error al registrar la renta");
+    console.error(error.message);
   }
 };
 // Trae una renta especificada por el id
