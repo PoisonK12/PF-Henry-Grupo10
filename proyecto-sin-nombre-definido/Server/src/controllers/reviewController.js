@@ -16,9 +16,10 @@ const getReviewByIdController = async (req) => {
     try {
       const response = await Review.findAll({
         where: { userName: id },
-        attributes: ["score", "comment", "userName", "createdAt"],
+        // attributes: ["id", "score", "comment", "userName", "createdAt"],
+        // include: { joinTableAttributes: [] },
       });
-
+      // const extraData = await findOne({where:{userName:response.userName}}, attributes:[""])
       return response;
     } catch (error) {
       console.error(error.message);
