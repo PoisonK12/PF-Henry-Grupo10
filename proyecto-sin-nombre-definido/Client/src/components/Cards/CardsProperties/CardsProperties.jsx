@@ -45,7 +45,7 @@ const CardsProperties = ({setFilter, filter}) => {
   console.log(allProperties)
   return (
     <>
-    {allProperties.rows.length ? (
+    {!allProperties.length ? (
       <>
     <div className={style.background} ref={listContainerRef}> 
       {allProperties.rows?.map((ele) => {
@@ -58,10 +58,6 @@ const CardsProperties = ({setFilter, filter}) => {
           location={ele.location}
           country={ele.country}
           images={ele.images}
-          rooms={ele.rooms}
-          bathrooms={ele.bathrooms}
-          coveredArea={ele.coveredArea}
-          totalArea={ele.totalArea}
           rentPrice={ele.rentPrice}
         />
       })}
@@ -72,7 +68,7 @@ const CardsProperties = ({setFilter, filter}) => {
         <button onClick={nextHandler} className={style.button}>NEXT</button>
       </div>
       </>
-    ) : <div><h1 style={{font:"700 70px/1 'Avenir', sans-serif", height:"100%", margin:"0 auto"}}>OH NO!</h1><h4 style={{textAlign:"center"}}>Prueba con otros filtros!</h4></div> }
+    ) : <NotFoundPage/> }
     </>
   );
 };

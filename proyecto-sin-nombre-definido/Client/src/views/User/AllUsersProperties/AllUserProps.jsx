@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
-  deleteLogicAssetById,
+  deleteAssetById,
   getAllReallyProperties,
   putProperty,
   getPropertyByUser
@@ -17,19 +17,18 @@ import Widget from "../../AdminDashboard/AllProperties/Balance/Balance";
 const AllUsersProps = () => {
   const dispatch = useDispatch();
   const allProperties = useSelector((state) => state.myProperties);
-  const deletedProperties = allProperties?.filter((property) => property.eliminado !== true);
-  console.log('sisisi',allProperties);
   const [datas, setDatas] = useState({})
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
-  console.log('id',idHouse);
   const [previousProperties, setPreviousProperties] = useState([]);
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
     onSale: "",
     parking: "",
     terrace: "",
   });
+
+
 
   const [form, setForm] = useState({
     name: "",
@@ -65,7 +64,7 @@ const AllUsersProps = () => {
   useEffect(() => {
     const getDataForFrom = async () => {
       const { data } = await axios(`/assets/` + idHouse);
-      setForm({
+      setForm(...form, {
         name: data.name,
         country: data?.country,
         state: data?.state,
@@ -153,15 +152,20 @@ const AllUsersProps = () => {
   const handleDeleteAsset = (id) => {
     if (window.confirm("¿Seguro que deseas eliminar esta propiedad?")) {
       // Llama a la acción para eliminar la propiedad por su ID
-      dispatch(deleteLogicAssetById(id));
-      dispatch()
+      dispatch(deleteAssetById(id));
     }
   };
-  // useEffect(() => {
-  //   dispatch(getAllReallyProperties());
-  // }, [allProperties]);
+  useEffect(() => {
+    dispatch(getAllReallyProperties());
+  }, [allProperties]);
 
-
+  useEffect(() => {
+    // Lógica para detectar eliminaciones
+    const deletedItems = previousProperties.filter(item => !allProperties.includes(item));
+    // Hacer algo con los elementos eliminados si es necesario
+    // Actualizar el estado anterior con el estado actual
+    setPreviousProperties(allProperties);
+  }, [allProperties]);
 
   return (
     <div className={style.background}>
@@ -174,7 +178,7 @@ const AllUsersProps = () => {
             </div>
           </div>
           <div>
-            {deletedProperties?.map((props, index) => (
+            {allProperties?.map((props, index) => (
               <div className={`${style.centeredContent}`} key={props.id}>
                 <div className={`card mb-3 p-2 ${style.maxWidth}`}>
                   <div className="row g-0">

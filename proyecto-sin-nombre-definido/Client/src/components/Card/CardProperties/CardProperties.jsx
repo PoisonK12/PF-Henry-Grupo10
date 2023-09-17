@@ -1,10 +1,6 @@
 import React from "react";
 import style from "./CardProperties.module.css";
 import { Link } from "react-router-dom";
-import bed from "../../../assets/images/svg/bed.svg";
-import bath from "../../../assets/images/svg/bath.svg";
-import ruler from "../../../assets/images/svg/ruler.svg";
-import allSize from "../../../assets/images/svg/allSize.svg";
 
 const CardProperties = (props) => {
   const descripCut = () => {
@@ -52,28 +48,6 @@ const CardProperties = (props) => {
                 <Link to={`/detail/${props.id}`} target="_blank">
                   <button className="btn btn-primary">Ver Detalles</button>
                 </Link>
-              </div>
-            </div>
-            <div className={` ${style.propertyInfo}`}>
-              <div>
-                <ul className={style.amenitiesList}>
-                  <li className={style.amenitiesItem}>
-                    <img src={bed} width="20"></img>
-                    <span> Habitaciones:</span> {props.rooms}
-                  </li>
-                  <li className={style.amenitiesItem}>
-                    <img src={bath} width={"20"}></img>
-                    <span> Baños:</span> {props.bathrooms}
-                  </li>
-                  <li className={style.amenitiesItem}>
-                    <img src={ruler} width={"20"}></img>
-                    <span> Tamaño propiedad:</span> {props.coveredArea}mt2
-                  </li>
-                  <li className={style.amenitiesItem}>
-                    <img src={allSize} width={"20"}></img>
-                    <span> Total Area:</span> {props.totalArea}mt2
-                  </li>
-                </ul>
               </div>
             </div>
           </div>

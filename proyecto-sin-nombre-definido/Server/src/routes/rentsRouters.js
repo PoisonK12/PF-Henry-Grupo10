@@ -7,7 +7,7 @@ const {
 
 const rentsRouter = Router();
 
-rentsRouter.post("/create/:id", createRentHandler);
+rentsRouter.post("/create", createRentHandler);
 rentsRouter.post("/reserva", createBookHandler);
 
 //rentsRouter.delete("/:id", deleteRentByIdHandler);

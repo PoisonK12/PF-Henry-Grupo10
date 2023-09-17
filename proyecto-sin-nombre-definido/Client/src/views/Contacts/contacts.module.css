@@ -1,6 +1,6 @@
 @import url('https://fonts.cdnfonts.com/css/avenir');
 .cont {
-  font-family: 'Avenir', sans-serif; 
+  /* font-family: montserrat, arial, verdana; */
   background-color: rgb(231, 231, 231);
   padding: 20px;
   display: flex;

@@ -10,28 +10,4 @@
   .centeredContent{
     box-shadow:  0 10px 15px -3px rgba(0,0,0,.2),0 4px 6px -4px rgba(0,0,0,.1 );
   }
-
   
-.amenitiesList {
-  margin-left: 20px;
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  width: 100%;
-  color: #091f44;
-}
-
-.amenitiesItem img {
-  margin-bottom: 7px;
-}
-
-.amenitiesItem {
-  font-size: 16px;
-  margin-right: 25px;
-  margin-bottom: 10px;
-}
-
-.amenitiesItem span {
-  font-weight: bold;
-  margin-right: 5px;
-}

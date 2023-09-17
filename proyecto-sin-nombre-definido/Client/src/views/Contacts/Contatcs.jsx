@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { createContact, getAllContact, getAllReallyProperties } from "../../redux/actions";
 
 const Contacts = () => {
-
+  const allCount = useSelector((state) => state.propertiesCopy);
+  const asi = useSelector(state => state.contact);
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
   
@@ -77,6 +78,8 @@ const Contacts = () => {
   };
 
   useEffect(() => {
+    dispatch(getAllReallyProperties());
+    dispatch(getAllContact());
     setVisible(true);
   }, []);
 

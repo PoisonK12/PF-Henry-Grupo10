@@ -23,7 +23,6 @@ axios.defaults.baseURL = "http://localhost:3001"
 import jwt_decode from "jwt-decode"
 import {ScrollToTop} from './Helpers';
 import Loader from './components/Loader/Loader';
-import FAQ from './views/Faq/Faq';
 
 
 
@@ -48,7 +47,7 @@ function App() {
     <>
     
     {loading && <Loader></Loader>} {/*? lOADER */}
-      {(location.pathname !== "/" && location.pathname !== "/checkIn" && location.pathname !=="/404") && <Nav />}
+      {(location.pathname !== "/" && location.pathname !== "/checkIn") && <Nav />}
       <ScrollToTop></ScrollToTop>
      <Routes>
       <Route path='/' element={<><Landing/></>} />
@@ -63,8 +62,7 @@ function App() {
       <Route path='/userPanel' element={<><UserPanel/><Footer/></>}/>
       <Route path='/addProperty' element={<><PropertyForm/><Footer/><Chatbot/></>}></Route>           
       <Route path="/checkIn" element={<><LoginRegister/><Footer/></>}></Route>
-      <Route path="/demo" element={<><Loader/><Footer/></>}></Route> 
-      <Route path="/faq" element={<><FAQ/><Footer/></>}></Route>       
+      <Route path="/demo" element={<><Loader/><Footer/></>}></Route>
       <Route path="*" element={<><NotFound/><Footer/></>}/>
      </Routes>
       

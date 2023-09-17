@@ -210,6 +210,7 @@ const getAssetsByUserId = async (id) => {
 
   // Extraer los IDs de las propiedades desde las filas encontradas
   const assetIds = userAss.map((a) => a.AssetId);
+  console.log(assetIds);
   // Buscar las propiedades correspondientes a los IDs obtenidos
   const assets = await Asset.findAll({
     where: { id: assetIds },
@@ -223,10 +224,6 @@ const getAssetById = async (id) => {
   try {
     const asset = await Asset.findOne({
       where: { id: id },
-      // include:[{
-      //   model: User,
-      //   attributes: ["fullName", "profilePic"]
-      // }]
     });
     return asset;
   } catch (error) {
@@ -265,6 +262,54 @@ const updateAsset = async (
   amenities
 ) => {
   try {
+    /**Validaciones en el caso de no poder usar zod */
+    // if (typeof name !== "string") {
+    //   throw Error("El nombre ingresado debe ser un string");
+    // }
+    // if (typeof description !== "string") {
+    //   throw Error("La descripción ingresada debe ser un string");
+    // }
+        // if (typeof images !== typeof ["https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659301.jpg?k=2534661492111b259f5dbc7277e3f48c2e2f8232e92e9908ad81b6890b0616fa&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659315.jpg?k=499585cf667a36291b45c1e31bd4d871ee0ab0826348fdc2cfda66f4dbe8e685&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659308.jpg?k=2f921fa3038fe4c5ab2dc9f26046053866e2700b966f0e3c9acc2aed607f85f1&o=&hp=1"]) {
+    //   throw Error("El formato de la imagen no es correcto")
+    // }
+    // if (images.length !== 3) {
+    //   throw Error("Debe subir exactamente 3 imagenes de la propiedad")
+    // }
+    // if (typeof onSale !== "boolean") {
+    //   throw Error("onSale debe ser un booleano")
+    // }
+    // if (typeof sellPrice !== "number") {
+    //   throw Error("sellPrice debe ser un número")
+    // }
+    // if (sellPrice < 1) {
+    //   throw Error("sellPrice no puede ser menor que 1")
+    // }
+    // if (typeof rentPrice !== "number") {
+    //     throw Error(" El precio de renta debe ser un número")
+    // }
+    // if (rentPrice < 1) {
+    //   throw Error("El precio de renta no puede ser menor que 1")
+    // }
+    // if (typeof rooms !== "number") {
+    //   throw Error("habitación debe ser un número")
+    // }
+    // if (rooms < 1) {
+    //   throw Error("Tiene que tener al menos una habitación")
+    // }
+    // if (typeof bathrooms !== "number") {
+    //   throw Error("baño debe ser un número")
+    // }
+    // if (bathrooms < 1) {
+    //   throw Error("Tiene que tener al menos un baño")
+    // }
+    // if (typeof coveredArea !== "number") {
+    //   throw Error("Area cubierta debe ser un número")
+    // }
+    // if (coveredArea < 1) {
+    //   throw Error("El área cubierta debe ser mayor a 1")
+    // }
+
+
     const updateAsset = await Asset.findOne({ where: { id: id } });
     await updateAsset.update({
       name,
@@ -308,6 +353,75 @@ const createAsset = async (
     if (existingAsset) {
       throw new Error("Ya existe una publicacion con ese nombre");
     }
+
+    /**Validaciones en el caso de no poder usar zod */
+
+    // if (!name || !description || !address || !location || !country || !images || !rooms) {
+    //   throw Error("Faltan datos")
+    // }
+
+    // if (typeof name !== "string") {
+    //   throw Error("El nombre ingresado debe ser un string");
+    // }
+    // if (typeof description !== "string") {
+    //   throw Error("La descripción ingresada debe ser un string");
+    // }
+    // if (typeof address !== "string") {
+    //   throw Error("La dirección ingresada debe ser un string");
+    // }
+    // if (typeof location !== "string") {
+    //   throw Error("La locación ingresada debe ser un string");
+    // }
+    // if (typeof country !== "string") {
+    //   throw Error("El país ingresado debe ser un string");
+    // }
+    
+    // if (typeof images !== typeof ["https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659301.jpg?k=2534661492111b259f5dbc7277e3f48c2e2f8232e92e9908ad81b6890b0616fa&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659315.jpg?k=499585cf667a36291b45c1e31bd4d871ee0ab0826348fdc2cfda66f4dbe8e685&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659308.jpg?k=2f921fa3038fe4c5ab2dc9f26046053866e2700b966f0e3c9acc2aed607f85f1&o=&hp=1"]) {
+    //   throw Error("El formato de la imagen no es correcto")
+    // }
+    // if (images.length !== 3) {
+    //   throw Error("Debe subir exactamente 3 imagenes de la propiedad")
+    // }
+    // if (typeof onSale !== "boolean") {
+    //   throw Error("onSale debe ser un booleano")
+    // }
+    // if (typeof sellPrice !== "number") {
+    //   throw Error("sellPrice debe ser un número")
+    // }
+    // if (sellPrice < 1) {
+    //   throw Error("sellPrice no puede ser menor que 1")
+    // }
+    // if (typeof rentPrice !== "number") {
+    //     throw Error(" El precio de renta debe ser un número")
+    // }
+    // if (rentPrice < 1) {
+    //   throw Error("El precio de renta no puede ser menor que 1")
+    // }
+    // if (typeof rooms !== "number") {
+    //   throw Error("habitación debe ser un número")
+    // }
+    // if (rooms < 1) {
+    //   throw Error("Tiene que tener al menos una habitación")
+    // }
+    // if (typeof bathrooms !== "number") {
+    //   throw Error("baño debe ser un número")
+    // }
+    // if (bathrooms < 1) {
+    //   throw Error("Tiene que tener al menos un baño")
+    // }
+    // if (typeof coveredArea !== "number") {
+    //   throw Error("Area cubierta debe ser un número")
+    // }
+    // if (coveredArea < 1) {
+    //   throw Error("El área cubierta debe ser mayor a 1")
+    // }
+    // if (typeof totalArea !== "number") {
+    //   throw Error("El área total debe ser un número")
+    // }
+    // if (totalArea < 1) {
+    //   throw Error("El área total debe ser mayor a 1")
+    // }
+    
     const createdAsset = await Asset.create({
       userName,
       name,

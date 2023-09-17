@@ -107,8 +107,8 @@ const Detail = () => {
       </div>
       <div className={`${style.propertyDetails}`}>
         <div className={` ${style.propertyInfo}`}>
-          <h2 style={{ fontWeight: "lighter", color: "#091f44" }}>
-            ${assetDetail.rentPrice} por noche
+          <h2 style={{ fontWeight: "bold", color: "#091f44" }}>
+            {assetDetail.rentPrice} USD
           </h2>
           <h1 className={style.heading}> {assetDetail.name}</h1>
           <p className={style.paragraph}>
@@ -188,7 +188,7 @@ const Detail = () => {
             <h2>Lee las reseñas de los demas huespedes!</h2>
             <div className={style.reseña}>
               <div className={style.contReseña}>
-                <h1>Valentina Delucchi</h1>
+                <h1>Reseña de Valentina Delucchi</h1>
                 <p>
                   Perderse en la naturaleza nunca había sido tan encantador. La
                   Cabaña Bosque Encantado nos brindó la escapada perfecta del
@@ -201,7 +201,7 @@ const Detail = () => {
                 </p>
               </div>
               <div className={style.contReseña}>
-                <h1>Mariano Ospina</h1>
+                <h1>Reseña de Mariano Ospina</h1>
                 <p>
                   Perderse en la naturaleza nunca había sido tan encantador. La
                   Cabaña Bosque Encantado nos brindó la escapada perfecta del
@@ -214,7 +214,7 @@ const Detail = () => {
                 </p>
               </div>
               <div className={style.contReseña}>
-                <h1>Juan Esteban</h1>
+                <h1>Reseña de Juan Esteban</h1>
                 <p>
                   Realmente un gran hotel ubicado muy cerca de las principales
                   atracciones y ahorra mucho tiempo tratando de encontrar
@@ -273,34 +273,34 @@ const Detail = () => {
               </svg>
               Consejos de seguridad a la hora de alquilar
             </h3>
-            <div style={{ display: "flex", width: "100%", alignItems: "center" }}>
-  <div style={{ display: "flex", alignItems: "center" }}>
-    <h1 style={{ marginRight: "10px", color: "#091f44" }}>1</h1>
-    <p style={{ color: "#091f44" }}>
-      No pagues sin ver la propiedad o tener documentación certificada.
-    </p>
-  </div>
-  <div style={{ display: "flex", alignItems: "center" }}>
-    <h1 style={{ marginRight: "10px", color: "#091f44" }}>3</h1>
-    <p style={{ color: "#091f44" }}>
-      Evita compartir información bancaria o contraseñas por mensajes.
-    </p>
-  </div>
-</div>
-<div style={{ display: "flex", width: "100%", alignItems: "center" }}>
-  <div style={{ display: "flex", alignItems: "center" }}>
-    <h1 style={{ marginRight: "10px", color: "#091f44" }}>2</h1>
-    <p style={{ color: "#091f44" }}>
-      Precios demasiado bajos pueden ser señal de estafa.
-    </p>
-  </div>
-  <div style={{ display: "flex", alignItems: "left" }}>
-    <h1 style={{ marginLeft: "17px", color: "#091f44", paddingRight:"15px" }}>4</h1>
-    <p style={{ color: "#091f44" }}>
-      Si dudas de una oferta, repórtala para prevenir fraudes.
-    </p>
-  </div>
-</div>
+            <div style={{ display: "grid", gridTemplateRows: "repeat(2,1fr)" }}>
+              <div
+                style={{ display: "flex", width: "100%", alignItems: "center" }}
+              >
+                <h1 style={{ marginRight: "10px", color: "#091f44" }}>1</h1>
+                <p style={{ color: "#091f44" }}>
+                  No pagues sin ver la propiedad o tener documentación
+                  certificada.
+                </p>
+                <h1 style={{ marginRight: "10px", color: "#091f44" }}>3</h1>
+                <p style={{ color: "#091f44" }}>
+                  Evita compartir información bancaria o contraseñas por
+                  mensajes.
+                </p>
+              </div>
+              <div
+                style={{ display: "flex", width: "100%", alignItems: "center" }}
+              >
+                <h1 style={{ marginRight: "10px", color: "#091f44" }}>2</h1>
+                <p style={{ color: "#091f44" }}>
+                  Precios demasiado bajos pueden ser señal de estafa.
+                </p>
+                <h1 style={{ marginRight: "10px", color: "#091f44" }}>4</h1>
+                <p style={{ color: "#091f44" }}>
+                  Si dudas de una oferta, repórtala para prevenir fraudes.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

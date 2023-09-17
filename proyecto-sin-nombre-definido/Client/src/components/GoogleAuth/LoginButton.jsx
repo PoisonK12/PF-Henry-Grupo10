@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
-import axios from 'axios';
 
 function GoogleLoginButton() {
   // Utiliza el hook useState para gestionar el estado del usuario.
@@ -15,7 +14,7 @@ function GoogleLoginButton() {
   }
 
   // Función para manejar la respuesta de la autenticación de Google.
-  async function handleCallbackResponse(response) {
+  function handleCallbackResponse(response) {
     // console.log('Encoded JWT ID token: ' + response.credential);
     localStorage.setItem("token", response.credential)
     // Decodifica el token JWT para obtener la información del usuario.
@@ -25,12 +24,13 @@ function GoogleLoginButton() {
     setUser(userObj);
     // Oculta el botón de inicio de sesión.
     document.getElementById("signInDiv").hidden = true;
-    try {
-      const {data} = await axios("/google/login")
-      console.log(data)
-    } catch (error) {
-      console.log(error)
-    }
+    // window.location.reload()
+    // ---------------------------------------------------------------------------//
+    // ---------------------------------------------------------------------------//    
+    //Puedes agregar aquí cualquier lógica adicional que desees realizar después de la autenticación.//
+    // ---------------------------------------------------------------------------//
+    // ---------------------------------------------------------------------------//
+
   }
 
   // Utiliza el hook useEffect para realizar efectos secundarios en la función componente.
