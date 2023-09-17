@@ -1,17 +1,15 @@
-const { Router } = require('express')
-const { createSession } = require('../controllers/payment.controller')
+const { Router } = require("express");
+const { createSession } = require("../controllers/payment.controller");
+const { finalHandler } = require("../handlers/rentHandler");
 
-const paymentRouter = Router()
+const paymentRouter = Router();
 
-paymentRouter.post('/create-checkout-session', createSession)
+paymentRouter.post("/create-checkout-session", createSession);
 
-paymentRouter.get('/success', (req, res) => {
-  res.json('Pago exitoso');
+paymentRouter.get("/success/:id", finalHandler);
+
+paymentRouter.get("/cancel", (req, res) => {
+  res.json("Pago cancelado");
 });
 
-paymentRouter.get('/cancel', (req, res) => {
-  res.json('Pago cancelado');
-});
-
-
-module.exports = { paymentRouter }
+module.exports = { paymentRouter };

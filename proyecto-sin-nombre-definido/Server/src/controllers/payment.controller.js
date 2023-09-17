@@ -3,8 +3,8 @@ const Stripe = require("stripe");
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
-const createSession = async (req, res) => {
-  const { name, description, price } = req.body;
+const createSession = async (pay, id) => {
+  const { name, description, price } = pay.body;
 
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -21,10 +21,11 @@ const createSession = async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: "http://localhost:3001/pay/success",
+    success_url: `http://localhost:3001/pay/success/${id}`,
     cancel_url: "http://localhost:3001/pay/cancel",
   });
-  return res.json(session);
+  console.log(session.url);
+  return session.url;
 };
 
 module.exports = { createSession };

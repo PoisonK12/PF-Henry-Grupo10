@@ -5,6 +5,7 @@ const {
   emptyUserReviewCreater,
   emptyAssetReviewCreater,
 } = require("../controllers/reviewController");
+const { createSession } = require("../controllers/payment.controller");
 
 const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
   let innerDate = new Date(checkInDate);
@@ -63,14 +64,32 @@ const createRent = async (req) => {
 
     const isItAvailable = await Availability.findOne({
       where: { id: bookingCode },
+      // includes: { model: Asset },
     });
 
     if (isItAvailable === null) {
       return "Debes hacer una reserva, antes de efectuar el pago";
     }
-    // await pago($786487, userName);
+    const pay = await Asset.findOne({
+      where: { id: isItAvailable.assetId },
+      attributes: ["name", "description", "rentPrice"],
+    });
 
-    // const createdRent = await Rent.create();
+    const createdRent = await Rent.create();
+
+    const id = createRent.id;
+
+    const URL = await createSession(pay, id);
+    return URL;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+// -----------------------------------------------------------------
+
+const final = async (id) => {
+  try {
+    const rented = await Rent.findOne(id);
 
     const booked = await Availability.findOne({
       where: { id: bookingCode, expirationTime: { [Op.not]: null } },
@@ -133,5 +152,6 @@ const getRentById = async (id) => {
 module.exports = {
   createRent,
   createBook,
+  final,
   getRentById,
 };
