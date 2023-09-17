@@ -9,8 +9,6 @@ const {
   updateReviewUser,
   getUserByIdController,
 } = require("../controllers/userController");
-// const { response } = require("express");
-// const { param } = require("../routes");
 
 const getReviewByIdController = async (req) => {
   const { id } = req.params;
@@ -26,7 +24,6 @@ const getReviewByIdController = async (req) => {
       console.error(error.message);
     }
   }
-  // console.log(id);
   try {
     const response = await Review.findAll({
       include: [
@@ -45,11 +42,9 @@ const getReviewByIdController = async (req) => {
           [Op.eq]: id,
         },
       },
-      attributes: ["score", "comment", "userName", "createdAt"],
+      attributes: ["id", "score", "comment", "userName", "createdAt"],
     });
 
-    console.log(response);
-    console.log(id);
     if (response.length > 0) return response;
     else {
       const response = await Review.findAll({
@@ -61,7 +56,7 @@ const getReviewByIdController = async (req) => {
           },
         ],
         where: { "$Users.id$": { [Op.eq]: id } },
-        attributes: ["score", "comment", "userName", "createdAt"],
+        attributes: ["id", "score", "comment", "userName", "createdAt"],
       });
       if (response.length > 0) return response;
       return "No hay reviews relacionadas a los datos proporcionados";
@@ -192,14 +187,13 @@ const deleteReviewById = async (id) => {
 
 const emptyAssetReviewCreater = async (userName, id) => {
   try {
-    // console.log(userName);
     const findAsset = await Asset.findByPk(id);
     console.log(findAsset);
 
     if (findAsset) {
       const createdReview = await Review.create({
         userName: userName,
-        score: 2,
+        score: 0,
         comment: "",
       });
       await findAsset.addReview(createdReview);
@@ -215,7 +209,7 @@ const emptyUserReviewCreater = async (userName, id) => {
     if (findUser) {
       const createdReview = await Review.create({
         userName: userName,
-        score: 1,
+        score: 0,
         comment: "",
       });
       await findUser.addReview(createdReview);

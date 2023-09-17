@@ -6,9 +6,6 @@ const {
   emptyAssetReviewCreater,
 } = require("../controllers/reviewController");
 
-// const { Op, Sequelize } = require("sequelize");
-// const { filterLocation } = require("../helpers/filterLocation");
-
 const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
   let innerDate = new Date(checkInDate);
 
@@ -59,7 +56,7 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
   }
 };
 
-const createRent = async (req, res) => {
+const createRent = async (req) => {
   const bookingCode = req.params.id;
   try {
     await removeExpiredRecords();
@@ -73,22 +70,8 @@ const createRent = async (req, res) => {
     }
     // await pago();
 
-    // const createdRent = await Rent.create({
-    //   bookingCode,
-    //   onSale,
-    //   userId,
-    //   assetId,
-    //   checkInDate,
-    //   checkInTime,
-    //   checkOutDate,
-    //   checkOutTime,
-    //   price,
-    //   termCon,
-    //   paymentMethod,
-    //   guest,
-    //   guestName,
-    //   guestPhoneNumber,
-    // });
+    // const createdRent = await Rent.create();
+
     const booked = await Availability.findOne({
       where: { id: bookingCode, expirationTime: { [Op.not]: null } },
       includes: { model: Asset },
@@ -99,14 +82,12 @@ const createRent = async (req, res) => {
       expirationTime: null,
     });
 
-    console.log(1111111);
     const tenant = await User.findOne(
       {
         where: { id: booked.userId },
       },
       { attributes: ["userName"] }
     );
-    console.log(22222);
     const nuevoId = isItAvailable.assetId;
 
     const landlordData = await User.findOne({
@@ -118,16 +99,8 @@ const createRent = async (req, res) => {
           },
         },
       ],
-      // where: { "$User.id$": { [Op.eq]: id } },
       attributes: ["id", "userName"],
     });
-
-    console.log(landlordData.userName);
-
-    console.log(tenant.id);
-    console.log(tenant.userName);
-    console.log(isItAvailable.assetId);
-    console.log(landlordData.id);
 
     await emptyUserReviewCreater(landlordData.userName, tenant.id);
     await emptyAssetReviewCreater(tenant.userName, isItAvailable.assetId);
