@@ -1,8 +1,10 @@
-const { Rent, Availability } = require("../db");
+const { Op } = require("sequelize");
+const { Rent, Availability, Asset, User } = require("../db");
 const { removeExpiredRecords } = require("../helpers/removeExpiredRecords");
-
-// const { Op, Sequelize } = require("sequelize");
-// const { filterLocation } = require("../helpers/filterLocation");
+const {
+  emptyUserReviewCreater,
+  emptyAssetReviewCreater,
+} = require("../controllers/reviewController");
 
 const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
   let innerDate = new Date(checkInDate);
@@ -48,85 +50,63 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
   }
 };
 
-const createRent = async (
-  onSale,
-  user,
-  asset,
-  checkIn,
-  checkInTime,
-  checkOut,
-  checkOutTime,
-  price,
-  termCon,
-  paymentMethod,
-  guest,
-  guestName,
-  guestPhoneNumber
-) => {
+const createRent = async (req) => {
+  const bookingCode = req.params.id;
   try {
-    /**Validaciones en el caso de no poder usar zod */
-    
-    // if (!user || !asset || !checkIn || !checkInTime || !checkOut || !checkOutTime || !price || !termCon || !paymentMethod || !guest) {
-    //   throw Error("Faltan datos")
-    // }
-    // if (typeof onSale !== "boolean") {
-    //   throw Error("onSale debe ser un booleano")
-    // }
-    // if (typeof user !== "string") {
-    //   throw Error("El nombre de usuario ingresado debe ser un string");
-    // }
-    // if (typeof asset !== "string") {
-    //   throw Error("La propiedad ingresada debe ser un string");
-    // }
-    // if (! (checkIn instanceof Date)) {
-    //   throw Error("checkIn no es del tipo Date");
-    // }
-    // if (! (checkInTime instanceof Date)) {
-    //   throw Error("checkInTime no es del tipo Date");
-    // }
-    // if (! (checkOut instanceof Date)) {
-    //   throw Error("checkOut no es del tipo Date");
-    // }
-    // if (! (checkOutTime instanceof Date)) {
-    //   throw Error("checkOutTime no es del tipo Date");
-    // }
-      // if (typeof price !== "number") {
-    //     throw Error(" El precio de renta debe ser un número")
-    // }
-    // if (price < 1) {
-    //   throw Error("El precio de renta no puede ser menor que 1")
-    // }
-    // if (typeof termCon !== "boolean") {
-    //   throw Error("termCon debe ser un booleano")
-    // }
-    // if(
-    //   paymentMethod !== "Card" &&
-    //   paymentMethod !== "Cash" 
-    // ){
-    //   throw Error("El método de pago debe ser Card o Cash");
-    // }
-    // if (typeof guest !== "boolean") {
-    //   throw Error("guest debe ser un booleano")
-    // }
-      
+    await removeExpiredRecords();
 
-    const createdRent = await Rent.create({
-      onSale,
-      user,
-      asset,
-      checkIn,
-      checkInTime,
-      checkOut,
-      checkOutTime,
-      price,
-      termCon,
-      paymentMethod,
-      guest,
-      guestName,
-      guestPhoneNumber,
+    const isItAvailable = await Availability.findOne({
+      where: { id: bookingCode },
     });
 
-    return createdRent;
+    if (isItAvailable === null) {
+      return "Debes hacer una reserva, antes de efectuar el pago";
+    }
+    // await pago();
+
+    // const createdRent = await Rent.create();
+
+    const booked = await Availability.findOne({
+      where: { id: bookingCode, expirationTime: { [Op.not]: null } },
+      includes: { model: Asset },
+    });
+    if (booked === null) return "Homero, ya marcaste...";
+    await booked.update({
+      isAvailable: "Indispuesta",
+      expirationTime: null,
+    });
+
+    const tenant = await User.findOne(
+      {
+        where: { id: booked.userId },
+      },
+      { attributes: ["userName"] }
+    );
+    const nuevoId = isItAvailable.assetId;
+
+    const landlordData = await User.findOne({
+      include: [
+        {
+          model: Asset,
+          through: {
+            where: { AssetId: nuevoId },
+          },
+        },
+      ],
+      attributes: ["id", "userName"],
+    });
+
+    await emptyUserReviewCreater(landlordData.userName, tenant.id);
+    await emptyAssetReviewCreater(tenant.userName, isItAvailable.assetId);
+    await emptyUserReviewCreater(tenant.userName, landlordData.id);
+
+    return (
+      "Felices vacaciones!!" +
+      " " +
+      "Y no te olvides de usar filtro solar." +
+      " " +
+      "Y no seas rata y traele algo a la abuela. Un imancito.., lo que sea. Con una boludes de dos mangos, la haces sentir re bien ;-)"
+    );
   } catch (error) {
     // console.log(error);
     throw new Error("Error al registrar la renta");
