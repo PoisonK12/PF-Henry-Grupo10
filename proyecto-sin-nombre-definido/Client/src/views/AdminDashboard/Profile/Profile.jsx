@@ -82,10 +82,10 @@ function User() {
     <>
       <div className="content">
         <Row>
-          <Col md="8">
-            <Card>
+          <Col md="8" style={{width:"100%", marginTop:"17px"}}>
+            <Card >
               <CardHeader>
-                <h5 className="title">Editar Perfil {form.phoneNumber}</h5>
+                <h5 className="title">Editar Perfil</h5>
               </CardHeader>
               <CardBody style={cardStyle}>
                 <Form onSubmit={handleUpdate}>
@@ -101,7 +101,7 @@ function User() {
                             borderRadius: "50%",
                             objectFit: "cover",
                             border: "10px  #ccc",
-                            background: "rgba(169, 181, 197, 0.562)",
+                            // background: "rgba(169, 181, 197, 0.562)",
                             margin: `15px 15px`,
                             textAlign: "center",
                             width: "200px",
@@ -208,7 +208,7 @@ function User() {
                   <Row>
                     <Col md="12 d-flex justify-content-center align-items-center">
                       <FormGroup>
-                        <button type="submit" className="btn btn-warning">Editar</button>
+                        <button type="submit" className={style.buttons}>Editar</button>
                       </FormGroup>
                     </Col>
                   </Row>
@@ -216,7 +216,7 @@ function User() {
               </CardBody>
             </Card>
           </Col>
-          <Col md="4">
+          {/* <Col md="4">
             <Card className="card-user">
               
               <div className={style.wave}>
@@ -250,7 +250,7 @@ function User() {
               </CardBody>
               <hr />
             </Card>
-          </Col>
+          </Col> */}
         </Row>
       </div>
     </>

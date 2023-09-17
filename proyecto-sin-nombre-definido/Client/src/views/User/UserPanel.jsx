@@ -16,15 +16,18 @@ const UserPanel = () => {
   console.log(componenteActual);
   // const dispatch = useDispatch();
   const [data, setData] = useState({});
-  const [color, setColor] = useState('white');
+  const [color, setColor] = useState("#091f44");
   const [selectedLink, setSelectedLink] = useState(null);
 
- 
   const handleLinkClick = (linkName) => {
     setComponenteActual(linkName);
     setSelectedLink(linkName); // Establecer el enlace seleccionado al hacer clic
-    setColor('#6693e2'); // Restablecer el color cuando se hace clic en un enlace
   };
+
+  useEffect(() => {
+    setSelectedLink("A"); // Establecer el enlace seleccionado al hacer clic
+    setColor("#091f44"); // Restablecer el color cuando se hace clic en un enlace
+  }, []);
 
   useEffect(() => {
     // if (!data) return
@@ -34,7 +37,11 @@ const UserPanel = () => {
 
   return (
     <div
-      style={{ paddingTop: "5rem", backgroundColor: "#6693e2", padding: "15px" }}
+      style={{
+        paddingTop: "40px",
+        backgroundColor: "#091f44",
+        padding: "15px",
+      }}
     >
       <div className="row" style={{ marginTop: "3rem", width: "100%" }}>
         <div className="col-md-3">
@@ -42,7 +49,7 @@ const UserPanel = () => {
             className={`card ${style.fixedCard}`}
             style={{ position: "sticky", top: "5rem", marginBottom: "1rem" }}
           >
-            <div className="card-body mt-2">
+            <div className="card-body mt-2" style={{ padding: "0" }}>
               <div
                 style={{
                   display: "flex",
@@ -66,19 +73,14 @@ const UserPanel = () => {
                 <li class="nav-item">
                   <a
                     class="nav-link"
-                    onClick={() => {handleLinkClick("D");
-                      
-                  }
-                  }
-
-                    
+                    className={style.links}
+                    onClick={() => {
+                      handleLinkClick("D");
+                    }}
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      borderRadius: "15px",
-                      height: "70px",
-                      width: "90%",
-                      backgroundColor: selectedLink === "D" ? color : "white", 
+                      paddingInline: "5px",
+                      backgroundColor: selectedLink === "D" ? color : "white",
+                      color: selectedLink === "D" ? "white" : "black",
                     }}
                     href="#"
                   >
@@ -101,14 +103,13 @@ const UserPanel = () => {
                   <a
                     class="nav-link"
                     href="#"
+                    className={style.links}
                     onClick={() => handleLinkClick("A")}
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      borderRadius: "15px",
-                      height: "70px",
-                      width: "90%",
-                      backgroundColor: selectedLink === "A" ? color : "white", 
+                      paddingInline: "5px",
+
+                      backgroundColor: selectedLink === "A" ? color : "white",
+                      color: selectedLink === "A" ? "white" : "black",
                     }}
                   >
                     <div>
@@ -127,39 +128,41 @@ const UserPanel = () => {
                     </div>
                   </a>
                 </li>
-                <Link to={'/addProperty'} style={{textDecoration : "none", color: "#212529"}}>
+                <Link
+                  to={"/addProperty"}
+                  style={{ textDecoration: "none", color: "#212529" }}
+                >
                   <li class="nav-item">
-                      <a
-                        class="nav-link"
-                        onClick={() => handleLinkClick("E")}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          borderRadius: "15px",
-                          height: "70px",
-                          width: "90%",
-                          backgroundColor: selectedLink === "E" ? color : "white", 
-                        }}
-                        href="#"
-                        // onClick={() => setComponenteActual("C")}
-                        // onClick={handlerClick}
-                      >
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="35"
-                            height="35"
-                            fill="currentColor"
-                            class="bi bi-house-add-fill"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 1 1-1 0v-1h-1a.5.5 0 1 1 0-1h1v-1a.5.5 0 0 1 1 0Z" />
-                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
-                            <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
-                          </svg>
-                          &nbsp; Agregar propiedad
-                        </div>
-                      </a>
+                    <a
+                      class="nav-link"
+                      onClick={() => handleLinkClick("E")}
+                      className={style.links}
+                      style={{
+                        paddingInline: "5px",
+
+                        backgroundColor: selectedLink === "E" ? color : "white",
+                        color: selectedLink === "E" ? "white" : "black",
+                      }}
+                      href="#"
+                      // onClick={() => setComponenteActual("C")}
+                      // onClick={handlerClick}
+                    >
+                      <div>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="35"
+                          height="35"
+                          fill="currentColor"
+                          class="bi bi-house-add-fill"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 1 1-1 0v-1h-1a.5.5 0 1 1 0-1h1v-1a.5.5 0 0 1 1 0Z" />
+                          <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
+                          <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
+                        </svg>
+                        &nbsp; Agregar propiedad
+                      </div>
+                    </a>
                   </li>
                 </Link>
                 <li class="nav-item">
@@ -167,15 +170,13 @@ const UserPanel = () => {
                     class="nav-link"
                     href="#"
                     onClick={() => handleLinkClick("B")}
-                 
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      borderRadius: "15px",
-                      height: "70px",
-                      width: "90%",
-                      backgroundColor: selectedLink === "B" ? color : "white", 
+                      color: selectedLink === "B" ? "white" : "black",
+                      paddingInline: "5px",
+
+                      backgroundColor: selectedLink === "B" ? color : "white",
                     }}
+                    className={style.links}
                   >
                     <div>
                       <svg
@@ -196,14 +197,13 @@ const UserPanel = () => {
                   <a
                     class="nav-link"
                     href="#"
+                    className={style.links}
                     onClick={() => handleLinkClick("C")}
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      borderRadius: "15px",
-                      height: "70px",
-                      width: "90%",
-                      backgroundColor: selectedLink === "C" ? color : "white", 
+                      color: selectedLink === "C" ? "white" : "black",
+
+                      paddingInline: "5px",
+                      backgroundColor: selectedLink === "C" ? color : "white",
                     }}
                   >
                     <div>
@@ -236,11 +236,66 @@ const UserPanel = () => {
           </div>
         ) : componenteActual === "C" ? (
           <div className="col-md-9">
-            <Reviews/>
+            <Reviews />
           </div>
         ) : (
           <div className="col-md-9">
             <User />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                textAlign: "center",
+                marginTop: "20px",
+                background: "white",
+                width: "100%",
+                height: "auto",
+                borderRadius: "5px",
+              }}
+            >
+              <h3
+                style={{
+                  color: "rgb(27, 27, 27)",
+                  fontWeight: "bold",
+                  fontSize: "32px",
+                  marginTop: "10px",
+                }}
+              >
+                Suspender tu cuenta!
+              </h3>
+              <div
+                style={{
+                  display: "block",
+                  background: "rgba(157, 10, 202, 0.2)",
+                  marginInline: "40%",
+                  padding: "5px",
+                  marginBottom: "10px",
+                  borderRadius: "999px",
+                }}
+              >
+                <p style={{ color: "#9d0aca" }}>
+                  Avanzar con precaucion{" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-exclamation-triangle-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                  </svg>
+                </p>
+              </div>
+              <p style={{ width: "55%", margin: "auto", fontSize: "20px" }}>
+                Asegúrese de haber realizado una copia de seguridad de su cuenta
+                en caso de que alguna vez necesite acceder a sus datos.
+                Suspenderemos su cuenta, puede contactarse con nuestro servicio
+                si desea volver
+              </p>
+              <p style={{color:"#9d0aca", textDecoration:"underline", margin:"auto", cursor:"pointer", width:"150px", marginTop:"5px"}}>Suspenda su cuenta!</p>
+            </div>
           </div>
         )}
       </div>

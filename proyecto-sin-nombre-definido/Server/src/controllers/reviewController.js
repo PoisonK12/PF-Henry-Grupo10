@@ -18,7 +18,7 @@ const getReviewByIdController = async (req) => {
     try {
       const response = await Review.findAll({
         where: { userName: id },
-        attributes: ["score", "comment", "userName", "createdAt"],
+        attributes: ["id","score", "comment", "userName", "createdAt"],
       });
 
       return response;
@@ -45,7 +45,7 @@ const getReviewByIdController = async (req) => {
           [Op.eq]: id,
         },
       },
-      attributes: ["score", "comment", "userName", "createdAt"],
+      attributes: ["id","score", "comment", "userName", "createdAt"],
     });
 
     console.log(response);
