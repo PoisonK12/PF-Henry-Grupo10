@@ -24,11 +24,14 @@ const getAdminAssets = async (req) => {
   const { name, eliminado } = query;
 
   try {
-    
     let page = 1;
     let size = 10;
-    if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {page = pageAsNumber;}
-    if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {size = sizeAsNumber;}
+    if (!Number.isNaN(pageAsNumber) && pageAsNumber > 1) {
+      page = pageAsNumber;
+    }
+    if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
+      size = sizeAsNumber;
+    }
     const sortMap = {
       sellPriceAsc: ["sellPrice", "ASC"],
       sellPriceDesc: ["sellPrice", "DESC"],
@@ -41,26 +44,27 @@ const getAdminAssets = async (req) => {
       nameAsc: ["name", "ASC"],
       nameDesc: ["name", "DESC"],
     };
-    
+
     const order = [];
     for (const param in query) {
       if (sortMap[param] && query[param] === "yes") {
         order.push(sortMap[param]);
-      }}
-      
-      if (order.length === 0) {
-        throw new Error("No se proporcionaron parámetros de ordenamiento válidos.");
       }
-      
-      let filter = {};
-      if (eliminado) {
-        filter.eliminado = eliminado
-      }
-      if (name ) {
-        filter.name = { ...filter.name, [Op.iLike]:`%${name}%` };
-      }
+    }
 
+    if (order.length === 0) {
+      throw new Error(
+        "No se proporcionaron parámetros de ordenamiento válidos."
+      );
+    }
 
+    let filter = {};
+    if (eliminado) {
+      filter.eliminado = eliminado;
+    }
+    if (name) {
+      filter.name = { ...filter.name, [Op.iLike]: `%${name}%` };
+    }
 
     const response = await Asset.findAndCountAll({
       where: filter,
@@ -269,7 +273,7 @@ const updateAsset = async (
     // if (typeof description !== "string") {
     //   throw Error("La descripción ingresada debe ser un string");
     // }
-        // if (typeof images !== typeof ["https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659301.jpg?k=2534661492111b259f5dbc7277e3f48c2e2f8232e92e9908ad81b6890b0616fa&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659315.jpg?k=499585cf667a36291b45c1e31bd4d871ee0ab0826348fdc2cfda66f4dbe8e685&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659308.jpg?k=2f921fa3038fe4c5ab2dc9f26046053866e2700b966f0e3c9acc2aed607f85f1&o=&hp=1"]) {
+    // if (typeof images !== typeof ["https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659301.jpg?k=2534661492111b259f5dbc7277e3f48c2e2f8232e92e9908ad81b6890b0616fa&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659315.jpg?k=499585cf667a36291b45c1e31bd4d871ee0ab0826348fdc2cfda66f4dbe8e685&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659308.jpg?k=2f921fa3038fe4c5ab2dc9f26046053866e2700b966f0e3c9acc2aed607f85f1&o=&hp=1"]) {
     //   throw Error("El formato de la imagen no es correcto")
     // }
     // if (images.length !== 3) {
@@ -308,7 +312,6 @@ const updateAsset = async (
     // if (coveredArea < 1) {
     //   throw Error("El área cubierta debe ser mayor a 1")
     // }
-
 
     const updateAsset = await Asset.findOne({ where: { id: id } });
     await updateAsset.update({
@@ -375,7 +378,7 @@ const createAsset = async (
     // if (typeof country !== "string") {
     //   throw Error("El país ingresado debe ser un string");
     // }
-    
+
     // if (typeof images !== typeof ["https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659301.jpg?k=2534661492111b259f5dbc7277e3f48c2e2f8232e92e9908ad81b6890b0616fa&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659315.jpg?k=499585cf667a36291b45c1e31bd4d871ee0ab0826348fdc2cfda66f4dbe8e685&o=&hp=1","https://cf.bstatic.com/xdata/images/hotel/max1024x768/345659308.jpg?k=2f921fa3038fe4c5ab2dc9f26046053866e2700b966f0e3c9acc2aed607f85f1&o=&hp=1"]) {
     //   throw Error("El formato de la imagen no es correcto")
     // }
@@ -421,7 +424,7 @@ const createAsset = async (
     // if (totalArea < 1) {
     //   throw Error("El área total debe ser mayor a 1")
     // }
-    
+
     const createdAsset = await Asset.create({
       userName,
       name,
@@ -478,16 +481,12 @@ const softDeleteAssetById = async (id) => {
 
 const deleteAssetById = async (id) => {
   try {
-    const asset = await Asset.findOne({
-      where: {
-        id: id,
-      },
-    });
+    const asset = await Asset.findOne({ id });
 
     if (!asset) {
       throw new Error("Estas seguro de que esta propiedad existe?");
     }
-
+    // console.log(asset);
     await asset.destroy();
 
     return "La propiedad ha sido eliminada permanentemente";

@@ -66,7 +66,7 @@ const createRent = async (req) => {
       where: { id: bookingCode },
       // includes: { model: Asset },
     });
-
+    console.log(11111111);
     if (isItAvailable === null) {
       return "Debes hacer una reserva, antes de efectuar el pago";
     }
