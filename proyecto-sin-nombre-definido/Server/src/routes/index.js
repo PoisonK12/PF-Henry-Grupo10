@@ -9,11 +9,11 @@ const rentsRouter = require("./rentsRouters");
 const contactRouter = require("./contactRouter");
 const emailContact = require("./email");
 const favoritesRouter = require("./favoritesRouter");
-// const googleLoginRouter = require('./googleLogin');
+const googleLoginRouter = require('./googleLogin');
 const { paymentRouter } = require("./payment.routes");
 const router = Router();
 
-// router.use("/google", googleLoginRouter);
+router.use("/google", googleLoginRouter);
 router.use("/login", loginRouter);
 router.use("/logout", logOutRouter);
 
