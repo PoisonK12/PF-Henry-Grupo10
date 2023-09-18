@@ -252,7 +252,8 @@ export const deleteFavUserProperty = (idUser, idAsset) => {
 export const getAllFavUserProps = (id) => {
   return async (dispatch)=> {
     try {
-      const {data} = await axios.get(`http://localhost:3001/favorites?userId=${id}`)
+      const data = await axios(`/favorites?userId=${id}`)
+      console.log(data)
       return dispatch({
         type:GET_ALL_FAV_USER_PROPERTY,
         payload: data
@@ -569,40 +570,30 @@ export const handleReserv = async (bookingId) => {
     }
 };
 
-export const  getPayment = async (asset, setPaymentOpen ) => {
+export const  getPayment = async (asset,  setPaymentSuccess ) => {
   const {name , description , price} = asset;
     try {
       const data = await axios.post("/pay/create-checkout-session" , {name : name , description : description , price : price})
       if(data) {
+       
         var width = 500;
         var height = 600;
         const left = (screen.width - width) / 2;
         const top = (screen.height - height) / 2;
         const options = `width=${width}, height=${height}, left=${left}, top=${top}, location=no, toolbar=no`;
-        var open = window.open(data.data.url, '_blank', options);
-        const interval = setInterval(() => {
-          if (open.closed) {
-            clearInterval(interval);
-          } else {
-            try {
-              const currentURL = open.location.href;
-              console.log(currentURL);
-              // Realiza acciones con la URL actual de la ventana emergente
-              if (currentURL.includes("success")) {
-                open.close();
-              }
-            } catch (error) {
-              console.error(error);
-            }
+        var payment = window.open(data.data.url, '_blank', options);
+        
+        var intervalID = setInterval(() => {
+          
+          if(payment.closed) {
+            clearInterval(intervalID);
+            setPaymentSuccess(true)
           }
-        }, 1000); 
-        if(open.location.href.includes("success")) {
-          open.close()
-          console.log(("holi"));
-        }
+        }, 100)
       }
+
     } catch (error) {
-      
+      return console.log(error);
     }
 };
 

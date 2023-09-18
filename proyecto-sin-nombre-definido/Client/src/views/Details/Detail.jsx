@@ -37,7 +37,7 @@ const Detail = () => {
   const isFavorite = Array.isArray(favoritesData) && favoritesData.includes(id);
   // console.log("kolor", isFavorite);
 
-  const handlerOnclick = (id) => {
+  const handlerOnclick = () => {
     const info = localStorage.getItem("data");
     const userData = JSON.parse(info);
     // console.log("idUser", userData.id, "idAsset", id);

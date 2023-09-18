@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 const Favorites = () => {
-    const favoritesData = useSelector(state => state.myFavoritesProps)
+    const favoritesData = useSelector((state) => state.myFavoritesProps)
     console.log('favortitos', favoritesData);
     const allProperties = useSelector((state) => state.propertiesCopy);
     console.log('propiedad', allProperties);

@@ -72,7 +72,7 @@ const UserPanel = () => {
     <div
       style={{
         paddingTop: "40px",
-        backgroundColor: "#091f44",
+        backgroundColor: "#DFDFDF",
         padding: "15px",
       }}
     >

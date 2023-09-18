@@ -5,21 +5,27 @@ const passport = require('passport')
 const googleLoginRouter = Router()
 
 //Permite iniciar sesion
-googleLoginRouter.get('/auth/google',
-passport.authenticate('google', { scope: ['profile'] }));
+googleLoginRouter.get('/login',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
 
-googleLoginRouter.get("/login", (req, res) => {
-  res.json('Houston tenemos un problema')
-})
+googleLoginRouter.get('/success', (req, res) => {
+  res.json({
+    message: 'Te has logueado exitosamente',
+    name: req.user.displayName, 
+    email: req.user.emails[0].value, 
+    pic: req.user.photos[0].value
+  });
+});
 
 
 // Ruta de callback para Google después de la autenticación
-googleLoginRouter.get('/auth/google/callback', 
-passport.authenticate('google', { failureRedirect: '/login' }),
-function(req, res) {
-  // Successful authentication, redirect home.
-  res.redirect('/');
-});
+googleLoginRouter.get('/callback',
+  passport.authenticate('google', { failureRedirect: '/failed' }),
+  (req, res) => {
+    res.redirect('/success');
+  }
+);
 
 
 module.exports = googleLoginRouter
