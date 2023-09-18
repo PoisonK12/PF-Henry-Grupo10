@@ -57,16 +57,14 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
   }
 };
 
-const createRent = async (req) => {
+const createRent = async (req, res) => {
   const bookingCode = req.params.id;
   try {
     await removeExpiredRecords();
-
     const isItAvailable = await Availability.findOne({
       where: { id: bookingCode },
       // includes: { model: Asset },
     });
-    console.log(11111111);
     if (isItAvailable === null) {
       return "Debes hacer una reserva, antes de efectuar el pago";
     }
@@ -75,14 +73,22 @@ const createRent = async (req) => {
       attributes: ["name", "description", "rentPrice"],
     });
 
-    const createdRent = await Rent.create();
+    const pago = {
+      name: pay.name,
+      description: pay.description,
+      rentPrice: pay.rentPrice,
+      price: 12345,
+    };
+    const createdRent = await Rent.create(pago);
 
-    const id = createRent.id;
-
-    const URL = await createSession(pay, id);
+    const id = createdRent.id;
+    console.log(pay.rentPrice);
+    console.log(1111111);
+    const URL = await createSession(pago, id);
+    console.log(33333333);
     return URL;
   } catch (error) {
-    console.error(error.message);
+    console.log(error.message);
   }
 };
 // -----------------------------------------------------------------
