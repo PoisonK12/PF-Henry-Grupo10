@@ -7,9 +7,8 @@ const {
 const updateFavoriteHandler = async (req, res) => {
     const { userId, assetId } = req.body;
     try {
-        const response = await userAddFavorite(userId, assetId);
-        res.status(200).json(response)
-        // res.status(200).json("La propiedad se agregó a favoritos.")
+        await userAddFavorite(userId,assetId);
+        res.status(200).json("La propiedad se agregó a favoritos.")
     } catch (error) {
         console.log(error)
         res.status(400).json({ error: error.message });
@@ -19,8 +18,8 @@ const updateFavoriteHandler = async (req, res) => {
 const removeFavoriteHandler = async (req, res) => {
     const { userId, assetId } = req.body;
     try {
-        const response = await userRemoveFavorite(userId,assetId);
-        res.status(200).json(response)
+        await userRemoveFavorite(userId,assetId);
+        res.status(200).json("La propiedad se eliminó de favoritos.")
     } catch (error) {
         console.log(error)
         res.status(400).json({ error: error.message });
@@ -28,11 +27,9 @@ const removeFavoriteHandler = async (req, res) => {
 }
 
 const getAllFavoriteHandler = async (req, res) => {
-    const { userId } = req.query
-    console.log(userId)
-    // 1448ef28-59a7-4e5e-9777-47b84e48ad7e
+    const {userId} = req.params
     try {
-        const response = await userAllFavorites(userId);
+        const response = await userAllFavorites(userId,assetId);
         res.status(200).json(response)
     } catch (error) {
         console.log(error)

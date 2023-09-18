@@ -5,9 +5,7 @@ const {
   emptyUserReviewCreater,
   emptyAssetReviewCreater,
 } = require("../controllers/reviewController");
-
-// const { Op, Sequelize } = require("sequelize");
-// const { filterLocation } = require("../helpers/filterLocation");
+const { createSession } = require("../controllers/payment.controller");
 
 const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
   let innerDate = new Date(checkInDate);
@@ -63,32 +61,42 @@ const createRent = async (req, res) => {
   const bookingCode = req.params.id;
   try {
     await removeExpiredRecords();
-
     const isItAvailable = await Availability.findOne({
       where: { id: bookingCode },
+      // includes: { model: Asset },
     });
-
     if (isItAvailable === null) {
       return "Debes hacer una reserva, antes de efectuar el pago";
     }
-    // await pago();
+    const pay = await Asset.findOne({
+      where: { id: isItAvailable.assetId },
+      attributes: ["name", "description", "rentPrice"],
+    });
 
-    // const createdRent = await Rent.create({
-    //   bookingCode,
-    //   onSale,
-    //   userId,
-    //   assetId,
-    //   checkInDate,
-    //   checkInTime,
-    //   checkOutDate,
-    //   checkOutTime,
-    //   price,
-    //   termCon,
-    //   paymentMethod,
-    //   guest,
-    //   guestName,
-    //   guestPhoneNumber,
-    // });
+    const pago = {
+      name: pay.name,
+      description: pay.description,
+      rentPrice: pay.rentPrice,
+      price: 12345,
+    };
+    const createdRent = await Rent.create(pago);
+
+    const id = createdRent.id;
+    console.log(pay.rentPrice);
+    console.log(1111111);
+    const URL = await createSession(pago, id);
+    console.log(33333333);
+    return URL;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+// -----------------------------------------------------------------
+
+const final = async (id) => {
+  try {
+    const rented = await Rent.findOne(id);
+
     const booked = await Availability.findOne({
       where: { id: bookingCode, expirationTime: { [Op.not]: null } },
       includes: { model: Asset },
@@ -99,14 +107,12 @@ const createRent = async (req, res) => {
       expirationTime: null,
     });
 
-    console.log(1111111);
     const tenant = await User.findOne(
       {
         where: { id: booked.userId },
       },
       { attributes: ["userName"] }
     );
-    console.log(22222);
     const nuevoId = isItAvailable.assetId;
 
     const landlordData = await User.findOne({
@@ -118,16 +124,8 @@ const createRent = async (req, res) => {
           },
         },
       ],
-      // where: { "$User.id$": { [Op.eq]: id } },
       attributes: ["id", "userName"],
     });
-
-    console.log(landlordData.userName);
-
-    console.log(tenant.id);
-    console.log(tenant.userName);
-    console.log(isItAvailable.assetId);
-    console.log(landlordData.id);
 
     await emptyUserReviewCreater(landlordData.userName, tenant.id);
     await emptyAssetReviewCreater(tenant.userName, isItAvailable.assetId);
@@ -160,5 +158,6 @@ const getRentById = async (id) => {
 module.exports = {
   createRent,
   createBook,
+  final,
   getRentById,
 };

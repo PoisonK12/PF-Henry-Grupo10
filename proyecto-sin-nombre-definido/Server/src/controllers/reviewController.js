@@ -9,8 +9,6 @@ const {
   updateReviewUser,
   getUserByIdController,
 } = require("../controllers/userController");
-// const { response } = require("express");
-// const { param } = require("../routes");
 
 const getReviewByIdController = async (req) => {
   const { id } = req.params;
@@ -18,15 +16,15 @@ const getReviewByIdController = async (req) => {
     try {
       const response = await Review.findAll({
         where: { userName: id },
-        attributes: ["id","score", "comment", "userName", "createdAt"],
+        // attributes: ["id", "score", "comment", "userName", "createdAt"],
+        // include: { joinTableAttributes: [] },
       });
-
+      // const extraData = await findOne({where:{userName:response.userName}}, attributes:[""])
       return response;
     } catch (error) {
       console.error(error.message);
     }
   }
-  // console.log(id);
   try {
     const response = await Review.findAll({
       include: [
@@ -45,11 +43,9 @@ const getReviewByIdController = async (req) => {
           [Op.eq]: id,
         },
       },
-      attributes: ["id","score", "comment", "userName", "createdAt"],
+      attributes: ["id", "score", "comment", "userName", "createdAt"],
     });
 
-    console.log(response);
-    console.log(id);
     if (response.length > 0) return response;
     else {
       const response = await Review.findAll({
@@ -61,14 +57,13 @@ const getReviewByIdController = async (req) => {
           },
         ],
         where: { "$Users.id$": { [Op.eq]: id } },
-        attributes: ["score", "comment", "userName", "createdAt"],
+        attributes: ["id", "score", "comment", "userName", "createdAt"],
       });
       if (response.length > 0) return response;
       return "No hay reviews relacionadas a los datos proporcionados";
     }
   } catch (error) {
     console.error(error.message);
-    // throw error;
   }
 };
 //!------------------------------------------------------------------------
@@ -93,6 +88,19 @@ const updateReview = async (
   //edicion por sistema
   score
 ) => {
+  /**Validaciones en el caso de no poder usar zod */
+    // if (!score) {
+    //     throw Error("Falta cargar puntuación")
+    //   }
+    // if (typeof userName !== "string") {
+    //   throw Error("El nombre de usuario ingresado debe ser un string");
+    // }
+    // if (typeof comment !== "string") {
+    //   throw Error("El comentario ingresado debe ser un string");
+    // }
+    // if (typeof score !== "number") {
+    //   throw Error("El score ingresado debe ser un número");
+    // }
   const updateReview = await User.findOne({
     where: { userName: userName },
   });
@@ -109,6 +117,19 @@ const updateReview = async (
 //!---------------------------------evaluador-texto--puntos-evaluado---------------------------------
 const reviewUserController = async (Pk, userName, score, comment, id) => {
   try {
+    /**Validaciones en el caso de no poder usar zod */
+    // if (!score) {
+    //     throw Error("Falta cargar puntuación")
+    //   }
+    // if (typeof userName !== "string") {
+    //   throw Error("El nombre de usuario ingresado debe ser un string");
+    // }
+    // if (typeof comment !== "string") {
+    //   throw Error("El comentario ingresado debe ser un string");
+    // }
+    // if (typeof score !== "number") {
+    //   throw Error("El score ingresado debe ser un número");
+    // }
     const response = await getUserByIdController(id);
     let { averageScore, numberOfReviews } = response;
 
@@ -142,6 +163,19 @@ const reviewUserController = async (Pk, userName, score, comment, id) => {
 //!---------------------------------evaluador-texto--puntos-evaluada---------------------------------
 const reviewAssetController = async (Pk, userName, score, comment, id) => {
   try {
+        /**Validaciones en el caso de no poder usar zod */
+    // if (!score) {
+    //     throw Error("Falta cargar puntuación")
+    //   }
+    // if (typeof userName !== "string") {
+    //   throw Error("El nombre de usuario ingresado debe ser un string");
+    // }
+    // if (typeof comment !== "string") {
+    //   throw Error("El comentario ingresado debe ser un string");
+    // }
+    // if (typeof score !== "number") {
+    //   throw Error("El score ingresado debe ser un número");
+    // }
     const response = await getAssetById(id);
     let { averageScore, numberOfReviews } = response;
 
@@ -192,14 +226,13 @@ const deleteReviewById = async (id) => {
 
 const emptyAssetReviewCreater = async (userName, id) => {
   try {
-    // console.log(userName);
     const findAsset = await Asset.findByPk(id);
     console.log(findAsset);
 
     if (findAsset) {
       const createdReview = await Review.create({
         userName: userName,
-        score: 2,
+        score: 0,
         comment: "",
       });
       await findAsset.addReview(createdReview);
@@ -215,7 +248,7 @@ const emptyUserReviewCreater = async (userName, id) => {
     if (findUser) {
       const createdReview = await Review.create({
         userName: userName,
-        score: 1,
+        score: 0,
         comment: "",
       });
       await findUser.addReview(createdReview);
