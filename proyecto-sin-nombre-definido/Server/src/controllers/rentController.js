@@ -92,7 +92,7 @@ const createRent = async (req, res) => {
 
     const URL = await createSession(rent, id);
 
-    return URL + id;
+    return URL + " - " + id;
   } catch (error) {
     console.log(error.message);
   }
