@@ -3,11 +3,11 @@ const Stripe = require("stripe");
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
-const createSession = async (pago, id, res) => {
-  const { name, description, rentPrice } = pago;
+const createSession = async (rent, id, res) => {
+  const { name, description, price } = rent;
   // console.log(name);
   // console.log(description);
-  // console.log();
+  console.log(price);
   try {
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -18,7 +18,7 @@ const createSession = async (pago, id, res) => {
               description: description,
             },
             currency: "usd",
-            unit_amount: rentPrice * 100,
+            unit_amount: price * 100,
           },
           quantity: 1,
         },
@@ -27,7 +27,7 @@ const createSession = async (pago, id, res) => {
       success_url: `http://localhost:3001/pay/success/${id}`,
       cancel_url: "http://localhost:3001/pay/cancel",
     });
-    console.log(session.url);
+    // console.log(session.url);
     return session.url;
   } catch (error) {
     console.log(error.message);
