@@ -5,7 +5,9 @@ const {
   createRent,
   createBook,
   getRentById,
+  final,
 } = require("../controllers/rentController.js");
+// const { final } = require("../controllers/rentController.js");
 
 const createBookHandler = async (req, res) => {
   const { assetId, userId, checkInDate, checkOutDate } = req.body;
@@ -24,13 +26,12 @@ const createBookHandler = async (req, res) => {
 
 const createRentHandler = async (req, res) => {
   // const {
-  //   bookingCode,
   //   onSale,
-  //   userId,
-  //   assetId,
-  //   checkInDate,
+  //   user,
+  //   asset,
+  //   checkIn,
   //   checkInTime,
-  //   checkOutDate,
+  //   checkOut,
   //   checkOutTime,
   //   price,
   //   termCon,
@@ -39,17 +40,16 @@ const createRentHandler = async (req, res) => {
   //   guestName,
   //   guestPhoneNumber,
   // } = req.body;
-  // console.log(req.params.id);
+  console.log(22222222);
   try {
     // const validData = dataSchemePost.parse({
     //   body: {
-    //     bookingCode,
     //     onSale,
-    //     userId,
-    //     assetId,
-    //     checkInDate,
+    //     user,
+    //     asset,
+    //     checkIn,
     //     checkInTime,
-    //     checkOutDate,
+    //     checkOut,
     //     checkOutTime,
     //     price,
     //     termCon,
@@ -59,25 +59,8 @@ const createRentHandler = async (req, res) => {
     //     guestPhoneNumber,
     //   },
     // });
-    const response = await createRent(
-      req,
-      res
-      // bookingCode,
-      // onSale,
-      // onSale,
-      // userId,
-      // assetId,
-      // checkInDate,
-      // checkInTime,
-      // checkOutDate,
-      // checkOutTime,
-      // price,
-      // termCon,
-      // paymentMethod,
-      // guest,
-      // guestName,
-      // guestPhoneNumber
-    );
+    const response = await createRent(req, res);
+
     res.status(201).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -96,8 +79,20 @@ const getRentByIdHandler = async (req, res) => {
   }
 };
 
+const finalHandler = async (req, res) => {
+  const id = req.params;
+  try {
+    const response = await final(id);
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: error.message });
+  }
+};
+
 module.exports = {
   createRentHandler,
+  finalHandler,
   createBookHandler,
   getRentByIdHandler,
 };

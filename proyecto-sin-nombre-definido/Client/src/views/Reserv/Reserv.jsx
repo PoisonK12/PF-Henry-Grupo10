@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import  validationReserv from "./validationReserv";
+import  validationReserv from "./validationReserv.js";
 import React , {useEffect, useState} from "react";
 import { handleReserv , getPayment } from "../../redux/actions";
 import { useSelector } from "react-redux";

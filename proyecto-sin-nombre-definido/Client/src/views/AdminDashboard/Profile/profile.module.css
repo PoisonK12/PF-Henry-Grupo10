@@ -46,10 +46,10 @@
       margin-bottom: 15px;
   }
   .containerImagen{
-    background: linear-gradient(to bottom, #8b8b8b, #000000);
+    /* background: linear-gradient(to bottom, #8b8b8b, #000000); */
     border-radius: 15px;
     margin-bottom: 15px;
-    box-shadow: 0px 4px 6px #6693e2;
+    /* box-shadow: 0px 4px 6px #6693e2; */
   }
   .face {
     margin-top: 50px;
@@ -70,7 +70,9 @@
     font-family: 'Allura', cursive;
     z-index: 15;
     position: absolute;
-    left: 0;
+    right: 5px;
+    color: #333;
+    
     margin: 10px;
     margin-top: 200px;
   }
@@ -182,3 +184,17 @@
     }
   }
   
+
+  .buttons{
+    padding-inline: 40px;
+    padding-block: 5px;
+    background: #091f44;
+    border: none;
+    border-radius: 10px;
+    color: #eee;
+  }
+  
+  .buttons:hover{
+    
+    background: #0e2f6a;
+  }

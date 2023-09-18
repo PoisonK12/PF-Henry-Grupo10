@@ -597,6 +597,7 @@ export const  getPayment = async (asset,  setPaymentSuccess ) => {
 };
 
 export const reviewsPut = async (form , condicional) =>{
+  console.log("aapa", form)
   
     try {
       const {data} = await axios.put(`/reviews/${condicional}/`, form)
@@ -617,7 +618,7 @@ export const reviewsGet = (id) => {
         payload: data
       })
     } catch (error) {
-      
+      console.log(error)
     }
   }
 }

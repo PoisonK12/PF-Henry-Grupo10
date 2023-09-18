@@ -11,46 +11,47 @@ module.exports = (sequelize) => {
       },
       onSale: {
         type: DataTypes.BOOLEAN,
+        allowNull: true,
       },
       user: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       asset: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       checkIn: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
+        allowNull: true,
       },
       checkInTime: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       checkOut: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
+        allowNull: true,
       },
       checkOutTime: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       price: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       termCon: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
       },
       paymentMethod: {
         type: DataTypes.ENUM("Card", "Cash"),
-        allowNull: false,
+        allowNull: true,
       },
       guest: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
       },
       guestName: {
         type: DataTypes.STRING,

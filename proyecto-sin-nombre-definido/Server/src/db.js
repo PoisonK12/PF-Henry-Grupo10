@@ -22,8 +22,7 @@ ReviewModel(sequelize);
 AmenityModel(sequelize);
 ContactModel(sequelize);
 AvailabilityModel(sequelize);
-/* GoogleUsersModel(sequelize);
- */
+
 const { User, Rent, Asset, Review, Contact } = sequelize.models;
 
 User.belongsToMany(Asset, { through: "userAssets" });
@@ -33,10 +32,10 @@ User.belongsToMany(Rent, { through: "userRents" });
 Rent.belongsTo(User, { through: "userRents" });
 
 Asset.belongsToMany(Review, { through: "assetReview" });
-Review.belongsToMany(Asset, { through: "assetReview" });
+Review.belongsTo(Asset, { through: "assetReview" });
 
 User.belongsToMany(Review, { through: "userReview" });
-Review.belongsToMany(User, { through: "userReview" });
+Review.belongsTo(User, { through: "userReview" });
 
 Contact.belongsToMany(User, { through: "userContact" });
 User.belongsTo(Contact, { through: "userContact" });

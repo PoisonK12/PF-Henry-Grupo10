@@ -9,8 +9,6 @@ const {
   updateReviewUser,
   getUserByIdController,
 } = require("../controllers/userController");
-// const { response } = require("express");
-// const { param } = require("../routes");
 
 const getReviewByIdController = async (req) => {
   const { id } = req.params;
@@ -18,15 +16,15 @@ const getReviewByIdController = async (req) => {
     try {
       const response = await Review.findAll({
         where: { userName: id },
-        attributes: ["score", "comment", "userName", "createdAt"],
+        // attributes: ["id", "score", "comment", "userName", "createdAt"],
+        // include: { joinTableAttributes: [] },
       });
-
+      // const extraData = await findOne({where:{userName:response.userName}}, attributes:[""])
       return response;
     } catch (error) {
       console.error(error.message);
     }
   }
-  // console.log(id);
   try {
     const response = await Review.findAll({
       include: [
@@ -45,11 +43,9 @@ const getReviewByIdController = async (req) => {
           [Op.eq]: id,
         },
       },
-      attributes: ["score", "comment", "userName", "createdAt"],
+      attributes: ["id", "score", "comment", "userName", "createdAt"],
     });
 
-    console.log(response);
-    console.log(id);
     if (response.length > 0) return response;
     else {
       const response = await Review.findAll({
@@ -61,14 +57,13 @@ const getReviewByIdController = async (req) => {
           },
         ],
         where: { "$Users.id$": { [Op.eq]: id } },
-        attributes: ["score", "comment", "userName", "createdAt"],
+        attributes: ["id", "score", "comment", "userName", "createdAt"],
       });
       if (response.length > 0) return response;
       return "No hay reviews relacionadas a los datos proporcionados";
     }
   } catch (error) {
     console.error(error.message);
-    // throw error;
   }
 };
 //!------------------------------------------------------------------------
@@ -93,6 +88,19 @@ const updateReview = async (
   //edicion por sistema
   score
 ) => {
+  /**Validaciones en el caso de no poder usar zod */
+    // if (!score) {
+    //     throw Error("Falta cargar puntuación")
+    //   }
+    // if (typeof userName !== "string") {
+    //   throw Error("El nombre de usuario ingresado debe ser un string");
+    // }
+    // if (typeof comment !== "string") {
+    //   throw Error("El comentario ingresado debe ser un string");
+    // }
+    // if (typeof score !== "number") {
+    //   throw Error("El score ingresado debe ser un número");
+    // }
   const updateReview = await User.findOne({
     where: { userName: userName },
   });
@@ -107,8 +115,21 @@ const updateReview = async (
 };
 
 //!---------------------------------evaluador-texto--puntos-evaluado---------------------------------
-const reviewUserController = async (userName, score, comment, id) => {
+const reviewUserController = async (Pk, userName, score, comment, id) => {
   try {
+    /**Validaciones en el caso de no poder usar zod */
+    // if (!score) {
+    //     throw Error("Falta cargar puntuación")
+    //   }
+    // if (typeof userName !== "string") {
+    //   throw Error("El nombre de usuario ingresado debe ser un string");
+    // }
+    // if (typeof comment !== "string") {
+    //   throw Error("El comentario ingresado debe ser un string");
+    // }
+    // if (typeof score !== "number") {
+    //   throw Error("El score ingresado debe ser un número");
+    // }
     const response = await getUserByIdController(id);
     let { averageScore, numberOfReviews } = response;
 
@@ -123,13 +144,14 @@ const reviewUserController = async (userName, score, comment, id) => {
   try {
     const findUser = await User.findByPk(id);
     if (findUser) {
-      const createdReview = await Review.create({
+      const toUpdate = await Review.findByPk(Pk);
+      await toUpdate.update({
         userName,
         comment,
         score,
       });
 
-      await findUser.addReview(createdReview);
+      // await findUser.addReview(createdReview);
       return `Exito al crear la review de ${findUser.userName}, ${userName}`;
     }
     res.status(500).json(`Mala mia`);
@@ -139,8 +161,21 @@ const reviewUserController = async (userName, score, comment, id) => {
   }
 };
 //!---------------------------------evaluador-texto--puntos-evaluada---------------------------------
-const reviewAssetController = async (userName, score, comment, id) => {
+const reviewAssetController = async (Pk, userName, score, comment, id) => {
   try {
+        /**Validaciones en el caso de no poder usar zod */
+    // if (!score) {
+    //     throw Error("Falta cargar puntuación")
+    //   }
+    // if (typeof userName !== "string") {
+    //   throw Error("El nombre de usuario ingresado debe ser un string");
+    // }
+    // if (typeof comment !== "string") {
+    //   throw Error("El comentario ingresado debe ser un string");
+    // }
+    // if (typeof score !== "number") {
+    //   throw Error("El score ingresado debe ser un número");
+    // }
     const response = await getAssetById(id);
     let { averageScore, numberOfReviews } = response;
 
@@ -153,23 +188,17 @@ const reviewAssetController = async (userName, score, comment, id) => {
     console.log(error);
   }
   try {
-    // console.log(111111111111111111);
-    // try {
     const findAsset = await Asset.findByPk(id);
 
-    // console.log(userName);
-    // console.log(comment);
-    // console.log(score);
-    // console.log(333333333333333);
     if (findAsset) {
-      const createdReview = await Review.create({
+      const toUpdate = await Review.findByPk(Pk);
+      await toUpdate.update({
         userName,
         score,
         comment,
       });
 
-      // console.log(444444444444444444);
-      await findAsset.addReview(createdReview);
+      // await findAsset.addReview(createdReview);
       return `Exito al crear la review de ${findAsset.name}, ${userName}`;
     }
 
@@ -195,6 +224,40 @@ const deleteReviewById = async (id) => {
   return "Review eliminado con exito";
 };
 
+const emptyAssetReviewCreater = async (userName, id) => {
+  try {
+    const findAsset = await Asset.findByPk(id);
+    console.log(findAsset);
+
+    if (findAsset) {
+      const createdReview = await Review.create({
+        userName: userName,
+        score: 0,
+        comment: "",
+      });
+      await findAsset.addReview(createdReview);
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+const emptyUserReviewCreater = async (userName, id) => {
+  try {
+    const findUser = await User.findByPk(id);
+
+    if (findUser) {
+      const createdReview = await Review.create({
+        userName: userName,
+        score: 0,
+        comment: "",
+      });
+      await findUser.addReview(createdReview);
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 module.exports = {
   getReviewByIdController,
   getAllReviewController,
@@ -202,4 +265,6 @@ module.exports = {
   updateReview,
   reviewUserController,
   reviewAssetController,
+  emptyAssetReviewCreater,
+  emptyUserReviewCreater,
 };
