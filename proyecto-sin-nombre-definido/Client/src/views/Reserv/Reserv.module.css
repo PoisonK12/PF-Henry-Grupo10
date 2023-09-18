@@ -21,3 +21,133 @@
 .rating > label:hover ~ input:checked ~ label {
   color: #e58e09;
 }
+
+ .hr {
+  border : 0.5px solid  rgb(30, 8, 36);
+  margin-top : 30px
+}
+
+.container {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.2);
+}
+
+.infoAvailable {
+  background: url("./fondo-minimalista-colorido_23-2148909133.avif");
+  
+  
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+    0 4px 6px -4px rgba(0, 0, 0, 0.2);
+
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  width: 1105px;
+  margin: 0 auto;
+  padding: 80px;
+  margin-bottom: 30px !important;
+}
+
+
+.inputContainer {
+  margin: 40px 90px;
+  width: 400px !important;
+  
+} 
+.legend {
+  margin-left : 45px !important;
+  margin : 15px;
+  font-size: 30px;
+  margin-top: 30px;
+}
+
+.fieldsetTax {
+  width: 100%;
+ height: 100%;
+ 
+
+} 
+.fieldsetContainer {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin : 30px;
+  display : flex;
+  flex-direction: row;
+  
+  
+}
+.container1 {
+  background-color: white !important;
+  width: 55%;
+}
+.container2 {
+  width :45%;
+  background-image : url("./178959100-mano-con-llave-alquilar-coche-o-casa-entregar-las-llaves-a-mano-a-más-de-una-persona-comprar.jpg");
+ background-repeat: no-repeat;
+ background-size:cover;
+ background-position: center ;
+
+ position: relative;
+}
+
+.divTax {
+  
+  display : flex ;
+  flex-direction: column;
+  margin-top : 90px;
+  /* background-color: rgba(255, 255, 255, 0.466); */
+  height: 500px;
+  padding : 40px 
+}
+.child {
+  margin : 20px 0;
+  font-size: 20px;
+}
+
+
+.link:hover {
+  color: rgb(69, 108, 182);
+}
+.link {
+  color : rgba(163, 19, 199, 0.945);
+  font-size:large;
+  
+}
+.input:focus {
+  box-shadow: 0 0 0 0.20rem rgba(163, 19, 199, 0.568) !important
+}
+
+
+
+.input:hover {
+/*  border : 3px solid rgba(163, 19, 199, 0.568); */
+border-color: rgb(237, 39, 255);
+}
+
+.buttons {
+  display: flex; 
+  flex-direction: row;
+  justify-content:space-evenly;
+  align-items: center;
+ 
+ 
+
+}
+
+.button:hover {
+  color: rgba(163, 19, 199, 0.945) !important;
+  
+  border : 3px solid rgba(163, 19, 199, 0.945) !important;
+  background-color: transparent !important;
+}
+
+.button {
+  border: 3px solid transparent !important;
+  color: white !important;
+  background-color: rgba(163, 19, 199, 0.945) !important;
+}
+.svg:hover {
+  fill: rgba(163, 19, 199, 0.945);
+ 
+} 

@@ -40,30 +40,35 @@ const Booking = () => {
 
     return (
     <div >
-      {reserv ? <Reserv setReserv = {setReserv} bookingId = {bookingId} booking ={booking}/> :
-      ( <div>
+      {reserv ?
+      
+       <Reserv setReserv = {setReserv} bookingId = {bookingId} booking ={booking}/> 
+       :
+      ( 
+      <div className={style.infoAvailable}> 
+      
     <h2 className={style.legend}> Disponibilidad </h2>
             
  <form onSubmit={handleSubmit}>
-   <div className="d-flex flex-column " style={{marginTop : "40px"}}>
-   <fieldset class="border p-1 border-primary rounded" style={{borderColor : "red"}}>
+   <div className="d-flex flex-column " >
+   <fieldset className={style.fieldset}>
      
  
- <div className="d-flex flex-row m-4 ">
+ <div className="d-flex flex-row "style={{backgroundColor : "#ffffff3f" ,padding : "15px", borderRadius : "5px"}} >
   
      
-       <div className="d-flex flex-row " style={{marginRight: "90px"}}>
-          <label>Check-in : </label>
-         <DatePicker className={style.data} selected={booking.checkInDate} onChange={handleDateChange} locale={es} />
+       <div className="d-flex flex-row col-md-5 "  >
+          <label className="form-label m-1 lead">Fecha de entrada: </label>
+         <DatePicker className={style.data} placeholderText="   yyyy-MM-dd       🗓" selected={booking.checkInDate} onChange={handleDateChange} locale={es} />
         
        </div>
-       <div className="d-flex flex-row ">
-           <label className="form-label">Check-out : </label>
-           <DatePicker  className="form-input"   selected={booking.checkOutDate} onChange={handleDateChangeOut} />
+       <div className="d-flex flex-row col-md-5">
+           <label className="form-label m-1 lead">Fecha de salida : </label>
+           <DatePicker   className={style.data} placeholderText="   yyyy-MM-dd       🗓"  selected={booking.checkOutDate} onChange={handleDateChangeOut} />
        </div>
   
       
-       <div style={{marginLeft : "200px"}}>
+       <div  style={{width : "250px" }} >
          <button className={style.button} type="submit" >Ver disponiblidad</button>
        </div>
       
