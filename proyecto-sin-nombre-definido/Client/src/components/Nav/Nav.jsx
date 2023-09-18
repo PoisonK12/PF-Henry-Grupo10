@@ -36,7 +36,7 @@ export const Nav = () => {
         fixed && location.pathname !== "/addProperty"
           ? style.fixed
           : location.pathname == "/addProperty" ||
-            /^\/detail\/[\w-]+$/.test(location.pathname) ||  location.pathname == "/property"
+            /^\/detail\/[\w-]+$/.test(location.pathname) ||  location.pathname == "/property" || /^\/userPanel\/[\w-]+$/.test(location.pathname)
           ? style.back
           : ""
       }`}
