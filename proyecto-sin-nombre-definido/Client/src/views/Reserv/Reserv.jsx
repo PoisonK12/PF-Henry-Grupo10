@@ -9,6 +9,7 @@ const Reserv = ({setReserv , bookingId ,booking}) => {
 
     const userData = JSON.parse(localStorage.getItem("data"));
     const assetData = useSelector(state => state.detail) 
+
     const [form  , setForm] = useState({
         name : assetData.name,
         description : assetData.description,
@@ -19,8 +20,12 @@ const Reserv = ({setReserv , bookingId ,booking}) => {
         checkOutDate : booking.checkOutDate.toISOString().split("T")[0]
     });
 
+
+
+    
     const [payment ,setPayment] = useState(false)
-    const [paymentOpen , setPaymentOpen] = useState("");
+    const [paymentSucess , setPaymentSuccess] = useState(true);
+  
 
     const handleChange = (e) => {
         const {name , value } = e.target
@@ -36,21 +41,19 @@ const Reserv = ({setReserv , bookingId ,booking}) => {
         setReserv(false)
     };
 
-    useEffect(() => {
-        if(paymentOpen.includes("success")) {
-            window.close()
-        }
-    })
+  
 
     const handlePayment = async (e) => {
         e.preventDefault();
-        await getPayment(form  ,setPaymentOpen)
+        await getPayment(form , setPaymentSuccess)
+        console.log(paymentSucess);
     };
-
+console.log(paymentSucess);
     const handleSubmit = async (e) => {
         e.preventDefault();
         await handleReserv(bookingId)
     };
+
 
 //?-------------------Acodarse de decirle a los chicos del back apra arreglar tema rutas success/cancel------------------------------------
 
@@ -114,11 +117,27 @@ const Reserv = ({setReserv , bookingId ,booking}) => {
                
             </div>
             <div className="d-flex flex-row justify-content-end ">
+            <div style={{width : "200px"}}>
+                    {!paymentSucess ?  (
+                        <p
+                          style={{
+                            border : "1px solid " ,
+                            borderColor: "red",
+                            visibility: "visible",
+                            marginBottom: "0",
+                          }}
+                        >
+                          ¡Necesitas elegir un <p style={{color : "red"}}>método de pago</p>  antes de continuar!
+                        </p>
+                    ) : (
+                        <p style={{border : "1px solid green" }}> Gracias por confiar en nosotros !</p>
+                     ) }
+                    </div>
             <div >
                 <button type="button" onClick={handleBack}>Volver</button>
             </div>
             <div>
-                <button type="submit"> Reservar </button>
+                <button type="submit" class="btn btn-primary"  disabled={paymentSucess}> Reservar </button>
             </div>
             </div></fieldset>
         </form>
