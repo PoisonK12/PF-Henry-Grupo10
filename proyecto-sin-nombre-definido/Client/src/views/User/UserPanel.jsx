@@ -252,6 +252,7 @@ const UserPanel = () => {
                 width: "100%",
                 height: "auto",
                 borderRadius: "5px",
+                paddingBottom:"20px"
               }}
             >
               <h3
@@ -294,7 +295,7 @@ const UserPanel = () => {
                 Suspenderemos su cuenta, puede contactarse con nuestro servicio
                 si desea volver
               </p>
-              <p style={{color:"#9d0aca", textDecoration:"underline", margin:"auto", cursor:"pointer", width:"150px", marginTop:"5px"}}>Suspenda su cuenta!</p>
+              <p style={{color:"#9d0aca", textDecoration:"underline", margin:"auto", cursor:"pointer", width:"150px", marginBlock:"10px"}}>Suspenda su cuenta!</p>
             </div>
           </div>
         )}

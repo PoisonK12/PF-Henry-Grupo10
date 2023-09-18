@@ -9,13 +9,7 @@ const Reviews = () => {
   // const testeo = test;
   const testeo = useSelector((state) => state.myReviews)
   const dispatch = useDispatch();
-  const [reviews, setReviews] = useState({
-    Pk:"",
-    id: "",
-    userName: "",
-    comment: "",
-    score: 0,
-  });
+  const [reviews, setReviews] = useState({});
 
   const handleChange = (e) => {
     const { value, name, type } = e.target;
@@ -35,11 +29,17 @@ const Reviews = () => {
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("data"));
-    setReviews({ ...reviews, userName: data.userName });
+    // setReviews({ ...reviews, userName: data.userName });
     dispatch(reviewsGet(data.userName))
+    const initialReviews = {}
+    // testeo.forEach((ele) => {
+    //   initialReviews[ele.id] = {
+    //     Pk:ele.Pk
+    //   }
+    // })
 
   }, []);
-
+console.log(testeo)
 
   // console.log("aaaaaaaaaaaaaaaaaaapaaaa", testeo);
   return (

@@ -52,7 +52,7 @@ const Detail = () => {
       try {
         dispatch(getAssetById(id));
         dispatch(SearchByLocation(assetDetail.location, 1));
-        dispatch(reviewsGet(assetDetail.id));
+        dispatch(reviewsGet(id));
         if (reviews.includes("datos")) {
           return;
         }

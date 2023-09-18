@@ -174,7 +174,7 @@ const AllUsersProps = () => {
               <Widget type="balance" />
             </div>
           </div> */}
-          <div>
+          <div style={{marginTop:"17px"}}>
             {deletedProperties?.map((props, index) => (
               <div className={`${style.centeredContent}`} key={props.id}>
                 <div className={`card mb-3 p-2 ${style.maxWidth}`}>
