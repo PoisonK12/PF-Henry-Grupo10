@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getAllReallyProperties, getPropertyByUser } from "../../redux/actions";
+import { deleteLogicUserById, getAllReallyProperties, getPropertyByUser } from "../../redux/actions";
 import style from "./user.module.css";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import Favorites from "./Favorite/Favorites";
@@ -10,19 +10,52 @@ import User from "../AdminDashboard/Profile/Profile";
 import AllUsersProps from "./AllUsersProperties/AllUserProps";
 import PropertyForm from "../Property Form/PropertyForm";
 import { Route, Routes } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const UserPanel = () => {
   const [componenteActual, setComponenteActual] = useState("A");
   console.log(componenteActual);
   // const dispatch = useDispatch();
   const [data, setData] = useState({});
+  const idUser = data.id
+  console.log('Informascasdasd',data);
   const [color, setColor] = useState("#091f44");
   const [selectedLink, setSelectedLink] = useState(null);
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   const handleLinkClick = (linkName) => {
     setComponenteActual(linkName);
     setSelectedLink(linkName); // Establecer el enlace seleccionado al hacer clic
   };
+  const handlePauseUser = async (e, idUser) => {
+    console.log('esta el id', idUser);
+    e.preventDefault(); // Evita la recarga de la página
+
+    const confirmed = await Swal.fire({
+      title: "¿Seguro que deseas suspender tu cuenta?",
+      text: "Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, suspender",
+      cancelButtonText: "Cancelar",
+    });
+    if (confirmed.isConfirmed) {
+      try {
+        dispatch(deleteLogicUserById(idUser));
+        localStorage.removeItem("log");
+        localStorage.removeItem("data");
+        navigate('/checkIn')
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un problema al pausar el usuario.",
+        });
+      }
+    }
+  }
 
   useEffect(() => {
     setSelectedLink("A"); // Establecer el enlace seleccionado al hacer clic
@@ -39,7 +72,7 @@ const UserPanel = () => {
     <div
       style={{
         paddingTop: "40px",
-        backgroundColor: "#091f44",
+        backgroundColor: "#DFDFDF",
         padding: "15px",
       }}
     >
@@ -295,7 +328,7 @@ const UserPanel = () => {
                 Suspenderemos su cuenta, puede contactarse con nuestro servicio
                 si desea volver
               </p>
-              <p style={{color:"#9d0aca", textDecoration:"underline", margin:"auto", cursor:"pointer", width:"150px", marginBlock:"10px"}}>Suspenda su cuenta!</p>
+              <button onClick={(e) => handlePauseUser(e, idUser)}  style={{color:"#9d0aca", textDecoration:"underline", margin:"auto", cursor:"pointer", width:"150px", marginBlock:"10px", border: "none"}}>Suspenda su cuenta!</button>
             </div>
           </div>
         )}
