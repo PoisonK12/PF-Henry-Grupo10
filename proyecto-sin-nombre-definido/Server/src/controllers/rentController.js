@@ -66,37 +66,45 @@ const createRent = async (req, res) => {
       // includes: { model: Asset },
     });
     if (isItAvailable === null) {
-      return "Debes hacer una reserva, antes de efectuar el pago";
+      return "Debes hacer una reserva, antes de efectuar el rent";
     }
     const pay = await Asset.findOne({
       where: { id: isItAvailable.assetId },
-      attributes: ["name", "description", "rentPrice"],
+      // attributes: ["name", "description", "rentPrice"],
+      include: [{ model: User, attributes: ["userName"] }],
     });
+    const stay = isItAvailable.dates.length;
 
-    const pago = {
+    console.log(bookingCode);
+    const rent = {
       name: pay.name,
+      tenant: isItAvailable.userId,
+      landlord: "pay.userName",
+      asset: isItAvailable.assetId,
       description: pay.description,
-      rentPrice: pay.rentPrice,
-      price: 12345,
+      price: pay.rentPrice * stay,
+      stay: stay,
+      bookingCode: bookingCode,
     };
-    const createdRent = await Rent.create(pago);
+    const createdRent = await Rent.create(rent);
 
     const id = createdRent.id;
-    console.log(pay.rentPrice);
-    console.log(1111111);
-    const URL = await createSession(pago, id);
-    console.log(33333333);
-    return URL;
+
+    const URL = await createSession(rent, id);
+
+    return URL + id;
   } catch (error) {
     console.log(error.message);
   }
 };
 // -----------------------------------------------------------------
 
-const final = async (id) => {
+const final = async (req) => {
+  const { id } = req;
   try {
-    const rented = await Rent.findOne(id);
-
+    console.log(id);
+    const rented = await Rent.findByPk(id);
+    const bookingCode = rented.bookingCode;
     const booked = await Availability.findOne({
       where: { id: bookingCode, expirationTime: { [Op.not]: null } },
       includes: { model: Asset },
@@ -113,7 +121,7 @@ const final = async (id) => {
       },
       { attributes: ["userName"] }
     );
-    const nuevoId = isItAvailable.assetId;
+    const nuevoId = rented.asset;
 
     const landlordData = await User.findOne({
       include: [
@@ -128,7 +136,7 @@ const final = async (id) => {
     });
 
     await emptyUserReviewCreater(landlordData.userName, tenant.id);
-    await emptyAssetReviewCreater(tenant.userName, isItAvailable.assetId);
+    await emptyAssetReviewCreater(tenant.userName, rented.asset);
     await emptyUserReviewCreater(tenant.userName, landlordData.id);
 
     return (
