@@ -226,10 +226,14 @@ const getAssetsByUserId = async (id) => {
 // Trae una propiedad especificada por el id
 const getAssetById = async (id) => {
   try {
-    const asset = await Asset.findOne({
-      where: { id: id },
-    });
-    return asset;
+    const asset = await Asset.findOne({where: { id: id }});
+    const relacion = await userAssets.findAll({where: { AssetId:id }})
+    const user = await User.findOne({where:{id:relacion[0].dataValues.UserId}})
+    const {fullName, profilePic} = user
+
+    return {...asset.dataValues,
+      ownerName:fullName,
+      ownerPic:profilePic};
   } catch (error) {
     console.log(error);
     throw error;
