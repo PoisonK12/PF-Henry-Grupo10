@@ -16,41 +16,32 @@ const UserPanel = () => {
   console.log(componenteActual);
   // const dispatch = useDispatch();
   const [data, setData] = useState({});
+  const [color, setColor] = useState("#091f44");
+  const [selectedLink, setSelectedLink] = useState(null);
 
-  const descripCut = (description) => {
-    if (description.length > 220) {
-      const newDesc = description
-        .split("")
-        .slice(0, 220)
-        .join("");
-      return <p className="card-text">{newDesc}...</p>;
-    }
-    return <p className="card-text">{description}</p>;
+  const handleLinkClick = (linkName) => {
+    setComponenteActual(linkName);
+    setSelectedLink(linkName); // Establecer el enlace seleccionado al hacer clic
   };
 
-  const handlerClick = () => {
-    <Routes>
-      <Route
-        path="/addProperty"
-        element={
-          <RutaProtegida token={token}>
-            <PropertyForm></PropertyForm>
-          </RutaProtegida>
-        }
-      />
-      ;
-    </Routes>;
-  };
+  useEffect(() => {
+    setSelectedLink("A"); // Establecer el enlace seleccionado al hacer clic
+    setColor("#091f44"); // Restablecer el color cuando se hace clic en un enlace
+  }, []);
 
   useEffect(() => {
     // if (!data) return
     const info = localStorage.getItem("data");
     setData(JSON.parse(info));
-  }, [localStorage]);
+  }, []);
 
   return (
     <div
-      style={{ paddingTop: "5rem", backgroundColor: "gray", padding: "15px" }}
+      style={{
+        paddingTop: "40px",
+        backgroundColor: "#091f44",
+        padding: "15px",
+      }}
     >
       <div className="row" style={{ marginTop: "3rem", width: "100%" }}>
         <div className="col-md-3">
@@ -58,7 +49,7 @@ const UserPanel = () => {
             className={`card ${style.fixedCard}`}
             style={{ position: "sticky", top: "5rem", marginBottom: "1rem" }}
           >
-            <div className="card-body mt-2">
+            <div className="card-body mt-2" style={{ padding: "0" }}>
               <div
                 style={{
                   display: "flex",
@@ -82,11 +73,14 @@ const UserPanel = () => {
                 <li class="nav-item">
                   <a
                     class="nav-link"
-                    onClick={() => setComponenteActual("D")}
+                    className={style.links}
+                    onClick={() => {
+                      handleLinkClick("D");
+                    }}
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      height: "80px",
+                      paddingInline: "5px",
+                      backgroundColor: selectedLink === "D" ? color : "white",
+                      color: selectedLink === "D" ? "white" : "black",
                     }}
                     href="#"
                   >
@@ -109,11 +103,13 @@ const UserPanel = () => {
                   <a
                     class="nav-link"
                     href="#"
-                    onClick={() => setComponenteActual("A")}
+                    className={style.links}
+                    onClick={() => handleLinkClick("A")}
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      height: "80px",
+                      paddingInline: "5px",
+
+                      backgroundColor: selectedLink === "A" ? color : "white",
+                      color: selectedLink === "A" ? "white" : "black",
                     }}
                   >
                     <div>
@@ -132,14 +128,20 @@ const UserPanel = () => {
                     </div>
                   </a>
                 </li>
-                <NavLink to="/addPropery">
+                <Link
+                  to={"/addProperty"}
+                  style={{ textDecoration: "none", color: "#212529" }}
+                >
                   <li class="nav-item">
                     <a
                       class="nav-link"
+                      onClick={() => handleLinkClick("E")}
+                      className={style.links}
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        height: "80px",
+                        paddingInline: "5px",
+
+                        backgroundColor: selectedLink === "E" ? color : "white",
+                        color: selectedLink === "E" ? "white" : "black",
                       }}
                       href="#"
                       // onClick={() => setComponenteActual("C")}
@@ -162,17 +164,19 @@ const UserPanel = () => {
                       </div>
                     </a>
                   </li>
-                </NavLink>
+                </Link>
                 <li class="nav-item">
                   <a
                     class="nav-link"
                     href="#"
-                    onClick={() => setComponenteActual("B")}
+                    onClick={() => handleLinkClick("B")}
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      height: "80px",
+                      color: selectedLink === "B" ? "white" : "black",
+                      paddingInline: "5px",
+
+                      backgroundColor: selectedLink === "B" ? color : "white",
                     }}
+                    className={style.links}
                   >
                     <div>
                       <svg
@@ -193,11 +197,13 @@ const UserPanel = () => {
                   <a
                     class="nav-link"
                     href="#"
-                    onClick={() => setComponenteActual("C")}
+                    className={style.links}
+                    onClick={() => handleLinkClick("C")}
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      height: "80px",
+                      color: selectedLink === "C" ? "white" : "black",
+
+                      paddingInline: "5px",
+                      backgroundColor: selectedLink === "C" ? color : "white",
                     }}
                   >
                     <div>
@@ -230,11 +236,67 @@ const UserPanel = () => {
           </div>
         ) : componenteActual === "C" ? (
           <div className="col-md-9">
-            <PropertyForm />
+            <Reviews />
           </div>
         ) : (
           <div className="col-md-9">
             <User />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                textAlign: "center",
+                marginTop: "20px",
+                background: "white",
+                width: "100%",
+                height: "auto",
+                borderRadius: "5px",
+                paddingBottom:"20px"
+              }}
+            >
+              <h3
+                style={{
+                  color: "rgb(27, 27, 27)",
+                  fontWeight: "bold",
+                  fontSize: "32px",
+                  marginTop: "10px",
+                }}
+              >
+                Suspender tu cuenta!
+              </h3>
+              <div
+                style={{
+                  display: "block",
+                  background: "rgba(157, 10, 202, 0.2)",
+                  marginInline: "40%",
+                  padding: "5px",
+                  marginBottom: "10px",
+                  borderRadius: "999px",
+                }}
+              >
+                <p style={{ color: "#9d0aca" }}>
+                  Avanzar con precaucion{" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-exclamation-triangle-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                  </svg>
+                </p>
+              </div>
+              <p style={{ width: "55%", margin: "auto", fontSize: "20px" }}>
+                Asegúrese de haber realizado una copia de seguridad de su cuenta
+                en caso de que alguna vez necesite acceder a sus datos.
+                Suspenderemos su cuenta, puede contactarse con nuestro servicio
+                si desea volver
+              </p>
+              <p style={{color:"#9d0aca", textDecoration:"underline", margin:"auto", cursor:"pointer", width:"150px", marginBlock:"10px"}}>Suspenda su cuenta!</p>
+            </div>
           </div>
         )}
       </div>

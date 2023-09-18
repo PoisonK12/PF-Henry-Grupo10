@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import style from "./alluser.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
-  deleteAssetById,
+  deleteLogicAssetById,
   getAllReallyProperties,
   putProperty,
   getPropertyByUser
@@ -16,19 +16,21 @@ import Widget from "../../AdminDashboard/AllProperties/Balance/Balance";
 
 const AllUsersProps = () => {
   const dispatch = useDispatch();
+  const {id} = useParams()
   const allProperties = useSelector((state) => state.myProperties);
+  const deletedProperties = allProperties?.filter((property) => property.eliminado !== true);
+  console.log('sisisi',allProperties);
   const [datas, setDatas] = useState({})
   const [updated, setUpdated] = useState(false);
   const [price, setPrice] = useState(false);
   const [idHouse, setIdHouse] = useState("");
+  console.log('id',idHouse);
   const [previousProperties, setPreviousProperties] = useState([]);
   const [selectedCkeckbox, setSelectedCheckbox] = useState({
     onSale: "",
     parking: "",
     terrace: "",
   });
-
-
 
   const [form, setForm] = useState({
     name: "",
@@ -54,17 +56,17 @@ const AllUsersProps = () => {
         const info = localStorage.getItem("data");
         setDatas(JSON.parse(info))
         
-       dispatch(getPropertyByUser(datas.id));
+       dispatch(getPropertyByUser(id));
         console.log(datas)
       
-  }, [datas]);
+  }, []);
 
 
 
   useEffect(() => {
     const getDataForFrom = async () => {
       const { data } = await axios(`/assets/` + idHouse);
-      setForm(...form, {
+      setForm({
         name: data.name,
         country: data?.country,
         state: data?.state,
@@ -152,33 +154,28 @@ const AllUsersProps = () => {
   const handleDeleteAsset = (id) => {
     if (window.confirm("¿Seguro que deseas eliminar esta propiedad?")) {
       // Llama a la acción para eliminar la propiedad por su ID
-      dispatch(deleteAssetById(id));
+      dispatch(deleteLogicAssetById(id));
+      dispatch()
     }
   };
-  useEffect(() => {
-    dispatch(getAllReallyProperties());
-  }, [allProperties]);
+  // useEffect(() => {
+  //   dispatch(getAllReallyProperties());
+  // }, [allProperties]);
 
-  useEffect(() => {
-    // Lógica para detectar eliminaciones
-    const deletedItems = previousProperties.filter(item => !allProperties.includes(item));
-    // Hacer algo con los elementos eliminados si es necesario
-    // Actualizar el estado anterior con el estado actual
-    setPreviousProperties(allProperties);
-  }, [allProperties]);
+
 
   return (
     <div className={style.background}>
-          <div>
+          {/* <div>
             <div className={style.widgets}>
               <Widget type="user" />
               <Widget type="order" />
               <Widget type="earning" />
               <Widget type="balance" />
             </div>
-          </div>
-          <div>
-            {allProperties?.map((props, index) => (
+          </div> */}
+          <div style={{marginTop:"17px"}}>
+            {deletedProperties?.map((props, index) => (
               <div className={`${style.centeredContent}`} key={props.id}>
                 <div className={`card mb-3 p-2 ${style.maxWidth}`}>
                   <div className="row g-0">
