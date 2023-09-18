@@ -1,61 +1,42 @@
-.cardsCont {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-top: 20px;
+.image img{
+  object-position: center bottom !important;
 }
 
-/* cards.module.css */
-.cardCont {
-    background-color: #ffffffd7;
-    width: calc(30% - 2rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 1rem;
-    padding: 1rem;
-    border: solid 1px #ccc;
-    border-radius: 10px;
-    box-shadow: 0 8px 18px rgba(255, 255, 255, 0.63); /* Cambio en el valor de box-shadow */
-    transition: transform 0.2s;
-  }
-  .cardCont:hover {
-    transform: translateY(-5px);
-  }
-    
-    .cardTittle {
-      text-align: center;
-      margin-bottom: 1rem;
-      color: black;
-      
-    }
-    
-    .cardTittle h2 {
-      font-size: 1.5rem;
-      margin: 0;
-      text-decoration: none;
-      color: black;
-    }
-    
-    .cardSeparator {
-      display: flex;
-      align-items: center; /* Centrado horizontal */
-      justify-content: center; /* Centrado vertical */
-      background-color: #ccc;
-      width: 85%;
-      height: 4px;
-      margin: 10px auto; 
-    }
-    
-    .cardInfo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: black;
-    }
-    .cardInfo h2 {
-        font-size: 1rem;
-        margin: 5px 0;
-      }
-    
+.rating:not(:checked) > input {
+  position: absolute;
+  appearance: none;
+}
+
+.rating:not(:checked) > label , .rating svg{
+  float: right;
+  cursor: pointer;
+  font-size: 30px;
+  color: #666;
+}
+
+/* .rating:not(:checked) > label:before svg {
+  content: "★";
+} */
+
+.rating > input:checked + label:hover svg,
+.rating > input:checked + label:hover svg ~ label svg,
+.rating > input:checked ~ label:hover svg,
+.rating > input:checked ~ label:hover svg ~ label svg,
+.rating > label:hover svg ~ input:checked ~ label svg {
+  color: #e58e09;
+}
+
+.rating label{
+  margin-right: 20px;
+}
+
+
+.rating:not(:checked) > label:hover svg,
+.rating:not(:checked) > label:hover  ~ label svg {
+  color: #ff9e0b;
+  
+}
+
+.rating > input:checked ~ label svg {
+  color: #ffa723;
+}

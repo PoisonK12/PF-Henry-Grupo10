@@ -11,3 +11,21 @@
 .container:hover {
     transform: translateY(-5px);
 }
+.icons div {
+    border: 2px solid red;
+    border-radius: 50%;
+    margin-right: 5px;
+    padding-inline: 8px;
+    padding-block: 7px;
+    transition: background-color 0.3s ease;
+  }
+  .icons svg {
+    transition: color 0.3s ease;
+    color: red;
+  }
+  .icons div:hover {
+    background-color: red;
+  }
+  .icons div:hover svg {
+    color: #cccccc;
+  }

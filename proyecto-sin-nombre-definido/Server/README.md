@@ -107,8 +107,19 @@ Get amenities (devuelve un array de objetos con id y name)
 GET -> http://localhost:3001/amenities
 
 
+Favorites
+Add favorite
+PUT -> http://localhost:3001/favorites/like
+uuid de usuario
+uuid de asset
 
+Remove favorite
+PUT -> http://localhost:3001/favorites/unlike
+uuid de usuario
+uuid de asset
 
+All favorites
+GET -> http://localhost:3001/favorites?userId=:uuid
 
 Crud USER
 

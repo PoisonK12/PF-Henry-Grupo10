@@ -5,38 +5,119 @@ import bath from "../../assets/images/svg/bath.svg";
 import ruler from "../../assets/images/svg/ruler.svg";
 import allSize from "../../assets/images/svg/allSize.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { SearchByLocation, getAssetById } from "../../redux/actions";
+import {
+  SearchByLocation,
+  favUserProperty,
+  getAllFavUserProps,
+  getAssetById,
+  reviewsGet,
+} from "../../redux/actions";
 import { useParams, Link } from "react-router-dom";
 import NotFoundPage from "../404/404";
-import Calendar from "./Calendar";
 import Card from "../../components/Card/CardOffer/CardOffer";
 import Loader from "../../components/Loader/Loader";
+import Booking from "../Reserv/Booking";
+import Maps from "../../views/Map/Map";
 
 const Detail = () => {
+  const favoritesData = useSelector((state) => state.myFavoritesProps);
+  // console.log("infoafv", favoritesData);
   const { id } = useParams();
   const dispatch = useDispatch();
   const assetDetail = useSelector((state) => state.detail);
   const [imageUrl, setImageUrl] = useState(null);
   const propertiesSug = useSelector((state) => state.properties);
-  const sugs = propertiesSug.rows?.filter((el) => el.id !== assetDetail.id);
-  console.log("Detalle", assetDetail);
+  const reviews = useSelector((state) => state.myReviews);
+  const [myReviews, setMyReviews] = useState([]);
+  const sugs = propertiesSug?.rows?.filter((el) => el.id !== assetDetail.id);
+  const token = localStorage.getItem("log");
+  // console.log("Detalle", assetDetail);
   const [loading, setLoading] = useState(true);
+
+  const isFavorite = Array.isArray(favoritesData) && favoritesData.includes(id);
+  // console.log("kolor", isFavorite);
+
+  const handlerOnclick = (id) => {
+    const info = localStorage.getItem("data");
+    const userData = JSON.parse(info);
+    // console.log("idUser", userData.id, "idAsset", id);
+    const idUser = userData.id;
+    dispatch(favUserProperty(idUser, id));
+    alert("Propiedad guardada en favoritos");
+    dispatch(getAllFavUserProps(userData.id));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch(getAssetById(id));
-        dispatch(SearchByLocation(assetDetail.location));
+        dispatch(SearchByLocation(assetDetail.location, 1));
+        dispatch(reviewsGet(id));
+        if (reviews.includes("datos")) {
+          return;
+        }
+        setMyReviews(reviews);
         setTimeout(() => {
           setLoading(false);
-
-        },2000)
+        }, 2000);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    const info = localStorage.getItem("data");
+    const userData = JSON.parse(info);
+    // console.log("idUser", userData);
+    dispatch(getAllFavUserProps(userData.id));
+  }, []);
+
+  useEffect(() => {}, [myReviews]);
+  console.log(myReviews);
+
+  const stars = (stars) => {
+    const starDraw = [];
+    for (let i = 0; i < stars; i++) {
+      starDraw.push(
+        <svg
+          key={i}
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          style={{ marginRight: "10px", color: "#9d0aca" }}
+          fill="currentColor"
+          class="bi bi-star-fill"
+          viewBox="0 0 16 16"
+        >
+          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+        </svg>
+      );
+    }
+    return starDraw;
+  };
+  const noStars = (stars) => {
+    const starLength = 5 - stars;
+    const starNoDraw = [];
+    for (let i = 0; i < starLength; i++) {
+      starNoDraw.push(
+        <svg
+          key={i}
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          style={{ marginRight: "10px", color: "#9d0aca" }}
+          class="bi bi-star"
+          viewBox="0 0 16 16"
+        >
+          <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+        </svg>
+      );
+    }
+    return starNoDraw;
+  };
+
   console.log("Soliii", sugs);
 
   const handlerImage = (e) => {
@@ -107,8 +188,8 @@ const Detail = () => {
       </div>
       <div className={`${style.propertyDetails}`}>
         <div className={` ${style.propertyInfo}`}>
-          <h2 style={{ fontWeight: "bold", color: "#091f44" }}>
-            {assetDetail.rentPrice} USD
+          <h2 style={{ fontWeight: "lighter", color: "#091f44" }}>
+            ${assetDetail.rentPrice} por noche
           </h2>
           <h1 className={style.heading}> {assetDetail.name}</h1>
           <p className={style.paragraph}>
@@ -121,9 +202,10 @@ const Detail = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
-                fill="currentColor"
+                fill={isFavorite ? "blue" : "currentColor"}
                 class="bi bi-heart-fill"
                 viewBox="0 0 16 16"
+                onClick={() => handlerOnclick(assetDetail.id)}
               >
                 <path
                   fill-rule="evenodd"
@@ -131,6 +213,7 @@ const Detail = () => {
                 />
               </svg>
             </div>
+
             <div className={style.fav}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -165,6 +248,30 @@ const Detail = () => {
             </ul>
           </div>
         </div>
+
+        {token ? (
+          <div className={style.infoAvailable}>
+            <div>
+              <Booking></Booking>
+            </div>
+          </div>
+        ) : (
+          <div className={style.alert}>
+            <h5>
+              Hola! Para rentar esta propiedad debes de estar{" "}
+              <b style={{ color: "#e43838" }}>registrado</b> o{" "}
+              <b style={{ color: "#e43838" }}>logeado</b>.
+            </h5>
+            <p>
+              {" "}
+              Por favor
+              <Link to="/checkIn"> Inicia sesión </Link>
+              para reservar o<Link to="/checkIn"> créate una cuenta </Link>
+              para acceder a todos los beneficios que ofrece esta página
+            </p>
+          </div>
+        )}
+
         <div className={style.info}>
           <div style={{ display: "flex" }}>
             <div className={style.description}>
@@ -172,23 +279,14 @@ const Detail = () => {
               <p>{assetDetail.description}</p>
             </div>
             <div className={style.googleMap}>
-              <iframe
-                title="Google Map"
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15908.325523601628!2d-74.18270045!3d4.5794067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1693329189613!5m2!1ses-419!2sco"
-                width="100%"
-                height="300"
-                style={{ border: "0" }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+              <Maps location={assetDetail.location} />
             </div>
           </div>
           <div className={style.reseñas}>
             <h2>Lee las reseñas de los demas huespedes!</h2>
             <div className={style.reseña}>
               <div className={style.contReseña}>
-                <h1>Reseña de Valentina Delucchi</h1>
+                <h1>Valentina Delucchi</h1>
                 <p>
                   Perderse en la naturaleza nunca había sido tan encantador. La
                   Cabaña Bosque Encantado nos brindó la escapada perfecta del
@@ -200,39 +298,37 @@ const Detail = () => {
                   escondida a todos los amantes de la naturaleza.
                 </p>
               </div>
-              <div className={style.contReseña}>
-                <h1>Reseña de Mariano Ospina</h1>
-                <p>
-                  Perderse en la naturaleza nunca había sido tan encantador. La
-                  Cabaña Bosque Encantado nos brindó la escapada perfecta del
-                  ajetreo y el bullicio de la ciudad. Cada mañana nos
-                  despertábamos con el canto de los pájaros y una taza de café
-                  en la terraza. El interior de la cabaña estaba decorado con un
-                  estilo rústico pero moderno, y nos sentimos como en casa desde
-                  el primer momento. Definitivamente, recomiendo esta joya
-                  escondida a todos los amantes de la naturaleza.
-                </p>
-              </div>
-              <div className={style.contReseña}>
-                <h1>Reseña de Juan Esteban</h1>
-                <p>
-                  Realmente un gran hotel ubicado muy cerca de las principales
-                  atracciones y ahorra mucho tiempo tratando de encontrar
-                  transporte para hacer turismo. El personal del hotel fue
-                  amable, el ascensor también funciona completamente y ayudó a
-                  los miembro
-                </p>
-              </div>
+              {myReviews &&
+                myReviews?.map((ele) => {
+                  return (
+                    <div className={style.contReseña}>
+                      <h1 style={{ marginBottom: "0px" }}>{ele?.userName}</h1>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          marginBottom: "20px",
+                          marginTop: "0",
+                        }}
+                      >
+                        {stars(ele?.score)}
+                        {noStars(ele?.score)}
+                      </div>
+                      <p>{ele?.comment}</p>
+                    </div>
+                  );
+                })}
             </div>
           </div>
 
-          {propertiesSug.count <= 0 ? (
+          {!propertiesSug?.count ? (
             ""
           ) : (
             <div className={style.sugs}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h4>
-                  Hemos encontrado <span>{propertiesSug.count - 1}</span>{" "}
+                  Hemos encontrado <span>{propertiesSug?.count - 1}</span>{" "}
                   coincidencias de localidad
                 </h4>
                 <Link to={`/property?location=${assetDetail.location}`}>
@@ -273,29 +369,43 @@ const Detail = () => {
               </svg>
               Consejos de seguridad a la hora de alquilar
             </h3>
-            <div style={{ display: "grid", gridTemplateRows: "repeat(2,1fr)" }}>
-              <div
-                style={{ display: "flex", width: "100%", alignItems: "center" }}
-              >
+            <div
+              style={{ display: "flex", width: "100%", alignItems: "center" }}
+            >
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <h1 style={{ marginRight: "10px", color: "#091f44" }}>1</h1>
                 <p style={{ color: "#091f44" }}>
                   No pagues sin ver la propiedad o tener documentación
                   certificada.
                 </p>
+              </div>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <h1 style={{ marginRight: "10px", color: "#091f44" }}>3</h1>
                 <p style={{ color: "#091f44" }}>
                   Evita compartir información bancaria o contraseñas por
                   mensajes.
                 </p>
               </div>
-              <div
-                style={{ display: "flex", width: "100%", alignItems: "center" }}
-              >
+            </div>
+            <div
+              style={{ display: "flex", width: "100%", alignItems: "center" }}
+            >
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <h1 style={{ marginRight: "10px", color: "#091f44" }}>2</h1>
                 <p style={{ color: "#091f44" }}>
                   Precios demasiado bajos pueden ser señal de estafa.
                 </p>
-                <h1 style={{ marginRight: "10px", color: "#091f44" }}>4</h1>
+              </div>
+              <div style={{ display: "flex", alignItems: "left" }}>
+                <h1
+                  style={{
+                    marginLeft: "17px",
+                    color: "#091f44",
+                    paddingRight: "15px",
+                  }}
+                >
+                  4
+                </h1>
                 <p style={{ color: "#091f44" }}>
                   Si dudas de una oferta, repórtala para prevenir fraudes.
                 </p>
