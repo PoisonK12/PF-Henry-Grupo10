@@ -74,12 +74,7 @@ const createRent = async (req, res) => {
       include: [{ model: User, attributes: ["userName"] }],
     });
     const stay = isItAvailable.dates.length;
-    // console.log(pay);
-    // console.log(pay.name);
-    // console.log(isItAvailable.userId);
-    // console.log(pay.userName);
-    // console.log(isItAvailable.assetId);
-    console.log(333333333);
+
     console.log(bookingCode);
     const rent = {
       name: pay.name,
@@ -94,11 +89,10 @@ const createRent = async (req, res) => {
     const createdRent = await Rent.create(rent);
 
     const id = createdRent.id;
-    // console.log(pay.rentPrice);
-    // console.log(1111111);
+
     const URL = await createSession(rent, id);
-    // console.log(33333333);
-    return URL;
+
+    return URL + id;
   } catch (error) {
     console.log(error.message);
   }

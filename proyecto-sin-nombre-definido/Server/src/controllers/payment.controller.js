@@ -5,8 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
 const createSession = async (rent, id, res) => {
   const { name, description, price } = rent;
-  // console.log(name);
-  // console.log(description);
+
   console.log(price);
   try {
     const session = await stripe.checkout.sessions.create({
@@ -27,7 +26,7 @@ const createSession = async (rent, id, res) => {
       success_url: `http://localhost:3001/pay/success/${id}`,
       cancel_url: "http://localhost:3001/pay/cancel",
     });
-    // console.log(session.url);
+
     return session.url;
   } catch (error) {
     console.log(error.message);
