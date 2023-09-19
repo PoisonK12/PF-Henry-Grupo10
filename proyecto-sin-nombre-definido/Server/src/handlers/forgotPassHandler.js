@@ -18,7 +18,7 @@ const forgotPassHandler = async (req, res) => {
             }
         
         
-        const user = await User.findOne({ where: { email: email } });
+        const user = await User.findOne({where:{email: email} } );
         console.log('Email ingresasdo', user);
 
         if (!user) {
@@ -29,12 +29,12 @@ const forgotPassHandler = async (req, res) => {
         
         
         var transporter = nodemailer.createTransport({
-            host: "mail.grupo-cava.com",
-              post: 993, // Cambiado de "post" a "port"
+            host: "smtp.gmail.com",
+              port: 465, // Cambiado de "post" a "port"
               secure: true,
               auth: {
-                user: "greatravel@grupo-cava.com",
-                pass: "00oscar00"
+                user: "greattravel.contact@gmail.com",
+                pass: "hbacczxxirmcjmht"
               },
               tls:{
                 rejectUnauthorized:false
@@ -45,7 +45,7 @@ const forgotPassHandler = async (req, res) => {
        
 
         var mailOptions = {
-            from: 'greatravel@grupo-cava.com',
+            from: 'greattravel.contact@gmail.com',
             to: email,
             subject: 'Reset Password Link',
             html: html
