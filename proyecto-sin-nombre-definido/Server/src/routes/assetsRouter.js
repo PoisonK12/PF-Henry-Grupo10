@@ -38,13 +38,13 @@ assetsRouter.post("/create", createAssetHandler);
 //Edicion de perfil de usuario
 assetsRouter.put("/:id", updateAssetHandler);
 
-//Destruir asset 
+//Destruir asset
 assetsRouter.delete("/:id", deleteAssetByIdHandler);
 
 //Pausar propiedad
 assetsRouter.delete("/delete/:id", softDeleteAssetByIdHandler);
 
-//Restaurar propiedad 
+//Restaurar propiedad
 assetsRouter.get("/restore/:id", restoreAssetByIdHandler);
 
 module.exports = assetsRouter;

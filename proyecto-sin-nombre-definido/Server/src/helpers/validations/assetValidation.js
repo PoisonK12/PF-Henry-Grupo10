@@ -25,7 +25,7 @@ const assetSchemePost = z.object({
       })
       .max(3, {
         message: "A maximum of 3 pictures are required",
-      }),
+      }) ,
 
     onSale: z.boolean(),
 

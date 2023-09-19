@@ -75,23 +75,25 @@ module.exports = (sequelize) => {
       },
 
       favorites: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.ARRAY(DataTypes.TEXT),
         allowNull: true,
-        defaultValue:[]
       },
       history: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
-        defaultValue:[]
       },
       hide: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      // Modelo de datos de Google
       googleId: {
         type: DataTypes.STRING,
         allowNull: true,
-        unique: true, // Establecer como único para evitar duplicados
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {

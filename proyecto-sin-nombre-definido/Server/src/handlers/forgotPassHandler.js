@@ -3,10 +3,13 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs'); // Asegúrate de requerir fs
+const { log } = require('console');
 const templatePath = path.join(__dirname, 'mailingTemplates', 'ResetPass.html');
 
 const forgotPassHandler = async (req, res) => {
     const { email } = req.body;
+    console.log(email);
+    
     try {
         fs.readFile(templatePath, 'utf8', async (err, html) => {
             if (err) {
@@ -14,14 +17,17 @@ const forgotPassHandler = async (req, res) => {
               return res.status(500).json({ error: "Error al registrar el usuario", details: err.message });
             }
         
-        const user = await User.findOne({ email: email });
+        
+        const user = await User.findOne({ where: { email: email } });
+        console.log('Email ingresasdo', user);
 
         if (!user) {
             return res.send({ Status: "User not existed" });
         }
 
         const token = jwt.sign({ id: user.id }, "jwt_secret_key", { expiresIn: "1d" });
-        console.log('tokeness', token);
+        
+        
         var transporter = nodemailer.createTransport({
             host: "mail.grupo-cava.com",
               post: 993, // Cambiado de "post" a "port"
@@ -36,6 +42,7 @@ const forgotPassHandler = async (req, res) => {
         });
 
         html = html.replace('<strong id="userPassword"></strong>', `<strong id="userPassword">${`http://localhost:5173/reset_password/${user.id}/${token}`}</strong>`);
+       
 
         var mailOptions = {
             from: 'greatravel@grupo-cava.com',

@@ -1,3 +1,42 @@
 .image img{
   object-position: center bottom !important;
 }
+
+.rating:not(:checked) > input {
+  position: absolute;
+  appearance: none;
+}
+
+.rating:not(:checked) > label , .rating svg{
+  float: right;
+  cursor: pointer;
+  font-size: 30px;
+  color: #666;
+}
+
+/* .rating:not(:checked) > label:before svg {
+  content: "★";
+} */
+
+.rating > input:checked + label:hover svg,
+.rating > input:checked + label:hover svg ~ label svg,
+.rating > input:checked ~ label:hover svg,
+.rating > input:checked ~ label:hover svg ~ label svg,
+.rating > label:hover svg ~ input:checked ~ label svg {
+  color: #e58e09;
+}
+
+.rating label{
+  margin-right: 20px;
+}
+
+
+.rating:not(:checked) > label:hover svg,
+.rating:not(:checked) > label:hover  ~ label svg {
+  color: #ff9e0b;
+  
+}
+
+.rating > input:checked ~ label svg {
+  color: #ffa723;
+}

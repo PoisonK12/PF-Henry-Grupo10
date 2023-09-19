@@ -83,17 +83,12 @@ const AllUser = () => {
       }
     }
 
-    //   if (result.isConfirmed) {
-    //     // Llama a la acción para pausar el usuario por su ID
-    //     axios.delete(`/assets/delete/${id}`);
-
-    //   }
-    // });
+   
   };
 
   useEffect(() => {
     dispatch(getAllUsers(filter));
-  }, [filter, dispatch]);
+  }, [filter]);
 
   // Efecto para cargar la lista de usuarios al montar el componente
   useEffect(() => {
@@ -102,7 +97,7 @@ const AllUser = () => {
     }
 
     // console.log(allUsers)
-  }, [filter, prevUser, dispatch]);
+  }, [filter]);
 
   // Filtrar usuarios basados en el filtro de búsqueda
   // const filteredUsers = allUsers?.filter((ele) =>
@@ -117,14 +112,29 @@ const AllUser = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        id="myInput"
-        name="search"
-        className={style.myInput}
-        onChange={handleInputChange}
-        placeholder="🔍   Search for names.."
-      />
+      <div className={style.container}>
+      <div className="col-md-6">
+        <select name="order" id="" className={style.order} onChange={(e) => handleInputChange(e)}>
+          <option value="">Ordenamiento</option>
+          <option name="order" value={"userNameAsc"}>A-Z</option>
+          <option name="order" value={"userNameDesc"}>Z-A</option>
+          <option value="">A-Z</option>
+          <option value="">Z-A</option>
+
+        </select>
+      </div>
+      <div className="col-md-6">
+        <input
+          type="text"
+          id="myInput"
+          name="search"
+          className={style.myInput}
+          onChange={handleInputChange}
+          placeholder="🔍   Search for names.."
+        />
+
+      </div>
+      </div>
       <table className="table table-bordered" style={{ borderRadius: "10px" }}>
         <thead style={{ borderRadius: "10px" }}>
           <tr style={{ borderRadius: "10px" }}>

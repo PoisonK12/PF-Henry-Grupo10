@@ -5,7 +5,13 @@ import bath from "../../assets/images/svg/bath.svg";
 import ruler from "../../assets/images/svg/ruler.svg";
 import allSize from "../../assets/images/svg/allSize.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { SearchByLocation, favUserProperty, getAllFavUserProps, getAssetById, reviewsGet } from "../../redux/actions";
+import {
+  SearchByLocation,
+  favUserProperty,
+  getAllFavUserProps,
+  getAssetById,
+  reviewsGet,
+} from "../../redux/actions";
 import { useParams, Link } from "react-router-dom";
 import NotFoundPage from "../404/404";
 import Card from "../../components/Card/CardOffer/CardOffer";
@@ -14,39 +20,44 @@ import Booking from "../Reserv/Booking";
 import Maps from "../../views/Map/Map";
 
 const Detail = () => {
-
-  const favoritesData = useSelector(state => state.myFavoritesProps)
-  console.log('infoafv',favoritesData);
+  const favoritesData = useSelector((state) => state.myFavoritesProps);
+  // console.log("infoafv", favoritesData);
   const { id } = useParams();
   const dispatch = useDispatch();
   const assetDetail = useSelector((state) => state.detail);
   const [imageUrl, setImageUrl] = useState(null);
   const propertiesSug = useSelector((state) => state.properties);
   const reviews = useSelector((state) => state.myReviews);
-  const [myReviews , setMyReviews] = useState([])
+  const [myReviews, setMyReviews] = useState([]);
   const sugs = propertiesSug?.rows?.filter((el) => el.id !== assetDetail.id);
   const token = localStorage.getItem("log");
-  console.log("Detalle", assetDetail);
+  // console.log("Detalle", assetDetail);
   const [loading, setLoading] = useState(true);
 
   const isFavorite = Array.isArray(favoritesData) && favoritesData.includes(id);
-  console.log('kolor', isFavorite);
+  // console.log("kolor", isFavorite);
 
-  const handlerOnclick = (id) => {
-    const info = localStorage.getItem("data")
+  const handlerOnclick = () => {
+    const info = localStorage.getItem("data");
     const userData = JSON.parse(info);
-    console.log('idUser',userData.id, 'idAsset', id);
-    const idUser = userData.id
-    dispatch(favUserProperty(idUser,id))
-    alert('Propiedad guardada en favoritos')
-    dispatch(getAllFavUserProps(userData.id))
-  }
-
+    // console.log("idUser", userData.id, "idAsset", id);
+    const idUser = userData.id;
+    dispatch(favUserProperty(idUser, id));
+    alert("Propiedad guardada en favoritos");
+    dispatch(getAllFavUserProps(userData.id));
+  };
+  console.log("APALAPAPAPA", assetDetail)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch(getAssetById(id));
+        dispatch(SearchByLocation(assetDetail.location, 1));
+        dispatch(reviewsGet(id));
+        if (reviews.includes("datos")) {
+          return;
+        }
+        setMyReviews(reviews);
         setTimeout(() => {
           setLoading(false);
         }, 2000);
@@ -57,20 +68,14 @@ const Detail = () => {
     fetchData();
   }, []);
   useEffect(() => {
-    const info = localStorage.getItem("data")
+    const info = localStorage.getItem("data");
     const userData = JSON.parse(info);
-    console.log('idUser',userData);
-    dispatch(getAllFavUserProps(userData.id))
-},[])
+    // console.log("idUser", userData);
+    dispatch(getAllFavUserProps(userData.id));
+  }, []);
 
-  useEffect(() => {
-    dispatch(SearchByLocation(assetDetail.location, 1));
-    dispatch(reviewsGet(assetDetail.id));
-    if(reviews.includes("datos")){
-      return
-    }
-    setMyReviews(reviews)
-  }, [assetDetail]);
+  useEffect(() => {}, [myReviews]);
+  console.log(myReviews);
 
   const stars = (stars) => {
     const starDraw = [];
@@ -192,7 +197,11 @@ const Detail = () => {
             <strong>Dirección:</strong> {assetDetail.address},{" "}
             {assetDetail.location}, {assetDetail.country}
           </p>
-          <div className={style.icons} >
+          <div className={style.profile} style={{display:"flex", flexDirection:"column"}}>
+            <img src={assetDetail.ownerPic} width={50}/>
+            <p>{assetDetail.ownerName}</p>
+          </div>
+          <div className={style.icons}>
             <div className={style.fav}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -202,7 +211,6 @@ const Detail = () => {
                 class="bi bi-heart-fill"
                 viewBox="0 0 16 16"
                 onClick={() => handlerOnclick(assetDetail.id)}
-                
               >
                 <path
                   fill-rule="evenodd"
@@ -247,7 +255,7 @@ const Detail = () => {
         </div>
 
         {token ? (
-          <div className={style.infoAvailable}>
+          <div >
             <div>
               <Booking></Booking>
             </div>

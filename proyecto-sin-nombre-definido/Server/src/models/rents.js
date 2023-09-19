@@ -9,10 +9,11 @@ module.exports = (sequelize) => {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
       },
-      onSale: {
-        type: DataTypes.BOOLEAN,
+      tenant: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
-      user: {
+      landlord: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -20,46 +21,62 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      checkIn: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
-      checkInTime: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      checkOut: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
-      checkOutTime: {
-        type: DataTypes.DATE,
+      description: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       price: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      termCon: {
-        type: DataTypes.BOOLEAN,
+      stay: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      paymentMethod: {
-        type: DataTypes.ENUM("Card", "Cash"),
-        allowNull: false,
-      },
-      guest: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-      guestName: {
+      bookingCode: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
-      guestPhoneNumber: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
+      // checkIn: {
+      //   type: DataTypes.DATEONLY,
+      //   allowNull: false,
+      // },
+      // checkOut: {
+      //   type: DataTypes.DATEONLY,
+      //   allowNull: false,
+      // },
+      // onSale: {
+      //   type: DataTypes.BOOLEAN,
+      //   allowNull: true,
+      // },
+      // checkInTime: {
+      //   type: DataTypes.DATE,
+      //   allowNull: true,
+      // },
+      // checkOutTime: {
+      //   type: DataTypes.DATE,
+      //   allowNull: true,
+      // },
+      // termCon: {
+      //   type: DataTypes.BOOLEAN,
+      //   allowNull: true,
+      // },
+      // paymentMethod: {
+      //   type: DataTypes.ENUM("Card", "Cash"),
+      //   allowNull: true,
+      // },
+      // guest: {
+      //   type: DataTypes.BOOLEAN,
+      //   allowNull: true,
+      // },
+      // guestName: {
+      //   type: DataTypes.STRING,
+      //   allowNull: true,
+      // },
+      // guestPhoneNumber: {
+      //   type: DataTypes.STRING,
+      //   allowNull: true,
+      // },
     },
     { timestamps: false }
   );

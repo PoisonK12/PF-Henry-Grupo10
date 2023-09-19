@@ -113,11 +113,9 @@ const updateUserHandler = async (req, res) => {
   } = req.body;
 
   try {
-    if(password){
-      password = await encrypt(password);
-    }
+    const passwordHash = await encrypt(password);
 
-    const response = await updateUser({
+    await updateUser({
       userName,
       //edicion por usuario
       fullName,
@@ -128,7 +126,7 @@ const updateUserHandler = async (req, res) => {
       address,
       nationality,
       email,
-      password,
+      password: passwordHash,
       landlord,
       //edicion por sistema
       userType,
@@ -137,7 +135,7 @@ const updateUserHandler = async (req, res) => {
       favorites,
       history,
     });
-    res.status(200).json(response);
+    res.status(200).json("Usuario editado con exito!");
   } catch (error) {
     console.log(error);
 
