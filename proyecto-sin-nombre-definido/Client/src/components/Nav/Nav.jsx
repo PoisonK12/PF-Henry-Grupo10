@@ -8,6 +8,7 @@ import jwtDecode from "jwt-decode";
 export const Nav = () => {
   const location = useLocation();
   const token = localStorage.getItem("log");
+  const data = JSON.parse(localStorage.getItem("data"))
   console.log(token);
   const [fixed, setFixed] = useState(false);
   const [access , setAccess] = useState(false)
@@ -77,7 +78,7 @@ export const Nav = () => {
             <span>Contacto</span>
           </NavLink>
         </li>
-        <li>
+        {data.userType == "admin" ? <li>
           <NavLink
             to="/adminDashboard"
             className={({ isActive }) =>
@@ -86,7 +87,8 @@ export const Nav = () => {
           >
             <span>Admin</span>
           </NavLink>
-        </li>
+        </li> : ""}
+        
         <li>
           <NavLink
             to="/faq"

@@ -190,7 +190,7 @@ const Detail = () => {
       <div className={`${style.propertyDetails}`}>
         <div className={` ${style.propertyInfo}`}>
           <h2 style={{ fontWeight: "lighter", color: "#091f44" }}>
-            ${assetDetail.rentPrice} por noche
+            ${assetDetail.rentPrice} USD por noche
           </h2>
           <h1 className={style.heading}> {assetDetail.name}</h1>
           <p className={style.paragraph}>
