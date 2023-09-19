@@ -26,7 +26,7 @@ function GoogleLoginButton() {
     // Oculta el botón de inicio de sesión.
     document.getElementById("signInDiv").hidden = true;
     try {
-      const {data} = await axios("/google/login")
+      const {data} = await axios("http://localhost:3001/auth/google/callback")
       console.log(data)
     } catch (error) {
       console.log(error)

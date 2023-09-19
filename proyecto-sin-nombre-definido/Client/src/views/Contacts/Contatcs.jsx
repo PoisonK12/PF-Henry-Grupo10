@@ -175,11 +175,11 @@ const Contacts = () => {
         </form>
         <div className={style.info}>
           <h2>
-            Contacta nuestro <span>equipo profesional para encontrar la casa de tus sueños</span>!{" "}   
+            Contacta a nuestro <span>equipo profesional para encontrar el hospedaje de tus sueños</span>{" "}   
           </h2>
           <div className={style.parrafo}>
             <p>
-              En <span>GreatTravel</span>, estamos aquí para ayudarte en cada paso de tu aventura de hospedaje! Ya sea que tengas preguntas sobre una propiedad, necesites asistencia con tu reserva o simplemente quieras saber más sobre nosotros, no dudes en ponerte en contacto.
+              En <span>GreatTravel</span>, estamos para ayudarte en cada paso de tu aventura de hospedaje. Ya sea que tengas preguntas sobre una propiedad, necesites asistencia con tu reserva o simplemente quieras saber más sobre nosotros, no dudes en ponerte en contacto.
             </p>
           </div>
           <div className={style.icons}>

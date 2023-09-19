@@ -2,8 +2,8 @@ import React from "react";
 
 const TermsAndConditions = () => {
     return (
-        <div>
-            <h2 style="text-align: center;">
+        <div style={{padding : "100px"}}>
+            <h2 style={{textAlign: "center"}}>
                 <strong>Términos y Condiciones de Uso</strong>
                 </h2>
                 <p>&nbsp;</p>
