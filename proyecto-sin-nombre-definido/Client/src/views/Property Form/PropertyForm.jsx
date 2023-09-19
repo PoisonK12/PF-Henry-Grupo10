@@ -356,7 +356,7 @@ const PropertyForm = () => {
               <div>
                 <h3 className=" display-6 ">
                   {" "}
-                  Agrega una nueva propiedad {step}
+                 Paso {step} Agrega un nuevo alojamiento... 
                 </h3>
               </div>
               <div
