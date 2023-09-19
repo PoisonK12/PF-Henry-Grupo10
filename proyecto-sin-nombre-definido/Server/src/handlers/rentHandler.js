@@ -2,10 +2,11 @@ const { type } = require("os");
 
 // const { rentSchemePost } = require("../helpers/validations/rentValidation.js");
 const {
-  createRent,
   createBook,
-  getRentById,
+  deleteBooking,
+  createRent,
   final,
+  getRentById,
 } = require("../controllers/rentController.js");
 // const { final } = require("../controllers/rentController.js");
 
@@ -67,6 +68,17 @@ const createRentHandler = async (req, res) => {
   }
 };
 
+const deleteBookingHandler = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const response = await deleteBooking(id);
+    res.status(200).json(response);
+  } catch (error) {
+    return "Falló la anulación de la reserva, Aguarde 15min y el sistema lo hará automaticamente";
+  }
+};
+
 const getRentByIdHandler = async (req, res) => {
   const { id } = req.params;
   try {
@@ -91,8 +103,9 @@ const finalHandler = async (req, res) => {
 };
 
 module.exports = {
+  createBookHandler,
+  deleteBookingHandler,
   createRentHandler,
   finalHandler,
-  createBookHandler,
   getRentByIdHandler,
 };

@@ -56,6 +56,17 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
     return "El servidor está caído. Por favor intentá más tarde.";
   }
 };
+const deleteBooking = async (id) => {
+  console.log(7777);
+  try {
+    // const cancelation = await Availability.findByPk(id);
+    // console.log(cancelation);
+    await Availability.destroy({ where: { id: id } });
+    return "Reserva cancelada";
+  } catch (error) {
+    console.error(error.message);
+  }
+};
 
 const createRent = async (req, res) => {
   const bookingCode = req.params.id;
@@ -164,8 +175,9 @@ const getRentById = async (id) => {
 };
 
 module.exports = {
-  createRent,
   createBook,
+  deleteBooking,
+  createRent,
   final,
   getRentById,
 };
