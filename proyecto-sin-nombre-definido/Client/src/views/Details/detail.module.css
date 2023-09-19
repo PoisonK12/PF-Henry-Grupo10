@@ -304,3 +304,22 @@
   width: 75%;
   border: 2px solid rgb(216, 215, 217);
 }
+
+.profile{
+  position: absolute;
+  right: 20px;
+  align-items: center;
+  top:85px
+}
+
+.profile img{
+  border-radius: 999px;
+  /* margin-right: 5px; */
+  margin-left: auto;
+}
+
+.profile p {
+  color: #091f44;
+  font-weight: 700;
+  letter-spacing: 1px;
+}

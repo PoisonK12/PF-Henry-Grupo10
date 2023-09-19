@@ -46,6 +46,7 @@ const Detail = () => {
     alert("Propiedad guardada en favoritos");
     dispatch(getAllFavUserProps(userData.id));
   };
+  console.log("APALAPAPAPA", assetDetail)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -196,6 +197,10 @@ const Detail = () => {
             <strong>Dirección:</strong> {assetDetail.address},{" "}
             {assetDetail.location}, {assetDetail.country}
           </p>
+          <div className={style.profile} style={{display:"flex", flexDirection:"column"}}>
+            <img src={assetDetail.ownerPic} width={50}/>
+            <p>{assetDetail.ownerName}</p>
+          </div>
           <div className={style.icons}>
             <div className={style.fav}>
               <svg
