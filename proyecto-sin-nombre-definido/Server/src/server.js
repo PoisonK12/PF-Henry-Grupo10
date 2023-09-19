@@ -7,7 +7,6 @@ const passport = require('passport');
 require('./helpers/middlewares/passport-config');
 const router = require('./routes/index');
 const { User } = require('./db')
-// const cookieSession = require('cookie-session');
 
 
 const server = express();
@@ -27,10 +26,6 @@ server.use(session({
 
 // Configura passport
 server.use(passport.initialize());
-// server.use(cookieSession({
-//   name: 'session',
-//   keys: [process.env.COOKIE_KEY1, process.env.COOKIE_KEY2],
-// }));
 server.use(passport.session());
 
 // Configura serializeUser y deserializeUser antes de configurar Passport

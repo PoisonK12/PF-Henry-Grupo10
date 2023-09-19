@@ -17,7 +17,7 @@ const googleLoginRouter = require('./googleLogin');
 const { paymentRouter } = require('./payment.routes');
 const router = Router();
 
-// router.use("/google", googleLoginRouter);
+router.use("/auth", googleLoginRouter);
 router.use("/login", loginRouter);
 router.use('/logout', logOutRouter);
 router.use('/forgot-password', forgotPassRouter)
