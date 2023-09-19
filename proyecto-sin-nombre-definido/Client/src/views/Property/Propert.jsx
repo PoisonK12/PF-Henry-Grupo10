@@ -444,7 +444,7 @@ const Property = () => {
             name="order"
             className={style.order}
           >
-            <option>
+            <option value={""} name="order">
               Ordenamiento{" "}
               {
                 <svg

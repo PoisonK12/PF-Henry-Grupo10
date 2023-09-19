@@ -11,6 +11,7 @@ import AllUsersProps from "./AllUsersProperties/AllUserProps";
 import PropertyForm from "../Property Form/PropertyForm";
 import { Route, Routes } from "react-router-dom";
 import Swal from "sweetalert2";
+import EasterEgg from "./EasterEgg";
 
 const UserPanel = () => {
   const [componenteActual, setComponenteActual] = useState("A");
@@ -70,12 +71,14 @@ const UserPanel = () => {
 
   return (
     <div
-      style={{
-        paddingTop: "40px",
+    style={{
+        paddingTop: "70px",
         backgroundColor: "#DFDFDF",
         padding: "15px",
       }}
+      id="profile"
     >
+        {/* <EasterEgg></EasterEgg> */}
       <div className="row" style={{ marginTop: "3rem", width: "100%" }}>
         <div className="col-md-3">
           <div

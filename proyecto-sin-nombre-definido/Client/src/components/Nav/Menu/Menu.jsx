@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
 import style from "./Menu.module.css";
 import { useEffect, useState } from "react";
 
@@ -22,9 +22,11 @@ const Menu = () => {
     return;
   }, []);
 
-  const logOut = () => {
+  const logOut = (e) => {
+    // e.preventDefault()
     localStorage.removeItem("log");
     localStorage.removeItem("data");
+    document.body.style.overflow = "auto"
 
     navigate("/checkIn");
   };
@@ -134,9 +136,9 @@ const Menu = () => {
                   </Link>
                 </li>
                 <li class="nav-item">
-                  <Link
+                  <a
                     class="nav-link"
-                    onClick={logOut}
+                    onClick={(e) => logOut(e)}
                     href="#"
                     style={{
                       display: "flex",
@@ -164,7 +166,7 @@ const Menu = () => {
                       </svg>
                       &nbsp; Salir
                     </div>
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>

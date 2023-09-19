@@ -16,8 +16,15 @@ const getReviewByIdController = async (req) => {
     try {
       const response = await Review.findAll({
         where: { userName: id },
-        // attributes: ["id", "score", "comment", "userName", "createdAt"],
-        // include: { joinTableAttributes: [] },
+        attributes: [
+          "id",
+          "score",
+          "comment",
+          "userName",
+          "createdAt",
+          "viewee",
+        ],
+        // include: [{ model: User, attributes: ["id"] }],
       });
       // const extraData = await findOne({where:{userName:response.userName}}, attributes:[""])
       return response;
@@ -43,7 +50,7 @@ const getReviewByIdController = async (req) => {
           [Op.eq]: id,
         },
       },
-      attributes: ["id", "score", "comment", "userName", "createdAt"],
+      attributes: ["id", "score", "comment", "userName", "createdAt", "viewee"],
     });
 
     if (response.length > 0) return response;
@@ -57,7 +64,14 @@ const getReviewByIdController = async (req) => {
           },
         ],
         where: { "$Users.id$": { [Op.eq]: id } },
-        attributes: ["id", "score", "comment", "userName", "createdAt"],
+        attributes: [
+          "id",
+          "score",
+          "comment",
+          "userName",
+          "createdAt",
+          "viewee",
+        ],
       });
       if (response.length > 0) return response;
       return "No hay reviews relacionadas a los datos proporcionados";
@@ -89,18 +103,18 @@ const updateReview = async (
   score
 ) => {
   /**Validaciones en el caso de no poder usar zod */
-    // if (!score) {
-    //     throw Error("Falta cargar puntuación")
-    //   }
-    // if (typeof userName !== "string") {
-    //   throw Error("El nombre de usuario ingresado debe ser un string");
-    // }
-    // if (typeof comment !== "string") {
-    //   throw Error("El comentario ingresado debe ser un string");
-    // }
-    // if (typeof score !== "number") {
-    //   throw Error("El score ingresado debe ser un número");
-    // }
+  // if (!score) {
+  //     throw Error("Falta cargar puntuación")
+  //   }
+  // if (typeof userName !== "string") {
+  //   throw Error("El nombre de usuario ingresado debe ser un string");
+  // }
+  // if (typeof comment !== "string") {
+  //   throw Error("El comentario ingresado debe ser un string");
+  // }
+  // if (typeof score !== "number") {
+  //   throw Error("El score ingresado debe ser un número");
+  // }
   const updateReview = await User.findOne({
     where: { userName: userName },
   });
@@ -163,7 +177,7 @@ const reviewUserController = async (Pk, userName, score, comment, id) => {
 //!---------------------------------evaluador-texto--puntos-evaluada---------------------------------
 const reviewAssetController = async (Pk, userName, score, comment, id) => {
   try {
-        /**Validaciones en el caso de no poder usar zod */
+    /**Validaciones en el caso de no poder usar zod */
     // if (!score) {
     //     throw Error("Falta cargar puntuación")
     //   }
@@ -227,13 +241,14 @@ const deleteReviewById = async (id) => {
 const emptyAssetReviewCreater = async (userName, id) => {
   try {
     const findAsset = await Asset.findByPk(id);
-    console.log(findAsset);
+    console.log(findAsset.id);
 
     if (findAsset) {
       const createdReview = await Review.create({
         userName: userName,
         score: 0,
         comment: "",
+        viewee: findAsset.id,
       });
       await findAsset.addReview(createdReview);
     }
@@ -250,6 +265,7 @@ const emptyUserReviewCreater = async (userName, id) => {
         userName: userName,
         score: 0,
         comment: "",
+        viewee: findUser.id,
       });
       await findUser.addReview(createdReview);
     }

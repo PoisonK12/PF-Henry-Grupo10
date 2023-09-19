@@ -243,10 +243,15 @@ position: absolute;
 
 .background{
     font-family: 'Avenir', sans-serif; 
-    background: linear-gradient(to bottom, rgb(0, 0, 0), #ffffff);
+    /* background: linear-gradient(to bottom, rgb(0, 0, 0), #ffffff); */
+    background: rgb(223, 223, 223);
     padding: 20px;
     padding-top: 100px;
 }
+.fixedCard {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5),
+      0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  }
 
 .containerImg img{
     object-position: center bottom !important;

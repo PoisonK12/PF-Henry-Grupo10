@@ -37,6 +37,7 @@ const Reviews = () => {
     dispatch(reviewsGet(data.userName));
     const initialReviews = {};
     testeo.forEach((ele) => {
+      console.log(ele)
       initialReviews[ele.id] = {
         Pk: ele.Pk,
         comment: "",
