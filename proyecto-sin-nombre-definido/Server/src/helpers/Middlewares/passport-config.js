@@ -9,7 +9,7 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:3001/auth/google/callback"
 },
 function(accessToken, refreshToken, profile, done) {
-  User.findOrCreate({ googleId: profile.id }, function (err, user) {
+  User.findOrCreate({ googleId: profile.id, email: profile.email, userName: profile.name }, function (err, user) {
     return done(err, user);
   });
 }
