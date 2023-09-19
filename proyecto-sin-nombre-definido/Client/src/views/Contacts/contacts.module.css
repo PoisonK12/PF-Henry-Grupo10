@@ -114,15 +114,16 @@
 }
 
 .info h2{
-  color:#091f44
+  color:#091f44;
 }
 
 .info h2, .info h2 span{
-
+  
   /* text-align: justify; */
   font:700 70px/1 'Avenir', sans-serif;
 }
 .info h2 span{
+  /* line-height: 5px; */
   color: #9d0aca;
 }
 

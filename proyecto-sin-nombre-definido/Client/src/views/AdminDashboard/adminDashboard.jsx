@@ -12,7 +12,7 @@ const AdminDashboard = () => {
   const dispatch = useDispatch();
   const [componenteActual, setComponenteActual] = useState("A");
   const [data, setData] = useState({});
-  const [color, setColor] = useState('white');
+  const [color, setColor] = useState('#091f44');
   const [selectedLink, setSelectedLink] = useState(null);
 
   //? PROPIEDADES -------------------------------------------
@@ -39,13 +39,15 @@ const AdminDashboard = () => {
   const handleLinkClick = (linkName) => {
     setComponenteActual(linkName);
     setSelectedLink(linkName); // Establecer el enlace seleccionado al hacer clic
-    setColor('#6693e2'); // Restablecer el color cuando se hace clic en un enlace
+    setColor('#091f44'); // Restablecer el color cuando se hace clic en un enlace
   };
 
 
   useEffect(() => {
     const info = localStorage.getItem("data");
     setData(JSON.parse(info));
+    setSelectedLink("A"); // Establecer el enlace seleccionado al hacer clic
+    setColor("#091f44");  
   }, [localStorage]);
 
  
@@ -92,7 +94,9 @@ const AdminDashboard = () => {
                       borderRadius: "15px",
                       height: "70px",
                       width: "90%",
-                      backgroundColor: selectedLink === "A" ? color : "white", 
+                      paddingInline: "5px",
+                      backgroundColor: selectedLink === "A" ? color : "white",
+                      color: selectedLink === "A" ? "white" : "black",
                     }}
                     href="#"
                   >
@@ -122,7 +126,9 @@ const AdminDashboard = () => {
                       borderRadius: "15px",
                       height: "70px",
                       width: "90%",
-                      backgroundColor: selectedLink === "B" ? color : "white", 
+                      paddingInline: "5px",
+                      backgroundColor: selectedLink === "B" ? color : "white",
+                      color: selectedLink === "B" ? "white" : "black",
                     }}
                   >
                     <div>
@@ -152,7 +158,9 @@ const AdminDashboard = () => {
                       borderRadius: "15px",
                       height: "70px",
                       width: "90%",
-                      backgroundColor: selectedLink === "C" ? color : "white", 
+                      paddingInline: "5px",
+                      backgroundColor: selectedLink === "C" ? color : "white",
+                      color: selectedLink === "C" ? "white" : "black", 
                     }}
                   >
                     <div>
@@ -181,7 +189,9 @@ const AdminDashboard = () => {
                       borderRadius: "15px",
                       height: "70px",
                       width: "90%",
-                      backgroundColor: selectedLink === "D" ? color : "white", 
+                      paddingInline: "5px",
+                      backgroundColor: selectedLink === "D" ? color : "white",
+                      color: selectedLink === "D" ? "white" : "black", 
                     }}
                   >
                     <div>
