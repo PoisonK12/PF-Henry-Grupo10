@@ -113,7 +113,7 @@ const AllUser = () => {
   return (
     <div>
       <div className={style.container}>
-      <div className="col-md-6">
+      <div className="col-md-6 justify-content-center d-flex">
         <select name="order" id="" className={style.order} onChange={(e) => handleInputChange(e)}>
           <option value="">Ordenamiento</option>
           <option name="order" value={"userNameAsc"}>A-Z</option>
@@ -123,7 +123,7 @@ const AllUser = () => {
 
         </select>
       </div>
-      <div className="col-md-6">
+      <div className="col-md-6 justify-content-center d-flex">
         <input
           type="text"
           id="myInput"

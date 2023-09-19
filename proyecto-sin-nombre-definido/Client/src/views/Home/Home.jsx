@@ -9,6 +9,7 @@ import { SearchBar } from "../../components/SearchBar/SearchBar";
 import Cards from "../../components/Cards/CardsOffer/CardsOffer";
 import Sale from "../../components/Sale/Sale.jsx";
 import Contacts from "../Contacts/Contatcs";
+import Ranking from "./Ranking/Ranking";
 
 export const Home = () => {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -132,6 +133,9 @@ export const Home = () => {
         </svg> */}
         <div className={style.sale}>
           <Sale></Sale>
+        </div>
+        <div>
+          <Ranking/>
         </div>
         <div style={{ height: "100%" }}>
           <Contacts></Contacts>
