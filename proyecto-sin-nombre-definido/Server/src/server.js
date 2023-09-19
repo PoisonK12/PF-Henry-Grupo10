@@ -15,6 +15,7 @@ server.use(morgan('dev'));
 server.use(express.json());
 server.use(cors({
   origin: 'http://localhost:5173',
+  methods: "GET,POST,PUT,DELETE",
   credentials: true, // Habilita las credenciales si es necesario (cookies, autenticación, etc.)
 }));
 
