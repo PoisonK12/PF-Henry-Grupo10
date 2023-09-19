@@ -7,22 +7,26 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Reviews = () => {
   // const testeo = test;
-  const testeo = useSelector((state) => state.myReviews)
+  const testeo = useSelector((state) => state.myReviews);
   const dispatch = useDispatch();
   const [reviews, setReviews] = useState({});
 
-  const handleChange = (e) => {
+  const handleChange = (e, id) => {
     const { value, name, type } = e.target;
-    if (type === "radio") {
-      setReviews({ ...reviews, [name]: Number(value) });
-      return;
-    }
-    setReviews({ ...reviews, [name]: value });
-    console.log(reviews)
+    // if (type === "radio") {
+    //   setReviews({ ...reviews, [name]: Number(value) });
+    //   return;
+    // }
+    // setReviews({ ...reviews, [name]: value });
+    // console.log(reviews)
+    setReviews((prevRev) => ({
+      ...prevRev,
+      [id]: { ...prevRev[id], [name]: type == "radio" ? Number(value) : value },
+    }));
   };
-
-  const handleSubmit = (id, condicional,e) => {
-    e.preventDefault()
+  console.log(reviews);
+  const handleSubmit = (id, condicional, e) => {
+    e.preventDefault();
     setReviews({ ...reviews, id: id });
     dispatch(reviewsPut(reviews, condicional));
   };
@@ -30,16 +34,21 @@ const Reviews = () => {
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("data"));
     // setReviews({ ...reviews, userName: data.userName });
-    dispatch(reviewsGet(data.userName))
-    const initialReviews = {}
-    // testeo.forEach((ele) => {
-    //   initialReviews[ele.id] = {
-    //     Pk:ele.Pk
-    //   }
-    // })
-
+    dispatch(reviewsGet(data.userName));
+    const initialReviews = {};
+    testeo.forEach((ele) => {
+      console.log(ele)
+      initialReviews[ele.id] = {
+        Pk: ele.Pk,
+        comment: "",
+        score: 0,
+        userName: data.userName,
+        id: ele.id,
+      };
+    });
+    setReviews(initialReviews);
   }, []);
-console.log(testeo)
+  console.log(testeo);
 
   // console.log("aaaaaaaaaaaaaaaaaaapaaaa", testeo);
   return (
@@ -48,7 +57,7 @@ console.log(testeo)
         {/* <h1>Soy el componete reviews{testeo[0].name}</h1> */}
         <div>
           {testeo?.map((props, index) => (
-            <form onSubmit={(e) => handleSubmit(props.id, "assets",e)}>
+            <form onSubmit={(e) => handleSubmit(props.id, "assets", e)}>
               <div className={`${style.centeredContent}`} key={props.id}>
                 <div className={`card mb-3 p-2 ${style.maxWidth}`}>
                   <div className="row g-0">
@@ -66,7 +75,7 @@ console.log(testeo)
                     <div>
                       <textarea
                         type="text"
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e, props.id)}
                         value={reviews.comment}
                         name="comment"
                         cols={20}
@@ -76,7 +85,7 @@ console.log(testeo)
 
                       <div className={style.rating}>
                         <input
-                          onChange={handleChange}
+                          onChange={(e) => handleChange(e, props.id)}
                           value="5"
                           name="score"
                           id="star5"
@@ -98,7 +107,7 @@ console.log(testeo)
                           </svg>
                         </label>
                         <input
-                          onChange={handleChange}
+                          onChange={(e) => handleChange(e, props.id)}
                           value="4"
                           name="score"
                           id="star4"
@@ -119,7 +128,7 @@ console.log(testeo)
                           </svg>
                         </label>
                         <input
-                          onChange={handleChange}
+                          onChange={(e) => handleChange(e, props.id)}
                           value="3"
                           name="score"
                           id="star3"
@@ -140,7 +149,7 @@ console.log(testeo)
                           </svg>
                         </label>
                         <input
-                          onChange={handleChange}
+                          onChange={(e) => handleChange(e, props.id)}
                           value="2"
                           name="score"
                           id="star2"
@@ -161,7 +170,7 @@ console.log(testeo)
                           </svg>
                         </label>
                         <input
-                          onChange={handleChange}
+                          onChange={(e) => handleChange(e, props.id)}
                           value="1"
                           name="score"
                           id="star1"

@@ -75,7 +75,7 @@ module.exports = (sequelize) => {
       },
 
       favorites: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.ARRAY(DataTypes.TEXT),
         allowNull: true,
       },
       history: {

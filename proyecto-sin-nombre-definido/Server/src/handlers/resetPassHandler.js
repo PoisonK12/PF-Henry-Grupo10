@@ -7,16 +7,16 @@ const resetPassHandler = async (req, res) => {
     const { password } = req.body;
 
     try {
-        // Verificar el token
+        
         jwt.verify(token, "jwt_secret_key", async (err, decoded) => {
             if (err) {
                 return res.json({ Status: "Error with token" });
             }
 
-            // Generar el hash de la nueva contraseña
+           
             const hash = await bcrypt.hash(password, 10);
 
-            // Actualizar la contraseña del usuario
+          
             const updatedUser = await User.update(
                 { password: hash },
                 { where: { id } }
@@ -33,4 +33,5 @@ const resetPassHandler = async (req, res) => {
         res.status(500).json({ Status: "Error with token verification" });
     }
 }
-module.exports = {resetPassHandler}
+
+module.exports = { resetPassHandler };

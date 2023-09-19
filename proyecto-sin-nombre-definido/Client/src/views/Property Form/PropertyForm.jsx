@@ -2,12 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import style from "./PropertyForm.module.css";
 import { useNavigate } from "react-router";
 import { Carousel, Modal, Button } from "react-bootstrap";
-import { createAsset, getCountries, getStates } from "../../redux/actions";
+import {
+  createAsset,
+  getAmenities,
+  getCountries,
+  getStates,
+} from "../../redux/actions";
 import Card from "../../components/Card/CardOffer/CardOffer";
 import validation from "./Validation";
 import axios from "axios";
 import fondo from "../../assets/images/Exteriores/Image2.jpg";
 import { useDispatch, useSelector } from "react-redux";
+import helicopter from "../../assets/helicopter.mp3"
 
 const PropertyForm = () => {
   const [modal, setModal] = useState(false);
@@ -21,6 +27,8 @@ const PropertyForm = () => {
   const [states, setStates] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [conditionalCreate, setConditionalCreate] = useState(false);
+
+  const amenities = useSelector((state) => state.amenities);
 
   const [Checked, setChecked] = useState({
     Wifi: false,
@@ -113,8 +121,9 @@ const PropertyForm = () => {
     setearName();
   }, []);
 
-  console.log("form", form);
-  if (modal && Array.isArray(modalBody.response)) console.log(true);
+  useEffect(() => {
+    dispatch(getAmenities());
+  }, []);
 
   const handleSellPrice = (e) => {
     const { checked } = e.target;
@@ -163,7 +172,7 @@ const PropertyForm = () => {
   };
 
   const handleDelete = (index, e) => {
-    e.preventDefault
+    e.preventDefault;
     const updatedImages = form.images.filter((ele, i) => i !== index);
     setForm({ ...form, images: updatedImages });
 
@@ -238,6 +247,10 @@ const PropertyForm = () => {
     const { name } = e.target;
     const { checked } = e.target;
     const { value } = e.target;
+    if(name === "Helipuerto"){
+      const audioElement = document.getElementById("audio-element");
+  audioElement.play();
+    }
     setChecked({ ...Checked, [name]: checked });
     console.log(Checked);
     setSelectedCheckbox({ ...selectedCkeckbox, [name]: checked ? value : "" });
@@ -356,7 +369,7 @@ const PropertyForm = () => {
               <div>
                 <h3 className=" display-6 ">
                   {" "}
-                  Agrega una nueva propiedad {step}
+                  Paso {step} Agrega un nuevo alojamiento...
                 </h3>
               </div>
               <div
@@ -904,9 +917,50 @@ const PropertyForm = () => {
               <h2 className=" display-6 mt-3 fw-bold"> ESPECIFICACIONES </h2>
             </div>
             <hr></hr>
-
-            <div className="d-flex flex-row justify-content-center ">
-              <div className="d-flex flex-column justify-content-start align-items-start m-4">
+            {/* <img src="https://icons8.com/icon/1786/barbell"></img> */}
+            <div
+              className="justify-content-center "
+              style={{ display: "flex", flexWrap: "wrap" }}
+            >
+              {amenities?.map((e) => {
+                // console.log(e)
+                return (
+                  <div className="form-check m-3" style={{}}>
+                    <img width={40} src={e.svg}></img>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginTop: "15px",
+                      }}
+                    >
+                      <label
+                        className="form-label"
+                        style={{ margin: "auto 0", marginRight: "15px" }}
+                      >
+                        {e.name}
+                      </label>
+                      <label className={style.switch}>
+                        <input
+                          onChange={(e) => handleCkecked(e)}
+                          type="checkbox"
+                          name={e.name}
+                          style={{}}
+                          className={style.checkBox}
+                          checked={Checked.name}
+                          value={e.id}
+                          // style={{ width: "15px" }}
+                        ></input>
+                        <span className={style.slider}></span>
+                      </label>
+                    </div>
+                  </div>
+                );
+              })}
+              <audio id="audio-element" controls style={{ display: "none" }}>
+                <source src={helicopter} type="audio/mp3" />
+              </audio>
+              {/* <div className="d-flex flex-column justify-content-start align-items-start m-4">
                 <div className="form-check m-3 form-switch">
                   <label className="form-check-label"> Wifi ? {""}</label>
                   <input
@@ -1029,7 +1083,7 @@ const PropertyForm = () => {
                     value="4"
                   ></input>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div>
               {errors.amenities ? (

@@ -20,7 +20,7 @@ import Booking from "../Reserv/Booking";
 import Maps from "../../views/Map/Map";
 
 const Detail = () => {
-  const favoritesData = useSelector((state) => state.myFavoritesProps);
+  // const favoritesData = useSelector((state) => state.myFavoritesProps);
   // console.log("infoafv", favoritesData);
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -34,10 +34,10 @@ const Detail = () => {
   // console.log("Detalle", assetDetail);
   const [loading, setLoading] = useState(true);
 
-  const isFavorite = Array.isArray(favoritesData) && favoritesData.includes(id);
+  // const isFavorite = Array.isArray(favoritesData) && favoritesData.includes(id);
   // console.log("kolor", isFavorite);
 
-  const handlerOnclick = (id) => {
+  const handlerOnclick = () => {
     const info = localStorage.getItem("data");
     const userData = JSON.parse(info);
     // console.log("idUser", userData.id, "idAsset", id);
@@ -46,6 +46,7 @@ const Detail = () => {
     alert("Propiedad guardada en favoritos");
     dispatch(getAllFavUserProps(userData.id));
   };
+  console.log("APALAPAPAPA", assetDetail)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -189,20 +190,24 @@ const Detail = () => {
       <div className={`${style.propertyDetails}`}>
         <div className={` ${style.propertyInfo}`}>
           <h2 style={{ fontWeight: "lighter", color: "#091f44" }}>
-            ${assetDetail.rentPrice} por noche
+            ${assetDetail.rentPrice} USD por noche
           </h2>
           <h1 className={style.heading}> {assetDetail.name}</h1>
           <p className={style.paragraph}>
             <strong>Dirección:</strong> {assetDetail.address},{" "}
             {assetDetail.location}, {assetDetail.country}
           </p>
+          <div className={style.profile} style={{display:"flex", flexDirection:"column"}}>
+            <img src={assetDetail.ownerPic} width={50}/>
+            <p>{assetDetail.ownerName}</p>
+          </div>
           <div className={style.icons}>
             <div className={style.fav}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
-                fill={isFavorite ? "blue" : "currentColor"}
+                fill={true ? "blue" : "currentColor"}
                 class="bi bi-heart-fill"
                 viewBox="0 0 16 16"
                 onClick={() => handlerOnclick(assetDetail.id)}
@@ -250,7 +255,7 @@ const Detail = () => {
         </div>
 
         {token ? (
-          <div className={style.infoAvailable}>
+          <div >
             <div>
               <Booking></Booking>
             </div>
