@@ -1,4 +1,4 @@
-const { Review, User, Asset } = require("../db");
+const { Review, User, Asset, assetReview } = require("../db");
 const { Op, Sequelize } = require("sequelize");
 const {
   getAssetById,
@@ -12,9 +12,11 @@ const {
 
 const getReviewByIdController = async (req) => {
   const { id } = req.params;
+
+  try {
   if (id.length !== 36) {
-    try {
-      const response = await Review.findAll({
+    //! reviews de usuarios 
+      const reviews = await Review.findAll({
         where: { userName: id },
         attributes: [
           "id",
@@ -24,60 +26,63 @@ const getReviewByIdController = async (req) => {
           "createdAt",
           "viewee",
         ],
-        // include: [{ model: User, attributes: ["id"] }],
       });
-      // const extraData = await findOne({where:{userName:response.userName}}, attributes:[""])
+      const reviewsArray = Array.isArray(reviews) ? reviews : [reviews];
+      
+      const response = await Promise.all (reviewsArray.map(async (rev) => {
+        const user = await User.findOne({ where: { id: rev.dataValues.viewee } });
+        if(!user){
+          const asset = await Asset.findOne({ where: { id: rev.dataValues.viewee } });
+          return {...rev.dataValues,
+            name: asset.name,
+            images: asset.images,
+        }};
+        return {...rev.dataValues,
+          fullName: user.dataValues.fullName,
+          profilePic: user.dataValues.profilePic,
+        };
+      }));
+      console.log(response)
       return response;
-    } catch (error) {
-      console.error(error.message);
     }
-  }
-  try {
-    const response = await Review.findAll({
-      include: [
-        {
-          model: Asset,
-          through: {
-            where: {
-              AssetId: id,
-            },
-          },
-          attributes: [],
-        },
-      ],
-      where: {
-        "$Assets.id$": {
-          [Op.eq]: id,
-        },
-      },
-      attributes: ["id", "score", "comment", "userName", "createdAt", "viewee"],
-    });
 
-    if (response.length > 0) return response;
-    else {
-      const response = await Review.findAll({
-        include: [
-          {
-            model: User,
-            through: { where: { UserId: id } },
-            attributes: [],
-          },
-        ],
-        where: { "$Users.id$": { [Op.eq]: id } },
-        attributes: [
-          "id",
-          "score",
-          "comment",
-          "userName",
-          "createdAt",
-          "viewee",
-        ],
-      });
-      if (response.length > 0) return response;
-      return "No hay reviews relacionadas a los datos proporcionados";
-    }
+    //! review asset + nombre y foto del que la hizo
+const referenceReviews = await assetReview.findAll({ where: { AssetId: id } });
+const reviews = await Review.findOne({ where: { id: referenceReviews[0].dataValues.ReviewId } });
+const reviewsArray = Array.isArray(reviews) ? reviews : [reviews];
+const response = await Promise.all (reviewsArray.map(async (rev) => {
+  const user = await User.findOne({ where: { userName: rev.dataValues.userName } });
+  return {...rev.dataValues,fullName: user.dataValues.fullName,profilePic: user.dataValues.profilePic,
+  };
+}));
+console.log(response)
+return response;
+
+    // if (response.length > 0) return response;
+    // else {
+    //   const response = await Review.findAll({
+    //     include: [
+    //       {
+    //         model: User,
+    //         through: { where: { UserId: id } },
+    //         attributes: [],
+    //       },
+    //     ],
+    //     where: { "$Users.id$": { [Op.eq]: id } },
+    //     attributes: [
+    //       "id",
+    //       "score",
+    //       "comment",
+    //       "userName",
+    //       "createdAt",
+    //       "viewee",
+    //     ],
+    //   });
+    //   if (response.length > 0) return response;
+    //   return "No hay reviews relacionadas a los datos proporcionados";
+    // }
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
   }
 };
 //!------------------------------------------------------------------------
@@ -241,7 +246,7 @@ const deleteReviewById = async (id) => {
 const emptyAssetReviewCreater = async (userName, id) => {
   try {
     const findAsset = await Asset.findByPk(id);
-    console.log(findAsset.id);
+    // console.log(findAsset.id);
 
     if (findAsset) {
       const createdReview = await Review.create({
