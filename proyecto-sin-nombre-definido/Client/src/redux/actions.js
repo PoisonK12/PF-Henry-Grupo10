@@ -570,24 +570,26 @@ export const handleReserv = async (bookingId) => {
     }
 };
 
-export const  getPayment = async (asset,  setPaymentSuccess ) => {
+export const  getPayment = async (asset,  setPaymentSuccess, setButtonReserv ) => {
   const {name , description , price} = asset;
     try {
       const data = await axios.post("/pay/create-checkout-session" , {name : name , description : description , price : price})
+     
       if(data) {
-       
+       console.log(data.data);
         var width = 500;
         var height = 600;
         const left = (screen.width - width) / 2;
         const top = (screen.height - height) / 2;
         const options = `width=${width}, height=${height}, left=${left}, top=${top}, location=no, toolbar=no`;
-        var payment = window.open(data.data.url, '_blank', options);
+        var payment = window.open(data.data, '_blank', options);
         
         var intervalID = setInterval(() => {
           
           if(payment.closed) {
             clearInterval(intervalID);
-            setPaymentSuccess(true)
+            setPaymentSuccess(true);
+            setButtonReserv(false);
           }
         }, 100)
       }

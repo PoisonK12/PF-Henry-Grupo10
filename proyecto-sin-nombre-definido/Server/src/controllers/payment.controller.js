@@ -3,10 +3,12 @@ const Stripe = require("stripe");
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
-const createSession = async (rent, id, res) => {
-  const { name, description, price } = rent;
-
-  console.log(price);
+const createSession = async (req, res) => {
+ 
+  const { name, description, price} = req.body;
+  // console.log(name);
+  // console.log(description);
+  // console.log();
   try {
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -23,11 +25,11 @@ const createSession = async (rent, id, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:3001/pay/success/${id}`,
+      success_url: `http://localhost:3001/pay/success`,
       cancel_url: "http://localhost:3001/pay/cancel",
     });
-
-    return session.url;
+    console.log(session.url);
+    return res.json(session.url);
   } catch (error) {
     console.log(error.message);
   }

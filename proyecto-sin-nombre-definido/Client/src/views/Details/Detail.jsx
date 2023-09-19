@@ -255,7 +255,7 @@ const Detail = () => {
         </div>
 
         {token ? (
-          <div className={style.infoAvailable}>
+          <div >
             <div>
               <Booking></Booking>
             </div>
