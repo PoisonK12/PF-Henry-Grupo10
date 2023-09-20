@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
-require("./helpers/middlewares/passport-config");
+require("./helpers/Middlewares/passport-config");
 const router = require("./routes/index");
 require("./helpers/Middlewares/github")
 const { User } = require("./db");
