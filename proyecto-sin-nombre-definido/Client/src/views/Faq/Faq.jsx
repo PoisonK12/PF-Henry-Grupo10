@@ -48,10 +48,17 @@ const FAQ = () => {
       question: '¿Cuál es la política de reembolso en caso de cancelación?',
       answer:
         'La política de reembolso varía según la propiedad y las condiciones de cancelación que elijas al hacer la reserva. Es importante revisar las condiciones de cancelación antes de confirmar tu reserva, ya que algunas propiedades ofrecen reembolsos completos, mientras que otras pueden tener restricciones.'
+    },
+    {
+      question: '¿Cómo puedo hacer una solicitud de reserva especial?',
+      answer:
+        'Si deseas hacer una solicitud de reserva especial, puedes contactarnos a través de nuestro formulario de contacto o comunicarte directamente con nuestro servicio de atención al cliente. Estaremos encantados de ayudarte a realizar una reserva que se ajuste a tus necesidades específicas.'
     }
+    
   ];
 
   const [activeIndex, setActiveIndex] = useState(null);
+  const [active2Index, setActive2Index] = useState(null);
 
   const handleQuestionClick = (index) => {
     if (index === activeIndex) {
@@ -61,22 +68,50 @@ const FAQ = () => {
     }
   };
 
+  const handleQuestionClick2 = (index2) => {
+    if (index2 === active2Index) {
+      setActive2Index(null);
+    } else {
+      setActive2Index(index2);
+    }
+  };
+
   return (
     <div className={styles['wrap']}>
     <div className={styles['faq-container']}>
       <h1>Preguntas Frecuentes</h1>
-      <ul className={styles['faq-list']}>
-        {faqData.map((faq, index) => (
-          <li
-            key={index}
-            className={`${styles['faq-item']} ${activeIndex === index ? styles.active : ''}`}
-            onClick={() => handleQuestionClick(index)}
-          >
-            <div className={styles['faq-question']}>{faq.question}</div>
-            {activeIndex === index && <div className={styles['faq-answer']}>{faq.answer}</div>}
-          </li>
-        ))}
-      </ul>
+      <div className='row'>
+        <div className='col-6'>
+          <ul className={styles['faq-list']}>
+          {faqData.slice(0, 5).map((faq, index) => (
+            <li
+              key={index}
+              className={`${styles['faq-item']} ${activeIndex === index ? styles.active : ''}`}
+              onClick={() => handleQuestionClick(index)}
+            >
+              <div className={styles['faq-question']}>{faq.question}</div>
+              {activeIndex === index && <div className={styles['faq-answer']}>{faq.answer}</div>}
+            </li>
+          ))}
+          </ul>
+        </div>
+        <div className='col-6'>
+        <ul className={styles['faq-list']}>
+          {faqData.slice(5, 10).map((faq, index2) => (
+            <li
+              key={index2}
+              className={`${styles['faq-item']} ${active2Index === index2 ? styles.active : ''}`}
+              onClick={() => handleQuestionClick2(index2)}
+            >
+              <div className={styles['faq-question']}>{faq.question}</div>
+              {active2Index === index2 && <div className={styles['faq-answer']}>{faq.answer}</div>}
+            </li>
+          ))}
+          </ul>
+        </div>
+
+      </div>
+      
     </div>
     </div>
   );
