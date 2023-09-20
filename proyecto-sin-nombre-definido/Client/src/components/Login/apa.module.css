@@ -39,9 +39,9 @@
   /* box-shadow: 4px  4px rgba(255, 255, 255, 0.534); */
   border-radius: 10px;
   border: none;
-  margin: 30px;
-  width: 44%;
-  height: 550px;
+  margin: 24px;
+  width: 45.5%;
+  height: 580px;
   position: relative;
   /* margin-left: auto; */
   float: right;
@@ -63,6 +63,69 @@
 }
 .form legend:hover {
   color: rgb(219, 46, 69);
+ 
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden !important;
+	position: relative;
+	z-index: -1;
+}
+.label {
+  
+    padding: 10px !important;
+    height: 45px !important;
+    text-align: center;
+    font-size: 15px;
+    color: #091f44 !important;
+    background-color:aliceblue ;
+    display: inline-block;
+    border-radius: 15px;
+}
+.buton { 
+  position: absolute;
+ /*  bottom: 80.5%;
+  left: 91%; */
+  top : 0;
+  right : 0;
+  transform: translate(-0%, 0%);
+  z-index: 2;
+  background-color: rgb(35, 90, 163);
+  color: #ffffff;
+  border: none;
+  padding: 5px 5px;
+  border-top-left-radius: none !important;
+ /*  border-radius: 3px; */
+  cursor: pointer;
+  /* margin-top: 20px; */
+  width: 40px;
+  box-shadow: #06142d;
+  transition: background-color 0.3s ease;
+
+}
+
+.buton:hover {
+  background-color: rgb(19, 60, 113);
+}
+.label:focus, 
+.label:hover {
+    background-color: rgba(209, 209, 209, 0.699);
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
 }
 
 .hr {

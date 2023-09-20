@@ -131,7 +131,7 @@ const Reserv = ({ setReserv, bookingId, booking }) => {
                     onChange={handleChange}
                   >
                     <option value=""> --Selecciona una forma de pago--</option>
-                    <option value="Card"> Targeta</option>
+                    <option value="Card"> Tarjeta</option>
                     <option value="Cash"> Efectivo</option>
                   </select>
                 </div>
