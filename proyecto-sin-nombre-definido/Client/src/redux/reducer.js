@@ -80,10 +80,6 @@ const rootReducer = (state = initialState, action) => {
 
         case GET_PROPERTIES_BY_USER:
             return {...state, myProperties: action.payload}
-
-        case DELETE_LOGIC_ASSET_BY_ID:
-            return{...state, myProperties : action.payload}
-
         case DELETE_LOGIC_USER_BY_ID:
             return{...state, users :action.payload}
             

@@ -49,7 +49,8 @@ const Reserv = ({ setReserv, bookingId, booking }) => {
 
   const handlePayment = async (e) => {
     e.preventDefault();
-    await getPayment(form, setPaymentSuccess, setButtonReserv);
+    // await getPayment(form, setPaymentSuccess, setButtonReserv);
+    await handleReserv(bookingId);
     console.log(paymentSucess);
   };
   console.log(paymentSucess);

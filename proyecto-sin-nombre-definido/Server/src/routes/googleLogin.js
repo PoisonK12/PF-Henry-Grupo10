@@ -6,7 +6,7 @@ const googleLoginRouter = Router()
 
 //Permite iniciar sesion
 googleLoginRouter.get('/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }));
+  passport.authenticate('google', { scope: ['profile',"name", 'email'] }));
 
 googleLoginRouter.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),

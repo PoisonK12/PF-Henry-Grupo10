@@ -561,10 +561,28 @@ export const setBookingDate = async (booking, setReserv , setBookingId , setErro
 export const handleReserv = async (bookingId) => {
 
     try {
-      const res = await axios.post(`/rents/create/${bookingId}`);
-      if(res) {
-        console.log(res);
-      }
+      console.log(bookingId)
+      const {data} = await axios.post(`/rents/create/${bookingId}`);
+      console.log(data)
+      if(data) {
+        // console.log(data.data);
+        const URL = data.split("-")
+         var width = 500;
+         var height = 600;
+         const left = (screen.width - width) / 2;
+         const top = (screen.height - height) / 2;
+         const options = `width=${width}, height=${height}, left=${left}, top=${top}, location=no, toolbar=no`;
+         var payment = window.open(URL[0], '_blank', options);
+         
+         var intervalID = setInterval(() => {
+           
+           if(payment.closed) {
+             clearInterval(intervalID);
+             setPaymentSuccess(true);
+             setButtonReserv(false);
+           }
+         }, 100)
+       }
     } catch (error) {
       console.log(error);
     }
@@ -572,6 +590,7 @@ export const handleReserv = async (bookingId) => {
 
 export const  getPayment = async (asset,  setPaymentSuccess, setButtonReserv ) => {
   const {name , description , price} = asset;
+  console.log(price)
     try {
       const data = await axios.post("/pay/create-checkout-session" , {name : name , description : description , price : price})
      

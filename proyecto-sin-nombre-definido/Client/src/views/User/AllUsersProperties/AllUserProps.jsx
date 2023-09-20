@@ -18,7 +18,7 @@ const AllUsersProps = () => {
   const dispatch = useDispatch();
   const {id} = useParams()
   const allProperties = useSelector((state) => state.myProperties);
-  const deletedProperties = allProperties?.filter((property) => property.eliminado !== true);
+  // const deletedProperties = allProperties?.filter((property) => property.eliminado !== true);
   console.log('sisisi',allProperties);
   const [datas, setDatas] = useState({})
   const [updated, setUpdated] = useState(false);
@@ -155,7 +155,7 @@ const AllUsersProps = () => {
     if (window.confirm("¿Seguro que deseas eliminar esta propiedad?")) {
       // Llama a la acción para eliminar la propiedad por su ID
       dispatch(deleteLogicAssetById(id));
-      dispatch()
+      // dispatch()
     }
   };
   // useEffect(() => {
@@ -175,7 +175,7 @@ const AllUsersProps = () => {
             </div>
           </div> */}
           <div style={{marginTop:"17px"}}>
-            {deletedProperties?.map((props, index) => (
+            {allProperties?.map((props, index) => (
               <div className={`${style.centeredContent}`} key={props.id}>
                 <div className={`card mb-3 p-2 ${style.maxWidth}`}>
                   <div className="row g-0">

@@ -47,8 +47,8 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
         userId: userId,
         expirationTime: expirationTime,
       });
-
-      return response.id;
+      console.log(response.dataValues.id)
+      return response.dataValues.id;
       // +" --- " +
       // `Mantendremos la propiedad reservada para vos por 15min... Pero metele porque vuela!!`
     }
@@ -84,28 +84,34 @@ const createRent = async (req, res) => {
       // attributes: ["name", "description", "rentPrice"],
       include: [{ model: User, attributes: ["userName"] }],
     });
+    // const stay = isItAvailable.dates.length;
+
     const stay = isItAvailable.dates.length;
 
-    console.log(bookingCode);
+    console.log(isItAvailable);
+    console.log(pay);
+    console.log(stay);
     const rent = {
-      name: pay.name,
-      tenant: isItAvailable.userId,
+      name: pay.dataValues.name,
+      tenant: isItAvailable.dataValues.userId,
       landlord: "pay.userName",
-      asset: isItAvailable.assetId,
-      description: pay.description,
-      price: pay.rentPrice * stay,
+      asset: isItAvailable.dataValues.assetId,
+      description: pay.dataValues.description,
+      price: pay.dataValues.rentPrice * stay,
       stay: stay,
       bookingCode: bookingCode,
     };
+    
     const createdRent = await Rent.create(rent);
 
     const id = createdRent.id;
-
-    const URL = await createSession(rent, id);
+    console.log(pay.rentPrice);
+    console.log(1111111);
+    const URL = await createSession(rent, id);;
 
     return URL + " - " + id;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 // -----------------------------------------------------------------
@@ -113,13 +119,14 @@ const createRent = async (req, res) => {
 const final = async (req) => {
   const { id } = req;
   try {
-    console.log(id);
+;
     const rented = await Rent.findByPk(id);
     const bookingCode = rented.bookingCode;
     const booked = await Availability.findOne({
       where: { id: bookingCode, expirationTime: { [Op.not]: null } },
       includes: { model: Asset },
     });
+    console.log(rented)
     if (booked === null) return "Homero, ya marcaste...";
     await booked.update({
       isAvailable: "Indispuesta",

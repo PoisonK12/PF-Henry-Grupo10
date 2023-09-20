@@ -11,15 +11,15 @@ module.exports = (sequelize) => {
       },
       tenant: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       landlord: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       asset: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       description: {
         type: DataTypes.TEXT,
@@ -27,19 +27,19 @@ module.exports = (sequelize) => {
       },
       price: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       stay: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       bookingCode: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       // checkIn: {
       //   type: DataTypes.DATEONLY,
-      //   allowNull: false,
+      //   allowNull: true,
       // },
       // checkOut: {
       //   type: DataTypes.DATEONLY,

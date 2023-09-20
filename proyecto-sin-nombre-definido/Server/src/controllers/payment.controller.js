@@ -3,9 +3,10 @@ const Stripe = require("stripe");
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
-const createSession = async (req, res) => {
+const createSession = async (rent,id, res) => {
  
-  const { name, description, price} = req.body;
+  const { name, description, price} = rent;
+  // console.log(rentPrice,name,description)
   // console.log(name);
   // console.log(description);
   // console.log();
@@ -25,11 +26,11 @@ const createSession = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:3001/pay/success`,
+      success_url: `http://localhost:3001/pay/success/${id}`,
       cancel_url: "http://localhost:3001/pay/cancel",
     });
     console.log(session.url);
-    return res.json(session.url);
+    return session.url;
   } catch (error) {
     console.log(error.message);
   }

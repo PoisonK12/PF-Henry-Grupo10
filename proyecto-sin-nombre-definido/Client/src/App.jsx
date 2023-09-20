@@ -35,6 +35,7 @@ import { RouteProtected } from './Helpers';
 function App() {
   
   const location = useLocation()
+//   localStorage.removeItem("data")
   // const [loading, setLoading] = useState(false)
 
   // useEffect(() => {
@@ -85,7 +86,6 @@ function App() {
       </Route>
 
 //! ----------------------------------------------- RUTAS PROTEGIDAS ADMIN ----------------
-
 
       <Route path="/terms&Conditions" element={<><TermsAndConditions/><Footer/></>}></Route>
       <Route path="/reserv" element={<><Reserv/><Footer/></>}></Route>     
