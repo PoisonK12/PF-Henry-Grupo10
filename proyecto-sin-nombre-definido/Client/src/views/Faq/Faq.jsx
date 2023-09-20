@@ -30,24 +30,9 @@ const FAQ = () => {
         'El proceso de check-in y check-out varía según la propiedad. Normalmente, recibirás instrucciones detalladas sobre cómo hacerlo antes de tu llegada. El check-in suele ser a partir de las 09:00 horas y el check-out antes de las 13:00 horas.'
     },
     {
-      question: '¿Se admiten mascotas en las propiedades?',
-      answer:
-        'Algunas propiedades admiten mascotas, mientras que otras no. Debes consultar la política de mascotas de la propiedad específica que te interesa en la página de detalles antes de hacer la reserva.'
-    },
-    {
       question: '¿Puedo modificar las fechas de mi reserva?',
       answer:
         'Sí, puedes modificar las fechas de tu reserva si la propiedad lo permite y si lo haces dentro de los plazos establecidos en la política de modificación. Para hacerlo, ve a tu cuenta y busca la reserva que deseas modificar.'
-    },
-    {
-      question: '¿Qué servicios están incluidos en el precio de la reserva?',
-      answer:
-        'Los servicios incluidos varían según la propiedad. Por lo general, el precio de la reserva incluye el alojamiento y ciertos servicios básicos. Consulta la descripción de la propiedad para obtener información detallada sobre los servicios incluidos.'
-    },
-    {
-      question: '¿Cuál es la política de reembolso en caso de cancelación?',
-      answer:
-        'La política de reembolso varía según la propiedad y las condiciones de cancelación que elijas al hacer la reserva. Es importante revisar las condiciones de cancelación antes de confirmar tu reserva, ya que algunas propiedades ofrecen reembolsos completos, mientras que otras pueden tener restricciones.'
     }
   ];
 

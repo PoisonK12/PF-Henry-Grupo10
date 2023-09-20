@@ -320,7 +320,7 @@ const Detail = () => {
                   escondida a todos los amantes de la naturaleza.
                 </p>
               </div>
-              {loadReviews &&
+              {/* {loadReviews &&
                 myReviews?.map((ele) => {
                   return (
                     <div className={style.contReseña}>
@@ -367,7 +367,7 @@ const Detail = () => {
                       </div>
                     </div>
                   );
-                })}
+                })} */}
             </div>
           </div>
 
