@@ -78,7 +78,7 @@ export const Nav = () => {
             <span>Contacto</span>
           </NavLink>
         </li>
-        {data.userType == "admin" ? <li>
+        {data && data.userType == "admin" ? <li>
           <NavLink
             to="/adminDashboard"
             className={({ isActive }) =>
@@ -87,7 +87,8 @@ export const Nav = () => {
           >
             <span>Admin</span>
           </NavLink>
-        </li> : ""}
+        </li> :"" }
+        
         
         <li>
           <NavLink

@@ -35,18 +35,7 @@ const Reviews = () => {
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("data"));
-    // setReviews({ ...reviews, userName: data.userName });
     dispatch(reviewsGet(data.userName));
-    // const initialReviews = {};
-    // testeo.forEach((ele) => {
-    //   initialReviews[ele.id] = {
-    //     Pk: ele.id,
-    //     comment: "",
-    //     score: 0,
-    //     userName: data.userName,
-    //     id: ele.id,
-    //   };
-    // });
     const initialReviews = testeo.map((ele) => ({
       Pk: ele.id,
       comment: "",
@@ -59,13 +48,13 @@ const Reviews = () => {
 
   // console.log("aaaaaaaaaaaaaaaaaaapaaaa", testeo);
   return (
-    <div>
+    <div style={{marginTop:"50px"}}>
       <div>
         {/* <h1>Soy el componete reviews{testeo[0].name}</h1> */}
         <div className={style.div}>
           {Array.isArray(testeo) ? (
             testeo?.map((props) => (
-              <form onSubmit={(e) => handleSubmit(props.id, "assets", e)}>
+              <form onSubmit={(e) => handleSubmit(props.id, props.profilePic ? "users" : "assets", e)}>
                 <div className={`${style.centeredContent}`} key={props.id}>
                   <div className={`card mb-3 p-2 ${style.maxWidth}`}>
                     <div className="row g-0">
@@ -92,7 +81,9 @@ const Reviews = () => {
                               ?.comment || ""
                           }
                           name="comment"
-                          cols={20}
+                          cols={30}
+                          rows={6}
+                          style={{resize:"none"}}
                           placeholder="comentario"
                         />
                         {/* <input name="score" type="number" onChange={handleChange} value={reviews.score}></input> */}

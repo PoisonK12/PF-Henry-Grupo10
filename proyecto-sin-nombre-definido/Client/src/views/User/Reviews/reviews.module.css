@@ -6,9 +6,15 @@
   position: absolute;
   appearance: none;
 }
+.rating{
+  display:flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  
+}
 
 .rating:not(:checked) > label , .rating svg{
-  float: right;
+  /* float: left; */
   cursor: pointer;
   font-size: 30px;
   color: #666;
@@ -42,5 +48,11 @@
 }
 
 .div{
-  
+  display:grid;
+  /* flex-wrap: wrap;
+  width: 100%; */
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+  align-items: center;
+  text-align: center;
 }

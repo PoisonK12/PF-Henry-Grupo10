@@ -26,6 +26,7 @@ const Menu = () => {
     // e.preventDefault()
     localStorage.removeItem("log");
     localStorage.removeItem("data");
+    localStorage.removeItem("token")
     document.body.style.overflow = "auto"
 
     navigate("/checkIn");
