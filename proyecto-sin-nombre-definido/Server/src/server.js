@@ -1,4 +1,5 @@
 require('dotenv').config();
+const GitHubStrategy = require('passport-github').Strategy;
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -22,7 +23,12 @@ server.use(cors({
 server.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    maxAge: 24 * 60 * 60 * 1000
+  }
 }));
 
 // Configura passport
@@ -30,21 +36,33 @@ server.use(passport.initialize());
 server.use(passport.session());
 
 // Configura serializeUser y deserializeUser antes de configurar Passport
-passport.serializeUser((user, done) => {
-  done(null, user.id);
+passport.serializeUser((user, cb) => {
+  cb(null, user.id);
+});
+passport.deserializeUser((id, cb) => {
+  cb(null, id)
 });
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return done(null, false);
-    }
-    done(null, user);
-  } catch (error) {
-    done(error);
-  }
-});
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: "http://localhost:3001/auth/github/callback"
+},
+function(accessToken, refreshToken, profile, cb) {
+  console.log(profile)
+    cb(null, profile)
+}
+));
+
+server.get('/auth/github',
+  passport.authenticate('github'));
+
+server.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 server.use(router);
 
