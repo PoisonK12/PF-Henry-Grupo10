@@ -9,7 +9,7 @@ require("./helpers/Middlewares/passport-config");
 const router = require("./routes/index");
 require("./helpers/Middlewares/github")
 const { User } = require("./db");
-const { tokenSign } = require("./helpers/token/loginToken");
+const { tokenSign } = require("./helpers/Token/loginToken");
 
 const server = express();
 
