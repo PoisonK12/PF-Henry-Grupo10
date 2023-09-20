@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "./detail.module.css";
 import bed from "../../assets/images/svg/bed.svg";
 import bath from "../../assets/images/svg/bath.svg";
@@ -22,6 +22,14 @@ import Maps from "../../views/Map/Map";
 const Detail = () => {
   // const favoritesData = useSelector((state) => state.myFavoritesProps);
   // console.log("infoafv", favoritesData);
+
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = reviews;
+  });
+
+  const prevReviews = ref.current;
+
   const { id } = useParams();
   const dispatch = useDispatch();
   const assetDetail = useSelector((state) => state.detail);
@@ -33,6 +41,7 @@ const Detail = () => {
   const token = localStorage.getItem("log");
   // console.log("Detalle", assetDetail);
   const [loading, setLoading] = useState(true);
+  const [loadReviews, setLoadReviews] = useState(false);
 
   // const isFavorite = Array.isArray(favoritesData) && favoritesData.includes(id);
   // console.log("kolor", isFavorite);
@@ -46,18 +55,14 @@ const Detail = () => {
     alert("Propiedad guardada en favoritos");
     dispatch(getAllFavUserProps(userData.id));
   };
-  console.log("APALAPAPAPA", assetDetail)
+  console.log("APALAPAPAPA", assetDetail);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch(getAssetById(id));
         dispatch(SearchByLocation(assetDetail.location, 1));
-        dispatch(reviewsGet(id));
-        if (reviews.includes("datos")) {
-          return;
-        }
-        setMyReviews(reviews);
+
         setTimeout(() => {
           setLoading(false);
         }, 2000);
@@ -74,7 +79,16 @@ const Detail = () => {
     dispatch(getAllFavUserProps(userData.id));
   }, []);
 
-  useEffect(() => {}, [myReviews]);
+  useEffect(() => {
+    const fetchReview = async () => {
+
+        dispatch(reviewsGet(id));
+        setMyReviews(reviews);
+        setLoadReviews(true);
+      return;
+    };
+    fetchReview();
+  }, [id, reviews]);
   console.log(myReviews);
 
   const stars = (stars) => {
@@ -197,8 +211,11 @@ const Detail = () => {
             <strong>Dirección:</strong> {assetDetail.address},{" "}
             {assetDetail.location}, {assetDetail.country}
           </p>
-          <div className={style.profile} style={{display:"flex", flexDirection:"column"}}>
-            <img src={assetDetail.ownerPic} width={50}/>
+          <div
+            className={style.profile}
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <img src={assetDetail.ownerPic} width={50} />
             <p>{assetDetail.ownerName}</p>
           </div>
           <div className={style.icons}>
@@ -255,7 +272,7 @@ const Detail = () => {
         </div>
 
         {token ? (
-          <div >
+          <div>
             <div>
               <Booking></Booking>
             </div>
@@ -303,7 +320,7 @@ const Detail = () => {
                   escondida a todos los amantes de la naturaleza.
                 </p>
               </div>
-              {myReviews &&
+              {loadReviews &&
                 myReviews?.map((ele) => {
                   return (
                     <div className={style.contReseña}>
@@ -320,7 +337,34 @@ const Detail = () => {
                         {stars(ele?.score)}
                         {noStars(ele?.score)}
                       </div>
-                      <p>{ele?.comment}</p>
+                      <div style={{padding:"50px"}} >
+                      <p style={{position:"relative", height:"100%"}}>
+                        {" "}
+                        <svg
+                        style={{position:"absolute", top:"0"}}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="60"
+                          height="60"
+                          fill="currentColor"
+                          class="bi bi-quote"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z" />
+                        </svg>
+                        {ele?.comment}{" "}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="60"
+                          height="60"
+                        style={{position:"absolute",right:"20px", bottom:"100px",transform:"scaleX(-1)"}}
+                        fill="currentColor"
+                          class="bi bi-quote"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z" />
+                        </svg>
+                      </p>
+                      </div>
                     </div>
                   );
                 })}
