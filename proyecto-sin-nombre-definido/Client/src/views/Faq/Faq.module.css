@@ -10,7 +10,7 @@
 }
 
 .faq-container {
-  max-width: 800px;
+  
   margin-bottom: 0;
   margin-left: auto;
   margin-right: auto;
@@ -30,6 +30,7 @@
   
   .faq-list {
     list-style: none;
+    width: 100%;
   }
   
   .faq-item {
