@@ -48,6 +48,16 @@
     color : rgb(219, 46, 69)
 } 
 
+.button {
+    border-color: rgba(137, 43, 226, 0);
+    border-radius: 15px;
+    padding : 7px 40px;
+    color: #f7f7f7;
+    background-color: rgb(35, 90, 163);
+    transition: background-color 0.3s ease;
+
+}
+
 .hr {
    
    border-width: 3px;
@@ -137,3 +147,34 @@
     background-color: #ff8686;
     color: rgba(255, 255, 255, 0.144) !important;
   }
+
+
+   p{
+    margin: 0 !important;
+  }
+
+
+  .buton { 
+    position: absolute;
+   /*  bottom: 80.5%;
+    left: 91%; */
+    top : 0;
+    right : 0;
+    transform: translate(-0%, 0%);
+    z-index: 2;
+    background-color: rgb(35, 90, 163);
+    color: #ffffff;
+    border: none;
+    padding: 5px 5px;
+    border-top-left-radius: none !important;
+   /*  border-radius: 3px; */
+    cursor: pointer;
+    /* margin-top: 20px; */
+    width: 53px;
+    transition: background-color 0.3s ease;
+  
+}
+
+.buton:hover {
+    background-color: rgb(19, 60, 113);
+}

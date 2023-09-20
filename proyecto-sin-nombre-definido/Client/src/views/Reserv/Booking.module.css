@@ -1,0 +1,91 @@
+
+.legend {
+    text-align: left !important;
+    font-size: 30px;
+    margin-bottom: 12px;
+    color: #091f44;
+   
+    
+}
+.button {
+    display: block;
+    border-radius: 10px; 
+    border-width: 3px;
+    border-color: #7b2097;
+    color: #8320a1;
+    background-color: rgb(255, 255, 255);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.infoAvailable {
+ 
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+    0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  width: 1105px;
+  margin: 0 auto;
+  background-color:  #fff;
+  margin-bottom: 30px !important;
+}
+
+.fieldset {
+ 
+   background: url("./fondo-minimalista-colorido_23-2148909133.avif");
+   background-size: cover;
+   background-position: bottom;
+   background-repeat: no-repeat;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+      0 4px 6px -4px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    display: flex;
+    
+    align-items: center;
+  
+  
+}
+
+
+.button:hover {
+        color : white;
+        background-color: #a115cc;
+}
+
+
+.alert {
+    background-color: #fff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+      0 4px 6px -4px rgba(0, 0, 0, 0.2);
+    
+    border: 3px solid #e43838;
+    border-radius: 5px;
+    width: 1065px;
+    margin: 0 auto;
+    padding: 20px;
+    margin: 30px 0;
+  }
+
+  .data {
+    
+    background-color: transparent;
+    border : 2px solid black !important;
+    margin-left: 10px;
+   border-radius: 3px;
+    padding : 5px
+  }
+
+  .data::placeholder {
+    color: #091f44;
+    font-size: large;
+  }
+
+  .data:hover {
+    
+      background-color: #ffffff7e;
+  }
+ 

@@ -19,6 +19,19 @@
   display: flex;
 }
 
+.alert {
+  background-color: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+    0 4px 6px -4px rgba(0, 0, 0, 0.2);
+
+  border: 3px solid #e43838;
+  border-radius: 5px;
+  width: 1105px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
 .icons div {
   border: 2px solid blueviolet;
   border-radius: 50%;
@@ -31,11 +44,9 @@
   transition: color 0.3s ease;
   color: blueviolet;
 }
-.icons div:hover {
-  background-color: blueviolet;
-}
+
 .icons div:hover svg {
-  color: #cccccc;
+  color: blue;
 }
 
 .primary,
@@ -101,7 +112,7 @@
 
 /* Estilos para las reseñas */
 .reviewCol {
-  background-color: #fff;
+  background-color: #CCCCFF;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
   margin-right: 20px;
@@ -160,6 +171,7 @@
   margin-bottom: 2px;
 }
 
+
 .propertyInfo p {
   font-size: 16px;
   margin-bottom: 10px;
@@ -203,6 +215,7 @@
   margin-right: 5px;
 }
 
+
 .info {
   background-color: #fff;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
@@ -216,8 +229,9 @@
   /* display: flex; */
 }
 
+
 .info h2 {
-  font-size: 24px;
+  font-size: 30px;
   color: #091f44;
   font-weight: bold;
 }
@@ -243,12 +257,15 @@
 }
 
 .contReseña {
-  border: 3px solid rgb(216, 215, 217);
+  border-radius: 10%;
   margin-top: 30px;
+  /* position: relative; */
+  padding: 10px;
   width: 100%;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -4px rgba(0, 0, 0, .5);
   padding: 20px;
+  background-color: rgb(55, 55, 178);
 }
 .contReseña h1 {
   font-size: 28px;
@@ -275,4 +292,23 @@
   flex-direction: column;
   width: 75%;
   border: 2px solid rgb(216, 215, 217);
+}
+
+.profile{
+  position: absolute;
+  right: 20px;
+  align-items: center;
+  top:85px
+}
+
+.profile img{
+  border-radius: 999px;
+  /* margin-right: 5px; */
+  margin-left: auto;
+}
+
+.profile p {
+  color: #091f44;
+  font-weight: 700;
+  letter-spacing: 1px;
 }

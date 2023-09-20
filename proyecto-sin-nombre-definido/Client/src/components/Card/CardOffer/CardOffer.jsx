@@ -17,6 +17,8 @@ const Card = ({
   bathrooms,
   coveredArea,
   totalArea,
+  offerDiscount,
+  offerPrice
 }) => {
     // const [isOffer, setIsOffer] = useState(offer);
   const descCut = () => {
@@ -61,7 +63,7 @@ const Card = ({
                 </p>
                 <p className={`card-text ${style.desc}`}>{descCut()}</p>
               
-                
+              {/* {offerDiscount && offerPrice?}   */}
                 <p className={`mb-2 ${style.price}`}>Precio ${total}</p>
                 
               </div>

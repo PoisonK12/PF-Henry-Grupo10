@@ -1,6 +1,6 @@
 const { z } = require("zod");
 
-const dataSchemePost = z.object({
+const assetSchemePost = z.object({
   body: z.object({
     name: z.string({
       message: "String data is required(name)",
@@ -25,7 +25,7 @@ const dataSchemePost = z.object({
       })
       .max(3, {
         message: "A maximum of 3 pictures are required",
-      }),
+      }) ,
 
     onSale: z.boolean(),
 
@@ -53,9 +53,9 @@ const dataSchemePost = z.object({
   }),
 });
 
-const dataSchemePut = "";
+const assetSchemePut = "";
 
 module.exports = {
-  dataSchemePost,
-  dataSchemePut,
+  assetSchemePost,
+  assetSchemePut,
 };

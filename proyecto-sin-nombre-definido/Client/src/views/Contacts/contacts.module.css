@@ -1,7 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.cdnfonts.com/css/avenir');
 .cont {
-  /* font-family: montserrat, arial, verdana; */
+  font-family: 'Avenir', sans-serif; 
   background-color: rgb(231, 231, 231);
   padding: 20px;
   display: flex;
@@ -33,7 +32,7 @@
   font-weight: 400;
   width: 100%;
   letter-spacing: 5px;
-  font:700 100px/1 'Pacifico', cursive;
+  font:700 100px/1 'Avenir', cursive;
   /* font-family: "Noto Sans", sans-serif; */
   top: 120px;
   color: rgba(36, 113, 201, 0.815);
@@ -58,11 +57,9 @@
 }
 .title {
   text-align: center;
-  font-family: "Noto Sans", sans-serif;
-  font:700 30px/1 'Lato', sans-serif;
+  font-family: "Avenir", sans-serif;
   text-transform: uppercase;
-
-  font-weight: bold; /* Establecer el texto en negrilla */
+  font-weight: normal; /* Establecer el texto en negrilla */
 }
 
 .formulario-entrada.formulario-visible{
@@ -111,28 +108,29 @@
   padding: 20px;
   padding-left: 50px;
   transition: all ease-in-out;
-
   margin: 0 auto;
   flex: 2;
+  text-align: left;
 }
 
 .info h2{
-  color:#091f44
+  color:#091f44;
 }
 
 .info h2, .info h2 span{
-
+  
   /* text-align: justify; */
-  font:700 70px/1 'Lato', sans-serif;
+  font:700 70px/1 'Avenir', sans-serif;
 }
 .info h2 span{
+  /* line-height: 5px; */
   color: #9d0aca;
 }
 
 .parrafo p{
   text-align: justify;
-  margin-top: 20px;
-  font:300 30px/1 'Lato', sans-serif;
+  margin-top: 37px;
+  font:300 30px/1 'Avenir', sans-serif;
 }
 
 .parrafo span{

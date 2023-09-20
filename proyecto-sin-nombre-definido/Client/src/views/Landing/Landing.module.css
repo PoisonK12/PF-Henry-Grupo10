@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Anton&family=Bangers&display=swap&family=Dancing+Script&display=swap'); 
-@import url('https://fonts.googleapis.com/css2?family=Victor+Mono:wght@300&display=swap%27');
+@import url("https://fonts.cdnfonts.com/css/avenir");
+
 .select{
   display: flex;
   width: 100vw;
@@ -31,10 +31,10 @@
   z-index: 10;
 }
 .text{
-  font-family: 'ADLaM Display', cursive;
+  font-family: "Avenir", sans-serif;
   font-size: 75px;
 }
 .parra{
-  font-family: 'Dancing Script', cursive;
+  font-family: "Avenir", sans-serif;
   font-size: 25px;
 }

@@ -38,6 +38,7 @@
 .nav ul {
   display: flex;
   font-family: "Avenir", sans-serif;
+  margin-right: 21px;
 }
 
 .nav ul li {
@@ -53,9 +54,10 @@
 
   text-decoration: none;
   color: white;
-  padding: 1.95rem 1.2rem;
+  padding: 1.60rem 1.2rem;
   height: 100%;
   margin: 0 0.5rem;
+  margin-top:4px ;
   /* border-radius: 0.9rem; */
 }
 .customLi {
@@ -71,9 +73,9 @@
 
 /* Estilo para el logotipo */
 .nav img {
-  margin-left: 20px;
   width: 150px;
   height: 150px;
+  overflow: hidden;
 }
 
 .nav .menu {
@@ -121,4 +123,24 @@
   .nav ul li a {
     margin: 0.2rem 0.5rem;
   }
+}
+
+.noHover{
+  margin-right: 30px;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 20px;
+  padding-inline: 10px;
+  transition: background-color .5s ease;
+}
+li{
+  list-style: none;
+
+}
+
+.noHover.login{
+  padding: 5px;
+  padding-inline: 10px;
+  border-radius: 20px;
+  background-color: #9d0aca;
 }

@@ -4,12 +4,12 @@
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
 } */
+@import url('https://fonts.cdnfonts.com/css/avenir');
 .buttonGroup {
     display: flex;
     justify-content: space-between; /* Distribuye los botones horizontalmente */
     align-items: center; /* Alinea los botones verticalmente en el centro */
   }
-  
 
 .table-responsive {
     margin: 30px 0;
@@ -236,11 +236,49 @@ position: absolute;
 }
 
 .background{
-    font-family: montserrat, arial, verdana;
-    background-color: rgb(76, 131, 228);
+    font-family: 'Avenir', sans-serif; 
+    background-color: transparent;
 }
 
 .containerImg img{
     object-position: center bottom !important;
 
 }
+.widgets,
+    .charts {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.buttonContainer p{
+    text-align: center;
+    /* align-items: center; */
+    align-content: center;
+    margin-top: 10px;
+    /* margin: auto 0; */
+}
+
+.button{
+    padding: 10px 15px;
+    border: 2px solid transparent;
+    background-color: #091f44;
+    color: #f4f4f4;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover{
+    position: relative;
+    background-color: #051229;
+    border: 2px solid transparent;
+    color: #f4f4f4;
+  }

@@ -11,42 +11,42 @@ module.exports = (sequelize) => {
       },
       userName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       fullName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       profilePic: {
         type: DataTypes.TEXT,
       },
       birthDate: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       phoneNumber: {
         type: DataTypes.STRING, // Cambiado: NUMBER a STRING si incluye caracteres no numéricos
-        allowNull: false,
+        allowNull: true,
       },
       verificationNumber: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       gender: {
         type: DataTypes.ENUM("Male", "Female", "agender", "No binary"),
-        allowNull: false,
+        allowNull: true,
       },
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       nationality: {
         type: DataTypes.ENUM("Argentina", "Mexico", "Colombia", "Venezuela"),
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true, // Agregado: para asegurarse de que los correos electrónicos sean únicos
         validate: {
           isEmail: true, // Agregado: para validar que sea un formato de correo electrónico válido
@@ -54,16 +54,16 @@ module.exports = (sequelize) => {
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       landlord: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
       },
       userType: {
-        type: DataTypes.ENUM("Admin", "User", "Premium"),
+        type: DataTypes.ENUM("admin", "user"),
         allowNull: true,
-        defaultValue: "User",
+        defaultValue: "user",
       },
       averageScore: {
         type: DataTypes.FLOAT,
@@ -75,7 +75,7 @@ module.exports = (sequelize) => {
       },
 
       favorites: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.ARRAY(DataTypes.TEXT),
         allowNull: true,
       },
       history: {
@@ -85,6 +85,11 @@ module.exports = (sequelize) => {
       hide: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+      },
+      // Modelo de datos de Google
+      githubId: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {

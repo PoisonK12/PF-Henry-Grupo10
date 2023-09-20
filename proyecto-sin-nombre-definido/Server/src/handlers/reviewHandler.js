@@ -1,4 +1,4 @@
-const { userSchemePost } = require("../helpers/reviewValidation.ts");
+const { reviewSchemePost } = require("../helpers/validations/reviewValidation.js");
 
 const {
   getReviewByIdController,
@@ -19,10 +19,16 @@ const getReviewByIdHandler = async (req, res) => {
 };
 
 const reviewAssetHandler = async (req, res) => {
-  const { userName, score, comment, id } = req.body;
+  const { id, userName, score, comment, viewee } = req.body;
 
   try {
-    const response = await reviewAssetController(userName, score, comment, id);
+    const response = await reviewAssetController(
+      id,
+      userName,
+      score,
+      comment,
+      viewee
+    );
     res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: message.error });
@@ -30,9 +36,9 @@ const reviewAssetHandler = async (req, res) => {
 };
 
 const reviewUserHandler = async (req, res) => {
-  const { userName, score, comment, id } = req.body;
+  const { Pk, userName, score, comment, id } = req.body;
   try {
-    const review = await reviewUserController(userName, score, comment, id);
+    const review = await reviewUserController(Pk, userName, score, comment, id);
     res.status(200).json(`Review ${userName} creado con exito!`);
   } catch (error) {
     console.log(error);

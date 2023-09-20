@@ -95,16 +95,22 @@ import landing2 from "../../assets/images/Landing.jpeg.webp"
 import landing3 from "../../assets/images/landing3.jpg";
 import landing4 from "../../assets/images/landing4.webp";
 import landing5 from "../../assets/images/landing5.avif";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 
 const Landing = () => {
+  const navigate = useNavigate()
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [animationActive, setAnimationActive] = useState(false);
 
   useEffect(() => {
     const redirectTimeout = setTimeout(() => {
-      window.location.href = "/home"; // Redireccionar después de 3 segundos
-    }, 4500);
+      setTimeout(() => {
+        {<Loader></Loader>}
+      }, 3000 )
+        navigate("/home"); // Redireccionar después de 3 segundos
+    }, 2000);
 
     return () => {
       clearTimeout(redirectTimeout);
@@ -125,6 +131,9 @@ const Landing = () => {
         <img className={style.ima} name='S03' src={landing3} alt="" />
       </section>
     </div>
+    // <>
+    //   <Loader></Loader>
+    // </>
   )
 
 }

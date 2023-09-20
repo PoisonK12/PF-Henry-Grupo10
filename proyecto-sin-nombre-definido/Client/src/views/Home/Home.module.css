@@ -43,8 +43,9 @@
 
 .search{
     position: absolute;
+    display: flex;
     top: 60%;
-    left: 45%;
+    left: 46%;
     transform: translate(-50%, -50%);
     z-index: 99;
 }
@@ -55,13 +56,13 @@
     display: flex;
 	align-items: center;
 	justify-content: center;
-    font-family: 'Avenir', sans-serif; ;
+    font-family: 'Avenir', sans-serif; 
 }
 
 
 
 .cajaCarrusel h1{
-    font-family: 'Geologica', sans-serif;
+    font-family: 'Avenir', sans-serif; 
     position: absolute;
     z-index: 10000;
     top: 35%;
@@ -73,7 +74,7 @@
     font-size: 3em;
     /* font-weight: 400; */
     text-align: center;
-    font-family: 'Avenir', sans-serif;
+    
 
 }
 
@@ -130,6 +131,8 @@
   }
 
   .sale{
+    /* margin-top: 20px; */
+    background-color: #e7e7e7;
     position: relative;
     z-index: 6;
   }

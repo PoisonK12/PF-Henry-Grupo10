@@ -7,37 +7,44 @@ const {
   updateAssetHandler,
   getAllLocationsHandler,
   getAmenitiesHandler,
-  getAllButAllAssetsHandler,
-  getAllAssetsWithAmenitiesHandler,
+  getAdminAssetsHandler,
   restoreAssetByIdHandler,
-  softDeleteAssetByIdHandler
+  softDeleteAssetByIdHandler,
+  getAssetsFromUserHandler,
 } = require("../handlers/assetHandler");
 
 const assetsRouter = Router();
-
+//Todas las propiedades para menu de admin
 assetsRouter.get("/", getAllAssetsHandler);
 
+//Lista de todos los lugares donde hay registradas propiedades
 assetsRouter.get("/location", getAllLocationsHandler);
 
-//! Temporal, hay que desarrollar el CRUD completo de amenities
+//Listado de todas las amenities disponibles para utilizar
 assetsRouter.get("/amenities", getAmenitiesHandler);
 
-//esta creo que se puede borrar
-assetsRouter.get("/filtroporamenities", getAllAssetsWithAmenitiesHandler);
+//Trae todos los asset existentes para mostrar en panel de administrador
+assetsRouter.get("/admin", getAdminAssetsHandler);
 
-//esta tal vez podemos combinarla con el all despues
-assetsRouter.get("/admin",getAllButAllAssetsHandler);
-
+//Traigo una propiedad en especifico para mostrar en el detail
 assetsRouter.get("/:id", getAssetByIdHandler);
 
-assetsRouter.put("/:id", updateAssetHandler);
+//Traigo todos los asset del usuario para mostrar en su perfil
+assetsRouter.get("/myassets/:id", getAssetsFromUserHandler);
 
+//Creacion de asset
 assetsRouter.post("/create", createAssetHandler);
 
+//Edicion de perfil de usuario
+assetsRouter.put("/:id", updateAssetHandler);
+
+//Destruir asset
 assetsRouter.delete("/:id", deleteAssetByIdHandler);
 
+//Pausar propiedad
 assetsRouter.delete("/delete/:id", softDeleteAssetByIdHandler);
 
+//Restaurar propiedad
 assetsRouter.get("/restore/:id", restoreAssetByIdHandler);
 
 module.exports = assetsRouter;

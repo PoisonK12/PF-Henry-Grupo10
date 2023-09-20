@@ -10,14 +10,28 @@ GET ->http://localhost:3001/assets?
 &rooms=1
 &bathrooms=1
 &onSale=true
-&amenities=1&amenities=2                    (hay que realizar un apartado por cada amenitie)
 &rentPriceMin
 &rentPriceMax
 &sellPriceMin
 &sellPriceMax
 &averageScoreMin                            (decimal min 1)
 &averageScoreMax                            (decimal max 5)
-&sortBy                                     (sin terminar)
+
+Busqueda de amenities
+&amenities=1
+&amenities=2
+&amenities=...
+
+Ordenamiento encadenable (Min 1)
+&sellPriceAsc=yes
+&sellPriceDesc=yes
+&rentPriceAsc=yes
+&rentPriceDesc=yes
+&averageScoreAsc=yes
+&averageScoreDesc=yes
+&numberOfReviewsAsc=yes
+&numberOfReviewsDesc=yes
+
 
 Borrado logico (pausar/primer paso de borrar publicacion)
 Delete -> http://localhost:3001/assets/delete/:id
@@ -29,7 +43,10 @@ Borrado definitivo (boton adicional segundo paso borrado)
 Delete -> http://localhost:3001/assets/:id
 
 Get asset by ID
-http://localhost:3001/assets/:uuid
+http://localhost:3001/assets/:assetId
+
+Get all asset by user ID. 
+http://localhost:3001/assets/:userId
 
 Post asset
 POST -> http://localhost:3001/assets/create
@@ -62,8 +79,24 @@ coveredArea   float
 totalArea     float
 amenities     array(number)
 
-Get all but all (trae todas las publicaciones en BBDD aunque tengan un borrado logico)
+Get admin assets (trae todas las publicaciones en BBDD aunque tengan un borrado logico)
 GET -> http://localhost:3001/assets/admin
+&page=1
+&size=10
+&name=  fragmento de texto que deseo que contenga el nombre
+&eliminado= true/false
+
+Ordenamiento encadenable (Min 1)
+&nameAsc=yes
+&nameDesc=yes
+&sellPriceAsc=yes
+&sellPriceDesc=yes
+&rentPriceAsc=yes
+&rentPriceDesc=yes
+&averageScoreAsc=yes
+&averageScoreDesc=yes
+&numberOfReviewsAsc=yes
+&numberOfReviewsDesc=yes
 
 
 Get location
@@ -74,8 +107,19 @@ Get amenities (devuelve un array de objetos con id y name)
 GET -> http://localhost:3001/amenities
 
 
+Favorites
+Add favorite
+PUT -> http://localhost:3001/favorites/like
+uuid de usuario
+uuid de asset
 
+Remove favorite
+PUT -> http://localhost:3001/favorites/unlike
+uuid de usuario
+uuid de asset
 
+All favorites
+GET -> http://localhost:3001/favorites?userId=:uuid
 
 Crud USER
 
@@ -84,6 +128,10 @@ GET -> http://localhost:3001/users
 
 Get user por id (chequear)
 GET -> http://localhost:3001/users/:id
+
+(tentativo)
+Get user by name/email 
+
 
 Creacion de usuario
 POST -> http://localhost:3001/users/create
@@ -120,7 +168,7 @@ Para edicion por voluntad de usuario
     password									string
     landlord									boolean
 Edicion por sistema
-    userType									string ENUM("Admin", "User", "Premium User")
+    userType									string ENUM("Admin", "User")
     averageScore              float
     numberOfReviews           integer
     favorites                 array(string) uuid de asset favoritos
@@ -130,10 +178,16 @@ Eliminar usuario (destroy)
 DELETE -> http://localhost:3001/users/:id
 
 
+
+
+
 Login
 POST -> http://localhost:3001/login
 email                         string
 password                      string original y se hashea en el recorrido para comparar
+
+Login google
+GET -> http://localhost:3001/google/login
 
 Logout
 GET -> http://localhost:3001/logout
@@ -175,7 +229,7 @@ Template de post para BBDD user
 
     "birthDate": "2023-09-06",
     "phoneNumber": "11 0303 4560",
-		"verificationNumber": "11 0404 5670",
+    "verificationNumber": "11 0404 5670",
 
 
     "gender": "Male",

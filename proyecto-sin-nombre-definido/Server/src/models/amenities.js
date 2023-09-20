@@ -13,6 +13,9 @@ module.exports = (sequelize) => {
       name: {
         type: DataTypes.STRING,
       },
+      svg:{
+        type: DataTypes.STRING
+      }
     },
     { timestamps: false }
   );
