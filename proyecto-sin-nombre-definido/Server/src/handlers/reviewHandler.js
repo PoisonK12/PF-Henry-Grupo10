@@ -19,15 +19,15 @@ const getReviewByIdHandler = async (req, res) => {
 };
 
 const reviewAssetHandler = async (req, res) => {
-  const { Pk, userName, score, comment, id } = req.body;
+  const { id, userName, score, comment, viewee } = req.body;
 
   try {
     const response = await reviewAssetController(
-      Pk,
+      id,
       userName,
       score,
       comment,
-      id
+      viewee
     );
     res.status(200).json(response);
   } catch (error) {

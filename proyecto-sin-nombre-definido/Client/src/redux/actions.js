@@ -623,7 +623,6 @@ export const reviewsPut = async (form , condicional) =>{
   
     try {
       const {data} = await axios.put(`/reviews/${condicional}/`, form)
-      console.log(data)
     } catch (error) {
       console.log(error)
     }
@@ -634,7 +633,6 @@ export const reviewsGet = (id) => {
   return async (dispatch) =>{
     try {
       const {data} = await axios("/reviews/"+ id)
-      console.log(data)
       return dispatch({
         type: GET_REVIEWS,
         payload: data

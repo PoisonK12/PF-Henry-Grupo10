@@ -228,6 +228,7 @@ const getAssetById = async (id) => {
   try {
     const asset = await Asset.findOne({where: { id: id }});
     const relacion = await userAssets.findAll({where: { AssetId:id }})
+    console.log(relacion[0])
     const user = await User.findOne({where:{id:relacion[0].dataValues.UserId}})
     const {fullName, profilePic} = user
 
