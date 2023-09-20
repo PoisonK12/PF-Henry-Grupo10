@@ -11,7 +11,7 @@ const AvailabilityModel = require("./models/availability");
 
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/GOAT10`,
+  `postgresql://postgres:078ntp8pGH28rcJaDiA4@containers-us-west-123.railway.app:5720/railway`,
   { logging: false }
 );
 
