@@ -10,7 +10,7 @@
   display:flex;
   flex-direction: row-reverse;
   justify-content: center;
-  
+  margin-bottom: 5px;
 }
 
 .rating:not(:checked) > label , .rating svg{
@@ -29,7 +29,7 @@
 .rating > input:checked ~ label:hover svg,
 .rating > input:checked ~ label:hover svg ~ label svg,
 .rating > label:hover svg ~ input:checked ~ label svg {
-  color: #e58e09;
+  color: #8810ad;
 }
 
 .rating label{
@@ -39,12 +39,12 @@
 
 .rating:not(:checked) > label:hover svg,
 .rating:not(:checked) > label:hover  ~ label svg {
-  color: #ff9e0b;
+  color: #9d0aca;
   
 }
 
 .rating > input:checked ~ label svg {
-  color: #ffa723;
+  color: #9d0aca;
 }
 
 .div{
@@ -55,4 +55,24 @@
   gap: 10px;
   align-items: center;
   text-align: center;
+}
+
+.buttons{
+  background-color: #091f44 ;
+  color:#fff;
+  padding-block: 5px;
+  border:2px solid #091f44;
+  border-radius:5px
+}
+
+.buttons:hover{
+  background-color:#0b2a5f ;
+}
+
+.centeredContent{
+  padding: 10px;
+}
+
+.maxWidth{
+  /* background-color: ; */
 }

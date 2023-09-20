@@ -14,8 +14,8 @@ const getReviewByIdController = async (req) => {
   const { id } = req.params;
 
   try {
-  if (id.length !== 36) {
-    //! reviews de usuarios 
+    if (id.length !== 36) {
+      //! reviews de usuarios
       const reviews = await Review.findAll({
         where: { userName: id },
         attributes: [
@@ -28,35 +28,57 @@ const getReviewByIdController = async (req) => {
         ],
       });
       const reviewsArray = Array.isArray(reviews) ? reviews : [reviews];
-      
-      const response = await Promise.all (reviewsArray.map(async (rev) => {
-        const user = await User.findOne({ where: { id: rev.dataValues.viewee } });
-        if(!user){
-          const asset = await Asset.findOne({ where: { id: rev.dataValues.viewee } });
-          return {...rev.dataValues,
-            name: asset.name,
-            images: asset.images,
-        }};
-        return {...rev.dataValues,
-          fullName: user.dataValues.fullName,
-          profilePic: user.dataValues.profilePic,
-        };
-      }));
-      console.log(response)
+
+      const response = await Promise.all(
+        reviewsArray.map(async (rev) => {
+          const user = await User.findOne({
+            where: { id: rev.dataValues.viewee },
+          });
+          if (!user) {
+            const asset = await Asset.findOne({
+              where: { id: rev.dataValues.viewee },
+            });
+            return {
+              ...rev.dataValues,
+              name: asset.name,
+              images: asset.images,
+            };
+          }
+          return {
+            ...rev.dataValues,
+            fullName: user.dataValues.fullName,
+            profilePic: user.dataValues.profilePic,
+          };
+        })
+      );
+      console.log(response);
       return response;
     }
 
     //! review asset + nombre y foto del que la hizo
-const referenceReviews = await assetReview.findAll({ where: { AssetId: id } });
-const reviews = await Review.findOne({ where: { id: referenceReviews[0].dataValues.ReviewId } });
-const reviewsArray = Array.isArray(reviews) ? reviews : [reviews];
-const response = await Promise.all (reviewsArray.map(async (rev) => {
-  const user = await User.findOne({ where: { userName: rev.dataValues.userName } });
-  return {...rev.dataValues,fullName: user.dataValues.fullName,profilePic: user.dataValues.profilePic,
-  };
-}));
-console.log(response)
-return response;
+    const referenceReviews = await assetReview.findAll(
+      { where: { AssetId: id } }
+     
+    );
+    const reviews = await Review.findOne({
+      where: { id: referenceReviews[0].ReviewId },
+      attributes: ["id", "score", "comment", "userName", "createdAt", "viewee"],
+    });
+    const reviewsArray = Array.isArray(reviews) ? reviews : [reviews];
+    const response = await Promise.all(
+      reviewsArray.map(async (rev) => {
+        const user = await User.findOne({
+          where: { userName: rev.dataValues.userName },
+        });
+        return {
+          ...rev.dataValues,
+          fullName: user.dataValues.fullName,
+          profilePic: user.dataValues.profilePic,
+        };
+      })
+    );
+    console.log(response);
+    return response;
 
     // if (response.length > 0) return response;
     // else {
