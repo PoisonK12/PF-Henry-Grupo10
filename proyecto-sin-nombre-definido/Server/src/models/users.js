@@ -87,7 +87,7 @@ module.exports = (sequelize) => {
         defaultValue: false,
       },
       // Modelo de datos de Google
-      googleId: {
+      githubId: {
         type: DataTypes.STRING,
         allowNull: true,
       },
