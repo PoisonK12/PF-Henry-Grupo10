@@ -8,51 +8,60 @@ import { GoogleLogin } from "react-google-login";
 
 function GoogleLoginButton() {
   const [user, setUser] = useState({});
+  const [logeado, setLogeado] = useState(false);
 
-  // function handleSignOut(event) {
-  //   setUser({});
-  //   localStorage.removeItem("token");
-  //   document.getElementById("signInDiv").hidden = false;
-  // }
-
-  // async function handleCallbackResponse(response) {
-  //   localStorage.setItem("token", response.credential);
-  //   var userObj = jwt_decode(response.credential);
-  //   console.log(userObj);
-  //   setUser(userObj);
-  //   document.getElementById("signInDiv").hidden = true;
-  //   try {
-  //     const { data } = await axios("http://localhost:3001/auth/google/");
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // const googleClientId = import.meta.env.VITE_CLIENT_ID_GOOGLE
- 
-  const handleGoogleLogin = async(response) => {
-    console.log(response)
+  const handleGithubLogin = async (response) => {
+    // console.log(response)
     try {
-      window.open(`http://localhost:3001/auth/google`)
-      // const {data} = await axios("http://localhost:3001/auth/google/")
-      // console.log(data)
-      
+      window.location.href = `http://localhost:3001/auth/github/`;
+      setLogeado(true);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (logeado) {
+  //       try {
+  //         const response = await axios.get("http://localhost:3001/auth/github/callback");
+
+  //         console.log(response.data);
+  //       } catch (error) {
+  //         console.error("Error en la solicitud Axios:", error);
+  //       }
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [logeado]);
+  // console.log(user)
 
   // Si no tenemos usuario, pintamos el botón de inicio de sesión.
   // Si tenemos usuario, mostramos el botón de cierre de sesión y la información del usuario.
   return (
     <div>
       {/* Contenedor del botón de inicio de sesión de Google */}
-      <button onClick={handleGoogleLogin}> Luquinho</button>
-
-  
+      <button
+        onClick={() => {
+          const popUp = window.open(
+            "http://localhost:3001/auth/github/",
+            "targetWindow",
+            "toolbar=no, location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=620,height=700"
+          );
+          window.addEventListener("message",(event) => {
+            if(event.origin === "http://localhost:3001"){
+              if(event.data){
+                localStorage.setItem("data", JSON.stringify(event.data))
+                popUp?.close()
+              }
+            }
+          })
+        }}
+      >
+        {" "}
+        Luquinho
+      </button>
     </div>
   );
 }

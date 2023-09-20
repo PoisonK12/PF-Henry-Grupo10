@@ -15,9 +15,10 @@ const resetPasswordRouter = require('./resetPassRouter');
 
 
 const { paymentRouter } = require('./payment.routes');
+const githubLogin = require("./googleLogin");
 const router = Router();
 
-// router.use("/auth", googleLoginRouter);
+router.use("/auth", githubLogin);
 router.use("/login", loginRouter);
 router.use('/logout', logOutRouter);
 router.use('/forgot-password', forgotPassRouter)

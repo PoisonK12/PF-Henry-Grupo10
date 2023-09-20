@@ -46,7 +46,7 @@ module.exports = (sequelize) => {
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true, // Agregado: para asegurarse de que los correos electrónicos sean únicos
         validate: {
           isEmail: true, // Agregado: para validar que sea un formato de correo electrónico válido
