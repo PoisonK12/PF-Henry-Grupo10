@@ -1,6 +1,6 @@
 const { User } = require("../db");
 const { Op, Sequelize } = require("sequelize");
-const { generateRegistrationToken } = require("../helpers/token/registerToken");
+const { generateRegistrationToken } = require("../helpers/Token/registerToken");
 
 // Método para soft delete
 //(delete) http://localhost:3001/users/id
