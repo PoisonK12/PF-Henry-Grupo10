@@ -259,11 +259,13 @@
 .contReseña {
   border-radius: 10%;
   margin-top: 30px;
+  /* position: relative; */
+  padding: 10px;
   width: 100%;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -4px rgba(0, 0, 0, .5);
   padding: 20px;
-  background-color: #CCCCFF;
+  background-color: rgb(55, 55, 178);
 }
 .contReseña h1 {
   font-size: 28px;

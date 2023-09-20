@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const passport = require('passport')
 const {User} = require("../db")
-const { tokenSign } = require('../helpers/token/loginToken')
+const { tokenSign } = require('../helpers/Token/loginToken')
 
 
 const githubLogin = Router()
