@@ -38,20 +38,20 @@ const Reviews = () => {
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("data"));
     dispatch(reviewsGet(data.userName));
-    const initialReviews = testeo.reduce((acc, ele) => {
+    const initialReviews = testeo?.reduce((acc, ele) => {
       acc[ele.id] = {
-        id: ele.id,
-        comment: ele.comment ? ele.comment : "",
-        score: ele.score ? ele.score : 0,
-        profilePic: ele.profilePic ? ele.profilePic : null,
-        userName: data.userName,
+        id: ele?.id,
+        comment: ele.comment ? ele?.comment : "",
+        score: ele.score ? ele?.score : 0,
+        profilePic: ele.profilePic ? ele?.profilePic : null,
+        userName: data?.userName,
         viewee: ele.viewee,
-        images: ele?.images ? ele.images[0] : null,
+        images: ele?.images ? ele?.images[0] : null,
       };
       return acc;
     }, {});
     setReviews(initialReviews);
-  }, [dispatch, testeo]);
+  }, [dispatch,reviews]);
 
   // console.log("aaaaaaaaaaaaaaaaaaapaaaa", testeo);
   return (
