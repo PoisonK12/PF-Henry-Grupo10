@@ -1,5 +1,8 @@
 const { type } = require("os");
 const nodemailer = require("nodemailer");
+const path = require('path');
+const fs = require('fs'); // Asegúrate de requerir fs
+const templatePath = path.join(__dirname, 'mailingTemplates', 'Rentas.html');
 
 // const { rentSchemePost } = require("../helpers/validations/rentValidation.js");
 const {
@@ -10,6 +13,7 @@ const {
   getRentById,
 } = require("../controllers/rentController.js");
 // const { final } = require("../controllers/rentController.js");
+
 
 const createBookHandler = async (req, res) => {
   const { assetId, userId, checkInDate, checkOutDate } = req.body;
@@ -84,6 +88,7 @@ const getRentByIdHandler = async (req, res) => {
   const { id } = req.params;
   try {
     const response = await getRentById(id);
+
 
     res.status(200).json(response);
   } catch (error) {
