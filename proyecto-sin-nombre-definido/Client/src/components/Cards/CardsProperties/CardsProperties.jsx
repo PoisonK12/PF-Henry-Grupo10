@@ -62,6 +62,7 @@ const CardsProperties = ({setFilter, filter}) => {
           bathrooms={ele.bathrooms}
           coveredArea={ele.coveredArea}
           totalArea={ele.totalArea}
+          averageScore={ele.averageScore}
           rentPrice={ele.rentPrice}
         />
       })}

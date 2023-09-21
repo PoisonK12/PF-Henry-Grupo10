@@ -31,7 +31,8 @@ const Reviews = () => {
     // setReviews({ ...reviews, id: id });
     const reviewToUpdate = reviews[id];
     // const reviewToupdate = reviews.find((review) => review.id == id);
-    await axios.put(`/reviews/${condicional}/`, reviewToUpdate);
+    const {data} = await axios.put(`/reviews/${condicional}/`, reviewToUpdate);
+    console.log(data, reviewToUpdate)
 
   };
 
@@ -51,7 +52,8 @@ const Reviews = () => {
       return acc;
     }, {});
     setReviews(initialReviews);
-  }, [dispatch,reviews]);
+  }, [dispatch, localStorage]);
+  console.log(testeo)
 
   // console.log("aaaaaaaaaaaaaaaaaaapaaaa", testeo);
   return (
@@ -69,6 +71,7 @@ const Reviews = () => {
                 <div className={`card mb-3 p-2 ${style.maxWidth}`}>
                   <div className="row g-0">
                     <div className={style.image}>
+
                       <img
                         src={props?.images ? props?.images : props?.profilePic}
                         style={{
@@ -79,8 +82,8 @@ const Reviews = () => {
                           backgroundPosition: "center bottom",
                         }}
                       ></img>
-                      <h3>{props?.name ? props?.name : props?.fullName}</h3>
                     </div>
+                          <h3 style={{color:"black"}}>{props?.images ? "Valoriza la propiedad!" : "Valoriza el propietaro!"}</h3>
                     <div>
                       <textarea
                         type="text"

@@ -277,7 +277,7 @@ export const searchByFilter = (
     order,
     amenities,
     page
-  },
+  },pagina
 ) => {
   return async (dispatch) => {
     try {
@@ -298,7 +298,7 @@ export const searchByFilter = (
       // console.log("BLABLABLA",searchAmen)
 
       const { data } = await axios(
-        `/assets?size=10&page=${page}&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}&${order}=yes${mapAmen}`
+        `/assets?size=10&page=${pagina}&location=${location}&rooms=${rooms}&bathrooms=${bathrooms}&onSale=${onSale}&rentPriceMax=${rentPriceMax}&rentPriceMin=${rentPriceMin}&sellPriceMax=${sellPriceMax}&sellPriceMin=${sellPriceMin}&${order}=yes${mapAmen}`
       );
       console.log(data);
       return dispatch({
