@@ -47,7 +47,7 @@ const createBook = async (assetId, userId, checkInDate, checkOutDate) => {
         userId: userId,
         expirationTime: expirationTime,
       });
-      console.log(response.dataValues.id)
+      console.log(response.dataValues.id);
       return response.dataValues.id;
       // +" --- " +
       // `Mantendremos la propiedad reservada para vos por 15min... Pero metele porque vuela!!`
@@ -101,13 +101,13 @@ const createRent = async (req, res) => {
       stay: stay,
       bookingCode: bookingCode,
     };
-    
+
     const createdRent = await Rent.create(rent);
 
     const id = createdRent.id;
     console.log(pay.rentPrice);
     console.log(1111111);
-    const URL = await createSession(rent, id);;
+    const URL = await createSession(rent, id);
 
     return URL + " - " + id;
   } catch (error) {
@@ -119,14 +119,13 @@ const createRent = async (req, res) => {
 const final = async (req) => {
   const { id } = req;
   try {
-;
     const rented = await Rent.findByPk(id);
     const bookingCode = rented.bookingCode;
     const booked = await Availability.findOne({
       where: { id: bookingCode, expirationTime: { [Op.not]: null } },
       includes: { model: Asset },
     });
-    console.log(rented)
+    console.log(rented);
     if (booked === null) return "Homero, ya marcaste...";
     await booked.update({
       isAvailable: "Indispuesta",
@@ -162,7 +161,7 @@ const final = async (req) => {
       " " +
       "Y no te olvides de usar filtro solar." +
       " " +
-      "Y no seas rata y traele algo a la abuela. Un imancito.., lo que sea. Con una boludes de dos mangos, la haces sentir re bien ;-)"
+      "Y no seas rata y traele algo a la abuela. Un imancito.., lo que sea. Con una boludez de dos mangos, la haces sentir re bien ;-)"
     );
   } catch (error) {
     console.error(error.message);
