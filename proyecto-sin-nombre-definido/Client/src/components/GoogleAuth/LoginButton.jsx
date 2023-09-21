@@ -13,7 +13,7 @@ function GoogleLoginButton() {
   const handleGithubLogin = async (response) => {
     // console.log(response)
     try {
-      window.location.href = `http://localhost:3001/auth/github/`;
+      window.location.href = `https://daily-oven-production.up.railway.app/auth/github/`;
       setLogeado(true);
     } catch (error) {
       console.log(error);
@@ -24,7 +24,7 @@ function GoogleLoginButton() {
   //   const fetchData = async () => {
   //     if (logeado) {
   //       try {
-  //         const response = await axios.get("http://localhost:3001/auth/github/callback");
+  //         const response = await axios.get("https://daily-oven-production.up.railway.app/auth/github/callback");
 
   //         console.log(response.data);
   //       } catch (error) {
@@ -45,12 +45,12 @@ function GoogleLoginButton() {
       <button
         onClick={() => {
           const popUp = window.open(
-            "http://localhost:3001/auth/github/",
+            "https://daily-oven-production.up.railway.app/auth/github/",
             "targetWindow",
             "toolbar=no, location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=620,height=700"
           );
           window.addEventListener("message",(event) => {
-            if(event.origin === "http://localhost:3001"){
+            if(event.origin === "https://daily-oven-production.up.railway.app"){
               if(event.data){
                 localStorage.setItem("data", JSON.stringify(event.data))
                 popUp?.close()

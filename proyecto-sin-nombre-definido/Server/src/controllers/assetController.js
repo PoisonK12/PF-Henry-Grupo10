@@ -5,13 +5,13 @@ const { filterLocation } = require("../helpers/filterLocation");
 //Prototipos de borralo logico
 
 // Método para soft delete
-//(delete) http://localhost:3001/assets/id
+//(delete) https://daily-oven-production.up.railway.app/assets/id
 Asset.prototype.softDelete = function () {
   return this.update({ eliminado: true });
 };
 
 // Método para restaurar
-//http://localhost:3001/assets/restore/id
+//https://daily-oven-production.up.railway.app/assets/restore/id
 Asset.prototype.restore = function () {
   return this.update({ eliminado: false });
 };

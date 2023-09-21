@@ -6,7 +6,7 @@
 // passport.use(new GoogleStrategy({
 //   clientID: process.env.CLIENT_ID_GOOGLE,
 //   clientSecret: process.env.CLIENT_SECRET_GOOGLE,
-//   callbackURL: "http://localhost:3001/auth/google/callback"
+//   callbackURL: "https://daily-oven-production.up.railway.app/auth/google/callback"
 // },
 // function(accessToken, refreshToken, profile, done) {
 //   User.findOrCreate({ googleId: profile.id, email: profile.email, userName: profile.name }, function (err, user) {

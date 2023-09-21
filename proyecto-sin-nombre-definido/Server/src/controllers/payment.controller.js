@@ -26,8 +26,8 @@ const createSession = async (rent,id, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:3001/pay/success/${id}`,
-      cancel_url: "http://localhost:3001/pay/cancel",
+      success_url: `https://daily-oven-production.up.railway.app/pay/success/${id}`,
+      cancel_url: "https://daily-oven-production.up.railway.app/pay/cancel",
     });
     console.log(session.url);
     return session.url;

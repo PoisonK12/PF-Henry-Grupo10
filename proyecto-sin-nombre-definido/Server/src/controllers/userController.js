@@ -3,13 +3,13 @@ const { Op, Sequelize } = require("sequelize");
 const { generateRegistrationToken } = require("../helpers/Token/registerToken");
 
 // Método para soft delete
-//(delete) http://localhost:3001/users/id
+//(delete) https://daily-oven-production.up.railway.app/users/id
 User.prototype.softDelete = function () {
   return this.update({ hide: true });
 };
 
 // Método para restaurar
-//http://localhost:3001/users/restore/id
+//https://daily-oven-production.up.railway.app/users/restore/id
 User.prototype.restore = function () {
   return this.update({ hide: false });
 };
