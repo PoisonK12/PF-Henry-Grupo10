@@ -41,7 +41,7 @@ const Contacts = () => {
     if (!contact.message) {
       validationErrors.message = "El mensaje es obligatorio.";
     }
-
+//
     // Si hay errores, muestra los mensajes de error
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
