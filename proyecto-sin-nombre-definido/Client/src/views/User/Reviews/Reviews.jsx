@@ -9,10 +9,8 @@ import axios from "axios";
 const Reviews = () => {
   // const testeo = test;
   const testeo = useSelector((state) => state.myReviews);
-  console.log(testeo);
   const dispatch = useDispatch();
   const [reviews, setReviews] = useState({});
-  console.log(reviews);
   const handleChange = (e, id) => {
     const { value, name, type } = e.target;
   
@@ -35,7 +33,6 @@ const Reviews = () => {
     // const reviewToupdate = reviews.find((review) => review.id == id);
     await axios.put(`/reviews/${condicional}/`, reviewToUpdate);
 
-    console.log("PUBLICADITSIMO",reviewToUpdate);
   };
 
   useEffect(() => {
@@ -54,7 +51,7 @@ const Reviews = () => {
       return acc;
     }, {});
     setReviews(initialReviews);
-  }, []);
+  }, [dispatch, testeo]);
 
   // console.log("aaaaaaaaaaaaaaaaaaapaaaa", testeo);
   return (

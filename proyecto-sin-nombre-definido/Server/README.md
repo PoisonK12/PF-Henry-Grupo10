@@ -3,7 +3,7 @@
 CRUD Asset
 
 Get all asset & count con filtrados
-GET ->http://localhost:3001/assets?
+GET ->https://daily-oven-production.up.railway.app/assets?
 &size=10
 &page=1
 &location=Ciudad%20de%20Buenos%20Aires      (el %20 representa el espacio, no se si hay que armarlo manualmente en la query)
@@ -34,22 +34,22 @@ Ordenamiento encadenable (Min 1)
 
 
 Borrado logico (pausar/primer paso de borrar publicacion)
-Delete -> http://localhost:3001/assets/delete/:id
+Delete -> https://daily-oven-production.up.railway.app/assets/delete/:id
 
 Restaurar
-GET -> http://localhost:3001/assets/restore/:id
+GET -> https://daily-oven-production.up.railway.app/assets/restore/:id
 
 Borrado definitivo (boton adicional segundo paso borrado)
-Delete -> http://localhost:3001/assets/:id
+Delete -> https://daily-oven-production.up.railway.app/assets/:id
 
 Get asset by ID
-http://localhost:3001/assets/:assetId
+https://daily-oven-production.up.railway.app/assets/:assetId
 
 Get all asset by user ID. 
-http://localhost:3001/assets/:userId
+https://daily-oven-production.up.railway.app/assets/:userId
 
 Post asset
-POST -> http://localhost:3001/assets/create
+POST -> https://daily-oven-production.up.railway.app/assets/create
 name          string
 description   text
 address       string
@@ -66,7 +66,7 @@ totalArea     float
 amenities     array(number)
 
 Editar asset
-PUT -> http://localhost:3001/assets/
+PUT -> https://daily-oven-production.up.railway.app/assets/
 name          string
 description   text
 images        array(string)
@@ -80,7 +80,7 @@ totalArea     float
 amenities     array(number)
 
 Get admin assets (trae todas las publicaciones en BBDD aunque tengan un borrado logico)
-GET -> http://localhost:3001/assets/admin
+GET -> https://daily-oven-production.up.railway.app/assets/admin
 &page=1
 &size=10
 &name=  fragmento de texto que deseo que contenga el nombre
@@ -100,41 +100,41 @@ Ordenamiento encadenable (Min 1)
 
 
 Get location
-GET -> http://localhost:3001/assets/location
+GET -> https://daily-oven-production.up.railway.app/assets/location
 Informacion disponible para lista desplegable de un primer pre-filtro por ubicacion.
 
 Get amenities (devuelve un array de objetos con id y name)
-GET -> http://localhost:3001/amenities
+GET -> https://daily-oven-production.up.railway.app/amenities
 
 
 Favorites
 Add favorite
-PUT -> http://localhost:3001/favorites/like
+PUT -> https://daily-oven-production.up.railway.app/favorites/like
 uuid de usuario
 uuid de asset
 
 Remove favorite
-PUT -> http://localhost:3001/favorites/unlike
+PUT -> https://daily-oven-production.up.railway.app/favorites/unlike
 uuid de usuario
 uuid de asset
 
 All favorites
-GET -> http://localhost:3001/favorites?userId=:uuid
+GET -> https://daily-oven-production.up.railway.app/favorites?userId=:uuid
 
 Crud USER
 
 Lista completa de usuarios
-GET -> http://localhost:3001/users
+GET -> https://daily-oven-production.up.railway.app/users
 
 Get user por id (chequear)
-GET -> http://localhost:3001/users/:id
+GET -> https://daily-oven-production.up.railway.app/users/:id
 
 (tentativo)
 Get user by name/email 
 
 
 Creacion de usuario
-POST -> http://localhost:3001/users/create
+POST -> https://daily-oven-production.up.railway.app/users/create
 Informacion enviada por body
 userName,
     fullName										string
@@ -153,7 +153,7 @@ userName,
 El user type en la practica no es un campo que utilicemos en el front, ahora lo enviamos por post para armar nuestras cuentas de admin pero en el caso de que una plataforma real tenga que crear este tipo de cuentas creo que se edita a mano por los dev en la BBDD o en un caso muy profesional se deberia hacer con una interfase dedicada.
 
 Edicion de usuario
-PUT -> http://localhost:3001/users/
+PUT -> https://daily-oven-production.up.railway.app/users/
 Como referencia
     userName(unique)          string
 Para edicion por voluntad de usuario
@@ -175,22 +175,22 @@ Edicion por sistema
     history                   array(string) uuid de rent completadas
 
 Eliminar usuario (destroy)
-DELETE -> http://localhost:3001/users/:id
+DELETE -> https://daily-oven-production.up.railway.app/users/:id
 
 
 
 
 
 Login
-POST -> http://localhost:3001/login
+POST -> https://daily-oven-production.up.railway.app/login
 email                         string
 password                      string original y se hashea en el recorrido para comparar
 
 Login google
-GET -> http://localhost:3001/google/login
+GET -> https://daily-oven-production.up.railway.app/google/login
 
 Logout
-GET -> http://localhost:3001/logout
+GET -> https://daily-oven-production.up.railway.app/logout
 
 
 Template de post para BBDD asset

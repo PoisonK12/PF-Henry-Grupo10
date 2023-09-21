@@ -41,6 +41,43 @@
 
 }
 
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden !important;
+	position: relative;
+	z-index: -1;
+}
+.label {
+    position: relative;
+    top: 160px;
+    text-align: center;
+    font-size: 15px;
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(35, 90, 163);
+    display: inline-block;
+    border-radius: 15px;
+}
+ 
+.label:focus, 
+.label:hover {
+    background-color: rgb(19, 60, 113);
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
+}
+
 .form legend {
     color:  rgb(32, 30, 30);
 }
@@ -177,4 +214,10 @@
 
 .buton:hover {
     background-color: rgb(19, 60, 113);
+}
+
+.select1 {
+    display : flex ;
+    flex-direction: row;
+
 }

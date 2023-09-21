@@ -182,12 +182,12 @@ const Login = ({ handleSwitch }) => {
                     type="button"
                     onClick={() => {
                       const popUp = window.open(
-                        "http://localhost:3001/auth/github/",
+                        "https://daily-oven-production.up.railway.app/auth/github/",
                         "targetWindow",
                         "toolbar=no, location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=620,height=700"
                       );
                       window.addEventListener("message", (event) => {
-                        if (event.origin === "http://localhost:3001") {
+                        if (event.origin === "https://daily-oven-production.up.railway.app") {
                           if (event.data) {
                             const eventData = event.data;
                             // console.log(JSON.parse(data))
