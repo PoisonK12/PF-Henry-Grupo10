@@ -32,7 +32,7 @@ const sendMail = (req, res) => {
           
             // Detalles del correo
             const mailOptions = {
-              from: 'greatravel@grupo-cava.com',
+              from: 'greattravel.contact@gmail.com',
               to: to, // Utiliza la dirección del destinatario proporcionada en el cuerpo de la solicitud
               subject :subject,
               html:html, // Puedes cambiar esto a HTML si lo deseas
