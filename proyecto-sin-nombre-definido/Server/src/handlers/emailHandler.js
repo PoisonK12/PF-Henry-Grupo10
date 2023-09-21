@@ -12,7 +12,7 @@ const sendMail = (req, res) => {
             }
             var transporter = nodemailer.createTransport({
               host: "smtp.gmail.com",
-              post: 465, // Cambiado de "post" a "port"
+              port: 465, // Cambiado de "post" a "port"
               secure: true,
               auth: {
                 user: "greattravel.contact@gmail.com",
