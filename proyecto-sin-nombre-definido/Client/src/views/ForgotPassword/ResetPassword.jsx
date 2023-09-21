@@ -12,7 +12,7 @@ function ResetPassword() {
         e.preventDefault();
       
         if (password.length >= 5) {
-          axios.post(`http://localhost:3001/reset-password/${id}/${token}`, { password })
+          axios.post(`https://daily-oven-production.up.railway.app/reset-password/${id}/${token}`, { password })
             .then(res => {
               if (res.data.Status === "Success") {
                 navigate('/checkIn');

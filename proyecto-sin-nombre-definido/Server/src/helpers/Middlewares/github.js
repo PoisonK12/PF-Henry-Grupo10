@@ -9,7 +9,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "http://localhost:3001/auth/github/callback",
+      callbackURL: "https://daily-oven-production.up.railway.app/auth/github/callback",
     },
     async function (accessToken, refreshToken, profile, cb) {
     // console.log(profile)

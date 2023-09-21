@@ -19,7 +19,7 @@ import UserPanel from './views/User/UserPanel';
 import Chatbot from './components/Chatbot/Chatbot';
 import { useEffect } from 'react';
 import Login from "./components/Login/apa"
-axios.defaults.baseURL = "http://localhost:3001"
+axios.defaults.baseURL = "https://daily-oven-production.up.railway.app"
 import jwt_decode from "jwt-decode"
 import {RouteAdminProtected, ScrollToTop} from './Helpers';
 import Loader from './components/Loader/Loader';
@@ -53,7 +53,7 @@ function App() {
     <>
     
     {/* {loading && <Loader></Loader>} ? lOADER */}
-      {(location.pathname !== "/" && location.pathname !== "/checkIn" && location.pathname !=="/404" && location.pathname !== "/forgot-password") && <Nav />}
+       {(location.pathname !== "/" && location.pathname !== "/checkIn" && location.pathname !=="/404" && location.pathname !== "/forgot-password") && <Nav />} 
       <ScrollToTop></ScrollToTop>
       
      <Routes>
