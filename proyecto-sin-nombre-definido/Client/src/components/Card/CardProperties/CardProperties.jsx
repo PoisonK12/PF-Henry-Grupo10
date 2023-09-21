@@ -48,7 +48,7 @@ const CardProperties = (props) => {
                 className="d-flex"
                 style={{ justifyContent: "space-between" }}
               >
-                <p className={`card-text`}>Precio ${props?.rentPrice}</p>
+                <p className={`card-text`}>Precio ${props?.sellPrice > 0 ? props?.sellPrice : props?.rentPrice }</p>
                 <Link to={`/detail/${props.id}`} target="_blank">
                   <button className="btn btn-primary">Ver Detalles</button>
                 </Link>

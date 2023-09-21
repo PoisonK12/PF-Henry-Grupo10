@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     try {
       const existEmail = allUsers.find((user) => user.email === email)
       if (existEmail) {
-        const response = await axios.post('http://localhost:3001/forgot-password', { email });
+        const response = await axios.post('https://daily-oven-production.up.railway.app/forgot-password', { email });
         if (response.data.Status === "Success") {
             alert("Email enviado, revisa tu bandeja de entrada!")
             navigate('/checkIn');
