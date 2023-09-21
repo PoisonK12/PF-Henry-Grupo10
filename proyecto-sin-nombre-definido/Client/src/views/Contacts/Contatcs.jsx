@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import style from "./contacts.module.css";
-import fondo from "../../assets/images/Exteriores/Image12.jpeg";
+//import fondo from "../../assets/images/Exteriores/Image12.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { createContact, getAllContact, getAllReallyProperties } from "../../redux/actions";
 
@@ -83,7 +83,7 @@ const Contacts = () => {
   return (
     <div className={style.background}>  
       <div className={style.contImg}>
-        <img className={style.img} src={fondo} alt="Background" />
+        <img className={style.img} src={""} alt="Background" />
       </div>
       <div className={style.cont}>
         <form onSubmit={handleSubmit} className={`${style["row-cols-1"]} ${style["custom-container"]} ${style['formulario-entrada']} ${visible ?  style['formulario-visible'] : ""}`}>
