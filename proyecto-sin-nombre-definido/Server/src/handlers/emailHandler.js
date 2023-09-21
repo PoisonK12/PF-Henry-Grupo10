@@ -11,12 +11,12 @@ const sendMail = (req, res) => {
               return res.status(500).json({ error: "Error al registrar el usuario", details: err.message });
             }
             var transporter = nodemailer.createTransport({
-              host: "mail.grupo-cava.com",
-              post: 993, // Cambiado de "post" a "port"
+              host: "smtp.gmail.com",
+              port: 465, // Cambiado de "post" a "port"
               secure: true,
               auth: {
-                user: "greatravel@grupo-cava.com",
-                pass: "00oscar00"
+                user: "greattravel.contact@gmail.com",
+                pass: "hbacczxxirmcjmht"
               },
               tls:{
                 rejectUnauthorized:false

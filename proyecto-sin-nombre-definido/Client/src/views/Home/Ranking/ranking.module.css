@@ -8,8 +8,10 @@
 
 }
 .separator{
-    width: 90%;
-    background-color: #131313;
+  margin-top: 15px;
+  margin-bottom: 15px;
+    width: 100%;
+    background-color: #4b4b4b;
     align-items: center;
     text-align: center;
     height: 1px;
@@ -84,14 +86,20 @@
   }
   .titulo{
     font-weight: bold;
-    font: 700 60px/1 'Lato', sans-serif;
-    padding-top: 50px;
+    font: 700 55px/1 'Lato', sans-serif;
+    padding-top: 20px;
   }
   .titulo2{
     font-weight: bold;
     font: 700 60px/1 'Lato', sans-serif;
     padding-top: 80px;
   }
+  .titulo3{
+    font-weight: bold;
+    font: 700 55px/1 'Lato', sans-serif;
+    padding-top: 20px;
+  }
+  
   
   .cardContent {
     position: absolute;
