@@ -11,10 +11,10 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import Chart from "./chart";
+import Chart from "./Chart";
 import { useDispatch } from "react-redux";
 import { putUser } from "../../../redux/actions";
-import style from './profile.module.css'
+import style from "./profile.module.css";
 
 function User() {
   const [data, setData] = useState({});
@@ -26,9 +26,9 @@ function User() {
     nationality: "",
     birthDate: "",
     phoneNumber: "",
-    gender: ""
+    gender: "",
   });
-  console.log('formulario',form);
+  console.log("formulario", form);
   const [errors, setErrors] = useState({
     image: "",
   });
@@ -37,23 +37,20 @@ function User() {
   });
   const dispatch = useDispatch();
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  const handleUpdate =  async (e) => {
-    e.preventDefault(e)
-    console.log('Datos que se van a enviar:', form);
-    dispatch(putUser(form))
-    const {data} = await axios.put("/users",form)
+  const handleUpdate = async (e) => {
+    e.preventDefault(e);
+    console.log("Datos que se van a enviar:", form);
+    dispatch(putUser(form));
+    const { data } = await axios.put("/users", form);
     let info = localStorage.getItem("data");
-    info = data
-    localStorage.setItem("data", JSON.stringify(info))
+    info = data;
+    localStorage.setItem("data", JSON.stringify(info));
   };
-  
-  
 
   const cardStyle = {
     backgroundImage: `url(${imagen.image})`,
@@ -67,14 +64,15 @@ function User() {
     const info = localStorage.getItem("data");
     const userData = JSON.parse(info);
     // setData(userData);
-    setForm({userName: userData.userName,
+    setForm({
+      userName: userData.userName,
       fullName: userData.fullName,
       profilePic: userData.profilePic,
       address: userData.address,
       nationality: userData.nationality,
       birthDate: userData.birthDate,
       phoneNumber: userData.phoneNumber,
-      gender: userData.gender
+      gender: userData.gender,
     });
   }, []);
 
@@ -82,16 +80,18 @@ function User() {
     <>
       <div className="content">
         <Row>
-          <Col md="8" style={{width:"100%", marginTop:"17px"}}>
-            <Card >
+          <Col md="8" style={{ width: "100%", marginTop: "17px" }}>
+            <Card>
               <CardHeader>
                 <h5 className="title">Editar Perfil</h5>
               </CardHeader>
               <CardBody style={cardStyle}>
                 <Form onSubmit={handleUpdate}>
-                
                   <Row className={style.containerImagen}>
-                    <Col md="12" className="d-flex justify-content-center align-items-center ">
+                    <Col
+                      md="12"
+                      className="d-flex justify-content-center align-items-center "
+                    >
                       <h1 className={style.firma}>{form.userName}</h1>
                       <FormGroup>
                         <img
@@ -110,7 +110,6 @@ function User() {
                           }}
                         />
                       </FormGroup>
-                    
                     </Col>
                   </Row>
                   <Row>
@@ -208,7 +207,9 @@ function User() {
                   <Row>
                     <Col md="12 d-flex justify-content-center align-items-center">
                       <FormGroup>
-                        <button type="submit" className={style.buttons}>Editar</button>
+                        <button type="submit" className={style.buttons}>
+                          Editar
+                        </button>
                       </FormGroup>
                     </Col>
                   </Row>
@@ -258,6 +259,3 @@ function User() {
 }
 
 export default User;
-
-
-      
