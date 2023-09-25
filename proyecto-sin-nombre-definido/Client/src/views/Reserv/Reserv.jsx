@@ -22,6 +22,8 @@ const Reserv = ({ setReserv, bookingId, booking }) => {
   const [payment, setPayment] = useState(true);
   const [paymentSucess, setPaymentSuccess] = useState(false);
   const [buttonReserv, setButtonReserv] = useState(true);
+  const [checked, setChecked] = useState(true);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,6 +41,9 @@ const Reserv = ({ setReserv, bookingId, booking }) => {
       setPayment(true);
       setPaymentSuccess(false);
       setButtonReserv(true);
+    }
+    if (checked) {
+      setButtonReserv(false);
     }
     setForm({ ...form, [name]: value });
   };
@@ -132,7 +137,7 @@ const Reserv = ({ setReserv, bookingId, booking }) => {
                   >
                     <option value=""> --Selecciona una forma de pago--</option>
                     <option value="Card"> Tarjeta</option>
-                    <option value="Cash"> Efectivo</option>
+                    {/* <option value="Cash"> Efectivo</option> */}
                   </select>
                 </div>
                 <hr className={style.hr}></hr>
@@ -145,8 +150,6 @@ const Reserv = ({ setReserv, bookingId, booking }) => {
                     class={`btn ${style.button}`}
                     style={{ marginLeft: "10px" }}
                     type="button"
-                    onClick={(e) => handlePayment(e)}
-                    disabled={payment}
                   >
                     <svg
                       className={style.svg}
@@ -172,8 +175,10 @@ const Reserv = ({ setReserv, bookingId, booking }) => {
                   <input
                     type="checkbox"
                     name="termCon"
-                    value={form.termCon}
-                    onChange={handleChange}
+                    // value={form.termCon}
+                    // onChange={handleChange}
+                    checked={checked}
+                    onChange={(e) => setChecked(e.target.checked)}
                   ></input>
                   <span>
                     {" "}
@@ -280,7 +285,6 @@ const Reserv = ({ setReserv, bookingId, booking }) => {
                     <button
                       type="submit"
                       class={`btn ${style.button}`}
-                      disabled={buttonReserv}
                     >
                       {" "}
                       📑 Reservar{" "}

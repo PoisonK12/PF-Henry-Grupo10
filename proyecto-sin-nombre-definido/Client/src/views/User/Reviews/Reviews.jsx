@@ -31,27 +31,29 @@ const Reviews = () => {
     // setReviews({ ...reviews, id: id });
     const reviewToUpdate = reviews[id];
     // const reviewToupdate = reviews.find((review) => review.id == id);
-    await axios.put(`/reviews/${condicional}/`, reviewToUpdate);
+    const {data} = await axios.put(`/reviews/${condicional}/`, reviewToUpdate);
+    console.log(data, reviewToUpdate)
 
   };
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("data"));
     dispatch(reviewsGet(data.userName));
-    const initialReviews = testeo.reduce((acc, ele) => {
+    const initialReviews = testeo?.reduce((acc, ele) => {
       acc[ele.id] = {
-        id: ele.id,
-        comment: ele.comment ? ele.comment : "",
-        score: ele.score ? ele.score : 0,
-        profilePic: ele.profilePic ? ele.profilePic : null,
-        userName: data.userName,
+        id: ele?.id,
+        comment: ele.comment ? ele?.comment : "",
+        score: ele.score ? ele?.score : 0,
+        profilePic: ele.profilePic ? ele?.profilePic : null,
+        userName: data?.userName,
         viewee: ele.viewee,
-        images: ele?.images ? ele.images[0] : null,
+        images: ele?.images ? ele?.images[0] : null,
       };
       return acc;
     }, {});
     setReviews(initialReviews);
-  }, [dispatch, testeo]);
+  }, [dispatch, localStorage]);
+  console.log(testeo)
 
   // console.log("aaaaaaaaaaaaaaaaaaapaaaa", testeo);
   return (
@@ -69,6 +71,7 @@ const Reviews = () => {
                 <div className={`card mb-3 p-2 ${style.maxWidth}`}>
                   <div className="row g-0">
                     <div className={style.image}>
+
                       <img
                         src={props?.images ? props?.images : props?.profilePic}
                         style={{
@@ -79,8 +82,8 @@ const Reviews = () => {
                           backgroundPosition: "center bottom",
                         }}
                       ></img>
-                      <h3>{props?.name ? props?.name : props?.fullName}</h3>
                     </div>
+                          <h3 style={{color:"black"}}>{props?.images ? "Valoriza la propiedad!" : "Valoriza el propietaro!"}</h3>
                     <div>
                       <textarea
                         type="text"

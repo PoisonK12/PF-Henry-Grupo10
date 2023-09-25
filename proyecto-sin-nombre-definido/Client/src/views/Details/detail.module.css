@@ -113,7 +113,7 @@
 
 /* Estilos para las reseñas */
 .reviewCol {
-  background-color: #CCCCFF;
+  background-color: #ccccff;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
   margin-right: 20px;
@@ -172,7 +172,6 @@
   margin-bottom: 2px;
 }
 
-
 .propertyInfo p {
   font-size: 16px;
   margin-bottom: 10px;
@@ -216,7 +215,6 @@
   margin-right: 5px;
 }
 
-
 .info {
   background-color: #fff;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
@@ -229,7 +227,6 @@
   padding: 20px;
   /* display: flex; */
 }
-
 
 .info h2 {
   font-size: 30px;
@@ -261,31 +258,31 @@
   border-radius: 10%;
   margin-top: 30px;
   /* position: relative; */
-  padding: 10px;
+  /* padding: 10px; */
   width: 100%;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, .5);
-  padding: 20px;
-  background-color: rgb(55, 55, 178);
+    0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  /* padding: 20px; */
+  background-color: rgb(101, 21, 135);
 }
 .contReseña h1 {
   font-size: 28px;
-  color: #9d0aca;
+  color: #5c0d8d;
 }
 
-.sugs{
+.sugs {
   margin-top: 30px;
   display: flex;
   color: #091f44;
   flex-direction: column;
 }
 
-.card{
+.card {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.security{
+.security {
   background: rgba(0, 0, 255, 0.2);
   padding: 20px;
   display: flex;
@@ -295,14 +292,14 @@
   border: 2px solid rgb(216, 215, 217);
 }
 
-.profile{
+.profile {
   position: absolute;
   right: 20px;
   align-items: center;
-  top:85px
+  top: 85px;
 }
 
-.profile img{
+.profile img {
   border-radius: 999px;
   /* margin-right: 5px; */
   margin-left: auto;
@@ -312,4 +309,47 @@
   color: #091f44;
   font-weight: 700;
   letter-spacing: 1px;
+}
+
+/* .p {
+  color: rgb(243 244 246);
+
+  font-style: italic;
+
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+
+  text-align: center;
+
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  position: relative;
+} */
+
+.contReseña {
+  border-radius: 0.75rem;
+  flex-direction: column;
+  max-width: 24rem;
+  display: flex;
+  position: relative;
+}
+
+.contReseña svg{
+  color:#2b123a
+}
+
+.contReseña p{
+  padding:40px;
+  font-size: 20px;
+  color:white;
+  z-index: 10;
+  text-align: center;
+}
+
+.reseñaWhite{
+  background-color: #cccccc;
 }

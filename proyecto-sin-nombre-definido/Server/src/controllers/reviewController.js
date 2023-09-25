@@ -203,6 +203,7 @@ const reviewUserController = async (Pk, userName, score, comment, id) => {
 };
 //!---------------------------------evaluador-texto--puntos-evaluada---------------------------------
 const reviewAssetController = async (Pk, userName, score, comment, id) => {
+
   try {
     /**Validaciones en el caso de no poder usar zod */
     // if (!score) {
@@ -230,7 +231,7 @@ const reviewAssetController = async (Pk, userName, score, comment, id) => {
   }
   try {
     const findAsset = await Asset.findByPk(id);
-
+    console.log(findAsset, id)
     if (findAsset) {
       const toUpdate = await Review.findByPk(Pk);
       await toUpdate.update({

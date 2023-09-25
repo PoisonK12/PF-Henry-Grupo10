@@ -9,6 +9,7 @@ import {
   SearchByLocation,
   favUserProperty,
   getAllFavUserProps,
+  getAmenities,
   getAssetById,
   reviewsGet,
 } from "../../redux/actions";
@@ -39,7 +40,10 @@ const Detail = () => {
   const [myReviews, setMyReviews] = useState([]);
   const sugs = propertiesSug?.rows?.filter((el) => el.id !== assetDetail.id);
   const token = localStorage.getItem("log");
-  // console.log("Detalle", assetDetail);
+  const amenidades = useSelector((state) => state.amenities);
+  const [amenities, setAmenities] = useState([]);
+
+  console.log("Detalle", amenities);
   const [loading, setLoading] = useState(true);
 
   // const isFavorite = Array.isArray(favoritesData) && favoritesData.includes(id);
@@ -63,6 +67,13 @@ const Detail = () => {
         dispatch(SearchByLocation(assetDetail.location, 1));
         dispatch(reviewsGet(id));
         setMyReviews(reviews);
+        dispatch(getAmenities());
+        console.log(amenidades);
+        const amenitiesDetail = amenidades?.filter((ele) => {
+          return assetDetail.amenities?.includes(ele.id);
+        });
+        console.log("klk", amenitiesDetail);
+        setAmenities(amenitiesDetail);
         setTimeout(() => {
           setLoading(false);
         }, 2000);
@@ -71,7 +82,7 @@ const Detail = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [reviews]);
   useEffect(() => {
     const info = localStorage.getItem("data");
     const userData = JSON.parse(info);
@@ -79,7 +90,7 @@ const Detail = () => {
     dispatch(getAllFavUserProps(userData.id));
   }, []);
 
-  useEffect(() => {}, [id, reviews]);
+  // useEffect(() => {}, [id, reviews]);
   console.log(myReviews);
 
   const stars = (stars) => {
@@ -194,6 +205,39 @@ const Detail = () => {
       </div>
       <div className={`${style.propertyDetails}`}>
         <div className={` ${style.propertyInfo}`}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              boxShadow:
+                "0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.2 )",
+              marginRight: "94%",
+            }}
+          >
+            <p
+              style={{
+                // border: "1px #b9b9b9 solid",
+                padding: "5px",
+                paddingInline: "7px",
+                fontWeight: "bold",
+                fontSize: "19px",
+                // marginRight: "96%",
+              }}
+            >
+              {assetDetail?.averageScore} {"  "}
+            </p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              style={{ marginRight: "10px", color: "#9d0aca" }}
+              fill="currentColor"
+              class="bi bi-star-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+            </svg>
+          </div>
           <h2 style={{ fontWeight: "lighter", color: "#091f44" }}>
             ${assetDetail.rentPrice} USD por noche
           </h2>
@@ -295,70 +339,96 @@ const Detail = () => {
               <Maps location={assetDetail.location} />
             </div>
           </div>
+          <div>
+            <h2>Servicios que ofrece la propiedad!</h2>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                flexDirection: "row",
+                width: "100%",
+                padding:"20px",
+                gap:"20px",
+                justifyContent:"center"
+              }}
+            >
+              {amenities &&
+                amenities?.map((ele) => {
+                  console.log("epaaaaaaaa", amenities);
+                  return (
+                    <div style={{display:"flex", flexDirection:"column", marginRight:"70px"}}>
+                      <img src={ele.svg} width={120} style={{justifyContent:"center", margin:"0 auto"}}></img>
+                      <h5 style={{fontSize:"30px", justifyContent:"center", textAlign:"center"}}>{ele.name}</h5>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
           <div className={style.reseñas}>
             <h2>Lee las reseñas de los demas huespedes!</h2>
             <div className={style.reseña}>
-              <div className={style.contReseña}>
-                <h1>Valentina Delucchi</h1>
-                <p>
-                  Perderse en la naturaleza nunca había sido tan encantador. La
-                  Cabaña Bosque Encantado nos brindó la escapada perfecta del
-                  ajetreo y el bullicio de la ciudad. Cada mañana nos
-                  despertábamos con el canto de los pájaros y una taza de café
-                  en la terraza. El interior de la cabaña estaba decorado con un
-                  estilo rústico pero moderno, y nos sentimos como en casa desde
-                  el primer momento. Definitivamente, recomiendo esta joya
-                  escondida a todos los amantes de la naturaleza.
-                </p>
-              </div>
               {myReviews &&
                 myReviews?.map((ele) => {
+                  console.log(ele)
                   return (
                     <div className={style.contReseña}>
-                      <h1 style={{ marginBottom: "0px" }}>{ele?.userName}</h1>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          marginBottom: "20px",
-                          marginTop: "0",
-                        }}
+                      <svg
+                        style={{ position: "absolute", top: "15px" }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="60"
+                        height="60"
+                        fill="currentColor"
+                        class="bi bi-quote"
+                        viewBox="0 0 16 16"
                       >
-                        {stars(ele?.score)}
-                        {noStars(ele?.score)}
-                      </div>
-                      <div style={{ padding: "50px" }}>
-                        <p style={{ position: "relative", height: "100%" }}>
-                          {" "}
-                          <svg
-                            style={{ position: "absolute", top: "0" }}
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="60"
-                            height="60"
-                            fill="currentColor"
-                            class="bi bi-quote"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z" />
-                          </svg>
-                          {ele?.comment}{" "}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="60"
-                            height="60"
-                            style={{
-                              position: "absolute",
-                              right: "20px",
-                              bottom: "100px",
-                              transform: "scaleX(-1)",
-                            }}
-                            fill="currentColor"
-                            class="bi bi-quote"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z" />
-                          </svg>
+                        <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z" />
+                      </svg>
+                      <svg
+                        style={{
+                          position: "absolute",
+                          bottom: "110px",
+                          right: "10px",
+                          transform: "scaleX(-1)",
+                        }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="60"
+                        height="60"
+                        fill="currentColor"
+                        class="bi bi-quote"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z" />
+                      </svg>
+                      <p>
+                       {ele?.comment}
+                      </p>
+                      <div className={style.reseñaWhite}>
+                        <h1 style={{ marginTop: "5px", paddingBottom: "0", }}>
+                          {console.log(ele)}
+                          {ele?.userName}
+                        </h1>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            marginBottom: "0px",
+                            marginTop: "0",
+                          }}
+                        >
+                          {stars(ele?.score)}
+                          {noStars(ele?.score)}
+                        </div>
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            display: "flex",
+                            justifyContent: "center",
+                            color: "black",
+                            padding: "10px",
+                          }}
+                        >
+                          Este usuario evaluo a la propiedad!
                         </p>
                       </div>
                     </div>

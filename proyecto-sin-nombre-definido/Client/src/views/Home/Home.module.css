@@ -118,7 +118,7 @@
 }
 
 .containerFluid{
-    /* overflow: hidden; */
+    overflow: hidden;
     background: #e7e7e7;
 }
 .svg {

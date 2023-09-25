@@ -77,7 +77,7 @@ const Ranking = () => {
 
     // Realiza una solicitud POST al servidor para enviar el correo electrónico
     axios
-      .post("/sendmail", data) // Debes ajustar la URL de acuerdo a tu configuración de servidor
+      .post("https://daily-oven-production.up.railway.app/sendmail", data) // Debes ajustar la URL de acuerdo a tu configuración de servidor
       .then((response) => {
         console.log(response.data);
       })
