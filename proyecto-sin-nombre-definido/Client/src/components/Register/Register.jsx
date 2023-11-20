@@ -46,7 +46,7 @@ const Register = ({ handleSwitch }) => {
     confirmPassword: "",
   });
 
-  const handleStep =  (e) => {
+  const handleStep = (e) => {
     e.preventDefault();
 
     if (e.target.value === "previous") {
@@ -56,7 +56,7 @@ const Register = ({ handleSwitch }) => {
         fullName: "",
         phoneNumber: "",
         verificationNumber: "",
-          gender: "",
+        gender: "",
         address: "",
         landlord: false,
         nationality: "",
@@ -200,9 +200,8 @@ const Register = ({ handleSwitch }) => {
     </svg>
   );
 
-
   const handleDelete = () => {
-    setRegister({...register , profilePic : ""})
+    setRegister({ ...register, profilePic: "" });
   };
 
   //?------------------------------------------------- Picture handlers -------------------------------------------------------------------------------
@@ -456,16 +455,18 @@ const Register = ({ handleSwitch }) => {
             <fieldset
               className={`border  d-flex flex-column text-center ${style.form2}`}
             >
-            <div className="d-flex flex-row " style={{ background:
-            "linear-gradient(45deg, rgba(29,88,148,1) 7%, rgba(186,38,224,1) 100%)", 
-            width : "100.6%" , 
-            height : "100% " ,
-            borderTopRightRadius : "10px" , 
-            borderTopLeftRadius : "10px",
-            marginTop : "34px"
-            }} >
-            
-
+              <div
+                className="d-flex flex-row "
+                style={{
+                  background:
+                    "linear-gradient(45deg, rgba(29,88,148,1) 7%, rgba(186,38,224,1) 100%)",
+                  width: "100.6%",
+                  height: "100% ",
+                  borderTopRightRadius: "10px",
+                  borderTopLeftRadius: "10px",
+                  marginTop: "34px",
+                }}
+              >
                 <div
                   className={`d-flex text-center justify-content-center align-items-center ${style.divDrop}`}
                   style={{
@@ -474,8 +475,8 @@ const Register = ({ handleSwitch }) => {
                     margin: `20px 35px`,
                     textAlign: "center",
                     width: "200px",
-              
-                    position:"relative",
+
+                    position: "relative",
                     height: "200px",
                     borderRadius: "10px",
                   }}
@@ -484,26 +485,26 @@ const Register = ({ handleSwitch }) => {
                   onDrop={handleDrop}
                 >
                   {register.profilePic ? (
-                    <div> 
+                    <div>
                       <img
-                      style={{
-                        borderRadius: "10px",
-                        width: "200px",
-                        height: "200px",
-                        maxHeight: "200px",
-                        objectFit: "cover",
-                      }}
-                      src={register.profilePic}
-                      alt={`Image ${register.profilePic}`}
-                    />
-                   
-                    <button
-                           className={`${style.buton}`}
-                           onClick={handleDelete}
-                         >
-                           X
-                         </button>
-                         </div>
+                        style={{
+                          borderRadius: "10px",
+                          width: "200px",
+                          height: "200px",
+                          maxHeight: "200px",
+                          objectFit: "cover",
+                        }}
+                        src={register.profilePic}
+                        alt={`Image ${register.profilePic}`}
+                      />
+
+                      <button
+                        className={`${style.buton}`}
+                        onClick={handleDelete}
+                      >
+                        X
+                      </button>
+                    </div>
                   ) : (
                     <div>
                       <svg
@@ -531,10 +532,8 @@ const Register = ({ handleSwitch }) => {
                       !
                     </div>
                   )}
-  
-             
-            </div>
-                
+                </div>
+
                 {errors.profilePic ? (
                   <p
                     style={{
@@ -548,10 +547,9 @@ const Register = ({ handleSwitch }) => {
                 ) : (
                   <p style={{ visibility: "hidden" }}>&nbsp;</p>
                 )}
-                <div className="d-flex flex-column justify-content-center align-items-center" >
-<div>
-
-                <label className={style.label} htmlFor="imageInput">
+                <div className="d-flex flex-column justify-content-center align-items-center">
+                  <div>
+                    <label className={style.label} htmlFor="imageInput">
                       Selecciona un archivo
                     </label>
                     <input
@@ -560,16 +558,12 @@ const Register = ({ handleSwitch }) => {
                       accept="image/*"
                       className={style.inputfile}
                       onChange={(e) => handleFile(e.target.files[0])}
-                    /> 
-                   
-</div>
-                  <div>
-                   
-
+                    />
                   </div>
+                  <div></div>
                 </div>
               </div>
- 
+
               <div
                 className={`d-flex flex-row align-items-center justify-content-center ${style.gridForm}`}
                 style={{ width: "80%" }}
@@ -583,7 +577,7 @@ const Register = ({ handleSwitch }) => {
                   }}
                 >
                   <label class="form-label lead" htmlFor="fullName">
-                    Nombre completo 
+                    Nombre completo
                   </label>
                   <input
                     type="text"
@@ -616,7 +610,7 @@ const Register = ({ handleSwitch }) => {
                   }}
                 >
                   <label class="form-label lead" htmlFor="userName">
-                    Nombre de usuario 
+                    Nombre de usuario
                   </label>
                   <input
                     type="text"
@@ -654,7 +648,6 @@ const Register = ({ handleSwitch }) => {
                   }}
                 >
                   <label class="form-label lead" htmlFor="birthDate">
-                    
                     Fecha de nacimiento
                   </label>
                   <input
@@ -688,7 +681,7 @@ const Register = ({ handleSwitch }) => {
                   }}
                 >
                   <label class="form-label lead" htmlFor="phoneNumber">
-                    Número de teléfono 
+                    Número de teléfono
                   </label>
                   <input
                     type="tel"
@@ -713,8 +706,11 @@ const Register = ({ handleSwitch }) => {
                   )}
                 </div>
               </div>
-             
-              <div class="d-flex flex-row align-items-center justify-content-center" style={{marginBottom:"20px"}}>
+
+              <div
+                class="d-flex flex-row align-items-center justify-content-center"
+                style={{ marginBottom: "20px" }}
+              >
                 <div class="col-xs-6 m-3">
                   <button
                     style={{
